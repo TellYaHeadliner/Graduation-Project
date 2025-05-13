@@ -1,0 +1,18 @@
+# Laravel
+/backend/.env
+/backend/vendor/
+/backend/storage/logs/*
+/backend/storage/framework/*
+/backend/storage/cache/*
+/backend/bootstrap/cache/*
+
+# React
+/frontend/.env
+/frontend/node_modules/
+/frontend/build/
+/frontend/yarn-error.log
+/frontend/*.tsbuildinfo
+/frontend/package-lock.json # Thêm nếu cần loại bỏ package-lock.json
+
+# Docker
+/docker-compose.yml.local

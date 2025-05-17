@@ -1,10 +1,14 @@
+import { Routes, Route } from "react-router-dom"
+import AuthenticatedGuard from "./guards/AuthenticatedGuard"
+import HomeRoutes from "./routes/HomeRoutes"
+
 function App() {
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
-    </>
+    <Routes>
+      <Route element={<AuthenticatedGuard />}>
+        {HomeRoutes()}
+      </Route>
+    </Routes>
   )
 }
 

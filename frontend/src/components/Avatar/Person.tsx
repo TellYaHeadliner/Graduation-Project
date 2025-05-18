@@ -2,13 +2,14 @@ import { Avatar, Box } from "@radix-ui/themes";
 import { PersonIcon } from "@radix-ui/react-icons";
 
 import { PATH } from "../../constants/Paths";
+import "./Person.modules.css"
 
 export default function Person(){
     return (
-        <Box width="64px" height="64px" className="object-contain">
-            <a href={PATH.LOGIN}>
+        <a href={PATH.LOGIN}>
+            <Box className="person rounded-full outline">
                 <PersonIcon />
-            </a>
-        </Box>
+            </Box>
+        </a>
     )
 }

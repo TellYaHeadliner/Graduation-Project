@@ -1,1 +1,26 @@
 @import "tailwindcss";
+@import "radix-themes-tw";
+
+@theme{
+    --color-primary: #F44336;
+    --color-primary-two: #FF4B3E;
+    --color-secondary: #FFA07A;
+    --color-secondary-two: #FFB88C;
+    --color-background: #FAF9F;
+    --color-background-two: #F5F5F5;
+    --color-background-three: #EDEDED;
+    --color-background-four: #DADADA;
+    --color-text: #333333;
+    --color-text-two: #2C2C2C;
+    --color-text-three: #FFFFFF;
+    --color-accent: #4FC3F7;
+    --color-accent-two: #5BC0BE;
+    --font-roboto: roboto;
+    --breakpoints-xs: 393px;
+    --breakpoints-sm: 576px;
+    --breakpoints-md: 768px;
+    --breakpoints-lg: 992px;
+    --breakpoints-xl: 1200px;
+    --breakpoints-2xl: 1400px;
+    
+}

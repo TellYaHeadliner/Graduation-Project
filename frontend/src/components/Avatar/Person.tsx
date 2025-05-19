@@ -6,8 +6,8 @@ export default function Person() {
 
     <a 
         href={PATH.LOGIN} 
-        className="rounded-full border-indigo-50 bg-accent text-white">
-        <PersonIcon className="w-8 h-7" />
+        className="rounded-full border-indigo-50 text-white">
+            <PersonIcon className="w-8 h-7" />
     </a>
     )
 }

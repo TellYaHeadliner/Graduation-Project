@@ -1,9 +1,17 @@
 import { TabNav } from '@radix-ui/themes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export default function TabNavLink() {
+interface TabNavLinkProps{
+    tab: string
+}
+
+export default function TabNavLink({ tab: string }: TabNavLinkProps) {
 
     const [tab, setTab] = useState('/khachsan')
+
+    useEffect(() => {
+        console.log("Khuyến mãi");
+    }, [])
 
     return (
         <TabNav.Root color="green">

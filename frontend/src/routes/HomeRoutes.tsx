@@ -4,7 +4,8 @@ import AuthenticatedGuard from "../guards/AuthenticatedGuard"
 import { PATH } from "../constants/Paths"
 import LoadingSpinner from "../components/Loading/LoadingSpinner"
 
-const Home = lazy(() => import("../pages/Home/Home"))
+const Home = lazy(() => import("../pages/Home"))
+const KhuyenMai = lazy(() => import("../pages/KhuyenMai"))
 
 export default function HomeRoutes() {
     return (
@@ -13,8 +14,12 @@ export default function HomeRoutes() {
                 <Suspense fallback={<LoadingSpinner />}>
                     <Home />
                 </Suspense>
-            }
-            />
+            } />
+            <Route path={PATH.KHUYENMAI} element={
+                <Suspense fallback={<LoadingSpinner />}>
+                    <KhuyenMai />
+                </Suspense>
+            } />
         </Route>
     )
 }

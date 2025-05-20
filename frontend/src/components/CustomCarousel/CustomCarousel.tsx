@@ -23,6 +23,13 @@ export default function CustomCarousel() {
           className="w-96 h-64 object-cover"
         />
       </AspectRatio.Root>
+      <AspectRatio.Root ratio={3 / 2}>
+        <img
+          src={ad_hotel_3}
+          alt={ad_hotel_3}
+          className="w-96 h-64 object-cover"
+        />
+      </AspectRatio.Root>
     </Carousel>
   );
 }

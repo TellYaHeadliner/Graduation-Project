@@ -15,8 +15,8 @@ use CKSource\CKFinderBridge\Controller\CKFinderController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-})->name('admin');
+    return "Yêu mẹ mày.net";
+});
 
 Route::prefix('ckfinder')->as('ckfinder.')->group(function () {
     Route::any('connector', [CKFinderController::class, 'requestAction'])->name('connector');

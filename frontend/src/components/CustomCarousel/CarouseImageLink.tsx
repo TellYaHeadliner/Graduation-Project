@@ -6,7 +6,7 @@ import ad_hotel_2 from "../../assets/Ad_hotel_2.png"
 import ad_hotel_3 from "../../assets/Ad_hotel_3.png"
 
 
-export default function CustomCarousel() {
+export default function CarouselImageLink() {
   return (
     <Carousel autoplay dotPosition="bottom">
       <AspectRatio.Root ratio={3 / 2}>

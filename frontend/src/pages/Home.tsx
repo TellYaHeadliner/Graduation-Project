@@ -3,6 +3,7 @@ import SearchBooking from "../components/TextField/SearchBooking";
 import CarouselImageLink from "../components/CustomCarousel/CarouseImageLink";
 import CarouselCard from "../components/CustomCarousel/CarouselCard";
 import { CardListStaticData } from "../utils/CardListStaticData";
+import AccordionCustom from "../components/Accordion/AccordionCustom";
 
 
 export default function Home(this: any) {
@@ -11,6 +12,7 @@ export default function Home(this: any) {
             <CarouselImageLink />
             <SearchBooking />
             <CarouselCard cardList={CardListStaticData}/>
+            <AccordionCustom />
         </MainLayout>
     )
 }

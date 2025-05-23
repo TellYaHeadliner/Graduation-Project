@@ -10,7 +10,7 @@
 								{{-- <a href="{{ route('admin.profile.index') }}" class="dropdown-item">{{ __('Thông tin cá nhân') }}</a>
 								<a href="{{ route('admin.password.index') }}" class="dropdown-item">{{ __('Đổi mật khẩu') }}</a> --}}
 								<div class="dropdown-divider"></div>
-								<a href="#" class="dropdown-item" data-bs-toggle="modal"
+								<a href="{{ route('login.logout') }}" class="dropdown-item" data-bs-toggle="modal"
 												data-bs-target="#modalLogout">{{ __('Đăng xuất') }}</a>
 				</div>
 </div>

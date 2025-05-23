@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Support;
+namespace App\Support;
 use Illuminate\Support\Facades\Lang;
 
 trait Enum

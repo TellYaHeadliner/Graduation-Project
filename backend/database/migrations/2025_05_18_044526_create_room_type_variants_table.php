@@ -18,9 +18,8 @@ return new class extends Migration
             $table->foreignId('room_type_id')->constrained('room_types')->onDelete('cascade');
             $table->integer('base_price');
             $table->integer('discount_price')->nullable();
-            $table->boolean('is_available')->default(true);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
-            
         });
     }
 

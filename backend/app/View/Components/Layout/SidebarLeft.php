@@ -2,17 +2,23 @@
 
 namespace App\View\Components\Layout;
 
-
+use App\Enums\User\UserRole;
 use Illuminate\View\Component;
 use App\Traits\GetConfig;
+use GPBMetadata\Google\Api\Auth;
 
 class SidebarLeft extends Component
 {
     use GetConfig;
     public $menu;
     public function __construct()
-    {
-        $this->menu = $this->traitGetConfigSidebar();
+    {   
+        if(Auth()->check()&&Auth()->user()->role===UserRole::Admin){
+            $this->menu = $this->traitGetConfigAdminSidebar();
+        }
+        else{
+            $this->menu = $this->traitGetConfigHotelSidebar();
+        }
     }
 
     public function routeName($routeName, $param)

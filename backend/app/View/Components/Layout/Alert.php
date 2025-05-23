@@ -43,6 +43,6 @@ class Alert extends Component
      */
     public function render()
     {
-        return view('admin.layouts.alert');
+        return view('layouts.alert');
     }
 }

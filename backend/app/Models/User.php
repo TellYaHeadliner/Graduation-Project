@@ -4,13 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Enums\User\UserRole;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Model
+class User extends Authenticatable
 {
     use HasFactory;
     protected $table = 'users';
     protected $guarded = [];
-    protected $casts = [];
+    protected $casts = [
+        'role'=> UserRole::class,
+    ];
 
     public function hotel(){
         return $this->hasOne(Hotel::class,'id','id');

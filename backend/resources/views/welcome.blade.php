@@ -16,9 +16,7 @@
                             <div class="card-header justify-content-center">
                                 <h2 class="mb-0">{{ __('Thông tin Lớp học') }}</h2>
                             </div>
-                            <div class="row card-body">
-                            
-                                
+                            <div class="row card-body">    
                                 <!-- name -->
                                 <div class="col-12">
                                     <div class="mb-3">

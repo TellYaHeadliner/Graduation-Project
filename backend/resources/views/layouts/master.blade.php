@@ -15,12 +15,12 @@
 																				@include('layouts.partials.breadcrumbs')
 																@show
 																@yield('content')
-																{{-- @include('layouts.modal.modal-logout')
-																@include('layouts.modal.modal-delete') --}}
+																@include('layouts.modal.modal-logout')
+																@include('layouts.modal.modal-delete')
 												</div>
 								</div>
 								@include('layouts.scripts')
-								{{-- @include('layouts.alert') --}}
+								<x-alert /> 
 				</body>
 
 </html>

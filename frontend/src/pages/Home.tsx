@@ -4,6 +4,7 @@ import CarouselImageLink from "../components/CustomCarousel/CarouseImageLink";
 import CarouselCard from "../components/CustomCarousel/CarouselCard";
 import { CardListStaticData } from "../utils/CardListStaticData";
 
+
 export default function Home(this: any) {
     return (
         <MainLayout>

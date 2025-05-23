@@ -1,35 +1,31 @@
-import { AspectRatio } from "radix-ui";
-import { Carousel } from 'antd';
+import AliceCarousel from 'react-alice-carousel';
+import 'react-alice-carousel/lib/alice-carousel.css';
 
 import ad_hotel_1 from "../../assets/Ad_hotel_1.png"
 import ad_hotel_2 from "../../assets/Ad_hotel_2.png"
 import ad_hotel_3 from "../../assets/Ad_hotel_3.png"
 
-
 export default function CarouselImageLink() {
+
+  const items = [
+    <div className="item w-full">
+      <img src={ad_hotel_1} alt={ad_hotel_1} />
+    </div>,
+    <div className="item w-full">
+      <img src={ad_hotel_2} alt={ad_hotel_2} />
+    </div>,
+    <div className="item w-full">
+      <img src={ad_hotel_3} alt={ad_hotel_3} />
+    </div>
+  ]
   return (
-    <Carousel autoplay dotPosition="bottom">
-      <AspectRatio.Root ratio={3 / 2}>
-        <img
-          src={ad_hotel_1}
-          alt={ad_hotel_1}
-          className="w-96 h-64 object-cover"
-        />
-      </AspectRatio.Root>
-      <AspectRatio.Root ratio={3 / 2}>
-        <img
-          src={ad_hotel_2}
-          alt={ad_hotel_2}
-          className="w-96 h-64 object-cover"
-        />
-      </AspectRatio.Root>
-      <AspectRatio.Root ratio={3 / 2}>
-        <img
-          src={ad_hotel_3}
-          alt={ad_hotel_3}
-          className="w-96 h-64 object-cover"
-        />
-      </AspectRatio.Root>
-    </Carousel>
+    <AliceCarousel 
+      autoPlay
+      autoPlayInterval={1000}
+      animationDuration={1000}
+      disableButtonsControls
+      items={items}
+      infinite
+    />
   );
 }

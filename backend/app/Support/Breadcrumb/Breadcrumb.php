@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Admin\Support\Breadcrumb;
+namespace App\Support\Breadcrumb;
 
 class Breadcrumb
 {

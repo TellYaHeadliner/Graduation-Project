@@ -1,4 +1,3 @@
-import { DateUtils } from "../../utils/Date";
 import AccordionCustom from "../Accordion/AccordionCustom";
 
 export default function Footer(){

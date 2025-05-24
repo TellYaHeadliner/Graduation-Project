@@ -19,7 +19,7 @@ export default function DateRangePicker(){
     };
 
     return (
-        <div className="flex flex-row items-center gap-4">
+        <div className="flex flex-row items-center gap-1">
             <div>
                 <label className="block text-sm">
                     Ngày bắt đầu:
@@ -28,12 +28,11 @@ export default function DateRangePicker(){
                 startDate={startDate}
                 endDate={endDate}
                 dateFormat="dd/MM/yyyy"
-                className="border rounded px-3 py-2 w-34 sm:w-50 text-sm"
-                placeholderText="Ngày bắt đầu"
+                className="border rounded px-3 py-2 w-26 sm:w-50 text-sm"
             />
             </div>
             <div>
-                <label className="block text-sm ">
+                <label className="block text-sm">
                     Ngày kết thúc:
                 </label>
                 <DatePicker selected={endDate}
@@ -42,8 +41,7 @@ export default function DateRangePicker(){
                 startDate={startDate}
                 endDate={endDate}
                 dateFormat="dd/MM/yyy"
-                className="border rounded px-3 py-2 w-34 sm:w-50 text-sm"
-                placeholderText="Ngày kết thúc"
+                className="border rounded px-3 py-2 w-26 sm:w-50 text-sm"
                 />
             </div>
         </div>

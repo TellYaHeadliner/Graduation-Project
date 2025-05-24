@@ -7,7 +7,7 @@ export default function TabNavLink() {
     const pathname = location.pathname;
 
     return (
-        <TabNav.Root color="green">
+        <TabNav.Root size="2" color="green">
             <TabNav.Link href="/khachsan" active={pathname === '/khachsan'}>
                 <span className="text-white">
                     Khách sạn

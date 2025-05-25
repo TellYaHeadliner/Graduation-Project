@@ -1,6 +1,6 @@
 import AliceCarousel, { Link } from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { Container, Heading } from "@radix-ui/themes"
+import  { Heading } from "@radix-ui/themes"
 
 import CardItem from "../Card/CardItem";
 import { CardItemType } from "../../utils/CardListStaticData";
@@ -25,7 +25,7 @@ export default function CarouselCard({ cardList }: CardListProps) {
   ));
 
   return (
-    <Container className="mt-2">
+    <div className="mt-2 2xl:px-34 flex flex-wrap">
       <Heading as="h4" className="pb-2">
         Khách sạn để bạn quan tâm
       </Heading>
@@ -47,11 +47,14 @@ export default function CarouselCard({ cardList }: CardListProps) {
           },
           1024: {
             items: 4
+          },
+          1920: {
+            items: 5
           }
         }}
       >
         {items}
       </AliceCarousel>
-    </Container>
+    </div>
   );
 }

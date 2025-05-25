@@ -5,12 +5,12 @@ export default function Footer(){
     const year = new Date().getFullYear();
 
     return (
-        <footer className="text-center ">
+        <footer className="text-center">
             <div className="sm:hidden">
                 <AccordionCustom />
             </div>
 
-            <div className="hidden sm:flex">
+            <div className="hidden sm:flex ">
                 <FooterInfoStatic />
             </div>
             

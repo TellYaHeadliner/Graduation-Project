@@ -44,6 +44,9 @@ export default function CarouselCard({ cardList }: CardListProps) {
           },
           768: {
             items: 3
+          },
+          1024: {
+            items: 4
           }
         }}
       >

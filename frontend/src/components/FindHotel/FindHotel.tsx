@@ -6,9 +6,9 @@ import ButtonSearch from "../Button/ButtonSearch";
 export default function FindHotel(){
     return (
         <div className="search-booking">
-        <Heading as="h3" size="4">
+        <Heading as="h3" size="6">
             Hãy chọn địa điểm, thời gian bạn muốn
-            <div className="container flex flex-row mt-2 items-center">
+            <div className="container flex flex-row mt-2 items-center md:justify-center">
                 <SelectProvinces />
                 <DateRangePicker />
                 <ButtonSearch />

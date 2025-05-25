@@ -8,24 +8,24 @@ import ad_hotel_3 from "../../assets/Ad_hotel_3.png"
 export default function CarouselImageLink() {
 
   const items = [
-    <div className="item w-full">
+    <div className="item w-full flex 2xl:justify-center">
       <img src={ad_hotel_1} alt={ad_hotel_1} />
     </div>,
-    <div className="item w-full">
+    <div className="item w-full flex 2xl:justify-center">
       <img src={ad_hotel_2} alt={ad_hotel_2} />
     </div>,
-    <div className="item w-full">
+    <div className="item w-full flex 2xl:justify-center">
       <img src={ad_hotel_3} alt={ad_hotel_3} />
     </div>
   ]
   return (
-    <AliceCarousel 
-      autoPlay
-      autoPlayInterval={1000}
-      animationDuration={1000}
-      disableButtonsControls
-      items={items}
-      infinite
-    />
+      <AliceCarousel
+        // autoPlay
+        // autoPlayInterval={1000}
+        // animationDuration={1000}
+        disableButtonsControls
+        items={items}
+        infinite
+      />
   );
 }

@@ -5,7 +5,7 @@ export default function Footer(){
     const year = new Date().getFullYear();
 
     return (
-        <footer className="text-center">
+        <footer className="text-center bg-gray-4">
             <div className="sm:hidden">
                 <AccordionCustom />
             </div>
@@ -13,8 +13,9 @@ export default function Footer(){
             <div className="hidden sm:flex ">
                 <FooterInfoStatic />
             </div>
-            
-            © {year} Roomix. Bảo lưu mọi quyền.
+            <span className="text-gray-10 text-normal">
+                © {year} Roomix. Bảo lưu mọi quyền.
+            </span>
         </footer>
     );
 }

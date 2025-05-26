@@ -25,7 +25,7 @@ export default function CarouselCard({ cardList }: CardListProps) {
   ));
 
   return (
-    <div className="mt-2 2xl:px-34 flex flex-wrap">
+    <div className="w-full mt-4 lg:px-22 2xl:px-34 flex flex-wrap">
       <Heading as="h4" className="pb-2">
         Khách sạn để bạn quan tâm
       </Heading>
@@ -50,7 +50,7 @@ export default function CarouselCard({ cardList }: CardListProps) {
           },
           1920: {
             items: 5
-          }
+          },
         }}
       >
         {items}

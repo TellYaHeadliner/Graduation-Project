@@ -1,6 +1,6 @@
 export default function FooterInfoStatic() {
     return (
-        <div className="w-full flex flex-row justify-around text-left p-4 text-sm bg-gray-50">
+        <div className="w-full flex flex-row justify-around text-left p-4 text-sm ">
             <div className="col">
                 <h3 className="font-medium mb-1">
                     Về chúng tôi

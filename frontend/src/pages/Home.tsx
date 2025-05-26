@@ -6,7 +6,7 @@ import useTitle from "../hooks/useTitle";
 import FindHotel from "../components/FindHotel/FindHotel";
 
 
-export default function Home(this: any) {
+export default function Home() {
     useTitle("Trang chủ");
 
     return (

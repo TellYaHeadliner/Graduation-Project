@@ -10,6 +10,6 @@
     Sinh viên thực hiện: <br/>
     Bùi Bảo Lâm
     <br/>
-    Nguyễn Thành Long
+    Trần Thành Long
 </h4>
  

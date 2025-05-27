@@ -24,6 +24,21 @@ return [
             ]
         ]
     ],
-   
-
+    [
+        'title' => 'Quản lý Loại giường',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-bed"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm Loại giường',
+                'routeName' => 'admin.bed_type.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Loại giường',
+                'routeName' => 'admin.bed_type.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ]
+        ]
+    ],
 ];

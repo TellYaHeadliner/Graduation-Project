@@ -50,5 +50,21 @@ return [
             'printable' => false,
             'addClass' => 'text-center align-middle'
         ],
-    ]
+    ],
+    'bed_types' => [
+        'name' => [
+            'title' => 'Loại giường',
+            'icon' => 'ti ti-bed',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

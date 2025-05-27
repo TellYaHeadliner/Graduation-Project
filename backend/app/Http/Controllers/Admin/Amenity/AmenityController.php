@@ -59,7 +59,7 @@ class AmenityController extends Controller
     {
         $this->data = $request->validated();
         if (Amenity::where('name', '=', $this->data['name'])->exists()) {
-            return redirect()->route($this->route['create'])->with('error', 'Tên tiện ích đã tồn tại');
+            return redirect()->route($this->route['create'])->with('error', 'Tiện ích đã tồn tại');
         }
         try {
             DB::beginTransaction();
@@ -89,7 +89,7 @@ class AmenityController extends Controller
     {
         $this->data = $request->validated();
         if (Amenity::where('name', '=', $this->data['name'])->exists()) {
-            return redirect()->route($this->route['edit'],$this->data['id'])->with('error', 'Tên tiện ích đã tồn tại');
+            return redirect()->route($this->route['edit'],$this->data['id'])->with('error', 'Tiện ích đã tồn tại');
         }
         try {
             DB::beginTransaction();

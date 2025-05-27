@@ -13,7 +13,7 @@ export default function Home() {
 
     return (
         <MainLayout>
-            <div className="relative h-[40vh] mx-18">
+            <div className="relative h-[70vh] mx-18">
                 <div className="absolute inset-0 bg-cover bg-center " style={{ backgroundImage: `url(${section})`, filter: 'brightness(0.5)' }} />
                 <div className="relative z-10 flex flex-col justify-center h-full px-8 lg:px-32 max-w-6xl">
                     <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-white">
@@ -27,7 +27,7 @@ export default function Home() {
                 </div>
             </div>
 
-            <CarouselCard cardList={CardListStaticData}/>
+            <CarouselCard cardList={CardListStaticData} title="Khách sạn bạn quan tâm"/>
         </MainLayout>
     )
 }

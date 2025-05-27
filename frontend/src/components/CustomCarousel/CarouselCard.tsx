@@ -7,10 +7,11 @@ import { CardItemType } from "../../utils/CardListStaticData";
 
 interface CardListProps {
   cardList: CardItemType[];
+  title: string;
 }
 
 
-export default function CarouselCard({ cardList }: CardListProps) {
+export default function CarouselCard({ cardList, title }: CardListProps) {
   const items = cardList.map((card) => (
     <div key={card.key} >
       <Link href="#">
@@ -26,8 +27,8 @@ export default function CarouselCard({ cardList }: CardListProps) {
 
   return (
     <div className="w-full mt-4 lg:px-22 2xl:px-34 flex flex-wrap">
-      <Heading as="h4" className="pb-2">
-        Khách sạn để bạn quan tâm
+      <Heading as="h2" className="pb-2">
+        {title}
       </Heading>
       <AliceCarousel
         mouseTracking

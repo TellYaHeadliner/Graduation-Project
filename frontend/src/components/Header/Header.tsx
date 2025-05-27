@@ -9,11 +9,11 @@ import ButtonRegister from '../Button/ButtonRegister';
 
 export default function Header() {
     return (
-        <header className="flex flex-col sm:flex-col bg-primary color-white 2xl:text-2xl 2xl:px-40 shadow-md">
-            <div className="flex items-center justify-around sm:justify-between sm:px-6 py-2">
+        <header className="flex flex-col sm:flex-col bg-secondary color-white lg:text-lg 2xl:text-lg 2xl:px-40 shadow-md">
+            <div className="flex items-center justify-around sm:justify-between 2xl:px-6 py-2 ">
                 <div className="flex flex-nowrap items-center">
                     <a href={PATH.HOME}>
-                        <img src={logo} alt={logo} className='2xl:w-40 mr-4 shadow-md bg-primary '/>
+                        <img src={logo} alt={logo} className='2xl:w-50 mr-4 '/>
                     </a>
                     <Search />
                 </div>
@@ -22,7 +22,7 @@ export default function Header() {
                     <Person />
                 </div>
             </div>
-            <div className="flex flex-row items-center justify-around py-2 ">
+            <div className="flex flex-row items-center justify-start py-2 ml-4 ">
                 <TabNavLink />
             </div>
         </header>

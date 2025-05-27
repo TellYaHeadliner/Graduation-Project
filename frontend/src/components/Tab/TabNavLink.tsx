@@ -1,36 +1,29 @@
 import { TabNav } from '@radix-ui/themes';
-import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 
-interface TabNavLinkProps{
-    tab: string
-}
+export default function TabNavLink() {
 
-export default function TabNavLink({ tab: string }: TabNavLinkProps) {
-
-    const [tab, setTab] = useState('/khachsan')
-
-    useEffect(() => {
-        console.log("Khuyến mãi");
-    }, [])
+    const location = useLocation();
+    const pathname = location.pathname;
 
     return (
-        <TabNav.Root color="green">
-            <TabNav.Link href="/khachsan" active={tab === '/khachsan'} onClick={() => setTab("/khachsan")}>
+        <TabNav.Root size="2" color="green">
+            <TabNav.Link href="/khachsan" active={pathname === '/khachsan'}>
                 <span className="text-white">
                     Khách sạn
                 </span>
             </TabNav.Link>
-            <TabNav.Link href="/khuyenmai" active={tab === '/khuyenmai'} onClick={() => setTab("/khuyenmai")}>
+            <TabNav.Link href="/khuyenmai" active={pathname === '/khuyenmai'}>
                 <span className="text-white">
                     Khuyến mãi
                 </span>
             </TabNav.Link>
-            <TabNav.Link href="toptrending" active={tab === '/toptrending'} onClick={() => setTab("/toptrending")}>
+            <TabNav.Link href="toptrending" active={pathname === '/toptrending'}>
                 <span className="text-white">
                     Top trending
                 </span>
             </TabNav.Link>
-            <TabNav.Link href="theomua" active={tab === '/theomua'} onClick={() => setTab("/theomua")}>
+            <TabNav.Link href="theomua" active={pathname === '/theomua'}>
                 <span className="text-white">
                     Theo mùa
                 </span>

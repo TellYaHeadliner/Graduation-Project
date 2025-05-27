@@ -14,11 +14,12 @@ use CKSource\CKFinderBridge\Controller\CKFinderController;
 |
 */
 
-Route::middleware(['RoleCheck:Owner'])->group(function () {
+Route::middleware(['RoleCheck:Admin'])->group(function () {
     Route::get('/', function () {
         return view('welcome');
     })->name('admin');
 });
+
 
 
 Route::prefix('ckfinder')->as('ckfinder.')->group(function () {

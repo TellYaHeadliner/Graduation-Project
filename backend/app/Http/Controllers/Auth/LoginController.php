@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Enums\User\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
@@ -27,14 +28,19 @@ class LoginController extends Controller
         $this->data = $request->validated();
 
         if (Auth::attempt(['email' => $this->data['email'], 'password' => $this->data['password']])) {
-            $request->session()->regenerate(); 
-            return redirect()->intended('/'); 
+            $request->session()->regenerate();
+            if (Auth()->user()->role === UserRole::Admin)
+                return redirect()->intended('/admin/dashboard');
+            else {
+                return redirect()->intended('/hotel/dashboard');
+            }
         } else {
-            return back()->with('error','Thông tin đăng nhập không đúng')->withInput();
-        }      
+            return back()->with('error', 'Thông tin đăng nhập không đúng')->withInput();
+        }
     }
 
-    public function logout(){
+    public function logout()
+    {
         Auth::logout();
         return redirect()->route('login.index');
     }

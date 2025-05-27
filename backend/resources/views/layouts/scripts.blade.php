@@ -17,7 +17,7 @@
 <script src="//cdn.rawgit.com/google/code-prettify/master/loader/run_prettify.js" type="text/javascript"></script>
 
 @stack('libs-js')
-<script type="module" src="{{ asset('public/admin/assets/js/i18n.js') }}"></script>
+<script type="module" src="{{ asset('admin/assets/js/i18n.js') }}"></script>
 <script src="{{ asset('admin/assets/js/setup.js') }}"></script>
 <script src="{{ asset('libs/firebase/firebase.js') }}"></script>
 

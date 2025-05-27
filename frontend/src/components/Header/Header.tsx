@@ -1,8 +1,7 @@
 
 import Search from '../TextField/Search';
-import logo from "../../assets/logo-header.png"
+import logo from "../../assets/light-logo.png"
 import { PATH } from "../../constants/Paths"
-import "./Header.modules.css"
 import Person from '../Avatar/Person';
 import TabNavLink from '../Tab/TabNavLink';
 import ButtonRegister from '../Button/ButtonRegister';
@@ -14,7 +13,7 @@ export default function Header() {
             <div className="flex items-center justify-around sm:justify-between sm:px-6 py-2">
                 <div className="flex flex-nowrap items-center">
                     <a href={PATH.HOME}>
-                        <img src={logo} alt={logo} width="40" className='2xl:w-15 mr-4 shadow-md '/>
+                        <img src={logo} alt={logo} className='2xl:w-40 mr-4 shadow-md bg-primary '/>
                     </a>
                     <Search />
                 </div>

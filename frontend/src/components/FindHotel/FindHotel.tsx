@@ -9,15 +9,11 @@ import { Heading } from "@radix-ui/themes"
 registerLocale("vi", vi);
 
 export default function FindHotel() {
-    const [startDate, setStartDate] = useState<Date | null | undefined>(null);
-    const [endDate, setEndDate] = useState<Date | null>(null);
+    const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+    const [startDate, endDate] = dateRange;
 
-    const handleStartDateChange = (date: Date | null) => {
-        setStartDate(date);
-        if (date && endDate && date > endDate) {
-            setEndDate(null);
-        }
-    };
+
+    
 
     return (
         <div className="search-booking lg:px-22 2xl:px-34">
@@ -40,31 +36,18 @@ export default function FindHotel() {
                     </select>
                 </div>
 
-                {/* Date Range Picker */}
+                {/* Gộp Date Range Picker */}
                 <div className="flex flex-col gap-1">
                     <DatePicker
-                        selected={startDate}
-                        onChange={handleStartDateChange}
+                        selectsRange
                         startDate={startDate}
                         endDate={endDate}
+                        onChange={(update: [Date | null, Date | null]) => setDateRange(update)}
                         dateFormat="dd/MM/yyyy"
                         locale="vi"
-                        className="px-3 py-2 w-30 sm:w-40 2xl:w-50 2xl:h-10 text-sm border-2 border-accent"
-                        placeholderText="Ngày ở "
-                    />
-                </div>
-
-                <div className="flex flex-col gap-1">
-                    <DatePicker
-                        selected={endDate}
-                        onChange={(date: Date | null) => setEndDate(date)}
-                        selectsEnd
-                        startDate={startDate}
-                        endDate={endDate}
-                        dateFormat="dd/MM/yyyy"
-                        locale="vi"
-                        className=" px-3 py-2 w-32 sm:w-40 2xl:w-50 2xl:h-10 text-sm border-2 border-accent"
-                        placeholderText="Ngày trả phòng"
+                        className="px-3 py-2 w-60 sm:w-80 2xl:w-100 2xl:h-10 text-sm border-2 border-accent"
+                        placeholderText="Chọn khoảng thời gian"
+                        isClearable
                     />
                 </div>
 

@@ -1,12 +1,17 @@
-import { TextField } from '@radix-ui/themes';
 import { MagnifyingGlassIcon } from '@radix-ui/react-icons';
+
 
 export default function Search() {
     return (
-        <TextField.Root placeholder="Bạn muốn tìm kiếm điều gì ?" size="3" className="w-68 sm:w-100 2xl:w-99 2xl:text-2xl shadow-md ">
-            <TextField.Slot>
-                <MagnifyingGlassIcon height="16" width="16" />
-            </TextField.Slot>
-        </TextField.Root>
+        <div className="relative max-w-md mx-auto">
+            <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                <MagnifyingGlassIcon className="w-5 h-5" />
+            </span>
+            <input
+                type="text"
+                placeholder="Tìm kiếm"
+                className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg shadow-sm outline-none focus:ring-2 focus:ring-blue-500"
+            />
+        </div>
     );
 }

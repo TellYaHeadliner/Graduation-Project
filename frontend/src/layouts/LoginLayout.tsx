@@ -17,7 +17,7 @@ export default function LoginLayout(props: Props) {
     return (
         <Theme appearance={isDark === true ? "dark" : "light"}>
             <div className="bg-gray-100 flex items-center justify-center min-h-screen">
-                <div className="w-full max-w-wd p-8 space-y-6 bg-white rounded-2xl shadow-lg">
+                <div className="w-full max-w-wd p-9 space-y-6 bg-white rounded-2xl shadow-lg">
                     <h2 className="text-2xl font-bold text-center text-gray-800">
                         Trang đăng nhập Booker.com
                     </h2>

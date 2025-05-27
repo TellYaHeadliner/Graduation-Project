@@ -66,7 +66,7 @@ export default function FindHotel() {
                         isClearable
                     />
                 </div>
-
+                <div className="relative" ref={dropDownRef}>
                 <div className="flex flex-row 2xl:h-15 2xl:w-full">
                     <button type="button" onClick={toggleOpen}
                         className="flex items-center bg-white justify-center gap-2 border-2 border-accent rounded-md px-4 py-3 transition">
@@ -130,7 +130,7 @@ export default function FindHotel() {
                         </button>
                     </div>
                 )}
-
+                </div>
                 <div className="flex items-center flex-nowrap" dir="rtl">
                     <button
                         type="submit"

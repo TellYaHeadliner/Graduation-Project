@@ -1,0 +1,1 @@
+<span>{{ \App\Enums\User\UserGender::getDescription($gender) }}</span>

@@ -165,7 +165,7 @@ function createSelectColumnUniqueDatatable(column, input){
     });
 }
 
-function generateSelectOptions(selectElement, optionsArray) {
+function generateSelectOptions(selectElement, optionsObject) {
     // Xóa tất cả các option hiện có trong select
     selectElement.innerHTML = '';
     var optionAll = document.createElement("OPTION");
@@ -173,13 +173,14 @@ function generateSelectOptions(selectElement, optionsArray) {
     optionAll.value = '';
     selectElement.appendChild(optionAll);
 
-    // Tạo và thêm option cho select dựa trên mảng optionsArray
-    optionsArray.forEach(function(optionValue) {
-        var option = document.createElement('option');
-        option.value = option.textContent = optionValue;
+    Object.entries(optionsObject).forEach(([value, label]) => {
+        var option = document.createElement("option");
+        option.value = value;
+        option.textContent = label;
         selectElement.appendChild(option);
     });
 }
+
 
 function moveSearchColumnsDatatable(idTable){
     $(idTable + ' thead').append($(idTable + ' tfoot tr'));

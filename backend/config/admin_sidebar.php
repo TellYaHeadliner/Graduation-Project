@@ -41,4 +41,21 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý Người dùng',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-user"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm Người dùng',
+                'routeName' => 'admin.user.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Người dùng',
+                'routeName' => 'admin.user.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ]
+        ]
+    ],
 ];

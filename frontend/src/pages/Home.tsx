@@ -5,11 +5,11 @@ import useTitle from "../hooks/useTitle";
 import FindHotel from "../components/FindHotel/FindHotel";
 
 import section from "../assets/section.jpg"
+import TrendingLocation from "../components/TrendingTab/TrendingLocation";
 
 
 export default function Home() {
-    useTitle("Trang chủ");
-
+    useTitle("Roomix");
 
     return (
         <MainLayout>
@@ -26,7 +26,7 @@ export default function Home() {
                 <FindHotel />
                 </div>
             </div>
-
+            <TrendingLocation />
             <CarouselCard cardList={CardListStaticData} title="Khách sạn bạn quan tâm"/>
         </MainLayout>
     )

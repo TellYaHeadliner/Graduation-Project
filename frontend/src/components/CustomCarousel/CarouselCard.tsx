@@ -1,6 +1,6 @@
 import AliceCarousel, { Link } from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import  { Heading } from "@radix-ui/themes"
+
 
 import CardItem from "../Card/CardItem";
 import { CardItemType } from "../../utils/CardListStaticData";
@@ -20,21 +20,22 @@ export default function CarouselCard({ cardList, title }: CardListProps) {
           address={card.address}
           star={card.star}
           price={card.price}
+          reviewCount={card.reviewCount}
+          discountPrice={card.discountPrice}
         />
       </Link>
     </div>
   ));
 
   return (
-    <div className="w-full mt-4 lg:px-22 2xl:px-34 flex flex-wrap">
-      <Heading as="h2" className="pb-2">
+    <div className="w-full h-full mt-4 lg:px-22 2xl:px-16 flex flex-wrap">
+      <h2 className="text-2xl font-bold mb-1">
         {title}
-      </Heading>
+      </h2>
       <AliceCarousel
         mouseTracking
         controlsStrategy="alternate"
         disableDotsControls
-        infinite
         responsive={{
           0: {
             items: 1,
@@ -47,9 +48,6 @@ export default function CarouselCard({ cardList, title }: CardListProps) {
             items: 3
           },
           1024: {
-            items: 4
-          },
-          1920: {
             items: 5
           },
         }}

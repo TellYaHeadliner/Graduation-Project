@@ -79,7 +79,7 @@ export default function FindHotel() {
                 </div>
 
                 {isOpen && (
-                    <div className="absolute z-10 mt-2 w-70 bg-white border border-gray-300 rounded-md shadow-lg p-4 space-y-4">
+                    <div className="absolute z-10 mt-2 w-full bg-white border border-gray-300 rounded-md shadow-lg p-4 space-y-4">
                         {[
                             { label: "Người lớn", value: adults, setValue: setAdults },
                             { label: "Trẻ em", value: children, setValue: setChildren },

@@ -1,8 +1,10 @@
 import React from "react"
-import { StarIcon } from "@radix-ui/react-icons";
-
+import { StarIcon, HeartFilledIcon } from "@radix-ui/react-icons";
+import { AlertDialog, Flex, Button } from "@radix-ui/themes";
+import { useNavigate } from "react-router-dom";
 import stephenHouse from "../../assets/stephen-house.jpg"
 import { Currency } from '../../utils/Currency';
+import { useAuthCheck } from "../../hooks/useAuthCheck";
 
 interface CardItemProps {
     title: string;
@@ -19,6 +21,42 @@ interface TagScoreProp {
 
 interface TagDiscountPrice {
     discountPrice: number | null;
+}
+
+interface AlertDialogCompProps {
+    open: boolean;
+    onOpenChange: (open: boolean) => void;
+}
+
+const AlertDialogComp: React.FC<AlertDialogCompProps> = ({ open, onOpenChange }) => {
+
+    const navigate = useNavigate();
+
+    return (
+        <AlertDialog.Root open={open} onOpenChange={onOpenChange}>
+            <AlertDialog.Content>
+                <AlertDialog.Title>
+                    Cảnh báo
+                </AlertDialog.Title>
+                <AlertDialog.Description size="2">
+                    Vui lòng thực hiện đăng nhập để có thể thực hiện chức năng yêu thích khách sạn
+                </AlertDialog.Description>
+
+                <Flex gap="3" mt="4" justify="end">
+                    <AlertDialog.Cancel>
+                        <Button variant="soft" color="gray">
+                            Thoát ra
+                        </Button>
+                    </AlertDialog.Cancel>
+                    <AlertDialog.Action>
+                        <Button type="button" variant="solid" color="blue" onClick={() => navigate("/login")} >
+                            Đăng nhập
+                        </Button>
+                    </AlertDialog.Action>
+                </Flex>
+            </AlertDialog.Content>
+        </AlertDialog.Root>
+    )
 }
 
 const TagScore: React.FC<TagScoreProp> = ({ star }) => {
@@ -51,6 +89,9 @@ const TagDiscount: React.FC<TagDiscountPrice> = ({ discountPrice }) => {
 }
 
 export default function CardItem({ title, address, star, price, reviewCount, discountPrice }: CardItemProps) {
+
+    const { isDialogOpen, closeDialog, checkAuth } = useAuthCheck();
+
     return (
         <div className="w-[270px] h-[330px] rounded-xl shadow-md overflow-hidden relative hover:bg-accent">
             <div className="relative">
@@ -60,6 +101,20 @@ export default function CardItem({ title, address, star, price, reviewCount, dis
                     className="w-full h-40 object-cover"
                 />
             </div>
+
+            <div className="absolute top-2 right-2 z-10">
+                <button className="bg-white hover:bg-accent text-red-500 p-1 rounded-full shadow"
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        checkAuth()}}
+                    type="button"
+                >
+                    <HeartFilledIcon className="w-5 h-5" />
+                </button>
+            </div>
+
+            <AlertDialogComp open={isDialogOpen} onOpenChange={closeDialog} />
 
             <div className="p-3 flex flex-col gap-1">
                 <h3 className="text-sm font-bold leading-snug">
@@ -93,7 +148,7 @@ export default function CardItem({ title, address, star, price, reviewCount, dis
                             </div>
                         ) : price ? (
                             Currency.formatVND(price)
-                        ): null}
+                        ) : null}
                     </span>
                 </div>
             </div>

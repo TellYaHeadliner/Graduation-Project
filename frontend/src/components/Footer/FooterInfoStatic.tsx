@@ -1,75 +1,34 @@
+import lightLogo from "../../assets/light-logo.png"
+
+
 export default function FooterInfoStatic() {
     return (
-        <div className="w-full flex flex-row justify-around text-left p-4 text-sm ">
-            <div className="col">
-                <h3 className="font-medium mb-1">
-                    Về chúng tôi
+        <div className="grid grid-cols-4 gap-x-10 px-8 py-6 text-sm text-gray-700">
+            <div>
+                <img src={lightLogo} alt={lightLogo} className="w-50 mb-2 "/>
+                <h3 className="font-semibold mb-2">
+                    Các phương thức thanh toán
                 </h3>
-                <div className="sm:w-40 text-justify">
-                    <span className="text-normal">
-                        Roomix là trang web đặt phòng khách sạn thông minh, giúp người dùng dễ dàng tìm kiếm, so sánh và đặt phòng tại hàng nghìn khách sạn uy tín trên khắp cả nước. Với giao diện thân thiện, Roomix cho phép bạn lọc theo vị trí, giá cả, tiện nghi và đánh giá từ khách hàng để lựa chọn nơi lưu trú phù hợp nhất. Ngoài ra, hệ thống tích hợp các phương thức thanh toán linh hoạt và chương trình tích điểm hấp dẫn, mang lại trải nghiệm tiện lợi và đáng tin cậy cho mọi chuyến đi.
-                    </span>
-                    <br />
-                    <a href="">
-                        <span className="underline">
-                            Xem thêm
-                        </span>
-                    </a>
+                <div className="flex flex-row gap-x-2">
+                    <img src="https://cdn.haitrieu.com/wp-content/uploads/2022/10/Icon-VNPAY-QR.png" alt="" className="w-10"/>
+                    <img src="https://upload.wikimedia.org/wikipedia/vi/f/fe/MoMo_Logo.png" alt="" className="w-10"/>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png" alt="" className="w-10"/>
+                    <img src="https://download.logo.wine/logo/Visa_Inc./Visa_Inc.-Logo.wine.png" alt="" className="w-12"/>
                 </div>
             </div>
-            <div className="sm:w-40 text-justify ml-4">
-                <h3 className="font-medium mb-1">
-                    Chính sách hoàn tiền
+            <div className="flex flex-col text-start">
+                <h3 className="font-semibold mb-2">
+                    Theo dõi chúng tôi
                 </h3>
-                <span className="text-normal">
-                    Roomix là trang web đặt phòng khách sạn thông minh, giúp người dùng dễ dàng tìm kiếm, so sánh và đặt phòng tại hàng nghìn khách sạn uy tín trên khắp cả nước. Với giao diện thân thiện, Roomix cho phép bạn lọc theo vị trí, giá cả, tiện nghi và đánh giá từ khách hàng để lựa chọn nơi lưu trú phù hợp nhất. Ngoài ra, hệ thống tích hợp các phương thức thanh toán linh hoạt và chương trình tích điểm hấp dẫn, mang lại trải nghiệm tiện lợi và đáng tin cậy cho mọi chuyến đi.
-                </span>
-                <br/>
-                <a href="">
-                    <span className="underline">
-                        Xem thêm
-                    </span>
-                </a>
-            </div>
-            <div className="sm:w-40 ml-4">
-                <h3 className="font-medium mb-1">
-                    Hỗ trợ
-                </h3>
-                <ul>
-                    <li className="mb-1">
-                        <a href="/TicketHoTro">
-                            <span className="underline">
-                                Gửi ticket hỗ trợ
-                            </span>
-                        </a>
+                <ul className="space-y-1 flex flex-col">
+                    <li className="flex flex-row gap-x-2">
+
                     </li>
-                    <li className="mb-1">
-                        <a href="">
-                            <span className="underline">
-                                Chăm sóc khách hàng
-                            </span>
-                        </a>
+                    <li className="flex flex-row gap-x-2">
+
                     </li>
-                    <li className="mb-1">
-                        <a href="">
-                            <span className="underline">
-                                Giải quyết khiếu nại
-                            </span>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div className="sm:w-40 ml-4">
-                <h3 className="font-medium mb-1">
-                    FAQ (Câu hỏi thường xuyên)
-                </h3>
-                <ul>
-                    <li className="mb-1">
-                        <a href="/FAQ">
-                            <span className="underline">
-                                Chi tiết câu hỏi
-                            </span>
-                        </a>
+                    <li className="flex flex-row gap-x-2">
+    
                     </li>
                 </ul>
             </div>

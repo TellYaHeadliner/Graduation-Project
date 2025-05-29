@@ -67,10 +67,11 @@ export default function FindHotel() {
                     />
                 </div>
                 <div className="relative" ref={dropDownRef}>
-                <div className="flex flex-row 2xl:h-15 2xl:w-full">
+
+                <div className="flex flex-row 2xl:h-15 2xl:w-full lg:h-11">
                     <button type="button" onClick={toggleOpen}
-                        className="flex items-center bg-white justify-center gap-2 border-2 border-accent rounded-md px-4 py-3 transition">
-                        <PersonIcon className="text-gray-700 w-10 h-10" />
+                        className="flex items-center bg-white justify-center gap-2 border-2 border-accent px-4 py-3 transition">
+                        <PersonIcon className="text-gray-700 w-10 h-10 lg:w-5 lg:h-5" />
                         <span className="text-lg text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis">
                             {adults} Người lớn · {children} Trẻ em · {rooms} Phòng {withPets ? "· Có thú cưng" : ""}
                         </span>
@@ -134,10 +135,10 @@ export default function FindHotel() {
                 <div className="flex items-center flex-nowrap" dir="rtl">
                     <button
                         type="submit"
-                        className="bg-secondary text-white p-2 h-[38px] lg:h-[40px] 2xl:h-[60px] 2xl:w-[140px] rounded-s-lg flex items-center gap-2 border-2 border-accent"
+                        className="bg-secondary text-white p-2 h-[38px] lg:h-[44px] 2xl:h-[60px] 2xl:w-[140px] lg:w-[120px] rounded-s-lg flex items-center gap-2 border-2 border-accent"
                     >
                         <MagnifyingGlassIcon className="text-white w-6 h-6" />
-                        <span className="hidden sm:inline text-lg lg:text-lg">Tìm kiếm</span>
+                        <span className="hidden sm:inline text-sm lg:text-md">Tìm kiếm</span>
                     </button>
                 </div>
             </form>

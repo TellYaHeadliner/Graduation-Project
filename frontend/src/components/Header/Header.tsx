@@ -9,15 +9,15 @@ import ButtonRegister from '../Button/ButtonRegister';
 
 export default function Header() {
     return (
-        <header className="flex flex-col sm:flex-col bg-secondary color-white lg:text-lg 2xl:text-lg 2xl:px-40 shadow-md">
-            <div className="flex items-center justify-around sm:justify-between 2xl:px-6 py-2 ">
+        <header className="sticky top-0 z-50 flex flex-col sm:flex-col bg-secondary color-white lg:text-lg 2xl:text-lg lg:px-20 2xl:px-40 shadow-md">
+            <div className="flex items-center justify-around sm:justify-between lg:px-6 2xl:px-6 py-2 ">
                 <div className="flex flex-nowrap items-center">
                     <a href={PATH.HOME}>
-                        <img src={logo} alt={logo} className='2xl:w-50 mr-4 '/>
+                        <img src={logo} alt={logo} className='lg:w-40 2xl:w-50 mr-4 '/>
                     </a>
                     <Search />
                 </div>
-                <div className="flex flex-nowrap items-center">
+                <div className="flex flex-nowrap items-center ">
                     <ButtonRegister />
                     <Person />
                 </div>

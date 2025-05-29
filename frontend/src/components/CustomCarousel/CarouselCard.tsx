@@ -12,9 +12,10 @@ interface CardListProps {
 
 
 export default function CarouselCard({ cardList, title }: CardListProps) {
+
   const items = cardList.map((card) => (
     <div key={card.key} >
-      <Link href="#">
+      <Link href="">
         <CardItem
           title={card.title}
           address={card.address}
@@ -27,9 +28,10 @@ export default function CarouselCard({ cardList, title }: CardListProps) {
     </div>
   ));
 
+
   return (
-    <div className="w-full h-full mt-4 lg:px-22 2xl:px-16 flex flex-wrap">
-      <h2 className="text-2xl font-bold mb-1">
+    <div className="w-full h-full my-3 lg:px-15 2xl:px-16 flex flex-wrap">
+      <h2 className="text-2xl font-bold mb-2">
         {title}
       </h2>
       <AliceCarousel
@@ -48,7 +50,7 @@ export default function CarouselCard({ cardList, title }: CardListProps) {
             items: 3
           },
           1024: {
-            items: 5
+            items: 4
           },
         }}
       >

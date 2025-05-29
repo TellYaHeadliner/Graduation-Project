@@ -1,11 +1,13 @@
 import MainLayout from "../layouts/MainLayout";
 import CarouselCard from "../components/CustomCarousel/CarouselCard";
-import { CardListStaticData } from "../utils/CardListStaticData";
+import { CardListStaticData, CardListWithPriceData } from "../utils/CardListStaticData";
 import useTitle from "../hooks/useTitle";
 import FindHotel from "../components/FindHotel/FindHotel";
 
 import section from "../assets/section.jpg"
 import TrendingLocation from "../components/TrendingTab/TrendingLocation";
+import { ToastContainer } from "react-toastify";
+import LocationTab from "../components/TrendingTab/LocationTab";
 
 
 export default function Home() {
@@ -28,6 +30,11 @@ export default function Home() {
             </div>
             <TrendingLocation />
             <CarouselCard cardList={CardListStaticData} title="Khách sạn bạn quan tâm"/>
+            <CarouselCard cardList={CardListWithPriceData} title="Khách sạn có giá ưu đãi"/>
+            <CarouselCard cardList={CardListStaticData} title="Khách sạn có ưu đãi cuối tuần"/>
+            <CarouselCard cardList={CardListStaticData} title="Khách sạn theo mùa du lịch"/>
+            <LocationTab />
+            <ToastContainer position="top-right" />
         </MainLayout>
     )
 }

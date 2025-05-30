@@ -5,8 +5,6 @@ import { PATH } from "../constants/Paths"
 import LoadingSpinner from "../components/Loading/LoadingSpinner"
 
 const Home = lazy(() => import("../pages/Home"))
-const Login = lazy(() => import("../pages/Login"))
-
 
 export default function HomeRoutes() {
     return (
@@ -14,11 +12,6 @@ export default function HomeRoutes() {
             <Route path={PATH.HOME} element={
                 <Suspense fallback={<LoadingSpinner />}>
                     <Home />
-                </Suspense>
-            } />
-            <Route path={PATH.LOGIN} element={
-                <Suspense fallback={<LoadingSpinner />}>
-                    <Login />
                 </Suspense>
             } />
         </Route>

@@ -1,14 +1,13 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom"
-import AuthenticatedGuard from "./guards/AuthenticatedGuard"
 import HomeRoutes from "./routes/HomeRoutes"
+import AuthRoutes from "./routes/AuthRoutes"
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route element={<AuthenticatedGuard />}>
+          {AuthRoutes()}
           {HomeRoutes()}
-        </Route>
       </Routes>
     </BrowserRouter>
 

@@ -1,7 +1,9 @@
-import { ReactNode, useState } from "react"
+import { ReactNode } from "react"
 import { Theme } from "@radix-ui/themes"
 
 import useTitle from "../hooks/useTitle"
+import logoLight from "../assets/light-logo.png"
+import background from "../assets/HoChiMinhCity.png"
 
 interface Props {
     children: ReactNode
@@ -11,16 +13,11 @@ export default function LoginLayout(props: Props) {
 
     const { children } = props
     useTitle("Đăng nhập")
-
-    const [isDark, setIsDark] = useState<boolean>(false);
-
     return (
-        <Theme appearance={isDark === true ? "dark" : "light"}>
-            <div className="bg-gray-100 flex items-center justify-center min-h-screen">
-                <div className="w-full max-w-wd p-9 space-y-6 bg-white rounded-2xl shadow-lg">
-                    <h2 className="text-2xl font-bold text-center text-gray-800">
-                        Trang đăng nhập Booker.com
-                    </h2>
+        <Theme>
+            <div className="bg-gray-100 flex items-center justify-center min-h-screen" style={{ backgroundImage: `url(${background})` }}>
+                <div className="w-[600px] p-9 bg-secondary space-y-6 rounded-2xl shadow-lg" style={{ backgroundColor: 'rgba(255, 159, 69, 0.5)' }}>
+                    <img src={logoLight} alt={logoLight} className="w-100 mx-auto"/>
                     {children}
                 </div>
             </div>

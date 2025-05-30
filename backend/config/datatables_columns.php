@@ -67,4 +67,68 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'users' => [
+        'fullname' => [
+            'title' => 'Tên Người dùng',
+            'icon' => 'ti ti-user',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'email' => [
+            'title' => 'Email',
+            'icon' => 'ti ti-mail',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'phone' => [
+            'title' => 'Số điện thoại',
+            'icon' => 'ti ti-phone',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'birthday' => [
+            'title' => 'Ngày sinh',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'gender' => [
+            'title' => 'Giới tính',
+            'icon' => 'ti ti-gender-bigender',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'address' => [
+            'title' => 'Địa chỉ',
+            'icon' => 'ti ti-home',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'avatar' => [
+            'title' => 'Ảnh đại diện',
+            'icon' => 'ti ti-user-circle',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'role' => [
+            'title' => 'Vai trò',
+            'icon' => 'ti-users',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

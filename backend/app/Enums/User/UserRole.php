@@ -13,5 +13,12 @@ enum UserRole: int
     case Customer = 2;
     case Owner = 3;
 
-
+    public function badge(): string
+    {
+        return match ($this) {
+            UserRole::Customer => 'bg-green-lt',
+            UserRole::Admin => 'bg-red-lt',
+            UserRole::Owner => 'bg-blue-lt',
+        };
+    }
 }

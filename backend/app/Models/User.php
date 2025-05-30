@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Enums\User\UserGender;
+use App\Enums\User\UserStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\User\UserRole;
@@ -14,6 +16,8 @@ class User extends Authenticatable
     protected $guarded = [];
     protected $casts = [
         'role'=> UserRole::class,
+        'gender'=> UserGender::class,
+        'status'=>UserStatus::class
     ];
 
     public function hotel(){

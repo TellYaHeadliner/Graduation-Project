@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\User\UserRole;
 use App\Support\Breadcrumb\Breadcrumb;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Bus\DispatchesJobs;
@@ -32,7 +33,15 @@ class BaseController extends Controller
 
         $this->setRoute();
 
-        $this->crums = (new Breadcrumb())->add(__('Dashboard'), route('admin'));
+        $this->middleware(function ($request, $next) {
+            $this->crums = (new Breadcrumb())->add(
+                __('Dashboard'),
+                auth()->check() && auth()->user()->role === UserRole::Admin
+                    ? route('admin.dashboard') : route('hotel.dashboard')
+            );
+            return $next($request);
+        });
+        // $this->crums = (new Breadcrumb())->add(__('Dashboard'), route('admin.dashboard'));
     }
 
     public function getView()

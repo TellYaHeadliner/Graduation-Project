@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Enums\User\UserRole;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Throwable;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -27,9 +28,10 @@ class Handler extends ExceptionHandler
     {
         // Ghi đè lỗi 404
         if ($exception instanceof NotFoundHttpException) {
-            return response()->view('errors.404', [], 404);
+            return response()->view('errors.404', [
+                'routeName' => 'login.index'
+            ], 404);
         }
-
         return parent::render($request, $exception);
     }
 }

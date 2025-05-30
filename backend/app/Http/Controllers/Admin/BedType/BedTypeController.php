@@ -75,10 +75,10 @@ class BedTypeController extends Controller
             unset($this->data['id']);
             $bedType->update($this->data);
             DB::commit();
-            return redirect()->route($this->route['index'])->with('success', 'Thêm thành công');
+            return redirect()->route($this->route['index'])->with('success', 'Cập nhập thành công');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route($this->route['create'])->with('error', 'Thêm thất bại');
+            return redirect()->route($this->route['edit'], $this->data['id'])->with('error', 'Cập nhập thất bại');
         }
     }
 

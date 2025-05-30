@@ -7,11 +7,11 @@
 
     <div class="page-body">
         <div class="container-xl">
-            <x-form :action="route('admin.bed_type.update')" type="put" :validate="true">
-                <x-input type="hidden" name="id" :value="$bedType->id" />
+            <x-form :action="route('admin.user.update')" type="put" :validate="true">
+                <x-input type="hidden" name="id" :value="$user->id" />
                 <div class="row justify-content-center">
-                    @include('admin.bed_types.forms.edit-left')
-                    @include('admin.bed_types.forms.edit-right')
+                    @include('admin.user.forms.edit-left')
+                    @include('admin.user.forms.edit-right')
                 </div>
             </x-form>
         </div>
@@ -19,12 +19,13 @@
 @endsection
 
 @push('libs-js')
-<!-- ckfinder js -->
-<script src="{{ asset('/libs/ckeditor/ckeditor.js') }}"></script>
-<script src="{{ asset('/libs/select2/dist/js/select2.min.js') }}"></script>
-<script src="{{ asset('/libs/ckeditor/adapters/jquery.js') }}"></script>
+    <!-- ckfinder js -->
+    <script src="{{ asset('/libs/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('/libs/select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('/libs/ckeditor/adapters/jquery.js') }}"></script>
+    @include('ckfinder::setup')
 @endpush
 
-
 @push('custom-js')
+    @include('admin.user.scripts.style')
 @endpush

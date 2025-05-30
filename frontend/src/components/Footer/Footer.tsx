@@ -1,12 +1,21 @@
 import AccordionCustom from "../Accordion/AccordionCustom";
+import FooterInfoStatic from "./FooterInfoStatic";
 
 export default function Footer(){
     const year = new Date().getFullYear();
 
     return (
-        <footer className="text-center ">
-            <AccordionCustom />
-            © {year} Roomix. Bảo lưu mọi quyền.
+        <footer className="text-center bg-gray-4">
+            <div className="sm:hidden">
+                <AccordionCustom />
+            </div>
+
+            <div className="hidden sm:flex">
+                <FooterInfoStatic />
+            </div>
+            <span className="text-gray-10 text-normal">
+                © {year} Roomix. Bảo lưu mọi quyền.
+            </span>
         </footer>
     );
 }

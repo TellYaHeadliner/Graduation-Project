@@ -20,8 +20,12 @@ Route::middleware(['RoleCheck:Admin'])->group(function () {
     })->name('admin');
 });
 
+<<<<<<< HEAD
+  
+=======
 
 
+>>>>>>> 57227d9a1561d91476848c45db25bd1fe4ec97cc
 Route::prefix('ckfinder')->as('ckfinder.')->group(function () {
     Route::any('connector', [CKFinderController::class, 'requestAction'])->name('connector');
     Route::any('browser', [CKFinderController::class, 'browserAction'])->name('browser');

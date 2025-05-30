@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-    <img src="./frontend/public/logo-header.png" />
+    <img src="./frontend/public/icon.png" />
 </p>
 
 <h4 align="center">
@@ -12,4 +12,5 @@
     <br/>
     Trần Thành Long
 </h4>
- 
+
+

@@ -12,8 +12,6 @@ export const registerSchema = z.object({
     gender: z.boolean({
         required_error: "Giới tính không được để trống"
     }),
-    address: z.string().nullable(),
-    birthDay: z.date().nullable(),
 })
 .refine((data) => data.password === data.confirmPassword, {
     message: "Mật khẩu xác nhận phải khớp",

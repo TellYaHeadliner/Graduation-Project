@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { loginSchema, LoginSchema } from "../../guards/loginSchemas"
@@ -30,15 +29,15 @@ export default function FormLogin() {
                 {errors.password && (<p className="text-red-500">{errors.password.message}</p>)}
             </div>
             <div className="flex-items-center justify-center">
-                <a href="#" className="text-sm text-blue-500 hover:underline">
+                <a href={PATH.QUENMATKHAU} className="text-sm text-blue-500 hover:underline">
                     Quên mật khẩu
                 </a>
 
             </div>
-            <button type="submit"  className="w-full py-2 px-4 bg-primary hover:bg-accent text-white font-semibold rounded-lg transition duration-200">
+            <button type="submit" className="w-full py-2 px-4 bg-primary hover:bg-accent text-white font-semibold rounded-lg transition duration-200">
                 Đăng nhập
             </button>
-            <p className="text-center text-sm text-gray-600">
+            <p className="text-center text-sm text-white">
                 Chưa có tài khoản? <a href={PATH.DANGKI} className="text-blue-500 hover:underline">Đăng ký</a>
             </p>
         </form>

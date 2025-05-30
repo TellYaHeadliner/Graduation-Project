@@ -3,4 +3,6 @@ export const PATH = {
     DANGNHAP: "/login",
     KHUYENMAI: "/khuyenmai",
     DANGKI: "/dangki",
+    QUENMATKHAU: "/quen-mat-khau",
+    MAILGUI: "/mail-gui"
 }

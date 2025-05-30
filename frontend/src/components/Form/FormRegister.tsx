@@ -1,23 +1,15 @@
 import { useForm  } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { registerSchema, RegisterSchema } from "../../guards/registerSchemas"
-import { useState } from "react";
 
 export default function FormRegister(){
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
     } = useForm<RegisterSchema>({
         resolver: zodResolver(registerSchema),
     });
-
-    const passwordValue = watch("password") || "";
-    const hasUpperCase = /[A-Z]/.test(passwordValue);
-    const hasNumber = /[0-9]/.test(passwordValue);
-    const hasSpecialChar = /[^A-Za-z0-9]/.test(passwordValue);
-    const hasMinLength = passwordValue.length >= 6;
 
     const onSubmit = (data: RegisterSchema) => {
         console.log("Dữ liệu: ", data)
@@ -49,20 +41,6 @@ export default function FormRegister(){
                 { errors.password && <p className="text-red-500">
                     { errors.password.message}
                 </p> }
-                <ul className="mt-2 text-sm text-gray-700 space-y-1">
-                    <li className={hasUpperCase ? "text-green-600" : "text-red-600"}>
-                        { hasUpperCase ? "✅" : "❌"} Có ít nhất 1 chữ in hoa 
-                    </li>
-                    <li className={hasNumber ? "text-green-600" : "text-red-600"}>
-                        { hasNumber ? "✅" : "❌"} Có ít nhất 1 chữ số
-                    </li>
-                    <li className={hasSpecialChar ? "text-green-600" : "text-red-600"}>
-                        { hasSpecialChar ? "✅" : "❌"} Có ít nhất 1 kí tự đặc biệt
-                    </li>
-                    <li className={hasMinLength ? "text-green-600" : "text-red-600"}>
-                        { hasMinLength ? "✅" : "❌"} Có ít nhất 6 kí tự
-                    </li>
-                </ul>
             </div>
 
             <div>

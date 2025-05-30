@@ -10,7 +10,7 @@ export default function Footer(){
                 <AccordionCustom />
             </div>
 
-            <div className="hidden sm:flex ">
+            <div className="hidden sm:flex">
                 <FooterInfoStatic />
             </div>
             <span className="text-gray-10 text-normal">

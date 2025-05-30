@@ -3,7 +3,7 @@ import { ChevronDownIcon } from '@radix-ui/react-icons';
 
 export default function AccordionCustom() {
   return (
-    <Accordion.Root type="single" collapsible className="w-full bg-background">
+    <Accordion.Root type="single" collapsible className="w-full">
       <Accordion.Item value="item-1">
         <Accordion.Header>
           <Accordion.Trigger className="group flex justify-between w-full p-4 font-medium">

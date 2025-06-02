@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Hotel\HotelStatus;
 use App\Enums\User\UserGender;
 use App\Enums\User\UserRole;
 use App\Enums\User\UserStatus;
@@ -17,5 +18,12 @@ return [
     UserGender::class => [
         UserGender::Male->value => 'Nam',
         UserGender::Female->value => 'Nữ',
+    ],
+    HotelStatus::class => [
+        HotelStatus::Pending->value => 'Chờ duyệt',
+        HotelStatus::Active->value => 'Đang hoạt động',
+        HotelStatus::Blocked->value => 'Khóa',
+        HotelStatus::Rejected->value => 'Bị từ chối',
+
     ],
 ];

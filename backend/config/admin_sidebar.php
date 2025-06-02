@@ -58,4 +58,21 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý Khách sạn',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-building-skyscraper"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm Khách sạn',
+                'routeName' => 'admin.hotel.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Khách sạn',
+                'routeName' => 'admin.hotel.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ]
+        ]
+    ],
 ];

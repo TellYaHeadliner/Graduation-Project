@@ -6,7 +6,7 @@ import youtube from "../../assets/youtube.svg"
 
 export default function FooterInfoStatic() {
     return (
-        <div className="w-full py-6 px-18">
+        <div className="w-full py-6 lg:px-12 2xl:px-18">
             <div className="max-w-screen-xl grid grid-cols-5 gap-x-10 text-sm text-gray-700">
                 <div>
                     <img src={lightLogo} alt={lightLogo} className="w-50 mb-2 m-auto" />

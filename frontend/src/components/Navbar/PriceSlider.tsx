@@ -37,18 +37,18 @@ export default function PriceSlider({ numberRoom, nightCount }: PriceSliderProps
 
 
     return (
-        <div className="bg-secondary p-4 rounded">
+        <div className="p-4 rounded-lg text-black border shadow-lg">
             <div className="flex justify-between items-start mb-2">
                 <div>
-                    <span className="block text-sm font-semibold text-white">Khoảng giá</span>
-                    <span className="block text-sm text-gray-300">{numberRoom} phòng, {nightCount} đêm</span>
+                    <span className="block text-sm font-semibold ">Khoảng giá</span>
+                    <span className="block text-sm ">{numberRoom} phòng, {nightCount} đêm</span>
                 </div>
-                <span className="text-sm text-blue-500 cursor-pointer" onClick={handleReset}>Đặt lại</span>
+                <span className="text-sm text-blue-500 cursor-pointer hover:text-underline" onClick={handleReset}>Đặt lại</span>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
                 <label htmlFor="min" className="block">
-                    <span className="block text-sm text-white mb-1">Giá thấp</span>
+                    <span className="block text-sm text-black mb-1">Giá thấp</span>
                     <input
                         type="number"
                         name="min"
@@ -60,7 +60,7 @@ export default function PriceSlider({ numberRoom, nightCount }: PriceSliderProps
                     />
                 </label>
                 <label htmlFor="max" className="block">
-                    <span className="block text-sm text-white mb-1">Giá cao</span>
+                    <span className="block text-sm text-black mb-1">Giá cao</span>
                     <input
                         type="number"
                         name="max"

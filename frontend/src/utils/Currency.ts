@@ -6,7 +6,7 @@ export class Currency{
         if (price === null || isNaN(0)){
             return ""
         }
-        const newFormatVND = new Intl.NumberFormat("vi-VN", {style: "currency", currency: "VND"}).format(price);
+        const newFormatVND = new Intl.NumberFormat("vi-VN").format(price);
         return `${newFormatVND} VNĐ`;
     }
 }

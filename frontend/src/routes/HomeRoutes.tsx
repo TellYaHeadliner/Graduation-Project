@@ -15,7 +15,7 @@ export default function HomeRoutes() {
                     <Home />
                 </Suspense>
             } />
-            <Route path="/ketquatimkiem"element={
+            <Route path={PATH.KETQUATIMKIEM} element={
                 <Suspense fallback={<LoadingSpinner />}>
                     <ResultSearch />
                 </Suspense>

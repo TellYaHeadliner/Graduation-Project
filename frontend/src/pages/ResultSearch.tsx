@@ -2,9 +2,13 @@ import MainLayout from "../layouts/MainLayout";
 import useTitle from "../hooks/useTitle";
 import SideBarFilter from "../components/Navbar/SidebarFilter";
 import CardItemSearch from "../components/Card/CardItemSearch";
+import useQuery from "../hooks/useQuery";
+import FindHotel from "../components/FindHotel/FindHotel";
 
 
 export default function Home() {
+    const { query } = useQuery();
+
     useTitle("Kết quả tìm kiếm");
 
     return (
@@ -16,8 +20,9 @@ export default function Home() {
                     </div>
                 </div>
                 <div className="flex-1 space-y-4 mt-4 overflow-auto">
-                    <h1 className="text-xl:font-normal">
-                        Kết quả tìm kiếm: Khách sạn Bình Minh
+                    <FindHotel />
+                    <h1 className="text-xl font-normal mt-4 overflow-auto">
+                        Kết quả tìm kiếm: {query}
                     </h1>
                     <CardItemSearch />
                     <CardItemSearch />

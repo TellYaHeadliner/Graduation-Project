@@ -7,9 +7,9 @@ export default function CardItemSearch() {
         {/* Left section - Image and labels */}
         <div className="w-1/3 relative">
           <img
-            src="https://cdn1.ivivu.com/iVivu/2023/10/24/14/Muong-Thanh-Luxury-Da-Nang-Hotel-1-20231024143140.jpg"
+            src="https://cf.bstatic.com/xdata/images/hotel/square600/665433940.webp?k=89858a85508ff5cc888a9ed0681fda9f8974c5395a383f58a436d266facc8707&o="
             alt="Hotel"
-            className="w-full h-full object-cover"
+            className="w-50 h-50 object-cover"
           />
         </div>
   
@@ -20,7 +20,7 @@ export default function CardItemSearch() {
               {CardListStaticData[0].title}
             </h2>
             <div className="flex items-center text-sm text-blue-600">
-              <span className="mr-2">8.5</span>
+              <span className="mr-2 px-2 py-1 rounded px-auto bg-blue-500 text-white">70</span>
               <span>{CardListStaticData[0].reviewCount} đánh giá</span>
             </div>
             <div className="text-sm text-gray-500 mt-1">📍 {CardListStaticData[0].address}</div>
@@ -33,13 +33,18 @@ export default function CardItemSearch() {
               <span className="bg-gray-100 px-2 py-1 rounded">Trung tâm thể dục thể hình</span>
               <span className="bg-gray-100 px-2 py-1 rounded">1+</span>
             </div>
+            <div className="flex flex-wrap mt-2 gap-1 text-xs text-white">
+              <span className="bg-red-500 px-2 py-1 rounded">Khuyến mãi</span>
+              <span className="bg-yellow-500 px-2 py-1 rounded">Giảm giá</span>
+              <span className="bg-blue-300 px-2 py-1 rounded">Khuyến mãi cuối tuần</span>
+            </div>
           </div>
   
         </div>
   
-        {/* Right section - Price and button */}
         <div className="w-1/4 p-4 flex flex-col items-end justify-between bg-white">
           <div className="text-right mt-2">
+            <div className="text-xl font-bold bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent animate-rainbow">50%</div>
             <div className="line-through text-gray-400 text-sm">{Currency.formatVND(CardListWithPriceData[0].discountPrice)}</div>
             <div className="text-orange-600 text-lg font-bold">{Currency.formatVND(CardListWithPriceData[0].price)}</div>
           </div>

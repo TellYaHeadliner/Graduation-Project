@@ -189,4 +189,32 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'services' => [
+        'name' => [
+            'title' => 'Tên dịch vụ',
+            'icon' => 'ti ti-server',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'default_unit' => [
+            'title' => 'Đơn vị tính',
+            'icon' => 'ti ti-percentage',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

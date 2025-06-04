@@ -75,4 +75,21 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý dịch vụ',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-server"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm Dịch vụ',
+                'routeName' => 'admin.service.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Dịch vụ',
+                'routeName' => 'admin.service.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ]
+        ]
+    ],
 ];

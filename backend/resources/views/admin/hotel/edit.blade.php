@@ -7,11 +7,11 @@
 
     <div class="page-body">
         <div class="container-xl">
-            <x-form :action="route('admin.user.update')" type="put" :validate="true">
-                <x-input type="hidden" name="id" :value="$user->id" />
+            <x-form :action="route('admin.hotel.update')" type="put" :validate="true">
+                <x-input type="hidden" name="id" :value="$hotel->id" />
                 <div class="row justify-content-center">
-                    @include('admin.user.forms.edit-left')
-                    @include('admin.user.forms.edit-right')
+                    @include('admin.hotel.forms.edit-left')
+                    @include('admin.hotel.forms.edit-right')
                 </div>
             </x-form>
         </div>
@@ -27,5 +27,5 @@
 @endpush
 
 @push('custom-js')
-    @include('admin.user.scripts.style')
+    @include('admin.hotel.scripts.style')
 @endpush

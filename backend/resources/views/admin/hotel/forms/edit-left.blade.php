@@ -1,81 +1,89 @@
 <div class="col-12 col-md-9">
-    <!-- Thông tin đăng nhập -->
-    <div class="card mb-3">
-        <div class="card-header justify-content-center">
-            <h2 class="mb-0 ">{{ __('Thông tin đăng nhập') }}</h2>
-        </div>
-        <div class="row card-body">
-            <div class="col-md-6 col-12">
-                <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-phone"></i> {{ __('Số điện thoại') }}:</label>
-                    <x-input-phone name="phone" :value="$user->phone" placeholder="{{ __('Số điện thoại') }}" />
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-mail"></i> {{ __('Email đăng nhập') }}:</label>
-                    <x-input-email id="emailInput" name="email" :value="$user->email" />
-                </div>
-            </div>
-			<!-- new password -->
-            <div class="col-md-6 col-12">
-                <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-key"></i> {{ __('Mật khẩu') }}:</label>
-                    <x-input-password name="password" />
-                </div>
-            </div>
-			<!-- new password confirmation-->
-            <div class="col-md-6 col-12">
-                <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-key"></i> {{ __('Xác nhận mật khẩu') }}:</label>
-                    <x-input-password name="password_confirmation" data-parsley-equalto="input[name='password']"
-                        data-parsley-equalto-message="{{ __('Mật khẩu không khớp.') }}" />
-                </div>
-            </div>
-        </div>
-    </div>
     <!-- Thông tin cơ bản -->
     <div class="card mb-3">
         <div class="card-header justify-content-center">
             <h2 class="mb-0">{{ __('Thông tin cơ bản') }}</h2>
         </div>
         <div class="row card-body">
+            {{-- name --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-user-edit"></i> {{ __('Họ và tên') }}:</label>
-                    <x-input name="fullname" :value="$user->fullname" placeholder="{{ __('Họ và tên') }}" />
+                    <label class="control-label"><i class="ti ti-user-edit"></i> {{ __('Tên khách sạn') }}:</label>
+                    <x-input name="name" :value="$hotel->name" placeholder="{{ __('Tên khách sạn') }}" />
                 </div>
             </div>
+            {{-- phone --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-calendar"></i> {{ __('Ngày sinh') }}:</label>
-                    <x-input type="date" :value="isset($user->birthday) ? format_date($user->birthday, 'Y-m-d') : null" name="birthday" />
+                    <label class="control-label"><i class="ti ti-phone"></i> {{ __('Số điện thoại') }}:</label>
+                    <x-input-phone name="phone" :value="$hotel->phone" placeholder="{{ __('Số điện thoại') }}" />
                 </div>
             </div>
+            {{-- email --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-gender-female"></i> {{ __('Giới tính') }}:</label>
-                    <x-select name="gender">
-                        @foreach ($gender as $key => $value)
-                            <x-select-option :option="$user->gender->value" :value="$key" :title="__($value)" />
-                        @endforeach
-                    </x-select>
+                    <label class="control-label"><i class="ti ti-mail"></i> {{ __('Email') }}:</label>
+                    <x-input-email id="emailInput" name="email" :value="$hotel->email" />
                 </div>
             </div>
+            {{-- mst --}}
+            <div class="col-md-6 col-12">
+                <div class="mb-3">
+                    <label class="control-label"><i class="ti ti-numbers"></i> {{ __('Mã số thuế') }}:</label>
+                    <x-input type="number" name="mst" :value="$hotel->mst" :required="true"
+                        placeholder="{{ __('Mã số thuế') }}" />
+                </div>
+            </div>
+            {{-- address --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
                     <label class="control-label"><i class="ti ti-map-pin"></i> {{ __('Địa chỉ') }}:</label>
-                    <x-input name="address" :value="$user->address" placeholder="{{ __('Địa chỉ') }}" />
+                    <x-input name="address" :value="$hotel->address" placeholder="{{ __('Địa chỉ') }}" />
+                </div>
+            </div>
+            <!-- user id -->
+			<div class="col-md-6 col-12">
+				<div class="mb-3">
+					<label class="control-label"> <span class="text-danger">*</span> {{ __('Chủ sở hữu') }}:</label>
+					<x-input :value="$hotel->user->fullname" disabled />
+                </div>
+			</div>
+            <!-- desc -->
+			<div class="col-12">
+				<div class="mb-3">
+					<label class="control-label">{{ __('Mô tả') }}:</label>
+					<textarea name="description" class="ckeditor visually-hidden"> {{ $hotel->description }}</textarea>
+				</div>
+			</div>
+        </div>
+    </div>
+    <!-- Thông tin ngân hàng -->
+    <div class="card mb-3">
+        <div class="card-header justify-content-center">
+            <h2 class="mb-0 ">{{ __('Thông tin ngân hàng') }}</h2>
+        </div>
+        <div class="row card-body">
+            {{-- bank_account_name --}}
+            <div class="col-md-6 col-12">
+                <div class="mb-3">
+                    <label class="control-label"><i class="ti ti-user-edit"></i> {{ __('Tên tài khoản') }}:</label>
+                    <x-input name="bank_account_name" :value="$hotel->bank_account_name"
+                        placeholder="{{ __('Tên tài khoản') }}" />
+                </div>
+            </div>
+            {{-- bank_account_number --}}
+            <div class="col-md-6 col-12">
+                <div class="mb-3">
+                    <label class="control-label">{{ __('Số tài khoản') }}:</label>
+                    <x-input type="number"  name="bank_account_number" :value="$hotel->bank_account_number" :required="true"
+                        placeholder="{{ __('Số tài khoản') }}" />
                 </div>
             </div>
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-users"></i> {{ __('Vai trò') }}:</label>
-                    <x-select name="role" >
-                        @foreach ($role as $key => $value)
-                            <x-select-option :value="$key" :title="__($value)" :option="$user->role->value"/>
-                        @endforeach
-                    </x-select>
+                    <label class="control-label"><i class="ti ti-user-edit"></i> {{ __('Tên ngân hàng') }}:</label>
+                    <x-input name="bank_name" :value="$hotel->bank_name"
+                        placeholder="{{ __('Tên ngân hàng') }}" />
                 </div>
             </div>
         </div>

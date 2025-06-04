@@ -21,7 +21,7 @@ return new class extends Migration
             $table->tinyInteger('star_rating')->default(0);
             $table->char('phone',10);
             $table->string('email')->unique();
-            $table->integer('mst');
+            $table->char('mst',20);
             $table->char('bank_account_number',50);
             $table->string('bank_account_name');
             $table->string('bank_name');

@@ -144,12 +144,6 @@ return [
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
-        'address' => [
-            'title' => 'Địa chỉ',
-            'icon' => 'ti ti-home',
-            'orderable' => false,
-            'addClass' => 'text-center align-middle'
-        ],
         'email' => [
             'title' => 'Email',
             'icon' => 'ti ti-mail',

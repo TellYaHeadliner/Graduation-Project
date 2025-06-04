@@ -30,7 +30,6 @@ class HotelDataTable extends BaseDataTable
             'email' => 'admin.hotel.datatable.email',
             'phone' => 'admin.hotel.datatable.phone',
             'mst' => 'admin.hotel.datatable.mst',
-            'address' => 'admin.hotel.datatable.address',
             'avatar' => 'admin.hotel.datatable.avatar',
             'reputation_score' => 'admin.hotel.datatable.reputation_score',
             'status' => 'admin.hotel.datatable.status',
@@ -41,11 +40,11 @@ class HotelDataTable extends BaseDataTable
     public function setColumnSearch(): void
     {
 
-        $this->columnAllSearch = [0, 1, 2, 3, 4, 5, 8];
+        $this->columnAllSearch = [0, 1, 2, 3, 4, 7];
 
         $this->columnSearchSelect = [
             [
-                'column' => 8,
+                'column' => 7,
                 'data' => HotelStatus::asSelectArray()
             ],
         ];
@@ -68,7 +67,6 @@ class HotelDataTable extends BaseDataTable
             'email' => $this->view['email'],
             'phone' => $this->view['phone'],
             'mst' => $this->view['mst'],
-            'address' => $this->view['address'],
             'avatar' => $this->view['avatar'],
             'reputation_score' => $this->view['reputation_score'],
             'status' => $this->view['status'],
@@ -85,7 +83,7 @@ class HotelDataTable extends BaseDataTable
 
     protected function setCustomRawColumns(): void
     {
-        $this->customRawColumns = ['action', 'name', 'email', 'phone', 'mst', 'address', 'avatar', 'reputation_score', 'status', 'owner'];
+        $this->customRawColumns = ['action', 'name', 'email', 'phone', 'mst', 'avatar', 'reputation_score', 'status', 'owner'];
     }
 
     public function setCustomFilterColumns(): void

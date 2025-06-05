@@ -6,6 +6,8 @@ import stephenHouse from "../../assets/stephen-house.jpg"
 import { Currency } from '../../utils/Currency';
 import { useAuthCheck } from "../../hooks/useAuthCheck";
 
+import "./CardItem.css"
+
 interface CardItemProps {
     title: string;
     address: string;
@@ -93,7 +95,7 @@ export default function CardItem({ title, address, star, price, reviewCount, dis
     const { isDialogOpen, closeDialog, checkAuth } = useAuthCheck();
 
     return (
-        <div className="w-[270px] h-[330px] rounded-xl shadow-md overflow-hidden relative hover:bg-accent">
+        <div className="w-[270px] h-[330px] rounded-xl shadow-md overflow-hidden relative hover:bg-accent hover:shadow-2xl card holographic-card">
             <div className="relative">
                 <img
                     src={stephenHouse}

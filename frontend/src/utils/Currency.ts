@@ -1,9 +1,12 @@
 export class Currency{
     static formatVND(price: number | null): string {
-        if (price === null || price === 0 || isNaN(0)){
+        if (price === 0){
+            return "O VNĐ"
+        }
+        if (price === null || isNaN(0)){
             return ""
         }
-        const newFormatVND = new Intl.NumberFormat("vi-VN", {style: "currency", currency: "VND"}).format(price)
-        return newFormatVND;
+        const newFormatVND = new Intl.NumberFormat("vi-VN").format(price);
+        return `${newFormatVND} VNĐ`;
     }
 }

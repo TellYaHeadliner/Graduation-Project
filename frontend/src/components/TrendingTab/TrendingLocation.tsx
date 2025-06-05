@@ -6,7 +6,7 @@ import NhaTrang from "../../assets/NhaTrang.png"
 
 export default function TrendingLocation() {
     return (
-        <div className="mx-17 mt-8">
+        <div className="lg:mx-18 2xl:mx-20 mt-8">
             <h2 className="text-2xl font-bold mb-1">
                 Những địa điểm đang hot
             </h2>

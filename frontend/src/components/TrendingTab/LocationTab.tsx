@@ -3,7 +3,7 @@ import { Tabs } from "@radix-ui/themes"
 
 export default function LocationTab() {
     return (
-        <div className="mx-auto lg:px-18">
+        <div className="mx-auto lg:px-18 2xl:px-20">
             <h2 className="text-2xl font-bold mb-6">
                 Các địa điểm du lịch phổ biến ở Việt Nam
             </h2>

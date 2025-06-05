@@ -29,7 +29,7 @@ export default function FormLogin() {
                 {errors.password && (<p className="text-red-500">{errors.password.message}</p>)}
             </div>
             <div className="flex-items-center justify-center">
-                <a href={PATH.QUENMATKHAU} className="text-sm text-blue-500 hover:underline">
+                <a href={PATH.QUENMATKHAU} className="text-sm text-fifth hover:underline">
                     Quên mật khẩu
                 </a>
 
@@ -38,7 +38,7 @@ export default function FormLogin() {
                 Đăng nhập
             </button>
             <p className="text-center text-sm text-white">
-                Chưa có tài khoản? <a href={PATH.DANGKI} className="text-blue-500 hover:underline">Đăng ký</a>
+                Chưa có tài khoản? <a href={PATH.DANGKI} className="text-fifth hover:underline">Đăng ký</a>
             </p>
         </form>
     )

@@ -7,13 +7,12 @@
 @source "../node_modules/flowbite";
 
 @theme{
-    --color-primary: #FF6B3D;        /* Cam đỏ rực – thu hút, nổi bật */
-    --color-secondary: #FF9F45;      /* Cam sáng – hỗ trợ màu chính nhưng vẫn mạnh mẽ */
-    --color-background: #FFF0E6;     /* Nền trắng pha cam – nhẹ nhưng đủ ấm */
-    --color-text: #2B2B2B;           /* Xám đen – sắc nét, dễ đọc */
-    --color-text-two: #4F4F4F;       /* Xám trung tính – làm dịu màu chữ phụ */
-    --color-text-three: #FFFFFF;     /* Trắng – dùng trên nền đậm */
-    --color-accent: #F76E6E;         /* Hồng cam đậm – điểm nhấn phụ cá tính */
+    --color-primary: #010D26;        
+    --color-secondary: #152A59;      
+    --color-third: #3C568C;   
+    --color-fourth: #788FBF;
+    --color-fifth: #C9D6F2;
+    --color-accent: #F76E6E;         
     --font-roboto: roboto;
     --breakpoints-xs: 393px;
     --breakpoints-sm: 576px;

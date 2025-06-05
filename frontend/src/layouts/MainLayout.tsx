@@ -14,7 +14,7 @@ export default function MainLayout(props: Props) {
     return (
         <Theme>
             <Header />
-            <main className="flex-1 lg:px-8 2xl:px-28">
+            <main className="flex-1">
                 {children}
             </main>
             <Footer />

@@ -16,7 +16,7 @@ export default function LoginLayout(props: Props) {
     return (
         <Theme>
             <div className="bg-gray-100 flex items-center justify-center min-h-screen" style={{ backgroundImage: `url(${background})` }}>
-                <div className="w-[600px] p-9 bg-secondary space-y-6 rounded-2xl shadow-lg" style={{ backgroundColor: 'rgba(255, 159, 69, 0.5)' }}>
+                <div className="w-[600px] p-9 bg-secondary space-y-6 rounded-2xl shadow-lg" style={{ backgroundColor: 'rgba(21, 42, 89, 0.5)' }}>
                     <img src={logoLight} alt={logoLight} className="w-100 mx-auto"/>
                     {children}
                 </div>

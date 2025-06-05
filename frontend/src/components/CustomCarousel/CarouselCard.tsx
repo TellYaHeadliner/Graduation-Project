@@ -30,7 +30,7 @@ export default function CarouselCard({ cardList, title }: CardListProps) {
 
 
   return (
-    <div className="w-full h-full my-3 lg:px-15 2xl:px-16 flex flex-wrap">
+    <div className="w-full h-full my-3 lg:px-18 2xl:px-20 flex flex-wrap">
       <h2 className="text-2xl font-bold mb-2">
         {title}
       </h2>
@@ -52,6 +52,9 @@ export default function CarouselCard({ cardList, title }: CardListProps) {
           1024: {
             items: 4
           },
+          1920: {
+            items: 5
+          }
         }}
       >
         {items}

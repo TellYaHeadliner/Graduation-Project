@@ -72,7 +72,12 @@ return [
                 'title' => 'DS Khách sạn',
                 'routeName' => 'admin.hotel.index',
                 'icon' => '<i class="ti ti-list"></i>',
-            ]
+            ],
+            [
+                'title' => 'DS Khách sạn đăng kí',
+                'routeName' => 'admin.hotel.indexHotelAppoval',
+                'icon' => '<i class="ti ti-list"></i>',
+            ],
         ]
     ],
     [

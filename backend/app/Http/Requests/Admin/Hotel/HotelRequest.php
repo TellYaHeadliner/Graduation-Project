@@ -26,7 +26,7 @@ class HotelRequest extends BaseRequest
                 'required',
                 'regex:/((09|03|07|08|05)+([0-9]{8})\b)/',
             ],
-            'mst' => ['required', 'min:10' , 'max:13'],
+            'mst' => ['required', 'min:10' , 'max:13', 'unique:App\Models\Hotel,mst'],
             'bank_account_number' => ['required', 'numeric'],
             'bank_account_name' => ['required', 'string'],
             'bank_name' => ['required', 'string'],

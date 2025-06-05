@@ -131,4 +131,90 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'hotels' => [
+        'name' => [
+            'title' => 'Tên khách sạn',
+            'icon' => 'ti ti-building-skyscraper',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'owner' => [
+            'title' => 'Chủ sở hữu',
+            'icon' => 'ti ti-user',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'email' => [
+            'title' => 'Email',
+            'icon' => 'ti ti-mail',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'phone' => [
+            'title' => 'Số điện thoại',
+            'icon' => 'ti ti-phone',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'mst' => [
+            'title' => 'Mã số thuế',
+            'icon' => 'ti ti-numbers',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'avatar' => [
+            'title' => 'Ảnh đại diện',
+            'icon' => 'ti ti-user-circle',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'reputation_score' => [
+            'title' => 'Điểm uy tín',
+            'icon' => 'ti ti-exposure',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+    'services' => [
+        'name' => [
+            'title' => 'Tên dịch vụ',
+            'icon' => 'ti ti-server',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'default_unit' => [
+            'title' => 'Đơn vị tính',
+            'icon' => 'ti ti-percentage',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

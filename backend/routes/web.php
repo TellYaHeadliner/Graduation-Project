@@ -19,7 +19,6 @@ Route::middleware(['RoleCheck:Admin'])->group(function () {
         return view('welcome');
     })->name('admin');
 });
-
   
 Route::prefix('ckfinder')->as('ckfinder.')->group(function () {
     Route::any('connector', [CKFinderController::class, 'requestAction'])->name('connector');

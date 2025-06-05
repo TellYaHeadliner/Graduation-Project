@@ -58,4 +58,43 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý Khách sạn',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-building-skyscraper"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm Khách sạn',
+                'routeName' => 'admin.hotel.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Khách sạn',
+                'routeName' => 'admin.hotel.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ],
+            [
+                'title' => 'DS Khách sạn đăng kí',
+                'routeName' => 'admin.hotel.indexHotelAppoval',
+                'icon' => '<i class="ti ti-list"></i>',
+            ],
+        ]
+    ],
+    [
+        'title' => 'Quản lý dịch vụ',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-server"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm Dịch vụ',
+                'routeName' => 'admin.service.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Dịch vụ',
+                'routeName' => 'admin.service.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ]
+        ]
+    ],
 ];

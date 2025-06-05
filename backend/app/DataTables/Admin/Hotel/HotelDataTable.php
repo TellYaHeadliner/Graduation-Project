@@ -52,7 +52,12 @@ class HotelDataTable extends BaseDataTable
 
     public function query()
     {
-        return $this->repository::with('user')->orderBy('created_at', 'desc');
+        return $this->repository::with('user')
+            ->whereIn('status', [
+                HotelStatus::Active->value,
+                HotelStatus::Blocked->value,
+            ])
+            ->orderBy('created_at', 'desc');
     }
 
     protected function setCustomColumns(): void

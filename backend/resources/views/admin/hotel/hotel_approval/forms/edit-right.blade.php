@@ -4,8 +4,8 @@
             {{ __('Đăng') }}
         </div>
         <div class="card-body p-2">
-            <x-button.submit :title="__('Cập nhập')" />
-            <x-button.modal-delete data-route="{{ route('admin.hotel.delete', $hotel->id) }}" :title="__('Xóa')" />
+            <x-button.submit :title="__('Duyệt')" />
+            <x-button.modal-delete data-route="{{ route('admin.hotel.deleteHotelApproval', $hotel->id) }}" :title="__('Từ chối')" />
         </div>
     </div>
     <div class="card mb-3">
@@ -14,12 +14,12 @@
             <span class="ms-2">@lang('Số sao khách sạn')</span>
         </div>
         <div class="card-body p-2" style="display:flex; flex-direction: column;">
-            <label><input type="radio" name="star_rating" value="0" {{ (old('star_rating', $hotel->star_rating) == '0') ? 'checked' : '' }}> Không có</label>
-            <label><input type="radio" name="star_rating" value="1" {{ (old('star_rating', $hotel->star_rating) == '1') ? 'checked' : '' }}> ⭐</label>
-            <label><input type="radio" name="star_rating" value="2" {{ (old('star_rating', $hotel->star_rating) == '2') ? 'checked' : '' }}> ⭐⭐</label>
-            <label><input type="radio" name="star_rating" value="3" {{ (old('star_rating', $hotel->star_rating) == '3') ? 'checked' : '' }}> ⭐⭐⭐</label>
-            <label><input type="radio" name="star_rating" value="4" {{ (old('star_rating', $hotel->star_rating) == '4') ? 'checked' : '' }}> ⭐⭐⭐⭐</label>
-            <label><input type="radio" name="star_rating" value="5" {{ (old('star_rating', $hotel->star_rating) == '5') ? 'checked' : '' }}> ⭐⭐⭐⭐⭐</label>
+            <label><input type="radio" name="star_rating" disabled value="0" {{ (old('star_rating', $hotel->star_rating) == '0') ? 'checked' : '' }}> Không có</label>
+            <label><input type="radio" name="star_rating" disabled value="1" {{ (old('star_rating', $hotel->star_rating) == '1') ? 'checked' : '' }}> ⭐</label>
+            <label><input type="radio" name="star_rating" disabled value="2" {{ (old('star_rating', $hotel->star_rating) == '2') ? 'checked' : '' }}> ⭐⭐</label>
+            <label><input type="radio" name="star_rating" disabled value="3" {{ (old('star_rating', $hotel->star_rating) == '3') ? 'checked' : '' }}> ⭐⭐⭐</label>
+            <label><input type="radio" name="star_rating" disabled value="4" {{ (old('star_rating', $hotel->star_rating) == '4') ? 'checked' : '' }}> ⭐⭐⭐⭐</label>
+            <label><input type="radio" name="star_rating" disabled value="5" {{ (old('star_rating', $hotel->star_rating) == '5') ? 'checked' : '' }}> ⭐⭐⭐⭐⭐</label>
         </div>
     </div>
     <div class="card mb-3">
@@ -38,16 +38,6 @@
         </div>
         <div class="card-body p-2">
             <x-input-gallery-ckfinder name="gallery" type="multiple" :value="$hotel->gallery" />
-        </div>
-    </div>
-
-    <div class="card mb-3">
-        <div class="card-header">
-            <span><i class="ti ti-home-check"></i>{{ __(' Đang hoạt động') }}</span>
-        </div>
-        <div class="card-body p-2">
-            <x-input-switch name="status" value="2" :label="__('Đang hoạt động?')"
-                :checked="$hotel->status->value == 2" />
         </div>
     </div>
 

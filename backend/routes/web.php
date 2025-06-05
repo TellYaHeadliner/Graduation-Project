@@ -32,4 +32,4 @@ Route::controller(App\Http\Controllers\Auth\LoginController::class)
         Route::get('/', 'index')->name('index');
         Route::post('/', 'login')->name('post');
         Route::post('/logout', 'logout')->name('logout');
-    });
+});

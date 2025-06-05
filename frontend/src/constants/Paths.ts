@@ -1,5 +1,8 @@
 export const PATH = {
     HOME: "/",
-    LOGIN: "/login",
-    KHUYENMAI: "/khuyenmai"
+    DANGNHAP: "/login",
+    KHUYENMAI: "/khuyenmai",
+    DANGKI: "/dangki",
+    QUENMATKHAU: "/quen-mat-khau",
+    MAILGUI: "/mail-gui"
 }

@@ -25,15 +25,7 @@ export default function Home() {
                     <p className="mt-4 text-2xl text-gray font-medium text-white">
                         Hãy đặt phòng khách sạn như bạn mong muốn !
                     </p>
-                <FindHotel 
-                    provinceProp={""} 
-                    adultsProp={0} 
-                    childrenProp={0} 
-                    roomsProp={0} 
-                    withPetsProp={false} 
-                    startDateProp={null} 
-                    endDateProp={null} 
-                />
+                <FindHotel />
                 </div>
             </div>
             <TrendingLocation />

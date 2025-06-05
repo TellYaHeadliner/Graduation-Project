@@ -66,6 +66,14 @@
             <h2 class="mb-0 ">{{ __('Thông tin ngân hàng') }}</h2>
         </div>
         <div class="row card-body">
+            <div class="col-12">
+                <div class="mb-3">
+                    <label class="control-label"><i class="ti ti-user-edit"></i> {{ __('Tên ngân hàng') }}:</label>
+                    <x-select name="bank_name" class="select2-bs5-ajax" :data-url="route('search.select.bank')"
+                        id="bank_name" >
+                    </x-select>
+                </div>
+            </div>
             {{-- bank_account_name --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
@@ -82,13 +90,7 @@
                         placeholder="{{ __('Số tài khoản') }}" />
                 </div>
             </div>
-            <div class="col-md-6 col-12">
-                <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-user-edit"></i> {{ __('Tên ngân hàng') }}:</label>
-                    <x-input name="bank_name" :value="old('bank_name')"
-                        placeholder="{{ __('Tên ngân hàng') }}" />
-                </div>
-            </div>
+
         </div>
     </div>
 </div>

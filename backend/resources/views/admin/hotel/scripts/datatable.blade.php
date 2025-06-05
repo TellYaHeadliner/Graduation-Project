@@ -1,5 +1,7 @@
 <script>
     const statusOptions = @json(\App\Enums\Hotel\HotelStatus::asSelectArray());
+    delete statusOptions[1];
+    delete statusOptions[4];
     function searchColumsDataTable(datatable) {
         datatable.api().columns([0, 1, 2, 3, 4, 7]).every(function () {
             var column = this;

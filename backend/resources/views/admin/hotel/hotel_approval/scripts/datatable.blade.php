@@ -1,5 +1,7 @@
 <script>
     const statusOptions = @json(\App\Enums\Hotel\HotelStatus::asSelectArray());
+    delete statusOptions[2];
+    delete statusOptions[3];
     function searchColumsDataTable(datatable) {
         datatable.api().columns([0, 1, 2, 3, 4, 7]).every(function () {
             var column = this;
@@ -20,7 +22,7 @@
         });
     }
     $(document).ready(function () {
-        columns = window.LaravelDataTables["hotelTable"].columns();
+        columns = window.LaravelDataTables["hotelApprovalTable"].columns();
         toggleColumnsDatatable(columns);
     });
 </script>

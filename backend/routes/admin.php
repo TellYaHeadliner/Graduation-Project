@@ -65,10 +65,13 @@ Route::middleware(['RoleCheck:Admin'])->group(function () {
 
             Route::delete('/xoa/{id}', 'delete')->name('delete');
             // Hotel-Approval
-            Route::get('/Hotel-Approval', 'indexHotelAppoval')->name('indexHotelAppoval');
-            Route::get('/Hotel-Approval/{id}', 'editHotelAppoval')->name('editHotelAppoval');
+            Route::get('/Hotel-Approval', 'indexHotelApproval')->name('indexHotelApproval');
+            Route::get('/Hotel-Approval/{id}', 'editHotelApproval')->name('editHotelApproval');
 
             Route::put('/updateHotel-Approval', 'updateHotelApproval')->name('updateHotelApproval');
+
+            Route::delete('/xoaHotel-Approval/{id}', 'deleteHotelApproval')->name('deleteHotelApproval');
+
         });
     });
     // Service

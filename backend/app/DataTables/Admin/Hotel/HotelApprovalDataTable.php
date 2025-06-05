@@ -52,7 +52,12 @@ class HotelApprovalDataTable extends BaseDataTable
 
     public function query()
     {
-        return $this->repository::with('user')->where('status','=','1')->orderBy('created_at', 'desc');
+        return $this->repository::with('user')
+            ->whereIn('status', [
+                HotelStatus::Pending->value,
+                HotelStatus::Rejected->value,
+            ])
+            ->orderBy('created_at', 'desc');
     }
 
     protected function setCustomColumns(): void

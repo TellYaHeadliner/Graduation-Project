@@ -217,4 +217,32 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'attributes' => [
+        'name' => [
+            'title' => 'Tên thuộc tính',
+            'icon' => 'ti ti-server',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'type' => [
+            'title' => 'Kiểu dữ liệu',
+            'icon' => 'ti ti-percentage',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'is_active' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

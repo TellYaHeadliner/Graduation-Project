@@ -97,4 +97,21 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý thuộc tính',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-chart-dots"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm Thuộc tính',
+                'routeName' => 'admin.attribute.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Thuộc tính',
+                'routeName' => 'admin.attribute.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ]
+        ]
+    ],
 ];

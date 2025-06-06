@@ -1,4 +1,5 @@
 import { TableRoomType } from "../../utils/TableRoomStaticData";
+import DialogDetailHotel from "../Dialog/DialogDetailHotel";
 
 interface RoomTableProps{
     data: TableRoomType[];
@@ -22,7 +23,7 @@ export default function TableRoom({data}: RoomTableProps){
                         <tr key={index} className="border-t border-gray-300">
                             <td className="px-4 py-3 border-r">
                                 <div className="font-medium text-blue-700 hover:underline cursor-pointer">
-                                    {room.tenPhong}
+                                    <DialogDetailHotel title={room.tenPhong} />
                                 </div>
                                 <div className="text-sm text-gray-600">
                                     {room.loaiGiuong}

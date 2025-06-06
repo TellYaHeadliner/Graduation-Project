@@ -1,6 +1,11 @@
 import MainLayout from "../layouts/MainLayout";
 import locationPin from "../assets/location-pin.svg"
 import CarouselComment from "../components/CustomCarousel/CarouselComment";
+import { HeartFilledIcon } from "@radix-ui/react-icons";
+import FavoriteButton from "../components/Button/ButtonFavortie";
+import TableRoom from "../components/Table/TableRoom";
+import { tableRoomData } from "../utils/TableRoomStaticData";
+import FindHotel from "../components/FindHotel/FindHotel";
 
 export default function DetailHotel() {
     return (
@@ -26,10 +31,46 @@ export default function DetailHotel() {
                 </div>
                 <div className="flex flex-row mt-4">
                     <div className="lg:w-1/2 w-full mr-4">
-                        <h2 className="text-lg font-semibold">Về khách sạn chúng tôi:</h2>
+                        <h3 className="text-lg font-semibold">Về khách sạn chúng tôi:</h3>
                         <p className="text-lg text-justify">
                             On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains
                         </p>
+                        <h2 className="text-lg font-semibold mt-2">
+                            Các tiện nghi chúng tôi có
+                        </h2>
+                        <div>
+                            <ul className="flex flex-row flex-wrap gap-4 mt-2">
+                                <li className="flex items-center gap-2">
+                                    <HeartFilledIcon />
+                                    Free WiFi
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <HeartFilledIcon />
+                                    Buffet
+                                </li>                                
+                                <li className="flex items-center gap-2">
+                                    <HeartFilledIcon />
+                                    Massage
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <HeartFilledIcon />
+                                    Hồ bơi vô cực
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <HeartFilledIcon />
+                                    Phòng xông hơi
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <HeartFilledIcon />
+                                    Massage
+                                </li>
+                                <li className="flex items-center gap-2">
+                                    <HeartFilledIcon />
+                                    Massage
+                                </li>
+                            </ul>
+                        </div>
+
                     </div>
                     <div className="w-1/2 space-y-4 flex flex-wrap justify-start">
                         <iframe
@@ -40,11 +81,21 @@ export default function DetailHotel() {
                             loading="lazy"
                             referrerPolicy="no-referrer-when-downgrade"
                         />
-                        <h2 className="text-lg font-bold">
+                        <h3 className="text-lg font-bold">
                             Đánh giá về khách sạn chúng tôi
-                        </h2>
+                        </h3>
                         <CarouselComment />
+                        <FavoriteButton />
                     </div>
+                </div>
+                <div className="flex flex-col mt-4">
+                    <h2 className="text-lg font-semibold">
+                        Lựa chọn loại phòng
+                    </h2>
+                    <div className="mb-4">
+                        <FindHotel />
+                    </div>
+                    <TableRoom data={tableRoomData} />
                 </div>
             </div>
         </MainLayout>

@@ -39,7 +39,6 @@ export default function CarouselComment() {
   return (
     <div className="w-full mx-auto">
         <AliceCarousel
-            autoHeight
             infinite
             mouseTracking
             items={items}

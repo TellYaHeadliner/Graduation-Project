@@ -10,7 +10,7 @@ import useFindHotel from "../../hooks/useFindHotel";
 registerLocale("vi", vi);
 
 export default function FindHotel() {
-    const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
+    const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null , null]);
     const [startDate, endDate] = dateRange;
     const [province, setProvince] = useState("")
     const [isOpen, setIsOpen] = useState(false);
@@ -105,6 +105,7 @@ export default function FindHotel() {
                         className="px-3 py-2 w-60 sm:w-60 2xl:w-100 2xl:h-15 2xl:text-lg border-2 border-accent"
                         placeholderText="Chọn khoảng thời gian"
                         isClearable
+                        minDate={new Date}
                     />
                 </div>
                 <div className="relative" ref={dropDownRef}>

@@ -25,23 +25,6 @@ export default function Home() {
                         Kết quả tìm kiếm: {query}
                     </h1>
                     <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
                 </div>
             </div>
         </MainLayout>

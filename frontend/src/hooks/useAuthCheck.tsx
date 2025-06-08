@@ -15,6 +15,7 @@ export function useAuthCheck(): UseAuthCheckInterface {
     const closeDialog = () => setIsDialogOpen(false);
 
     const checkAuth = () => {
+        // Có thể đổi thành session thành local mỗi lần check tính năng
         const token = sessionStorage.getItem("token");
 
         if (!token){

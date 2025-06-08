@@ -9,7 +9,6 @@ import TrendingLocation from "../components/TrendingTab/TrendingLocation";
 import { ToastContainer } from "react-toastify";
 import LocationTab from "../components/TrendingTab/LocationTab";
 
-
 export default function Home() {
     useTitle("Roomix");
 
@@ -19,28 +18,20 @@ export default function Home() {
                 <div className="absolute inset-0 bg-cover bg-no-repeat bg-center " style={{ backgroundImage: `url(${section})`, filter: 'brightness(0.5)' }} />
                 <div className="relative z-10 flex flex-col justify-center h-full px-8 lg:px-32 max-w-6xl">
                     <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-white">
-                        Roomix <br/>
+                        Roomix <br />
                         Trang web đặt khác sạn
                     </h1>
                     <p className="mt-4 text-2xl text-gray font-medium text-white">
                         Hãy đặt phòng khách sạn như bạn mong muốn !
                     </p>
-                <FindHotel 
-                    provinceProp={""} 
-                    adultsProp={0} 
-                    childrenProp={0} 
-                    roomsProp={0} 
-                    withPetsProp={false} 
-                    startDateProp={null} 
-                    endDateProp={null} 
-                />
+                    <FindHotel />
                 </div>
             </div>
             <TrendingLocation />
-            <CarouselCard cardList={CardListStaticData} title="Khách sạn bạn quan tâm"/>
-            <CarouselCard cardList={CardListWithPriceData} title="Khách sạn có giá ưu đãi"/>
-            <CarouselCard cardList={CardListStaticData} title="Khách sạn có ưu đãi cuối tuần"/>
-            <CarouselCard cardList={CardListStaticData} title="Khách sạn theo mùa du lịch"/>
+            <CarouselCard cardList={CardListStaticData} title="Khách sạn bạn quan tâm" />
+            <CarouselCard cardList={CardListWithPriceData} title="Khách sạn có giá ưu đãi" />
+            <CarouselCard cardList={CardListStaticData} title="Khách sạn có ưu đãi cuối tuần" />
+            <CarouselCard cardList={CardListStaticData} title="Khách sạn theo mùa du lịch" />
             <LocationTab />
             <ToastContainer position="top-right" />
         </MainLayout>

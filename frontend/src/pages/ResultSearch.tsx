@@ -13,34 +13,17 @@ export default function Home() {
 
     return (
         <MainLayout>
-            <div className="relative flex justify-between lg:px-26 max-w-screen-xl mx-auto ">
+            <div className="relative flex gap-x-4 lg:px-26 max-w-screen-xl mx-auto">
                 <div className="w-1/4 block">
                     <div className="sticky top-34">
                         <SideBarFilter />
                     </div>
                 </div>
-                <div className="flex-1 space-y-4 mt-4 overflow-auto">
+                <div className="flex-1 space-y-4 mt-4">
                     <FindHotel />
-                    <h1 className="text-xl font-normal mt-4 overflow-auto">
+                    <h1 className="text-xl font-normal mt-4">
                         Kết quả tìm kiếm: {query}
                     </h1>
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
-                    <CardItemSearch />
                     <CardItemSearch />
                 </div>
             </div>

@@ -6,6 +6,7 @@ import LoadingSpinner from "../components/Loading/LoadingSpinner"
 
 const Home = lazy(() => import("../pages/Home"))
 const ResultSearch = lazy(() => import("../pages/ResultSearch"))
+const DetailHotel = lazy(() => import("../pages/DetailHotel"))
 
 export default function HomeRoutes() {
     return (
@@ -18,6 +19,11 @@ export default function HomeRoutes() {
             <Route path={PATH.KETQUATIMKIEM} element={
                 <Suspense fallback={<LoadingSpinner />}>
                     <ResultSearch />
+                </Suspense>
+            } />
+            <Route path={PATH.CHITIETKHACHSAN} element={
+                <Suspense fallback={<LoadingSpinner />}>
+                    <DetailHotel />
                 </Suspense>
             } />
         </Route>

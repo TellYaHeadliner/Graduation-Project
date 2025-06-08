@@ -9,7 +9,7 @@ export default function NavBarFilter(){
         <nav className="w-64 px-auto rounded space-y-4 py-3 text-sm text-white">
             <PriceSlider numberRoom={1} nightCount={1} />
             <AccordionFilterRate />
-            <AccordionFilterStar />
+            <AccordionFilterStar defaultSelected={[3, 4]} />
             <AccordiionFilterComfortCommon title="Tiện nghi phổ biến" />
             <AccordionFilterSupport />
             <AccordiionFilterComfortCommon title="Tiện nghi độc đáo" />

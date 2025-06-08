@@ -5,5 +5,6 @@ export const PATH = {
     DANGKI: "/dangki",
     QUENMATKHAU: "/quen-mat-khau",
     MAILGUI: "/mail-gui",
-    KETQUATIMKIEM: "/search"
+    KETQUATIMKIEM: "/search",
+    CHITIETKHACHSAN: "/chi-tiet-khach-san"
 }

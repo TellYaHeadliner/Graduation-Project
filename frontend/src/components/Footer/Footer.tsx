@@ -6,11 +6,11 @@ export default function Footer(){
 
     return (
         <footer className="text-center bg-gray-4">
-            <div className="sm:hidden">
+            <div className="sm:inline ">
                 <AccordionCustom />
             </div>
 
-            <div className="hidden sm:flex">
+            <div className="hidden lg:flex">
                 <FooterInfoStatic />
             </div>
             <span className="text-gray-10 text-normal">

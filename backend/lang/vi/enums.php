@@ -2,6 +2,7 @@
 
 use App\Enums\Attribute\AttributeStatus;
 use App\Enums\Hotel\HotelStatus;
+use App\Enums\Season\SeasonStatus;
 use App\Enums\Service\ServiceStatus;
 use App\Enums\User\UserGender;
 use App\Enums\User\UserRole;
@@ -25,6 +26,10 @@ return [
     AttributeStatus::class => [
         AttributeStatus::Blocked->value => 'Không hiển thị',
         AttributeStatus::Active->value => 'Hiển thị',
+    ],
+    SeasonStatus::class => [
+        SeasonStatus::Blocked->value => 'Ngừng áp dụng',
+        SeasonStatus::Active->value => 'Đang áp dụng',
     ],
     HotelStatus::class => [
         HotelStatus::Pending->value => 'Chờ duyệt',

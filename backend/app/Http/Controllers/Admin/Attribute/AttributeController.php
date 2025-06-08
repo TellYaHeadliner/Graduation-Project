@@ -87,10 +87,10 @@ class AttributeController extends Controller
             $attribute = Attribute::find($this->data['id']);
             $attribute->update($this->data);
             DB::commit();
-            return redirect()->route($this->route['index'])->with('success', 'Thêm thành công');
+            return redirect()->route($this->route['index'])->with('success', 'Cập nhập thành công');
         } catch (Exception $e) {
             DB::rollback();
-            return redirect()->route($this->route['create'])->with('error', 'Thêm thất bại');
+            return redirect()->route($this->route['edit'],[$this->data['id']])->with('error', 'Cập nhập thất bại');
         }
     }
 

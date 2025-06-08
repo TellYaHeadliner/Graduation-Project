@@ -114,4 +114,21 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý mùa ưu đãi',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-clock-hour-10"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm mùa mới',
+                'routeName' => 'admin.season.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Mùa',
+                'routeName' => 'admin.season.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ]
+        ]
+    ],
 ];

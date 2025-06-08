@@ -1,13 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit"
 
-// Mẫu reducer sẽ có thay đổi
-// import sampleCounterSlice  from "./sampleCounterSlice"
-import authSlice from './authSlice';
+import authSlice from './slices/authSlice';
+import findHotelSlice from './slices/findHotelSlices';
 
 export const store = configureStore({
     reducer: {
         auth: authSlice,
+        findHotel: findHotelSlice
     },
+    devTools: true
 });
 
 export type RootState = ReturnType<typeof store.getState>;

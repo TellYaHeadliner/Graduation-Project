@@ -12,8 +12,7 @@ interface AccordionFilterSupportProps{
     defaultOpen?: boolean
 }
 
-export default function AccordionFilterSupport({ onFilterChange, defaultOpen = true}: AccordionFilterSupportProps){
-    const [isOpen, setIsOpen] = useState<boolean>(defaultOpen)
+export default function AccordionFilterSupport({ onFilterChange}: AccordionFilterSupportProps){
     const [filters, setFilters] = useState<FilterState>({
         fullRefund: false,
         payAtHotel: false,
@@ -30,10 +29,7 @@ export default function AccordionFilterSupport({ onFilterChange, defaultOpen = t
         if (onFilterChange){
             onFilterChange(newFilters)
         }
-    }
-
-    const toggleAccordion = () => {
-        setIsOpen(!isOpen)
+        console.log(filters)
     }
 
     return (
@@ -52,7 +48,7 @@ export default function AccordionFilterSupport({ onFilterChange, defaultOpen = t
                                 <input type="checkbox" className="mr-2" checked={filters.fullRefund} onChange={() => handleFilterChange('fullRefund')} /> Hỗ trợ hoàn tiền 100%
                             </label>
                             <label className="flex items-center">
-                                <input type="checkbox" className="mr-2" /> Thanh toán tại khách sạn
+                                <input type="checkbox" className="mr-2" checked={filters.payAtHotel} onChange={() => handleFilterChange('payAtHotel')} /> Thanh toán tại khách sạn
                             </label>
                         </div>
                     </Accordion.Content>

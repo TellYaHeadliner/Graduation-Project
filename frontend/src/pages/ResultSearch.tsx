@@ -21,9 +21,11 @@ export default function Home() {
                 </div>
                 <div className="flex-1 space-y-4 mt-4">
                     <FindHotel />
-                    <h1 className="text-xl font-normal mt-4">
-                        Kết quả tìm kiếm: {query}
-                    </h1>
+                    { query && (
+                        <h1 className="text-xl font-normal mt-4">
+                            Kết quả tìm kiếm: {query}
+                        </h1>
+                    )}
                     <CardItemSearch />
                 </div>
             </div>

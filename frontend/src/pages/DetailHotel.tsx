@@ -6,6 +6,7 @@ import FavoriteButton from "../components/Button/ButtonFavortie";
 import TableRoom from "../components/Table/TableRoom";
 import { tableRoomData } from "../utils/TableRoomStaticData";
 import FindHotel from "../components/FindHotel/FindHotel";
+import TabService from "../components/Tab/TabService";
 
 export default function DetailHotel() {
     return (
@@ -96,6 +97,14 @@ export default function DetailHotel() {
                         <FindHotel />
                     </div>
                     <TableRoom data={tableRoomData} />
+                </div>
+                <div>
+                    <h2 className="text-lg font-bold mt-2">
+                        Chọn dịch vụ
+                    </h2>
+                    <div className="mt-2">
+                        <TabService />
+                    </div>
                 </div>
             </div>
         </MainLayout>

@@ -131,4 +131,21 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý thông báo',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-bell"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm thông báo',
+                'routeName' => 'admin.notification.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Thông báo',
+                'routeName' => 'admin.notification.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ]
+        ]
+    ],
 ];

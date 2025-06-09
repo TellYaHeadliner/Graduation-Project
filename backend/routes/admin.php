@@ -117,6 +117,20 @@ Route::middleware(['RoleCheck:Admin'])->group(function () {
             Route::delete('/xoa/{id}', 'delete')->name('delete');
         });
     });
+    // Notification
+    Route::prefix('/notifications')->as('notification.')->group(function () {
+        Route::controller(App\Http\Controllers\Admin\Notification\NotificationController::class)->group(function () {
+            Route::get('/them', 'create')->name('create');
+            Route::post('/them', 'store')->name('store');
+
+            Route::get('/', 'index')->name('index');
+            Route::get('/sua/{id}', 'edit')->name('edit');
+
+            Route::put('/sua', 'update')->name('update');
+
+            Route::delete('/xoa/{id}/{user_id?}', 'delete')->name('delete');
+        });
+    });
 
     Route::prefix('/search')->as('search.')->group(function () {
         Route::prefix('/select')->as('select.')->group(function () {

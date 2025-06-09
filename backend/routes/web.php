@@ -37,5 +37,7 @@ Route::controller(App\Http\Controllers\Auth\LoginController::class)
 Route::prefix('/search')->as('search.')->group(function () {
     Route::prefix('/select')->as('select.')->group(function () {
         Route::get('/banks', [App\Http\Controllers\Search\BankSearchSelectController::class, 'selectSearch'])->name('bank');
+        Route::get('/users', [App\Http\Controllers\Search\UserSearchSelectController::class, 'selectSearch'])->name('user');
+
     });
 });

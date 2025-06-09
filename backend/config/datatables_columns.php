@@ -279,4 +279,44 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'notifications' => [
+        'title' => [
+            'title' => 'Tiêu đề',
+            'icon' => 'ti ti-bell',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'user_name' => [
+            'title' => 'Người nhận',
+            'icon' => 'ti-user',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'sent_at' => [
+            'title' => 'Ngày thông báo',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'is_read' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'read_at' => [
+            'title' => 'Thời gian đọc',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

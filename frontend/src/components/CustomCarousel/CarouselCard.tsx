@@ -1,7 +1,6 @@
 import AliceCarousel, { Link } from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 
-
 import CardItem from "../Card/CardItem";
 import { CardItemType } from "../../utils/CardListStaticData";
 
@@ -14,7 +13,7 @@ interface CardListProps {
 export default function CarouselCard({ cardList, title }: CardListProps) {
 
   const items = cardList.map((card) => (
-    <div key={card.key} >
+    <div key={card.key}>
       <Link href="">
         <CardItem
           title={card.title}
@@ -47,7 +46,7 @@ export default function CarouselCard({ cardList, title }: CardListProps) {
             items: 2
           },
           768: {
-            items: 3
+            items: 3,
           },
           1024: {
             items: 4

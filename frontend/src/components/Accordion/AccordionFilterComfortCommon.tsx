@@ -1,27 +1,6 @@
 import { Accordion } from "radix-ui";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-
-const popularAmenities = [
-    "Wi-Fi miễn phí",
-    "Điều hòa không khí / Máy sưởi",
-    "TV màn hình phẳng",
-    "Tủ lạnh mini",
-    "Máy sấy tóc",
-    "Bàn làm việc",
-    "Két an toàn",
-    "Ấm đun nước / Dụng cụ pha trà cà phê",
-    "Lễ tân 24/7",
-    "Dọn phòng hàng ngày",
-    "Bữa sáng miễn phí",
-    "Dịch vụ giặt ủi",
-    "Dịch vụ đưa đón sân bay",
-    "Chỗ đậu xe (miễn phí hoặc có tính phí)",
-    "Hồ bơi",
-    "Phòng gym / thể hình",
-    "Spa / Massage",
-    "Nhà hàng / Quầy bar",
-    "Phòng họp / hội nghị"
-];
+import { popularAmenities } from "../../utils/PopularAmenStaticData";
 
 interface AFCCProps{
     title: string;

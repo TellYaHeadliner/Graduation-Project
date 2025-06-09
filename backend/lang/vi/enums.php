@@ -1,6 +1,9 @@
 <?php
 
+use App\Enums\Attribute\AttributeStatus;
 use App\Enums\Hotel\HotelStatus;
+use App\Enums\Notification\NotificationStatus;
+use App\Enums\Season\SeasonStatus;
 use App\Enums\Service\ServiceStatus;
 use App\Enums\User\UserGender;
 use App\Enums\User\UserRole;
@@ -20,6 +23,18 @@ return [
     UserGender::class => [
         UserGender::Male->value => 'Nam',
         UserGender::Female->value => 'Nữ',
+    ],
+    AttributeStatus::class => [
+        AttributeStatus::Blocked->value => 'Không hiển thị',
+        AttributeStatus::Active->value => 'Hiển thị',
+    ],
+    SeasonStatus::class => [
+        SeasonStatus::Blocked->value => 'Ngừng áp dụng',
+        SeasonStatus::Active->value => 'Đang áp dụng',
+    ],
+    NotificationStatus::class => [
+        NotificationStatus::NOT_READ->value => 'Chưa đọc',
+        NotificationStatus::READ->value => 'Đã đọc',
     ],
     HotelStatus::class => [
         HotelStatus::Pending->value => 'Chờ duyệt',

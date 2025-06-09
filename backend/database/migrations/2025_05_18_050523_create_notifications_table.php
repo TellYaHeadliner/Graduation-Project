@@ -17,7 +17,6 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->longText('content');
-            $table->tinyInteger('target');
             $table->dateTime('sent_at')->nullable();
             $table->timestamps();
         });

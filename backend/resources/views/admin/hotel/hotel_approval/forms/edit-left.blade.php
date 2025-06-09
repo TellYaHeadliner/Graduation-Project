@@ -17,7 +17,6 @@
             <div class="card-header justify-content-center">
                 <h2 class="mb-0 ">{{ __('Thông tin mã số thuế') }}</h2>
             </div>
-            
             <div class="row card-body">
                 <div class="col-12">
                     <div class="mb-3">
@@ -50,6 +49,7 @@
                 </div>
             </div>
         </div>
+
     @endif
     <!-- Thông tin cơ bản -->
     <div class="card mb-3">
@@ -131,7 +131,6 @@
                         placeholder="{{ __('Số tài khoản') }}" />
                 </div>
             </div>
-
         </div>
     </div>
 </div>

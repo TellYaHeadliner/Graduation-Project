@@ -83,7 +83,7 @@ class UserDataTable extends BaseDataTable
             'avatar' => $this->view['avatar'],
             'role' => $this->view['role'],
             'status' => $this->view['status'],
-            'birthday' => '{{ format_date($created_at) }}',
+            'birthday' => '{{ date("d-m-Y", strtotime($birthday)) }}',
         ];
     }
 

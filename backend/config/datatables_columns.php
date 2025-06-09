@@ -217,4 +217,106 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'attributes' => [
+        'name' => [
+            'title' => 'Tên thuộc tính',
+            'icon' => 'ti ti-server',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'type' => [
+            'title' => 'Kiểu dữ liệu',
+            'icon' => 'ti ti-percentage',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'is_active' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+    'seasons' => [
+        'name' => [
+            'title' => 'Tên mùa',
+            'icon' => 'ti ti-label',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'start_date' => [
+            'title' => 'Ngày bắt đầu',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'end_date' => [
+            'title' => 'Ngày kết thúc',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+    'notifications' => [
+        'title' => [
+            'title' => 'Tiêu đề',
+            'icon' => 'ti ti-bell',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'user_name' => [
+            'title' => 'Người nhận',
+            'icon' => 'ti-user',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'sent_at' => [
+            'title' => 'Ngày thông báo',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'is_read' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'read_at' => [
+            'title' => 'Thời gian đọc',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

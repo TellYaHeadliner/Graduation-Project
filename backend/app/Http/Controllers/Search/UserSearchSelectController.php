@@ -36,8 +36,7 @@ class UserSearchSelectController extends BaseSearchSelectController
             'results' => $this->instance->map(function ($item) {
                 return [
                     'id' => $item['id'],
-                    'text' => $item['fullname'] . '| ' . UserRole::getDescription($item['role']->value) .
-                                '|'. $item['phone'] . '|' . $item['email'],
+                    'text' => $item['fullname'] . '|'. $item['phone'] . '|' . $item['email'],
                 ];
             }),
         ];

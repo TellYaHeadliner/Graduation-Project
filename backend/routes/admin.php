@@ -151,6 +151,7 @@ Route::middleware(['RoleCheck:Admin'])->group(function () {
         Route::prefix('/select')->as('select.')->group(function () {
             Route::get('/amenities', [App\Http\Controllers\Admin\Amenity\AmenitySearchSelectController::class, 'selectSearch'])->name('amenities');
             Route::get('/userCustomer', [App\Http\Controllers\Admin\User\UserCustomerSearchSelectController::class, 'selectSearch'])->name('userCustomer');
+            Route::get('/hotels', [App\Http\Controllers\Admin\Hotel\HotelSearchSelectController::class, 'selectSearch'])->name('hotel');
         });
     });
 });

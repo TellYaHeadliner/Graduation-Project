@@ -148,4 +148,21 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý voucher',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-ticket"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm voucher',
+                'routeName' => 'admin.voucher.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Voucher',
+                'routeName' => 'admin.voucher.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ]
+        ]
+    ],
 ];

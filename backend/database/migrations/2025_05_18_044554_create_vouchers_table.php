@@ -26,7 +26,6 @@ return new class extends Migration
             $table->date('end_date');
             $table->tinyInteger('customer_scope')->default(1);
             $table->timestamps();
-
         });
     }
 

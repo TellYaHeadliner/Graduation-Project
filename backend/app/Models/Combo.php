@@ -23,13 +23,11 @@ class Combo extends Model
                     ->withPivot('quantity')
                     ->withTimestamps();
     }
-
     public function bookings()
     {
         return $this->belongsToMany(Booking::class, 'booking_combos', 'combo_id', 'booking_id')
                     ->withPivot('quantity', 'price', 'total_price')
                     ->withTimestamps();
     }
-   
-
+    
 }

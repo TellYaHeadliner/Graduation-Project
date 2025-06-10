@@ -7,6 +7,11 @@ import TableRoom from "../components/Table/TableRoom";
 import { tableRoomData } from "../utils/TableRoomStaticData";
 import FindHotel from "../components/FindHotel/FindHotel";
 import TabService from "../components/Tab/TabService";
+import DataListRule from "../components/DataList/DataListRule";
+import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
+import ButtonBook from "../components/Button/ButtonBook";
+import CarouselCard from "../components/CustomCarousel/CarouselCard";
+import { CardListStaticData } from "../utils/CardListStaticData";
 
 export default function DetailHotel() {
     return (
@@ -90,7 +95,7 @@ export default function DetailHotel() {
                     </div>
                 </div>
                 <div className="flex flex-col mt-4">
-                    <h2 className="text-lg font-semibold">
+                    <h2 className="text-xl font-semibold">
                         Lựa chọn loại phòng
                     </h2>
                     <div className="mb-4">
@@ -99,13 +104,39 @@ export default function DetailHotel() {
                     <TableRoom data={tableRoomData} />
                 </div>
                 <div>
-                    <h2 className="text-lg font-bold mt-2">
+                    <h2 className="text-xl font-bold mt-2">
                         Chọn dịch vụ
                     </h2>
                     <div className="mt-2">
                         <TabService />
                     </div>
+                    <div className="mt-2">
+                        <ButtonBook />
+                    </div>
                 </div>
+                <div>
+                    <h2 className="text-xl font-bold mt-2">
+                        Đây là quy định của khách sạn chúng tôi
+                    </h2>
+                    <p className="font-thin">
+                        Bạn nên biết khi sử dụng khách sạn của chúng tôi
+                    </p>
+                    <div className="mt-2">
+                        <DataListRule />
+                    </div>
+                </div>
+                <div>
+                    <h2 className="text-xl font-bold mt-2">
+                        FAQ (Câu hỏi thường xuyên về khách sạn)
+                    </h2>
+                    <p className="font-thin">
+                       Những câu hỏi thường gặp mà khách hàng hay hỏi về khách sạn chúng tôi 
+                    </p>
+                    <AccordionFAQHotel />
+                </div>
+            </div>
+            <div className="mt-2">
+                <CarouselCard cardList={CardListStaticData} title="Những khách sạn bạn có thể quan tâm" />
             </div>
         </MainLayout>
     )

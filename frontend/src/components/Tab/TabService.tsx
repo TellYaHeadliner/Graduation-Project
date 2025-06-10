@@ -1,6 +1,7 @@
  import { Tabs, CheckboxGroup, Checkbox } from "@radix-ui/themes";
-import { hotelServices } from "../../utils/HotelServicesStaticData";
+import { combos, hotelServices } from "../../utils/HotelServicesStaticData";
 import { useState } from "react";
+import TableCombos from "../Table/TableCombos";
 
 export default function TabService(){
 
@@ -22,7 +23,7 @@ export default function TabService(){
             </Tabs.List>
 
             <Tabs.Content value="Combo-dich-vu" className="mt-2">
-                
+                <TableCombos datas={combos}/>
             </Tabs.Content>
 
             <Tabs.Content value="Dich-vu-rieng-le" className="mt-2">

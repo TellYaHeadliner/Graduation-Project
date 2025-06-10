@@ -21,17 +21,26 @@ export const hotelServices = [
     "Dịch vụ giữ hành lý"
 ];
 
-interface CombosType{
+export interface CombosType{
     tenCombo: string;
+    moTa: string;
+    giaCombo: number;
+    giaGoc: number;
+    uuDai: number;
+    dichVu: dichVuType[];
+}
+export interface dichVuType{
+  ten: string;
+  soLuong: string
 }
 
-export const combos = [
+export const combos: CombosType[] = [
     {
       tenCombo: "Thư giãn tối đa",
       moTa: "Phù hợp cho kỳ nghỉ cuối tuần thư thái",
       giaCombo: 1050000,
       giaGoc: 1235000,
-      uuDai: "15% OFF",
+      uuDai: 15,
       dichVu: [
         { ten: "Phòng Deluxe", soLuong: "1 đêm" },
         { ten: "Massage 60", soLuong: "1 lần" },
@@ -43,7 +52,7 @@ export const combos = [
       moTa: "Dành cho các cặp đôi tận hưởng không gian riêng tư và lãng mạn",
       giaCombo: 1650000,
       giaGoc: 1950000,
-      uuDai: "15% OFF",
+      uuDai: 15,
       dichVu: [
         { ten: "Phòng Suite hướng biển", soLuong: "1 đêm" },
         { ten: "Bữa tối tại nhà hàng sang trọng", soLuong: "1 lần" },
@@ -56,7 +65,7 @@ export const combos = [
       moTa: "Combo lý tưởng cho chuyến du lịch gia đình trọn vẹn",
       giaCombo: 2450000,
       giaGoc: 2870000,
-      uuDai: "15% OFF",
+      uuDai: 15,
       dichVu: [
         { ten: "Phòng Family", soLuong: "2 đêm" },
         { ten: "Vé vào khu vui chơi trẻ em", soLuong: "2 trẻ" },

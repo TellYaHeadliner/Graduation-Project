@@ -319,4 +319,62 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'vouchers' => [
+        'code' => [
+            'title' => 'Mã voucher',
+            'icon' => 'ti ti-ticket',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'hotel_scope' => [
+            'title' => 'Khách sạn',
+            'icon' => 'ti-building',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'customer_scope' => [
+            'title' => 'Khách hàng',
+            'icon' => 'ti-user',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'discount_type' => [
+            'title' => 'Loại giảm giá',
+            'icon' => 'ti-percent',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'discount_value' => [
+            'title' => 'Giá trị giảm',
+            'icon' => 'ti-currency-dollar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'start_date' => [
+            'title' => 'Ngày bắt đầu',
+            'icon' => 'ti-calendar-event',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'end_date' => [
+            'title' => 'Ngày kết thúc',
+            'icon' => 'ti-calendar-x',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'is_active' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

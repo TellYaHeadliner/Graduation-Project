@@ -90,7 +90,7 @@ class UserController extends Controller
             $user = User::find($this->data['id']);
 
             if($user->role->value != $this->data['role']){
-                return redirect()->route($this->route['create'])->with('error', 'Không thể thay đổi vai trò chính mình');
+                return redirect()->route($this->route['edit'], [$this->data['id']])->with('error', 'Lhông thể thay đổi vai trò chính mình');
             }
 
             $user->update($this->data);
@@ -99,7 +99,7 @@ class UserController extends Controller
             return redirect()->route($this->route['index'])->with('success', 'Cập nhập thành công');
         } catch (Exception $e) {
             DB::rollback();
-            return redirect()->route($this->route['create'])->with('error', 'Cập nhập thất bại');
+            return redirect()->route($this->route['edit'], [$this->data['id']])->with('error', 'Cập nhập thất bại');
         }
     }
     public function store(UserRequest $request)

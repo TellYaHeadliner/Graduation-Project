@@ -2,16 +2,17 @@
 @push('libs-css')
     <link rel="stylesheet" href="{{ asset('/libs/select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/libs/select2/dist/css/select2-bootstrap-5-theme.min.css') }}">
+    @include('admin.voucher.scripts.style')
 @endpush
 @section('content')
 
     <div class="page-body">
         <div class="container-xl">
-            <x-form :action="route('admin.user.update')" type="put" :validate="true">
-                <x-input type="hidden" name="id" :value="$user->id" />
+            <x-form :action="route('admin.voucher.update')" type="put" :validate="true">
+                <x-input type="hidden" name="id" :value="$voucher->id" />
                 <div class="row justify-content-center">
-                    @include('admin.user.forms.edit-left')
-                    @include('admin.user.forms.edit-right')
+                    @include('admin.voucher.forms.edit-left')
+                    @include('admin.voucher.forms.edit-right')
                 </div>
             </x-form>
         </div>
@@ -27,5 +28,5 @@
 @endpush
 
 @push('custom-js')
-    @include('admin.user.scripts.style')
+    @include('admin.voucher.scripts.scripts')
 @endpush

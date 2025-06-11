@@ -27,11 +27,10 @@ class VoucherDataTable extends BaseDataTable
     {
         $this->view = [
             'code' => 'admin.voucher.datatable.code',
-            'hotel_id' => 'admin.voucher.datatable.hotel_id',
+            'hotel_scope' => 'admin.voucher.datatable.hotel_scope',
+            'customer_scope' => 'admin.voucher.datatable.customer_scope',
             'discount_type' => 'admin.voucher.datatable.discount_type',
             'discount_value' => 'admin.voucher.datatable.discount_value',
-            'min_order_value' => 'admin.voucher.datatable.min_order_value',
-            'max_discount_value' => 'admin.voucher.datatable.max_discount_value',
             'is_active' => 'admin.voucher.datatable.is_active',
             'action' => 'admin.voucher.datatable.action',
         ];
@@ -40,17 +39,17 @@ class VoucherDataTable extends BaseDataTable
     public function setColumnSearch(): void
     {
 
-        $this->columnAllSearch = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+        $this->columnAllSearch = [0, 3, 4, 5, 6, 7];
 
-        $this->columnSearchDate = [6, 7];
+        $this->columnSearchDate = [5, 6];
 
         $this->columnSearchSelect = [
             [
-                'column' => 2,
+                'column' => 3,
                 'data' => VoucherDiscountType::asSelectArray(),
             ],
             [
-                'column' => 8,
+                'column' => 7,
                 'data' => VoucherStatus::asSelectArray(),
             ],
         ];
@@ -58,7 +57,7 @@ class VoucherDataTable extends BaseDataTable
 
     public function query()
     {
-        return $this->repository::with('hotel')->orderBy('created_at', 'desc');
+        return $this->repository::orderBy('created_at', 'desc');
     }
 
     protected function setCustomColumns(): void
@@ -70,11 +69,10 @@ class VoucherDataTable extends BaseDataTable
     {
         $this->customEditColumns = [
             'code' => $this->view['code'],
-            'hotel_id' => $this->view['hotel_id'],
+            'hotel_scope' => $this->view['hotel_scope'],
+            'customer_scope' => $this->view['customer_scope'],
             'discount_type' => $this->view['discount_type'],
             'discount_value' => $this->view['discount_value'],
-            'min_order_value' => $this->view['min_order_value'],
-            'max_discount_value' => $this->view['max_discount_value'],
             'is_active' => $this->view['is_active'],
             'start_date' => '{{ date("d-m-Y", strtotime($start_date)) }}',
             'end_date' => '{{ date("d-m-Y", strtotime($end_date)) }}',
@@ -90,17 +88,8 @@ class VoucherDataTable extends BaseDataTable
 
     protected function setCustomRawColumns(): void
     {
-        $this->customRawColumns = ['action', 'code', 'hotel_id', 'discount_type', 'discount_value', 'min_order_value', 'max_discount_value', 'is_active'];
+        $this->customRawColumns = ['action', 'code', 'hotel_scope', 'discount_type', 'discount_value', 'is_active' ,'customer_scope'];
     }
 
-    public function setCustomFilterColumns(): void
-    {
-        $this->customFilterColumns = [
-            'hotel_id' => function ($query, $keyword) {
-                $query->whereHas('hotel', function ($q) use ($keyword) {
-                    $q->where('name', 'like', '%' . $keyword . '%');
-                });
-            },
-        ];
-    }
+    public function setCustomFilterColumns(): void{}
 }

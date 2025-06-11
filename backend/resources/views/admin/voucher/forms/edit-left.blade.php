@@ -1,83 +1,98 @@
 <div class="col-12 col-md-9">
-    <!-- Thông tin đăng nhập -->
-    <div class="card mb-3">
+    <div class="card">
         <div class="card-header justify-content-center">
-            <h2 class="mb-0 ">{{ __('Thông tin đăng nhập') }}</h2>
+            <h2 class="mb-0">{{ __('Thông tin Voucher') }}</h2>
         </div>
         <div class="row card-body">
-            <div class="col-md-6 col-12">
+            <!-- code -->
+            <div class="col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-phone"></i> {{ __('Số điện thoại') }}:</label>
-                    <x-input-phone name="phone" :value="$user->phone" placeholder="{{ __('Số điện thoại') }}" />
+                    <label class="control-label">{{ __('Mã vouher') }}:</label>
+                    <x-input type="text" name="code" :value="$voucher->code" :required="true"
+                        placeholder="{{ __('Mã voucher') }}" />
                 </div>
             </div>
-            <div class="col-md-6 col-12">
+
+            <!-- hotel -->
+            <div class="col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-mail"></i> {{ __('Email đăng nhập') }}:</label>
-                    <x-input-email id="emailInput" name="email" :value="$user->email" />
+                    <label class="control-label">{{ __('Áp dụng cho Khách sạn') }}:</label>
+                    <x-select name="hotel_id[]" class="select2-bs5-ajax" :data-url="route('admin.search.select.hotel')"
+                        id="hotel_id" multiple>
+                        @if (!empty($voucher->hotels) && $voucher->hotel_scope == \App\Enums\Voucher\VoucherHotelScope::SpecificHotels->value)
+                            @foreach ($voucher->hotels as $hotel)
+                                <x-select-option :option="$hotel->id" :value="$hotel->id"
+                                    :title="$hotel->name . '|' . $hotel->email" />
+                            @endforeach
+                        @endif
+                    </x-select>
+                    <span class="text-danger">* Để trống nếu chọn tất cả</span>
                 </div>
             </div>
-			<!-- new password -->
-            <div class="col-md-6 col-12">
+
+            <!-- user -->
+            <div class=" col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-key"></i> {{ __('Mật khẩu') }}:</label>
-                    <x-input-password name="password" />
+                    <label class="control-label">{{ __('Người nhận') }}:</label>
+                    <x-select name="user_id[]" class="select2-bs5-ajax" :data-url="route('search.select.user')"
+                        id="user_id" multiple>
+                        @if (!empty($voucher->users) && $voucher->customer_scope == \App\Enums\Voucher\VoucherCustomerScope::SpecificCustomers->value)
+                            @foreach ($voucher->users as $user)
+                                <x-select-option :option="$user->id" :value="$user->id"
+                                    :title="$user->fullname . '|' . $user->phone .'|'.$user->email " />
+                            @endforeach
+                        @endif
+                    </x-select>
+                    <span class="text-danger">* Để trống nếu chọn tất cả</span>
                 </div>
             </div>
-			<!-- new password confirmation-->
+            {{-- start_date --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-key"></i> {{ __('Xác nhận mật khẩu') }}:</label>
-                    <x-input-password name="password_confirmation" data-parsley-equalto="input[name='password']"
-                        data-parsley-equalto-message="{{ __('Mật khẩu không khớp.') }}" />
+                    <label class="control-label">{{ __('Ngày bắt đầu') }}:</label>
+                    <x-input type="date" name="start_date" :value=" format_date($voucher->start_date , 'Y-m-d')" />
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Thông tin cơ bản -->
-    <div class="card mb-3">
-        <div class="card-header justify-content-center">
-            <h2 class="mb-0">{{ __('Thông tin cơ bản') }}</h2>
-        </div>
-        <div class="row card-body">
+            {{-- end_date --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-user-edit"></i> {{ __('Họ và tên') }}:</label>
-                    <x-input name="fullname" :value="$user->fullname" placeholder="{{ __('Họ và tên') }}" />
+                    <label class="control-label">{{ __('Ngày kết thúc') }}:</label>
+                    <x-input type="date" name="end_date" :value=" format_date($voucher->end_date,'Y-m-d')" />
                 </div>
             </div>
+            {{-- discount_type --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-calendar"></i> {{ __('Ngày sinh') }}:</label>
-                    <x-input type="date" :value="isset($user->birthday) ? format_date($user->birthday, 'Y-m-d') : null" name="birthday" />
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-gender-female"></i> {{ __('Giới tính') }}:</label>
-                    <x-select name="gender">
-                        @foreach ($gender as $key => $value)
-                            <x-select-option :option="$user->gender->value" :value="$key" :title="__($value)" />
-                        @endforeach
+                    <label class="control-label">{{ __('Kiểu giảm giá') }}:</label>
+                    <x-select name="discount_type" id="discount_type" >
+                        <option value="0" {{ $voucher->discount_type->value == 0 ? 'selected' : '' }}> Số tiền cố định</option>
+                        <option value="1" {{ $voucher->discount_type->value == 1 ? 'selected' : '' }}> Giảm giá theo phần trăm</option>
                     </x-select>
                 </div>
             </div>
+            {{-- discount_value --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-map-pin"></i> {{ __('Địa chỉ') }}:</label>
-                    <x-input name="address" :value="$user->address" placeholder="{{ __('Địa chỉ') }}" />
+                    <label class="control-label">{{ __('Giá trị giảm ') }}:</label>
+                    <x-input-price name="discount_value_price" id="discount_value_price" :value="($voucher->discount_type->value == 0) ? $voucher->discount_value : 0"  :placeholder="__('Giá trị giảm')" />
+                    <x-input style="display: none;" name="discount_value_percent" id="discount_value_percent" :value="($voucher->discount_type->value == 1) ? $voucher->discount_value: 0 " :placeholder="__('%')" />
                 </div>
             </div>
+            {{-- min_order_value --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-users"></i> {{ __('Vai trò') }}:</label>
-                    <x-select name="role" >
-                        @foreach ($role as $key => $value)
-                            <x-select-option :value="$key" :title="__($value)" :option="$user->role->value"/>
-                        @endforeach
-                    </x-select>
+                    <label class="control-label">{{ __('Hóa đơn tối thiểu') }}:</label>
+                    <x-input-price name="min_order_value" id="min_order_value" :value="$voucher->min_order_value" :required="true" :placeholder="__('Hóa đơn tối thiểu')" />
                 </div>
             </div>
+            {{-- max_discount_value --}}
+            <div class="col-md-6 col-12" id="max_discount_value_group" style="display: none;">
+                <div class="mb-3">
+                    <label class="control-label">{{ __('Giảm giá tối đa') }}:</label>
+                    <x-input-price name="max_discount_value" id="max_discount_value" :value="$voucher->max_discount_value" :required="true" :placeholder="__('Giảm giá tối đa')" />
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

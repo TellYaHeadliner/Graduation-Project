@@ -326,9 +326,15 @@ return [
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
-        'hotel_id' => [
+        'hotel_scope' => [
             'title' => 'Khách sạn',
             'icon' => 'ti-building',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'customer_scope' => [
+            'title' => 'Khách hàng',
+            'icon' => 'ti-user',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
@@ -341,18 +347,6 @@ return [
         'discount_value' => [
             'title' => 'Giá trị giảm',
             'icon' => 'ti-currency-dollar',
-            'orderable' => false,
-            'addClass' => 'text-center align-middle'
-        ],
-        'min_order_value' => [
-            'title' => 'Hóa đơn tối thiểu',
-            'icon' => 'ti-wallet',
-            'orderable' => false,
-            'addClass' => 'text-center align-middle'
-        ],
-        'max_discount_value' => [
-            'title' => 'Giá trị giảm tối đa ',
-            'icon' => 'ti-arrow-down-right',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],

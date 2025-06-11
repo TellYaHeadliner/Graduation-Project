@@ -71,7 +71,7 @@ class Hotel extends Model
     }
 
     public function vouchers(){
-        return $this->hasMany(Voucher::class, 'hotel_id');
+        return $this->belongsToMany(Voucher::class, 'voucher_hotels', 'hotel_id', 'voucher_id')->withTimestamps();
     }
 
     public function complaints(){

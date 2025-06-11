@@ -1,81 +1,86 @@
 <div class="col-12 col-md-9">
-    <!-- Thông tin đăng nhập -->
-    <div class="card mb-3">
+    <div class="card">
         <div class="card-header justify-content-center">
-            <h2 class="mb-0 ">{{ __('Thông tin đăng nhập') }}</h2>
+            <h2 class="mb-0">{{ __('Thông tin Voucher') }}</h2>
         </div>
         <div class="row card-body">
-            <div class="col-md-6 col-12">
+            <!-- code -->
+            <div class="col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-phone"></i> {{ __('Số điện thoại') }}:</label>
-                    <x-input-phone name="phone" :value="old('phone')" placeholder="{{ __('Số điện thoại') }}" />
+                    <label class="control-label">{{ __('Mã vouher') }}:</label>
+                    <x-input type="text" name="code" :value="old('code')" :required="true"
+                        placeholder="{{ __('Mã voucher') }}" />
                 </div>
             </div>
-            <div class="col-md-6 col-12">
+
+            <!-- hotel -->
+            <div class="col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-mail"></i> {{ __('Email đăng nhập') }}:</label>
-                    <x-input-email id="emailInput" name="email" :value="old('email')" />
+                    <label class="control-label">{{ __('Áp dụng cho Khách sạn') }}:</label>
+                    <x-select name="hotel_id[]" class="select2-bs5-ajax" :data-url="route('admin.search.select.hotel')"
+                        id="hotel_id" multiple>
+                    </x-select>
+                    <span class="text-danger">* Để trống nếu chọn tất cả</span>
                 </div>
             </div>
-            <div class="col-md-6 col-12">
+
+            <!-- user -->
+            <div class=" col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-key"></i> {{ __('Mật khẩu') }}:</label>
-                    <x-input-password name="password" />
+                    <label class="control-label">{{ __('Người nhận') }}:</label>
+                    <x-select name="user_id[]" class="select2-bs5-ajax" :data-url="route('search.select.user')"
+                        id="user_id" multiple>
+                    </x-select>
+                    <span class="text-danger">* Để trống nếu chọn tất cả</span>
                 </div>
             </div>
+            {{-- start_date --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-key"></i> {{ __('Xác nhận mật khẩu') }}:</label>
-                    <x-input-password name="password_confirmation" data-parsley-equalto="input[name='password']"
-                        data-parsley-equalto-message="{{ __('Mật khẩu không khớp.') }}" />
+                    <label class="control-label">{{ __('Ngày bắt đầu') }}:</label>
+                    <x-input type="date" name="start_date" :value="old('start_date')" />
                 </div>
             </div>
-        </div>
-    </div>
-    <!-- Thông tin cơ bản -->
-    <div class="card mb-3">
-        <div class="card-header justify-content-center">
-            <h2 class="mb-0">{{ __('Thông tin cơ bản') }}</h2>
-        </div>
-        <div class="row card-body">
+            {{-- end_date --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-user-edit"></i> {{ __('Họ và tên') }}:</label>
-                    <x-input name="fullname" :value="old('fullname')" placeholder="{{ __('Họ và tên') }}" />
+                    <label class="control-label">{{ __('Ngày kết thúc') }}:</label>
+                    <x-input type="date" name="end_date" :value="old('end_date')" />
                 </div>
             </div>
+            {{-- discount_type --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-calendar"></i> {{ __('Ngày sinh') }}:</label>
-                    <x-input type="date" name="birthday" />
-                </div>
-            </div>
-            <div class="col-md-6 col-12">
-                <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-gender-female"></i> {{ __('Giới tính') }}:</label>
-                    <x-select name="gender">
-                        @foreach ($gender as $key => $value)
-                            <x-select-option :value="$key" :title="__($value)" />
-                        @endforeach
+                    <label class="control-label">{{ __('Kiểu giảm giá') }}:</label>
+                    <x-select name="discount_type" id="discount_type">
+                        <option value="0"> Số tiền cố định</option>
+                        <option value="1"> Giảm giá theo phần trăm</option>
                     </x-select>
                 </div>
             </div>
+            {{-- discount_value --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-map-pin"></i> {{ __('Địa chỉ') }}:</label>
-                    <x-input name="address" :value="old('address')" placeholder="{{ __('Địa chỉ') }}" />
+                    <label class="control-label">{{ __('Giá trị giảm ') }}:</label>
+                    <x-input-price name="discount_value_price" id="discount_value_price" :value="old('discount_value_price',0)"  :placeholder="__('Giá trị giảm')" />
+                    <x-input style="display: none;" name="discount_value_percent" id="discount_value_percent" :value="old('discount_value_percent',0)" :placeholder="__('%')" />
                 </div>
             </div>
+            {{-- min_order_value --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-users"></i> {{ __('Vai trò') }}:</label>
-                    <x-select name="role" :selected="2" >
-                        @foreach ($role as $key => $value)
-                            <x-select-option :value="$key" :title="__($value)" :option="old('role',2)"/>
-                        @endforeach
-                    </x-select>
+                    <label class="control-label">{{ __('Hóa đơn tối thiểu') }}:</label>
+                    <x-input-price name="min_order_value" id="min_order_value" :value="old('min_order_value')" :required="true" :placeholder="__('Hóa đơn tối thiểu')" />
                 </div>
             </div>
+            {{-- max_discount_value --}}
+            <div class="col-md-6 col-12" id="max_discount_value_group" style="display: none;">
+                <div class="mb-3">
+                    <label class="control-label">{{ __('Giảm giá tối đa') }}:</label>
+                    <x-input-price name="max_discount_value" id="max_discount_value" :value="old('max_discount_value',0)" :required="true" :placeholder="__('Giảm giá tối đa')" />
+                </div>
+            </div>
+
         </div>
     </div>
 </div>

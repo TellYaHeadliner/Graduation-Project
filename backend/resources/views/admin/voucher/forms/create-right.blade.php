@@ -9,19 +9,10 @@
     </div>
     <div class="card mb-3">
         <div class="card-header">
-            <i class="ti ti-photo"></i>
-            <span class="ms-2">@lang('Avatar')</span>
+            <span><i class="ti ti-check"></i>{{ __(' Đang áp dụng') }}</span>
         </div>
         <div class="card-body p-2">
-            <x-input-image-ckfinder name="avatar" showImage="featureImage" />
-        </div>
-    </div>
-    <div class="card mb-3">
-        <div class="card-header">
-            <span><i class="ti ti-user-check me-2"></i>{{ __('Đang hoạt động') }}</span>
-        </div>
-        <div class="card-body p-2">
-            <x-input-switch name="status" value="1" :label="__('Đang hoạt động?')" />
+            <x-input-switch name="is_active" value="1" :label="__('Đang áp dụng?')" />
         </div>
     </div>
 

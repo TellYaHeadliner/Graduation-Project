@@ -22,8 +22,9 @@ class Voucher extends Model
         return $this->belongsToMany(User::class, 'voucher_user', 'voucher_id', 'user_id')
                     ->withTimestamps();
     }
-    public function hotel(){
-        return $this->belongsTo(Hotel::class,'hotel_id');
+    public function hotels(){
+        return $this->belongsToMany(Hotel::class, 'voucher_hotels', 'voucher_id', 'hotel_id')
+                    ->withTimestamps();
     }
 
     public function transactions()

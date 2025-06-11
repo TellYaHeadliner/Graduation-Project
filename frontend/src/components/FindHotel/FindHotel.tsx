@@ -23,6 +23,8 @@ registerLocale("vi", vi);
 
 export default function FindHotel() {
     const [isOpen, setIsOpen] = useState(false);
+    const [isNull, setIsNull] = useState(false);
+    const [error, setError] = useState("");
     const dropDownRef = useRef<HTMLDivElement | null>(null);
     const toggleOpen = () => setIsOpen((prev) => !prev);
     const navigate = useNavigate(); 
@@ -57,6 +59,10 @@ export default function FindHotel() {
             dispatch(setRooms(roomsFromQuery));
             dispatch(setWithPets(withPetsFromQuery));
         }
+        else {
+            setIsNull(true);
+            setError("Vui lòng nhập đầy đủ địa điểm, thời gian, số lượng người và phòng");
+        }
 
         const handleClickOutside = (event: MouseEvent) => {
             if (dropDownRef.current && !dropDownRef.current.contains(event.target as Node)) {
@@ -89,8 +95,8 @@ export default function FindHotel() {
     }
     return (
         <div className="search-booking">
-            <form className="flex flex-nowrap items-center mt-4 md:justify" onSubmit={handleSubmit}>
-                <div className="flex flex-col gap-1 " dir="ltr">
+            <form className="flex flex-nowrap items-center mt-4 md:justify w-full" onSubmit={handleSubmit}>
+                <div className="flex flex-col gap-1" dir="ltr">
                     <select
                         onChange={(e) => dispatch(setProvince(e.target.value))}
                         name="province"
@@ -189,6 +195,7 @@ export default function FindHotel() {
                         </button>
                     </div>
                 )}
+
                 </div>
                 <div className="flex items-center flex-nowrap" dir="rtl">
                     <button
@@ -200,6 +207,11 @@ export default function FindHotel() {
                     </button>
                 </div>
             </form>
+            { isNull && (
+                <div className="text-red-700">
+                    { error }
+                </div>
+            )}
         </div>
     );
 }

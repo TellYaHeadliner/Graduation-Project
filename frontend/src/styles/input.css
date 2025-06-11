@@ -20,4 +20,5 @@
     --breakpoints-lg: 992px;
     --breakpoints-xl: 1200px;
     --breakpoints-2xl: 1400px;
+    --default-font-family: "Blue Sans",BlinkMacSystemFont,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
 }

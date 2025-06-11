@@ -1,24 +1,29 @@
+export interface hotelServiceType{
+  name: string;
+  price: number;
+}
+
 export const hotelServices = [
-    "Wi-Fi miễn phí",
-    "Bữa sáng",
-    "Hồ bơi",
-    "Phòng gym",
-    "Dịch vụ giặt ủi",
-    "Đưa đón sân bay",
-    "Bãi đỗ xe",
-    "Spa & Massage",
-    "Lễ tân 24/7",
-    "Dịch vụ phòng",
-    "Nhà hàng",
-    "Quầy bar",
-    "Phòng không hút thuốc",
-    "Két an toàn",
-    "Tivi màn hình phẳng",
-    "Điều hòa không khí",
-    "Máy sấy tóc",
-    "Bồn tắm",
-    "Phòng họp/hội nghị",
-    "Dịch vụ giữ hành lý"
+  { name: "Wi-Fi miễn phí", price: 0 },
+  { name: "Bữa sáng", price: 100_000 },
+  { name: "Hồ bơi", price: 50_000 },
+  { name: "Phòng gym", price: 70_000 },
+  { name: "Dịch vụ giặt ủi", price: 30_000 },
+  { name: "Đưa đón sân bay", price: 200_000 },
+  { name: "Bãi đỗ xe", price: 20_000 },
+  { name: "Spa & Massage", price: 300_000 },
+  { name: "Lễ tân 24/7", price: 0 },
+  { name: "Dịch vụ phòng", price: 40_000 },
+  { name: "Nhà hàng", price: 0 }, // miễn phí nếu chỉ là phục vụ, tùy chọn món tính sau
+  { name: "Quầy bar", price: 0 }, // đồ uống tính riêng
+  { name: "Phòng không hút thuốc", price: 0 },
+  { name: "Két an toàn", price: 10_000 },
+  { name: "Tivi màn hình phẳng", price: 0 },
+  { name: "Điều hòa không khí", price: 0 },
+  { name: "Máy sấy tóc", price: 0 },
+  { name: "Bồn tắm", price: 0 },
+  { name: "Phòng họp/hội nghị", price: 500_000 },
+  { name: "Dịch vụ giữ hành lý", price: 0 }
 ];
 
 export interface CombosType{

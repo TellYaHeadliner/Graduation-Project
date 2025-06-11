@@ -12,6 +12,7 @@ import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
 import ButtonBook from "../components/Button/ButtonBook";
 import CarouselCard from "../components/CustomCarousel/CarouselCard";
 import { CardListStaticData } from "../utils/CardListStaticData";
+import catFAQ from "../assets/cat_faq.png"
 
 export default function DetailHotel() {
     return (
@@ -105,17 +106,6 @@ export default function DetailHotel() {
                 </div>
                 <div>
                     <h2 className="text-xl font-bold mt-2">
-                        Chọn dịch vụ
-                    </h2>
-                    <div className="mt-2">
-                        <TabService />
-                    </div>
-                    <div className="mt-2">
-                        <ButtonBook />
-                    </div>
-                </div>
-                <div>
-                    <h2 className="text-xl font-bold mt-2">
                         Đây là quy định của khách sạn chúng tôi
                     </h2>
                     <p className="font-thin">
@@ -132,7 +122,12 @@ export default function DetailHotel() {
                     <p className="font-thin">
                        Những câu hỏi thường gặp mà khách hàng hay hỏi về khách sạn chúng tôi 
                     </p>
-                    <AccordionFAQHotel />
+                    <div className="flex flex-row justify-around items-center gap-8">
+                        <img src={catFAQ} alt={catFAQ} className="w-40 md:w-60 h-auto"/>
+                        <div className="w-full md:w-3/4">
+                            <AccordionFAQHotel />
+                        </div>
+                    </div>  
                 </div>
             </div>
             <div className="mt-2">

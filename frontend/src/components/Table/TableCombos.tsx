@@ -24,15 +24,18 @@ export default function TableCombos({ datas }: TableComboProps) {
           </thead>
           <tbody>
             {datas.map((data, index) => (
-              <tr key={index} className="hover:bg-gray-100">
-                <td className="text-center py-3 border border-black align-top">
-                  <Radio
-                    value="2"
-                    checked={selectedCombo?.tenCombo === data.tenCombo}
-                    onChange={(checked) => {
-                      if (checked) setSelectedCombo(data);
-                    }}
-                  />
+              <tr key={index} className="hover:bg-gray-100 border border-black">
+                <td>
+                  <div className="flex items-start justify-center h-full">
+                    <input
+                      type="radio"
+                      id={data.tenCombo}
+                      value={data.tenCombo}
+                      checked={selectedCombo?.tenCombo === data.tenCombo}
+                      onClick={() => setSelectedCombo(data)}
+                    />
+                  </div>
+                  
                 </td>
                 <td className="px-4 py-3 border border-black align-top">
                   <div className="font-semibold text-base">{data.tenCombo}</div>

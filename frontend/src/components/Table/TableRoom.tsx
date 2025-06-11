@@ -1,5 +1,9 @@
+import React from "react";
+import { Currency } from "../../utils/Currency";
 import { TableRoomType } from "../../utils/TableRoomStaticData";
 import DialogDetailHotel from "../Dialog/DialogDetailHotel";
+import { Button, Select } from "@radix-ui/themes";
+import DialogHotelServices from "../Dialog/DialogHotelServices";
 
 interface RoomTableProps{
     data: TableRoomType[];
@@ -13,8 +17,17 @@ export default function TableRoom({data}: RoomTableProps){
                     <tr className="bg-blue-700 text-white">
                         <th className="text-left px-4 py-2 border-r border-black">Loại phòng </th>
                         <th className="text-left px-4 py-2 border-r border-black">Số lượng người</th>
-                        <th className="px-4 py-2 border-r border-black">
-        
+                        <th className="text-left px-4 py-2 border-r border-black">
+                            Giá phòng
+                        </th>
+                        <th className="text-left px-4 py-2 border-r border-black">
+                            Lựa chọn số lượng
+                        </th>
+                        <th className="text-left px-4 py-2 border-r border-black">
+                            Ghi chú
+                        </th>
+                        <th className="text-left px-4 py-2 border-r border-black">
+                            
                         </th>
                     </tr>
                 </thead>
@@ -26,7 +39,7 @@ export default function TableRoom({data}: RoomTableProps){
                                     <DialogDetailHotel title={room.tenPhong} />
                                 </div>
                                 <div className="text-sm text-gray-600">
-                                    {room.loaiGiuong}
+                                    {room.loaiPhong}
                                 </div>
                             </td>
                             <td className="px-4 py-3 border-r">
@@ -34,10 +47,34 @@ export default function TableRoom({data}: RoomTableProps){
                                     {room.soLuong} người
                                 </div>
                             </td>
+                            <td className="px-4 py-3 border-r">
+                                <div className="font-medium cursor pointer">
+                                    {Currency.formatVND(room.giaPhong)}
+                                </div>
+                            </td>
+                            <td className="px-4 py-3 border-r">
+                                <Select.Root defaultValue="0">
+                                    <Select.Trigger />
+                                    <Select.Content>
+                                        <Select.Item value="0">0</Select.Item>
+                                        <Select.Item value="1">1</Select.Item>
+                                    </Select.Content>
+                                </Select.Root>
+                            </td>
+                            <td className="px-4 py-3 border-r">
+                                <ul className="list-disc list-inside">
+                                    {room?.ghiChu.map((note, index) => (
+                                        <React.Fragment key={index}>
+                                           {note.note1 && <li>{note.note1}</li>}
+                                           {note.note2 && <li>{note.note2}</li>}
+                                           {note.note3 && <li>{note.note3}</li>}
+                                        </React.Fragment>
+                                    ))}
+                                </ul>
+                            </td>
+
                             <td className="px-4 py-3 text-left border-r">
-                                <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-4 py-2 rounded">
-                                    Xem giá
-                                </button>
+                                <DialogHotelServices />
                             </td>
                         </tr>
                     ))}

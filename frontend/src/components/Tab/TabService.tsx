@@ -1,52 +1,61 @@
- import { Tabs, CheckboxGroup, Checkbox } from "@radix-ui/themes";
+import { Tabs } from "@radix-ui/themes";
 import { combos, hotelServices } from "../../utils/HotelServicesStaticData";
 import { useState } from "react";
 import TableCombos from "../Table/TableCombos";
+import TableServices from "../Table/TableServices";
 
-export default function TabService(){
+export default function TabService() {
 
-    const [, setSelectedServices] = useState<string[]>([]);
+    const [selectedService, setSelectedServices] = useState<string[]>([]);
 
     const toggleService = (service: string) => {
         setSelectedServices((prev) => prev.includes(service) ? prev.filter((item) => item !== service) : [...prev, service])
     }
 
     return (
-        <Tabs.Root defaultValue="Combo-dich-vu">
-            <Tabs.List>
-                <Tabs.Trigger value="Combo-dich-vu">
+        <Tabs.Root defaultValue="comboDichVu" orientation="horizontal" className="w-full space-y-4">
+            <Tabs.List className="flex flex-wrap gap-2 border-b pb-2">
+                <Tabs.Trigger
+                    value="comboDichVu"
+                    className="px-4 py-2 rounded-md font-medium transition-colors 
+                 data-[state=active]:bg-blue-500 data-[state=active]:text-white 
+                 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 
+                 hover:bg-blue-100"
+                >
                     Combo dịch vụ
                 </Tabs.Trigger>
-                <Tabs.Trigger value="Dich-vu-rieng-le">
+                <Tabs.Trigger
+                    value="dichVuRiengLe"
+                    className="px-4 py-2 rounded-md font-medium transition-colors 
+                 data-[state=active]:bg-blue-500 data-[state=active]:text-white 
+                 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 
+                 hover:bg-blue-100"
+                >
                     Dịch vụ riêng lẻ
                 </Tabs.Trigger>
             </Tabs.List>
 
-            <Tabs.Content value="Combo-dich-vu" className="mt-2">
-                <TableCombos datas={combos}/>
-            </Tabs.Content>
-
-            <Tabs.Content value="Dich-vu-rieng-le" className="mt-2">
-                <CheckboxGroup.Root size="3">
-                    <div className="grid grid-cols-4">
-                    {hotelServices.map((service) => (
-                        <CheckboxGroup.Item 
-                        value={service} 
-                        key={service} 
-                        onClick={() => toggleService(service)}
-                        >
-                            {service}
-                        </CheckboxGroup.Item>
-                    ))}
-                    </div>
-                </CheckboxGroup.Root>
-                <div className="mt-2 flex items-center gap-2 font-semibold">
-                    <Checkbox />
-                    Tôi chấp thuận việc sử dụng dịch vụ riêng lẻ thay cho combo 
+            <Tabs.Content value="comboDichVu">
+                <div className="overflow-x-auto">
+                    <TableCombos datas={combos} />
+                </div>  
+                <div className="mt-4">
+                    <button className="bg-blue-500 text-white px-2 rounded-sm text-lg">
+                        Thanh toán
+                    </button>
                 </div>
             </Tabs.Content>
 
-
+            <Tabs.Content value="dichVuRiengLe" className="mt-4 block">
+               <div className="overflow-x-auto">
+                    <TableServices data={hotelServices}/>
+               </div>
+               <div className="mt-4">
+                    <button className="bg-blue-500 text-white px-2 rounded-sm text-lg">
+                        Thanh toán
+                    </button>
+               </div>
+            </Tabs.Content>
         </Tabs.Root>
     )
 }

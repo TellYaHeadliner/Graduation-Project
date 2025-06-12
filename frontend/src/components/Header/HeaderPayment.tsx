@@ -1,7 +1,14 @@
+import { useSelector } from "react-redux";
 import logoHeader from "../../assets/light-logo.png"
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { RootState } from "../../redux/store";
 
-const steps = [
+interface Step{
+    label: string;
+    active: boolean;
+}
+
+const initialSteps: Step[] = [
     { label: "Điền thông tin", active: true},
     { label: "Xem lại thông tin", active: false},
     { label: "Thanh toán", active: false},
@@ -9,7 +16,23 @@ const steps = [
     { label: "Gửi phiếu thanh toán", active: false}
 ];
 
+
 export default function HeaderPayment(){
+
+    const [steps, setSteps] = useState<Step[]>(initialSteps);
+    const pageTitle = useSelector((state: RootState) => state.pageTitleSlice.pageTitle);
+
+    useEffect(() => {
+        setSteps(prevSteps =>
+            prevSteps.map(step => ({
+                ...step,
+                active: step.label.trim().toLowerCase() === pageTitle.trim().toLowerCase()
+            }))
+        );
+        console.log(pageTitle === initialSteps[0].label)
+
+    }, [pageTitle])
+
     return (
         <header className="bg-secondary flex justify-between items-center lg:px-14  py-4 border-b shadow-sm">
             <div className="flex items-center space-x-2">

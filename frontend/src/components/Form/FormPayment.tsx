@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { paymentSchemas, PaymentSchema } from "../../guards/paymentSchemas"
@@ -12,7 +13,7 @@ export default function FormPayment() {
         resolver: zodResolver(paymentSchemas),
     });
 
-    const onSubmit = (data) => {
+    const onSubmit = (data: any) => {
         console.log(data)
     }
 
@@ -92,8 +93,6 @@ export default function FormPayment() {
                     { errors.checkIn.message }
                 </p> }
             </div>
-
-            
 
         </form>
     )

@@ -1,4 +1,5 @@
 import { ReactNode } from "react"
+
 import { Theme } from "@radix-ui/themes"
 import HeaderPayment from "../components/Header/HeaderPayment"
 
@@ -12,7 +13,7 @@ export default function PaymentLayout(props: Props){
 
     return (
         <Theme>
-            <HeaderPayment />
+            <HeaderPayment/>
             <main className="flex-1">
                 {children}
             </main>

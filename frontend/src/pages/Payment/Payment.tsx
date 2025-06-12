@@ -1,14 +1,20 @@
 
-import CardHotel from "../components/Card/CardHotel";
-import DataListRoomPayment from "../components/DataList/DataListRoomPayment";
-import DataListServiesPayment from "../components/DataList/DataListServicesPayment";
-import FormPayment from "../components/Form/FormPayment";
-import useTitle from "../hooks/useTitle";
-import PaymentLayout from "../layouts/PaymentLayout";
-import { Currency } from "../utils/Currency";
+import { useDispatch } from "react-redux";
+import CardHotel from "../../components/Card/CardHotel";
+import DataListRoomPayment from "../../components/DataList/DataListRoomPayment";
+import DataListServiesPayment from "../../components/DataList/DataListServicesPayment";
+import FormPayment from "../../components/Form/FormPayment";
+import useTitle from "../../hooks/useTitle";
+import PaymentLayout from "../../layouts/PaymentLayout";
+import { Currency } from "../../utils/Currency";
+import { setPageTitle } from "../../redux/slices/titlePaymentSlice";
 
 export default function Payment() {
-    useTitle("Thanh toán");
+    const dispatch = useDispatch();
+    const title = "Điền thông tin";
+    useTitle(title);
+
+    dispatch(setPageTitle("Điền thông tin"));
 
     return (
         <PaymentLayout>
@@ -36,7 +42,7 @@ export default function Payment() {
                         </div>
                         <div className="mt-2">
                         <button type="submit" className="text-lg py-2 px-4 text-left bg-secondary hover:bg-accent text-white font-semibold rounded-lg transition duration-200">
-                            Thanh toán
+                            Xác nhận
                         </button>
                         </div>
                     </div>

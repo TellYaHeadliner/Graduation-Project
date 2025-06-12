@@ -7,5 +7,6 @@ export const PATH = {
     MAILGUI: "/mail-gui",
     KETQUATIMKIEM: "/search",
     CHITIETKHACHSAN: "/chi-tiet-khach-san",
-    THANHTOAN: "/thanh-toan"
+    THANHTOAN: "/thanh-toan",
+    THONGTINTHANHTOAN: "/xem-lai-thong-tin"
 }

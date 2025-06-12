@@ -131,4 +131,250 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'hotels' => [
+        'name' => [
+            'title' => 'Tên khách sạn',
+            'icon' => 'ti ti-building-skyscraper',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'owner' => [
+            'title' => 'Chủ sở hữu',
+            'icon' => 'ti ti-user',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'email' => [
+            'title' => 'Email',
+            'icon' => 'ti ti-mail',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'phone' => [
+            'title' => 'Số điện thoại',
+            'icon' => 'ti ti-phone',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'mst' => [
+            'title' => 'Mã số thuế',
+            'icon' => 'ti ti-numbers',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'avatar' => [
+            'title' => 'Ảnh đại diện',
+            'icon' => 'ti ti-user-circle',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'reputation_score' => [
+            'title' => 'Điểm uy tín',
+            'icon' => 'ti ti-exposure',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+    'services' => [
+        'name' => [
+            'title' => 'Tên dịch vụ',
+            'icon' => 'ti ti-server',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'default_unit' => [
+            'title' => 'Đơn vị tính',
+            'icon' => 'ti ti-percentage',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+    'attributes' => [
+        'name' => [
+            'title' => 'Tên thuộc tính',
+            'icon' => 'ti ti-server',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'type' => [
+            'title' => 'Kiểu dữ liệu',
+            'icon' => 'ti ti-percentage',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'is_active' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+    'seasons' => [
+        'name' => [
+            'title' => 'Tên mùa',
+            'icon' => 'ti ti-label',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'start_date' => [
+            'title' => 'Ngày bắt đầu',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'end_date' => [
+            'title' => 'Ngày kết thúc',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+    'notifications' => [
+        'title' => [
+            'title' => 'Tiêu đề',
+            'icon' => 'ti ti-bell',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'user_name' => [
+            'title' => 'Người nhận',
+            'icon' => 'ti-user',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'sent_at' => [
+            'title' => 'Ngày thông báo',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'is_read' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'read_at' => [
+            'title' => 'Thời gian đọc',
+            'icon' => 'ti-calendar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+    'vouchers' => [
+        'code' => [
+            'title' => 'Mã voucher',
+            'icon' => 'ti ti-ticket',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'hotel_scope' => [
+            'title' => 'Khách sạn',
+            'icon' => 'ti-building',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'customer_scope' => [
+            'title' => 'Khách hàng',
+            'icon' => 'ti-user',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'discount_type' => [
+            'title' => 'Loại giảm giá',
+            'icon' => 'ti-percent',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'discount_value' => [
+            'title' => 'Giá trị giảm',
+            'icon' => 'ti-currency-dollar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'start_date' => [
+            'title' => 'Ngày bắt đầu',
+            'icon' => 'ti-calendar-event',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'end_date' => [
+            'title' => 'Ngày kết thúc',
+            'icon' => 'ti-calendar-x',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'is_active' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

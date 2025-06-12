@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Enums\User\UserRole;
+use App\Enums\User\UserStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
@@ -30,6 +31,9 @@ class LoginController extends Controller
 
         if (Auth::attempt(['email' => $this->data['email'], 'password' => $this->data['password']])) {
             $request->session()->regenerate();
+            if(Auth()->user()->status === UserStatus::Deactivated){
+                return back()->with('error', 'Tài khoản của bạn hiện đang khóa!')->withInput();
+            }
             if (Auth()->user()->role === UserRole::Admin)
                 return redirect()->intended('/admin/dashboard');
             else {

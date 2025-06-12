@@ -20,7 +20,6 @@ Route::middleware(['RoleCheck:Admin'])->group(function () {
     })->name('admin');
 });
 
-  
 Route::prefix('ckfinder')->as('ckfinder.')->group(function () {
     Route::any('connector', [CKFinderController::class, 'requestAction'])->name('connector');
     Route::any('browser', [CKFinderController::class, 'browserAction'])->name('browser');
@@ -33,4 +32,11 @@ Route::controller(App\Http\Controllers\Auth\LoginController::class)
         Route::get('/', 'index')->name('index');
         Route::post('/', 'login')->name('post');
         Route::post('/logout', 'logout')->name('logout');
+    });
+
+Route::prefix('/search')->as('search.')->group(function () {
+    Route::prefix('/select')->as('select.')->group(function () {
+        Route::get('/banks', [App\Http\Controllers\Search\BankSearchSelectController::class, 'selectSearch'])->name('bank');
+        Route::get('/users', [App\Http\Controllers\Search\UserSearchSelectController::class, 'selectSearch'])->name('user');
+    });
 });

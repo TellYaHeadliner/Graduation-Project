@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Service\ServiceStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,9 @@ class Service extends Model
     use HasFactory;
     protected $table = 'services';
     protected $guarded = [];
-    protected $casts = [];
+    protected $casts = [
+        'status' => ServiceStatus::class
+    ];
 
     public function bookings()
     {

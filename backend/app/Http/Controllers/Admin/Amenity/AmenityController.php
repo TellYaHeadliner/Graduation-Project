@@ -77,7 +77,7 @@ class AmenityController extends Controller
         $amenity = Amenity::where('id', $id)
             ->whereHas('parent')
             ->first();
-        if(empty($amenity))
+        if (empty($amenity))
             $amenity = Amenity::find($id);
         return view($this->view['edit'], [
             'breadcrumbs' => $this->crums->add(('Danh sách tiện ích'), route($this->route['index']))->add('Sửa tiện ích'),
@@ -88,19 +88,21 @@ class AmenityController extends Controller
     public function update(AmenityRequest $request)
     {
         $this->data = $request->validated();
-        if (Amenity::where('name', '=', $this->data['name'])->exists()) {
-            return redirect()->route($this->route['edit'],$this->data['id'])->with('error', 'Tiện ích đã tồn tại');
-        }
         try {
             DB::beginTransaction();
             $amenity = Amenity::findOrFail($this->data['id']);
             unset($this->data['id']);
+            if ($amenity['name'] !== $this->data['name']) {
+                if (Amenity::where('name', '=', $this->data['name'])->exists()) {
+                    return redirect()->route($this->route['edit'],$this->data['id'])->with('error', 'Tiện ích đã tồn tại');
+                }
+            }
             $amenity->update($this->data);
             DB::commit();
-            return redirect()->route($this->route['index'])->with('success', 'Thêm thành công');
+            return redirect()->route($this->route['index'])->with('success', 'Cập nhập thành công');
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->route($this->route['create'])->with('error', 'Thêm thất bại');
+            return redirect()->route($this->route['edit'],[$this->data['id']])->with('error', 'Cập nhập thất bại');
         }
     }
 

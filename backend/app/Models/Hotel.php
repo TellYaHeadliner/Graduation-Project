@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Hotel\HotelStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +12,9 @@ class Hotel extends Model
 
     protected $table = 'hotels';
     protected $guarded = [];
-    protected $casts = [];
+    protected $casts = [
+        'status' => HotelStatus::class,
+    ];
 
     public function user(){
         return $this->belongsTo(User::class,'id','id');
@@ -68,7 +71,7 @@ class Hotel extends Model
     }
 
     public function vouchers(){
-        return $this->hasMany(Voucher::class, 'hotel_id');
+        return $this->belongsToMany(Voucher::class, 'voucher_hotels', 'hotel_id', 'voucher_id')->withTimestamps();
     }
 
     public function complaints(){

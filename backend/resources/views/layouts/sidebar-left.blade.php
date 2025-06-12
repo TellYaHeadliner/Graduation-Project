@@ -338,7 +338,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <h1 class="navbar-brand navbar-brand-autodark">
-            <a href="{{ route('admin') }}">
+            <a href="{{ Auth()->user()->role === App\Enums\User\UserRole::Admin ? route('admin.dashboard') : route('hotel.dashboard') }}">
                 <img style="min-height: 80px" src="{{ asset('/assets/images/light-logo.png') }}" alt="Tabler" class="navbar-brand-image">
             </a>
         </h1>

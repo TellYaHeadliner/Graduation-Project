@@ -4,7 +4,7 @@
 				        'data-format' => 'price',
 				    ])->merge($isRequired()) }}>
 <input type="hidden" name="{{ $attributes->get('name') }}" id="{{ $attributes->get('name') }}-hidden">
-<script src="{{ asset('public/libs/numeral/numeral.min.js') }}"></script>
+<script src="{{ asset('/libs/numeral/numeral.min.js') }}"></script>
 <script>
 				document.addEventListener('DOMContentLoaded', function() {
 								const currency = 'VND';

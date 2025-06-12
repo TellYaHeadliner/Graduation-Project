@@ -28,7 +28,7 @@ class RoomTypeVariant extends Model
     public function seasons()
     {
         return $this->belongsToMany(Season::class, 'room_type_season_prices', 'room_type_variant_id', 'season_id')
-                    ->withPivot(['discount_type','discount_value','status'])
+                    ->withPivot(['discount_type','discount_value'])
                     ->withTimestamps();
     }
     public function bookingDetails()

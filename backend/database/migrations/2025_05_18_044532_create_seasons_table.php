@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('name');
             $table->dateTime('start_date');
             $table->dateTime('end_date');
-            $table->boolean('override_dates')->default(false);
             $table->longText('description')->nullable();
             $table->tinyInteger('status');
             $table->timestamps();

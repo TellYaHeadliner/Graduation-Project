@@ -18,7 +18,6 @@ return new class extends Migration
             $table->foreignId('season_id')->constrained('seasons')->onDelete('cascade');
             $table->tinyInteger('discount_type')->default(0); // 0: %, 1: fixed amount
             $table->integer('discount_value')->default(0);
-            $table->tinyInteger('status')->default(1);
             $table->primary(['room_type_variant_id', 'season_id']);
             $table->timestamps();
         });

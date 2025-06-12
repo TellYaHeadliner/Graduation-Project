@@ -16,31 +16,40 @@
                             <div class="card-header justify-content-center">
                                 <h2 class="mb-0">{{ __('Thông tin Lớp học') }}</h2>
                             </div>
-                            <div class="row card-body">    
-                                <!-- name -->
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="control-label">{{ __('Tên Lớp') }}:</label>
+                            <form action="#" method="post">
+                                <div class="row card-body">
+                                    <!-- name -->
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="control-label">{{ __('Tên Lớp') }}:</label>
+                                        </div>
                                     </div>
-                                </div>
-                    
-                                <!-- desc -->
-                                <div class="col-12">
-                                    <div class="mb-3">
-                                        <label class="control-label">{{ __('Mô tả') }}:</label>
-                                        <textarea name="desc" class="ckeditor visually-hidden">{{ old('desc') }}</textarea>
-                                    </div>
-                                </div>
-                    
-                                <hr />
 
-                                <div class="col-12 col-md-12">
-                                    <div class="mb-3">
-                                        {{-- <label class="control-label">{{ __('Hình ảnh') }}:</label> --}}
-                                        <x-input-image-ckfinder name="image" showImage="image" />
+                                    <!-- desc -->
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label class="control-label">{{ __('Mô tả') }}:</label>
+                                            <textarea name="desc"
+                                                class="ckeditor visually-hidden">{{ old('desc') }}</textarea>
+                                        </div>
+                                    </div>
+
+                                    <hr />
+
+                                    <div class="col-12 col-md-12">
+                                        <div class="mb-3">
+                                            {{-- <label class="control-label">{{ __('Hình ảnh') }}:</label> --}}
+                                            <x-input-gallery-ckfinder name="gallery" type="multiple" />
+                                        </div>
+                                    </div>
+                                       <div class="col-12 col-md-12">
+                                        <div class="mb-3">
+                                            {{-- <label class="control-label">{{ __('Hình ảnh') }}:</label> --}}
+                                            <input type="submit">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -50,13 +59,13 @@
 @endsection
 
 @push('libs-js')
-<!-- button in datatable -->
-<script src="{{ asset('/vendor/datatables/buttons.server-side.js') }}"></script>
+    <!-- button in datatable -->
+    <script src="{{ asset('/vendor/datatables/buttons.server-side.js') }}"></script>
 
 @endpush
 
 @push('custom-js')
 
-@include('ckfinder::setup')
+    @include('ckfinder::setup')
 
 @endpush

@@ -1,34 +1,6 @@
 <?php
 
 return [
-    'user_package' => [
-        'user_id' => [
-            'title' => 'Khách hàng',
-            'icon' => 'ti-diamond',
-            'orderable' => false,
-            'addClass' => 'text-center align-middle'
-        ],
-        'package_id' => [
-            'title' => 'Gói tập',
-            'icon' => 'ti-coins',
-            'orderable' => false,
-            'addClass' => 'text-center align-middle',
-        ],
-        'created_at' => [
-            'title' => 'Ngày gia hạn',
-            'icon' => 'ti-coins',
-            'orderable' => false,
-            'addClass' => 'text-center align-middle',
-        ],
-        'action' => [
-            'title' => 'Thao tác',
-            'icon' => 'ti-settings',
-            'orderable' => false,
-            'exportable' => false,
-            'printable' => false,
-            'addClass' => 'text-center align-middle'
-        ],
-    ],
     'amenities' => [
         'name' => [
             'title' => 'Tên tiện ích',
@@ -359,6 +331,46 @@ return [
         'end_date' => [
             'title' => 'Ngày kết thúc',
             'icon' => 'ti-calendar-x',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'is_active' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+    'commission_rules' => [
+        'min_amount' => [
+            'title' => 'Hóa đơn tối thiểu',
+            'icon' => 'ti ti-currency-dollar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'max_amount' => [
+            'title' => 'Hóa đơn tối đa',
+            'icon' => 'ti ti-currency-dollar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'commission_percent' => [
+            'title' => 'Phần trăm hoa hồng',
+            'icon' => 'ti ti-percentage',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'note' => [
+            'title' => 'Ghi chú',
+            'icon' => 'ti ti-notebook',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],

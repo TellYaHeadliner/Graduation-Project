@@ -11,7 +11,7 @@ enum ServiceStatus: int
 
     case Active = 1;
     case Suspended = 2;
-    case Pending = 4;
+    case Pending = 3;
 
     public function badge(): string
     {

@@ -1,7 +1,7 @@
 export class Currency{
     static formatVND(price: number | null): string {
         if (price === 0){
-            return "O VNĐ"
+            return "0 VNĐ"
         }
         if (price === null || isNaN(0)){
             return ""

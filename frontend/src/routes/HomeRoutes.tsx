@@ -3,6 +3,7 @@ import { Route } from "react-router-dom"
 import AuthenticatedGuard from "../guards/AuthenticatedGuard"
 import { PATH } from "../constants/Paths"
 import LoadingSpinner from "../components/Loading/LoadingSpinner"
+import Payment from "../pages/Payment"
 
 const Home = lazy(() => import("../pages/Home"))
 const ResultSearch = lazy(() => import("../pages/ResultSearch"))
@@ -24,6 +25,11 @@ export default function HomeRoutes() {
             <Route path={PATH.CHITIETKHACHSAN} element={
                 <Suspense fallback={<LoadingSpinner />}>
                     <DetailHotel />
+                </Suspense>
+            } />
+            <Route path={PATH.THANHTOAN} element={
+                <Suspense fallback={<LoadingSpinner />}>
+                    <Payment />
                 </Suspense>
             } />
         </Route>

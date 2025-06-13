@@ -29,9 +29,9 @@ export default function HeaderPayment(){
                 active: step.label.trim().toLowerCase() === pageTitle.trim().toLowerCase()
             }))
         );
-        console.log(pageTitle === initialSteps[0].label)
-
     }, [pageTitle])
+
+
 
     return (
         <header className="bg-secondary flex justify-between items-center lg:px-14  py-4 border-b shadow-sm">

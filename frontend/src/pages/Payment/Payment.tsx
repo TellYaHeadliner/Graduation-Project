@@ -14,7 +14,7 @@ export default function Payment() {
     const title = "Điền thông tin";
     useTitle(title);
 
-    dispatch(setPageTitle("Điền thông tin"));
+    dispatch(setPageTitle(title));
 
     return (
         <PaymentLayout>

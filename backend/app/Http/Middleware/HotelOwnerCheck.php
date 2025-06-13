@@ -3,10 +3,9 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use GPBMetadata\Google\Api\Auth;
 use Illuminate\Http\Request;
 
-class RoleCheck
+class HotelOwnerCheck
 {
     /**
      * Handle an incoming request.
@@ -15,13 +14,15 @@ class RoleCheck
      * @param  \Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
      * @return \Illuminate\Http\Response|\Illuminate\Http\RedirectResponse
      */
-    public function handle(Request $request, Closure $next, ...$role)
+    public function handle($request, Closure $next)
     {
-        $role = empty($role) ? [null] : $role;
-        if (Auth()->check() && in_array(Auth()->user()->role->name, $role)){
-            return $next($request);
+        $user = auth()->user();
+        $hotel_id = $request->route('hotel_id');
+
+        if ($user->id != $hotel_id) {
+            abort(403, 'Unauthorized access to this hotel.');
         }
-        
-        return redirect()->route('login.index')->with('error', 'Bạn không có quyền truy cập!');
+
+        return $next($request);
     }
 }

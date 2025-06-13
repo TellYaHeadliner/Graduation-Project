@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::middleware(['RoleCheck:Admin'])->group(function () {
+Route::middleware(['roleCheck:Admin'])->group(function () {
     Route::get('/dashboard', [App\Http\Controllers\Admin\Dashboard\DashboardController::class, 'index'])->name('dashboard');
     // amenities
     Route::prefix('/amenities')->as('amenity.')->group(function () {

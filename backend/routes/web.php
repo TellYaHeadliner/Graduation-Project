@@ -14,7 +14,7 @@ use CKSource\CKFinderBridge\Controller\CKFinderController;
 |
 */
 
-Route::middleware(['RoleCheck:Admin'])->group(function () {
+Route::middleware(['roleCheck:Admin,Owner'])->group(function () {
     Route::get('/', function () {
         return view('welcome');
     })->name('admin');

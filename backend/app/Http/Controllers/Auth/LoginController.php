@@ -31,13 +31,13 @@ class LoginController extends Controller
 
         if (Auth::attempt(['email' => $this->data['email'], 'password' => $this->data['password']])) {
             $request->session()->regenerate();
-            if(Auth()->user()->status === UserStatus::Deactivated){
+            if (Auth()->user()->status === UserStatus::Deactivated) {
                 return back()->with('error', 'Tài khoản của bạn hiện đang khóa!')->withInput();
             }
-            if (Auth()->user()->role === UserRole::Admin)
-                return redirect()->intended('/admin/dashboard');
-            else {
-                return redirect()->intended('/hotel/dashboard');
+            if (Auth()->user()->role === UserRole::Admin) {
+                return redirect()->intended(route('admin.dashboard'));
+            } else {
+                return redirect()->intended(route('hotel.dashboard', ['hotel_id' => Auth()->user()->id]));
             }
         } else {
             return back()->with('error', 'Thông tin đăng nhập không đúng')->withInput();

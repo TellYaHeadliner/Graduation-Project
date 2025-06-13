@@ -3,8 +3,16 @@
 return [
     [
         'title' => 'Dashboard',
-        'routeName' => 'admin',
+        'routeName' => 'hotel.dashboard',
         'icon' => '<i class="ti ti-home"></i>',
+        'param' => true,
+        'sub' => []
+    ],
+    [
+        'title' => 'Quy tắc chung khách sạn',
+        'routeName' => 'hotel.hotel_rules.index',
+        'icon' => '<i class="ti ti-clipboard-text"></i>',
+        'param' => true,
         'sub' => []
     ],
     [
@@ -14,7 +22,7 @@ return [
         'sub' => [
             [
                 'title' => 'Thêm Lớp',
-                'routeName' => 'admin',
+                'routeName' => null,
                 'icon' => '<i class="ti ti-plus"></i>',
             ],
             [

@@ -143,7 +143,7 @@
 												<h2 class="subtitle">404 - Page Not Found</h2>
 												<p class="message">The page you are looking for might have been removed, had its name changed, or is
 																temporarily unavailable.</p>
-												<a href="{{ route($routeName) }}" class="button">GO
+												<a href="/" class="button">GO
 																TO HOMEPAGE</a>
 								</div>
 

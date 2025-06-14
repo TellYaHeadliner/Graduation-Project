@@ -3,10 +3,10 @@ import { Route } from "react-router-dom"
 import { PATH } from "../constants/Paths"
 import LoadingSpinner from "../components/Loading/LoadingSpinner"
 
-const Login = lazy(() => import("../pages/Login"))
-const Register = lazy(() => import("../pages/Register"))
-const ForgotPassword = lazy(() => import("../pages/ForgotPassword"))
-const ConfirmMail = lazy(() => import("../pages/ConfirmMail"))
+const Login = lazy(() => import("../pages/Login/Login"))
+const Register = lazy(() => import("../pages/Login/Register"))
+const ForgotPassword = lazy(() => import("../pages/Login/ForgotPassword"))
+const ConfirmMail = lazy(() => import("../pages/Login/ConfirmMail"))
 
 export default function AuthRoutes() {
     return (

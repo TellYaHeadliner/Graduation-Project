@@ -32,6 +32,12 @@ Route::controller(App\Http\Controllers\Auth\LoginController::class)
         Route::get('/', 'index')->name('index');
         Route::post('/', 'login')->name('post');
         Route::post('/logout', 'logout')->name('logout');
+
+        Route::get('/auth/google/redirect', 'redirectToGoogle')->name('google.redirect');
+        Route::get('/auth/google/callback', 'handleGoogleCallback')->name('google.callback');
+        
+        Route::get('/auth/facebook/redirect', 'redirectToFacebook')->name('facebook.redirect');
+        Route::get('/auth/facebook/callback', 'handleFacebookCallback')->name('facebook.callback');
     });
 
 Route::prefix('/search')->as('search.')->group(function () {

@@ -22,6 +22,6 @@ class RoleCheck
             return $next($request);
         }
         
-        return redirect()->route('login.index')->with('error', 'Bạn không có quyền truy cập!');
+        return redirect()->route('login.index')->with('error', 'Bạn không thể try cập trang web này!');
     }
 }

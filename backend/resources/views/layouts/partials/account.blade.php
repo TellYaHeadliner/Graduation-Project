@@ -2,7 +2,7 @@
 				<a href="#" class="nav-link d-flex lh-1 text-reset p-0" data-bs-toggle="dropdown" aria-label="Open user menu">
 								<span class="avatar avatar-sm" style="background-image: url({{ asset(config('custom.images.avatar')) }})"></span>
 								<div class="d-none d-xl-block ps-2">
-												<div>Logn</div>
+												<div>{{ Auth()->user()->fullname}}</div>
 												<div class="small text-muted mt-1"></div>
 								</div>
 				</a>

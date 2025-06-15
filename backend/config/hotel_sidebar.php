@@ -9,7 +9,7 @@ return [
         'sub' => []
     ],
     [
-        'title' => 'Quy tắc chung khách sạn',
+        'title' => 'Quy tắc đặt chỗ',
         'routeName' => 'hotel.hotel_rules.index',
         'icon' => '<i class="ti ti-clipboard-text"></i>',
         'param' => true,

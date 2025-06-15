@@ -66,5 +66,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'roleCheck' => \App\Http\Middleware\RoleCheck::class,
         'hotelOwnerCheck' => \App\Http\Middleware\HotelOwnerCheck::class,
+        'checkJWT' => \App\Http\Middleware\CheckJWT::class,
     ];
 }

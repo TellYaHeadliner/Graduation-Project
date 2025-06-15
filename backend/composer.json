@@ -8,6 +8,7 @@
         "php": "^8.0",
         "bensampo/laravel-enum": "^6.12",
         "ckfinder/ckfinder-laravel-package": "^5.0",
+        "firebase/php-jwt": "^6.11",
         "fruitcake/laravel-cors": "^2.0.5",
         "guzzlehttp/guzzle": "^7.9",
         "kalnoy/nestedset": "^6.0",

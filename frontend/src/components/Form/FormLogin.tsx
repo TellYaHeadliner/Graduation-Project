@@ -4,6 +4,7 @@ import { loginSchema, LoginSchema } from "../../guards/loginSchemas"
 import { PATH } from "../../constants/Paths";
 import { FaFacebook, FaGoogle } from "react-icons/fa6"
 import { Button } from "@radix-ui/themes";
+import authApi from "../../api/Auth.api";
 
 export default function FormLogin() {
     const {
@@ -15,7 +16,13 @@ export default function FormLogin() {
     });
 
     const onSubmit = (data: LoginSchema) => {
-        console.log("Dữ liệu: ", data)
+        authApi.login(data.email, data.password)
+            .then(res => {
+                console.log(res.message)
+            })
+            .catch((err) => {
+                console.error(err);
+            })
     }
 
     return (

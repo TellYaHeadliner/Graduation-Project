@@ -165,4 +165,21 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Cấu hình quy tắc hoa hồng',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-settings"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm quy tắc hoa hồng',
+                'routeName' => 'admin.commission_rule.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+            ],
+            [
+                'title' => 'DS Quy tắc hoa hồng',
+                'routeName' => 'admin.commission_rule.index',
+                'icon' => '<i class="ti ti-list"></i>',
+            ]
+        ]
+    ],
 ];

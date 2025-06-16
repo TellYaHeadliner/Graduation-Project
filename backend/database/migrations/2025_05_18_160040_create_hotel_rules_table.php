@@ -19,7 +19,7 @@ return new class extends Migration
             $table->time('check_out_time');
             $table->boolean('pet_policy')->default(false);
             $table->boolean('child_policy')->default(false);
-            $table->integer('free_child_age')->nullable();
+            $table->integer('child_age_limit')->nullable();
             $table->integer('extra_bed_fee')->nullable();
             $table->timestamps();
             

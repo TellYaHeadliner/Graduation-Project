@@ -1,7 +1,10 @@
 <?php
 
 use App\Enums\Attribute\AttributeStatus;
+use App\Enums\CommissionRule\CommissionRuleStatus;
 use App\Enums\Hotel\HotelStatus;
+use App\Enums\HotelRule\HotelRuleChildPolicy;
+use App\Enums\HotelRule\HotelRulePetPolicy;
 use App\Enums\Notification\NotificationStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Enums\Service\ServiceStatus;
@@ -13,6 +16,8 @@ use App\Enums\Voucher\VoucherDiscountType;
 use App\Enums\Voucher\VoucherDiscountTypeStatus;
 use App\Enums\Voucher\VoucherHotelScope;
 use App\Enums\Voucher\VoucherStatus;
+use App\Models\CommissionRule;
+use App\Models\HotelRule;
 use App\Models\Service;
 use App\Models\Voucher;
 
@@ -68,6 +73,18 @@ return [
         ServiceStatus::Pending->value => 'Chờ duyệt',
         ServiceStatus::Active->value => 'Đang hoạt động',
         ServiceStatus::Suspended->value => 'Tạm ngừng',
+    ],
+    CommissionRuleStatus::class => [
+        CommissionRuleStatus::Inactive->value => 'Tạm ngưng áp dụng',
+        CommissionRuleStatus::Active->value => 'Đang áp dụng',
+    ],
+    HotelRulePetPolicy::class => [
+        HotelRulePetPolicy::Allowed->value => 'Cho phép',
+        HotelRulePetPolicy::NotAllowed->value => 'Không cho phép',
+    ],
+    HotelRuleChildPolicy::class => [
+        HotelRuleChildPolicy::Allowed->value => 'Cho phép',
+        HotelRuleChildPolicy::NotAllowed->value => 'Không cho phép',
     ],
     
 ];

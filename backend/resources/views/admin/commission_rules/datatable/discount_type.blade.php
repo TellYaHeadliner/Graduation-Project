@@ -1,0 +1,1 @@
+{{ \App\Enums\Voucher\VoucherDiscountType::getDescription($discount_type) }}

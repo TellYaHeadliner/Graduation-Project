@@ -27,7 +27,7 @@
 			font-feature-settings: "cv03", "cv04", "cv11";
 		}
 	</style>
-	
+
 </head>
 
 <body class="border-top-wide d-flex flex-column overflow-hidden">
@@ -68,11 +68,30 @@
 							{{ __('Đăng nhập') }}
 						</button>
 					</div>
+					<div class="mt-3">
+						<a href="{{ route('login.google.redirect') }}"
+							class="w-full font-semibold text-white"
+							style="text-decoration:none;margin-right:10px;"
+							>
+							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Google_Favicon_2025.svg/1002px-Google_Favicon_2025.svg.png"
+								alt="Google" style="width:20px;hight:20px" class="w-6 h-6 mr-3">
+							<span class="font-semibold text-gray-700">Đăng nhập với Google</span>
+						</a>
+						<a href="{{ route('login.facebook.redirect') }}"
+							class="w-full font-semibold text-white"
+							style="text-decoration:none"
+							>
+							<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png"
+								alt="Google" style="width:20px;hight:20px" class="w-6 h-6 mr-3">
+							<span class="font-semibold text-gray-700">Đăng nhập với Facebook</span>
+						</a>
+					</div>
 				</div>
 			</x-form>
 		</div>
 	</div>
 </body>
+
 </html>
 
 <x-alert />

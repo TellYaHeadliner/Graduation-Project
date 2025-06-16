@@ -15,4 +15,13 @@ Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
 
         });
     });
+    Route::prefix('/amenities')->as('amenity.')->group(function () {
+        Route::controller(App\Http\Controllers\Hotel\Amenity\AmenityController::class)->group(function () {
+
+            Route::get('/{hotel_id}', 'index')->name('index');
+
+            Route::put('/{hotel_id}/sua', 'update')->name('update');
+
+        });
+    });
 });

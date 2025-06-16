@@ -14,7 +14,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('checkJWT')->group(function () {});
+Route::middleware('checkJWT')->group(function () {
+    Route::prefix('/users')->as('user.')->group(function () {
+        Route::controller(App\Http\Controllers\API\User\UserController::class)->group(function () {
+            Route::get('/user-info','userInfo')->name('info');
+
+        });
+    });
+});
 
 
 Route::controller(App\Http\Controllers\API\Auth\AuthController::class)

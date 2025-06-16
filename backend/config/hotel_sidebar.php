@@ -16,22 +16,12 @@ return [
         'sub' => []
     ],
     [
-        'title' => 'Quản lý Tiện ích',
-        'routeName' => null,
-        'icon' => '<i class="ti ti-school"></i>',
-        'sub' => [
-            [
-                'title' => 'Thêm Lớp',
-                'routeName' => null,
-                'icon' => '<i class="ti ti-plus"></i>',
-            ],
-            [
-                'title' => 'DS Lớp học',
-                'routeName' => null,
-                'icon' => '<i class="ti ti-list"></i>',
-            ]
-        ]
+        'title' => 'Quản lý tiện ích',
+        'routeName' => 'hotel.amenity.index',
+        'icon' => '<i class="ti ti-tools"></i>',
+        'param' => true,
+        'sub' => []
     ],
-   
+
 
 ];

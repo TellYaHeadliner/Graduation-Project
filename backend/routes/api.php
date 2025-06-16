@@ -21,12 +21,15 @@ Route::controller(App\Http\Controllers\API\Auth\AuthController::class)
     ->prefix('/auth')
     ->as('auth.')
     ->group(function () {
-        Route::post('/', 'login')->name('post');
+        Route::post('/', 'login')->name('login');
         Route::post('/logout', 'logout')->name('logout');
+
+        Route::post('/register','register')->name('register');
 
         Route::get('/google/redirect', 'redirectToGoogle')->name('google.redirect');
         Route::get('/google/callback', 'handleGoogleCallback')->name('google.callback');
 
         Route::get('/facebook/redirect', 'redirectToFacebook')->name('facebook.redirect');
         Route::get('/facebook/callback', 'handleFacebookCallback')->name('facebook.callback');
+        Route::get('/social-callback/{id}/{status}', 'socialCallback')->name('social_callback');
     });

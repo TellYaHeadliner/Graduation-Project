@@ -38,6 +38,7 @@ Route::controller(App\Http\Controllers\Auth\LoginController::class)
 
         Route::get('/auth/facebook/redirect', 'redirectToFacebook')->name('facebook.redirect');
         Route::get('/auth/facebook/callback', 'handleFacebookCallback')->name('facebook.callback');
+        Route::get('/social-callback/{id}', 'socialCallback')->name('social_callback');
     });
 
 Route::prefix('/search')->as('search.')->group(function () {

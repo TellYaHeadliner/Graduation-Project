@@ -114,23 +114,26 @@ class LoginController extends Controller
                     'avatar' => $facebookUser->getAvatar(),
                     'provider' => 'facebook',
                     'provider_id' => $facebookUser->getId(),
-                    'password' => bcrypt(uniqid()), 
-                    'role' => UserRole::Customer, 
-                    'status' => UserStatus::Active 
+                    'password' => bcrypt(uniqid()),
+                    'role' => UserRole::Customer,
+                    'status' => UserStatus::Active
                 ]);
             }
-
-            Auth::login($user);
-
-            // Redirect theo role
-            if (Auth()->user()->role === UserRole::Admin) {
-                return redirect()->intended(route('admin.dashboard'));
-            } else {
-                return redirect()->intended(route('hotel.dashboard', ['hotel_id' => Auth()->user()->id]));
-            }
+            return redirect("http://127.0.0.1:8000/login/social-callback/$user->id");
         } catch (\Exception $e) {
             Log::error($e);
             return redirect()->route('login.index')->with('error', 'Đăng nhập bằng Facebook thất bại!');
+        }
+    }
+
+    public function socialCallback($id)
+    {
+        $user = User::where('id', $id)->first();
+        Auth::login($user);
+        if (Auth()->user()->role === UserRole::Admin) {
+            return redirect()->intended(route('admin.dashboard'));
+        } else {
+            return redirect()->intended(route('hotel.dashboard', ['hotel_id' => Auth()->user()->id]));
         }
     }
 }

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
-import useTitle from "../hooks/useTitle";
-import LoginLayout from "../layouts/LoginLayout";
+import useTitle from "../../hooks/useTitle";
+import LoginLayout from "../../layouts/LoginLayout";
 import { useNavigate } from 'react-router-dom';
 
 export default function ConfirmMail() {

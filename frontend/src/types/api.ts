@@ -4,7 +4,10 @@ export interface ApiError {
 }
 
 export interface ApiResponse<T> {
+  message: string;
   data: T;
-  status: number;
-  statusText: string;
+  status?: number;
+  statusText?: string;
 }
+
+

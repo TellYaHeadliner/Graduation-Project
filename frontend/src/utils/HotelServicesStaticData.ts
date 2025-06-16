@@ -14,8 +14,8 @@ export const hotelServices = [
   { name: "Spa & Massage", price: 300_000 },
   { name: "Lễ tân 24/7", price: 0 },
   { name: "Dịch vụ phòng", price: 40_000 },
-  { name: "Nhà hàng", price: 0 }, // miễn phí nếu chỉ là phục vụ, tùy chọn món tính sau
-  { name: "Quầy bar", price: 0 }, // đồ uống tính riêng
+  { name: "Nhà hàng", price: 0 }, 
+  { name: "Quầy bar", price: 0 }, 
   { name: "Phòng không hút thuốc", price: 0 },
   { name: "Két an toàn", price: 10_000 },
   { name: "Tivi màn hình phẳng", price: 0 },

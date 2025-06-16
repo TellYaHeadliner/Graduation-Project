@@ -30,14 +30,33 @@ export default function NavUser({ usernameProp }: NavUserProps){
           <AvatarCustom username={username} />
         </MenubarTrigger>
         <MenubarContent
-          className="mt-2 min-w-[160px] rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 p-1"
+          className="mt-2 min-w-[160px] rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 p-1 overflow-y-auto z-50"
           align="end"
         >
           <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
-            Thông tin cá nhân
+            <a href="">
+              Thông tin cá nhân
+            </a>
           </MenubarItem>
           <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
+            <a href="">
+              My booking 
+            </a>
+          </MenubarItem>
+          <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
+            <a href="">
+              Lịch sử booking
+            </a>
+          </MenubarItem>
+          <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
+            <a href="">
+              Khách sạn yêu thích
+            </a>
+          </MenubarItem>
+          <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
+            <a href="">
             Đăng xuất
+            </a>
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>

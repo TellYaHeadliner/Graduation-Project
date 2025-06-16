@@ -18,11 +18,10 @@ class RoleCheck
     public function handle(Request $request, Closure $next, ...$role)
     {
         $role = empty($role) ? [null] : $role;
-
         if (Auth()->check() && in_array(Auth()->user()->role->name, $role)){
             return $next($request);
         }
         
-        return redirect()->route('login.index')->with('error', 'Bạn không có quyền truy cập!');
+        return redirect()->route('login.index')->with('error', 'Bạn không thể try cập trang web này!');
     }
 }

@@ -34,11 +34,18 @@ class BaseController extends Controller
         $this->setRoute();
 
         $this->middleware(function ($request, $next) {
-            $this->crums = (new Breadcrumb())->add(
-                __('Dashboard'),
-                auth()->check() && auth()->user()->role === UserRole::Admin
-                    ? route('admin.dashboard') : route('hotel.dashboard')
-            );
+            $user = auth()->user();
+
+            if ($user && $user->role === UserRole::Admin) {
+                $url = route('admin.dashboard');
+            } elseif ($user) {
+                $url = route('hotel.dashboard', ['hotel_id' => $user->id]);
+            } else {
+                $url = '#'; 
+            }
+
+            $this->crums = (new Breadcrumb())->add(__('Dashboard'), $url);
+
             return $next($request);
         });
         // $this->crums = (new Breadcrumb())->add(__('Dashboard'), route('admin.dashboard'));

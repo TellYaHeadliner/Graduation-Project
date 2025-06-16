@@ -2,16 +2,16 @@
 @push('libs-css')
     <link rel="stylesheet" href="{{ asset('/libs/select2/dist/css/select2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('/libs/select2/dist/css/select2-bootstrap-5-theme.min.css') }}">
-    @include('hotel.amenity.scripts.style')
+    @include('hotel.information.scripts.style')
 @endpush
 @section('content')
     <div class="page-body">
         <div class="container-xl">
-            <x-form :action="route('hotel.amenity.update',['hotel_id'=>Auth()->user()->id])" type="put" :validate="true">
+            <x-form :action="route('hotel.information.update',['hotel_id'=>Auth()->user()->id])" type="put" :validate="true">
                 <x-input type="hidden" name="id" :value=" Auth()->user()->id " />
                 <div class="row justify-content-center">
-                    @include('hotel.amenity.forms.edit-left')
-                    @include('hotel.amenity.forms.edit-right')
+                    @include('hotel.information.forms.edit-left')
+                    @include('hotel.information.forms.edit-right')
                 </div>
             </x-form>
         </div>
@@ -27,5 +27,5 @@
 @endpush
 
 @push('custom-js')
-   
+  
 @endpush

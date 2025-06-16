@@ -22,6 +22,13 @@ return [
         'param' => true,
         'sub' => []
     ],
+    [
+        'title' => 'Thông tin khách sạn',
+        'routeName' => 'hotel.information.index',
+        'icon' => '<i class="ti ti-file-description"></i>',
+        'param' => true,
+        'sub' => []
+    ],
 
 
 ];

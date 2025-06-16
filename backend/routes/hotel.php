@@ -24,4 +24,13 @@ Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
 
         });
     });
+    Route::prefix('/information')->as('information.')->group(function () {
+        Route::controller(App\Http\Controllers\Hotel\Hotel\HotelController::class)->group(function () {
+
+            Route::get('/{hotel_id}', 'index')->name('index');
+
+            Route::put('/{hotel_id}/sua', 'update')->name('update');
+
+        });
+    });
 });

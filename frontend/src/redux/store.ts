@@ -2,11 +2,13 @@ import { configureStore } from "@reduxjs/toolkit"
 
 import authSlice from './slices/authSlice';
 import findHotelSlice from './slices/findHotelSlices';
+import pageTitleSlice from './slices/titlePaymentSlice';
 
 export const store = configureStore({
     reducer: {
         auth: authSlice,
-        findHotel: findHotelSlice
+        findHotel: findHotelSlice,
+        pageTitleSlice: pageTitleSlice
     },
     devTools: true
 });

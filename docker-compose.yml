@@ -86,10 +86,21 @@ services:
     networks:
       - app-network
     restart: unless-stopped
+  ngrok:
+    image: ngrok/ngrok:latest
+    container_name: ngrok_tunnel
+    restart: unless-stopped
+    environment:
+      NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
+    command: http localhost:9000
+    depends_on:
+      - backend
+    networks:
+      - app-network
 
 volumes:
   mysql-data:
-    name: roomix_mysql_data  # Named volume for clarity
+    name: roomix_mysql_data  # Named volume for clarityn
 
 networks:
   app-network:

@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 import { ApiError } from "../types/api"
 
 const api: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://127.0.0.1:9000/api/v1",
+  baseURL: import.meta.env.VITE_API_URL || "http://127.0.0.1:8000/api/v1",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

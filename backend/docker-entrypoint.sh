@@ -10,4 +10,4 @@ php artisan key:generate --force
 php artisan migrate --force
 
 # Khởi động server Laravel
-php artisan serve --host=0.0.0.0 --port=9000
+php artisan serve --host=0.0.0.0 --port=8000

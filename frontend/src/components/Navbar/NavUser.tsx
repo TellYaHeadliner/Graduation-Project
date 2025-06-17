@@ -8,6 +8,7 @@ import {
 import { useEffect, useState } from "react";
   
 import AvatarCustom from "../Avatar/AvatarCustom"
+import { PATH } from "../../constants/Paths";
 
 interface NavUserProps{
     usernameProp: string;
@@ -34,13 +35,8 @@ export default function NavUser({ usernameProp }: NavUserProps){
           align="end"
         >
           <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
-            <a href="">
+            <a href={PATH.THONGTINGUOIDUNG}>
               Thông tin cá nhân
-            </a>
-          </MenubarItem>
-          <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
-            <a href="">
-              My booking 
             </a>
           </MenubarItem>
           <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">

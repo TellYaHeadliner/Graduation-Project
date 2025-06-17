@@ -1,5 +1,4 @@
 
-import { useDispatch } from "react-redux";
 import CardHotel from "../../components/Card/CardHotel";
 import DataListRoomPayment from "../../components/DataList/DataListRoomPayment";
 import DataListServiesPayment from "../../components/DataList/DataListServicesPayment";
@@ -7,14 +6,11 @@ import FormPayment from "../../components/Form/FormPayment";
 import useTitle from "../../hooks/useTitle";
 import PaymentLayout from "../../layouts/PaymentLayout";
 import { Currency } from "../../utils/Currency";
-import { setPageTitle } from "../../redux/slices/titlePaymentSlice";
+
 
 export default function Payment() {
-    const dispatch = useDispatch();
     const title = "Điền thông tin";
     useTitle(title);
-
-    dispatch(setPageTitle(title));
 
     return (
         <PaymentLayout>

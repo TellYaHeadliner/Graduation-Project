@@ -5,6 +5,8 @@ import { PATH } from "../constants/Paths"
 import LoadingSpinner from "../components/Loading/LoadingSpinner"
 import Payment from "../pages/Payment/Payment"
 import InfoPayment from "../pages/Payment/InfoPayment"
+import InfoUser from "../pages/User/InfoUser"
+import MyBooking from "../pages/User/MyBooking"
 
 const Home = lazy(() => import("../pages/Home"))
 const ResultSearch = lazy(() => import("../pages/ResultSearch"))
@@ -38,6 +40,12 @@ export default function HomeRoutes() {
                     <InfoPayment />
                 </Suspense>
             } />
+            <Route path={PATH.THONGTINGUOIDUNG} element={
+                <Suspense fallback={<LoadingSpinner />}>
+                    <InfoUser />
+                </Suspense>
+            } />
+
         </Route>
     )
 }

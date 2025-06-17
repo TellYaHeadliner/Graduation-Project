@@ -8,5 +8,8 @@ export const PATH = {
     KETQUATIMKIEM: "/search",
     CHITIETKHACHSAN: "/chi-tiet-khach-san",
     THANHTOAN: "/thanh-toan",
-    THONGTINTHANHTOAN: "/xem-lai-thong-tin"
+    THONGTINTHANHTOAN: "/xem-lai-thong-tin",
+    THONGTINGUOIDUNG: "/thong-tin-nguoi-dung",
+    LICHSUBOOKING: "/lich-su-booking",
+    KHACHSANYEUTHICH: "/khach-san-yeu-thich"
 }

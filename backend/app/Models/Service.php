@@ -18,20 +18,13 @@ class Service extends Model
     public function bookings()
     {
         return $this->belongsToMany(Booking::class, 'booking_services', 'service_id', 'booking_id')
-                    ->withPivot('quantity', 'price', 'total_price')
-                    ->withTimestamps();
-    }
-    public function combos()
-    {
-        return $this->belongsToMany(Combo::class, 'combo_services', 'service_id', 'combo_id')
-                    ->withPivot('quantity')
-                    ->withTimestamps();
+            ->withPivot('quantity', 'price', 'total_price')
+            ->withTimestamps();
     }
     public function hotels()
     {
         return $this->belongsToMany(Hotel::class, 'hotel_services', 'service_id', 'hotel_id')
-                    ->withPivot('short_description', 'base_price', 'promo_price')
-                    ->withTimestamps();
+            ->withPivot('short_description', 'base_price', 'promo_price', 'status')
+            ->withTimestamps();
     }
-
 }

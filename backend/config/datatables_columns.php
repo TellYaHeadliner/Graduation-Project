@@ -389,4 +389,50 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'hotel_services' => [
+        'name' => [
+            'title' => 'Tên dịch vụ',
+            'icon' => 'ti ti-box',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'default_unit' => [
+            'title' => 'Đơn vị tính',
+            'icon' => 'ti ti-ruler',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'short_description' => [
+            'title' => 'Mô tả ngắn',
+            'icon' => 'ti ti-text-caption',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'base_price' => [
+            'title' => 'Giá gốc',
+            'icon' => 'ti ti-currency-dollar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'promo_price' => [
+            'title' => 'Giá giảm',
+            'icon' => 'ti ti-discount-2',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

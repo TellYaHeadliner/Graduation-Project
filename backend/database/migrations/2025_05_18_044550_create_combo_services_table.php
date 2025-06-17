@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('combo_services', function (Blueprint $table) {
             $table->foreignId('combo_id')->constrained('combos')->onDelete('cascade');
-            $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
+            $table->foreignId('hotel_service_id')->constrained('hotel_services')->onDelete('cascade');
             $table->integer('quantity')->default(1);
-            $table->primary(['combo_id', 'service_id']);
+            $table->primary(['combo_id', 'hotel_service_id']);
             $table->timestamps();
         });
     }

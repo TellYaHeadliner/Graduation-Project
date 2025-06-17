@@ -14,12 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('hotel_services', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
             $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
             $table->longText('short_description')->nullable();
             $table->integer('base_price')->default(0);
             $table->integer('promo_price')->nullable();
-            $table->primary(['hotel_id', 'service_id']);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
         });
     }

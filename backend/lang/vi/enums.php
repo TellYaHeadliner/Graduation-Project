@@ -5,6 +5,7 @@ use App\Enums\CommissionRule\CommissionRuleStatus;
 use App\Enums\Hotel\HotelStatus;
 use App\Enums\HotelRule\HotelRuleChildPolicy;
 use App\Enums\HotelRule\HotelRulePetPolicy;
+use App\Enums\HotelService\HotelServiceStatus;
 use App\Enums\Notification\NotificationStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Enums\Service\ServiceStatus;
@@ -18,6 +19,7 @@ use App\Enums\Voucher\VoucherHotelScope;
 use App\Enums\Voucher\VoucherStatus;
 use App\Models\CommissionRule;
 use App\Models\HotelRule;
+use App\Models\HotelService;
 use App\Models\Service;
 use App\Models\Voucher;
 
@@ -77,6 +79,10 @@ return [
     CommissionRuleStatus::class => [
         CommissionRuleStatus::Inactive->value => 'Tạm ngưng áp dụng',
         CommissionRuleStatus::Active->value => 'Đang áp dụng',
+    ],
+    HotelServiceStatus::class => [
+        HotelServiceStatus::INACTIVE->value => 'Đang bảo trì',
+        HotelServiceStatus::Active->value => 'Đang hoạt động',
     ],
     HotelRulePetPolicy::class => [
         HotelRulePetPolicy::Allowed->value => 'Cho phép',

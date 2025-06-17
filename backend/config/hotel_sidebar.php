@@ -22,6 +22,31 @@ return [
         'param' => true,
         'sub' => []
     ],
-
+    [
+        'title' => 'Thông tin khách sạn',
+        'routeName' => 'hotel.information.index',
+        'icon' => '<i class="ti ti-file-description"></i>',
+        'param' => true,
+        'sub' => []
+    ],
+    [
+        'title' => 'Quản lý dịch vụ',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-package"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm dịch vụ',
+                'routeName' => 'hotel.hotel_service.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+                'param' => true,
+            ],
+            [
+                'title' => 'DS dịch vụ',
+                'routeName' => 'hotel.hotel_service.index',
+                'icon' => '<i class="ti ti-list"></i>',
+                'param' => true,
+            ]
+        ]
+    ],
 
 ];

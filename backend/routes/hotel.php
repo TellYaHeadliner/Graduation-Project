@@ -45,4 +45,20 @@ Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
             Route::delete('/{hotel_id}/xoa/{id}', 'delete')->name('delete');
         });
     });
+    // Combos
+    Route::prefix('/combos')->as('combo.')->group(function () {
+        Route::controller(App\Http\Controllers\Hotel\Combo\ComboController::class)->group(function () {
+
+            Route::get('/{hotel_id}/them', 'create')->name('create');
+            Route::post('/{hotel_id}/them', 'store')->name('store');
+
+            Route::get('/{hotel_id}', 'index')->name('index');
+            Route::get('/{hotel_id}sua/{id}', 'edit')->name('edit');
+
+            Route::put('/{hotel_id}/sua', 'update')->name('update');
+
+            Route::delete('/{hotel_id}/xoa/{id}', 'delete')->name('delete');
+        });
+    });
+
 });

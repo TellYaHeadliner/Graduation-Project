@@ -48,5 +48,24 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý Combo',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-box-multiple"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm Combo',
+                'routeName' => 'hotel.combo.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+                'param' => true,
+            ],
+            [
+                'title' => 'DS Combo',
+                'routeName' => 'hotel.combo.index',
+                'icon' => '<i class="ti ti-list"></i>',
+                'param' => true,
+            ]
+        ]
+    ],
 
 ];

@@ -40,12 +40,12 @@ export default function NavUser({ usernameProp }: NavUserProps){
             </a>
           </MenubarItem>
           <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
-            <a href="">
+            <a href={PATH.LICHSUBOOKING}>
               Lịch sử booking
             </a>
           </MenubarItem>
           <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
-            <a href="">
+            <a href={PATH.KHACHSANYEUTHICH}>
               Khách sạn yêu thích
             </a>
           </MenubarItem>

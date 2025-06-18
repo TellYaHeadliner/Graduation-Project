@@ -3,15 +3,14 @@ import { Dialog } from "radix-ui";
 import TabService from "../Tab/TabService";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Button } from "@radix-ui/themes";
+import ButtonBook from "../Button/ButtonBook";
 
 
 export default function DialogHotelServices() {
     return (
         <Dialog.Root>
             <Dialog.Trigger>
-                <Button className="bg-blue-500 text-white">
-                    Đặt phòng
-                </Button>
+                <ButtonBook/>
             </Dialog.Trigger>
             <Dialog.Portal>
                 <Dialog.Overlay className="fixed inset-0 bg-black/50 z-40">

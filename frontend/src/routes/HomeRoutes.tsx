@@ -6,7 +6,8 @@ import LoadingSpinner from "../components/Loading/LoadingSpinner"
 import Payment from "../pages/Payment/Payment"
 import InfoPayment from "../pages/Payment/InfoPayment"
 import InfoUser from "../pages/User/InfoUser"
-import MyBooking from "../pages/User/MyBooking"
+import HistoryBooking from "../pages/User/HistoryBooking"
+import FavoriteHotels from "../pages/User/FavoriteHotels"
 
 const Home = lazy(() => import("../pages/Home"))
 const ResultSearch = lazy(() => import("../pages/ResultSearch"))
@@ -43,6 +44,16 @@ export default function HomeRoutes() {
             <Route path={PATH.THONGTINGUOIDUNG} element={
                 <Suspense fallback={<LoadingSpinner />}>
                     <InfoUser />
+                </Suspense>
+            } />
+            <Route path={PATH.LICHSUBOOKING} element={
+                <Suspense fallback={<LoadingSpinner />}>
+                    <HistoryBooking />
+                </Suspense>
+            } />
+            <Route path={PATH.KHACHSANYEUTHICH} element={
+                <Suspense fallback={<LoadingSpinner />}>
+                    <FavoriteHotels />
                 </Suspense>
             } />
 

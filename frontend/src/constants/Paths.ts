@@ -11,5 +11,5 @@ export const PATH = {
     THONGTINTHANHTOAN: "/xem-lai-thong-tin",
     THONGTINGUOIDUNG: "/thong-tin-nguoi-dung",
     LICHSUBOOKING: "/lich-su-booking",
-    KHACHSANYEUTHICH: "/khach-san-yeu-thich"
+    KHACHSANYEUTHICH: "/khach-san-yeu-thich",
 }

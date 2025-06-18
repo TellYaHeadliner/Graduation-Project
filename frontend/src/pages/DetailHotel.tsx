@@ -6,15 +6,16 @@ import FavoriteButton from "../components/Button/ButtonFavortie";
 import TableRoom from "../components/Table/TableRoom";
 import { tableRoomData } from "../utils/TableRoomStaticData";
 import FindHotel from "../components/FindHotel/FindHotel";
-import TabService from "../components/Tab/TabService";
 import DataListRule from "../components/DataList/DataListRule";
 import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
-import ButtonBook from "../components/Button/ButtonBook";
 import CarouselCard from "../components/CustomCarousel/CarouselCard";
 import { CardListStaticData } from "../utils/CardListStaticData";
 import catFAQ from "../assets/cat_faq.png"
 
+import 'react-chat-widget/lib/styles.css';
+
 export default function DetailHotel() {
+
     return (
         <MainLayout>
             <div className="flex lg:mx-26 flex-col text-black">

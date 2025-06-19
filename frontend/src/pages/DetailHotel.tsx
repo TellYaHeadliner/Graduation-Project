@@ -2,7 +2,6 @@ import MainLayout from "../layouts/MainLayout";
 import locationPin from "../assets/location-pin.svg"
 import CarouselComment from "../components/CustomCarousel/CarouselComment";
 import { HeartFilledIcon } from "@radix-ui/react-icons";
-import FavoriteButton from "../components/Button/ButtonFavortie";
 import TableRoom from "../components/Table/TableRoom";
 import { tableRoomData } from "../utils/TableRoomStaticData";
 import FindHotel from "../components/FindHotel/FindHotel";
@@ -11,8 +10,8 @@ import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
 import CarouselCard from "../components/CustomCarousel/CarouselCard";
 import { CardListStaticData } from "../utils/CardListStaticData";
 import catFAQ from "../assets/cat_faq.png"
-
-import 'react-chat-widget/lib/styles.css';
+import ChatButton from "../components/Chat/ChatButton";
+import DiscountBar from "../components/Discount/DiscountBar";
 
 export default function DetailHotel() {
 
@@ -28,7 +27,7 @@ export default function DetailHotel() {
                 </div>
                 <div className="flex gap-4">
                     <div className="w-2/3 h-64 bg-gray-300">
-
+                        
                     </div>
                     <div className="grid grid-cols-2 gap-4 w-1/3">
                         <div className="h-30 bg-gray-300 rounded"></div>
@@ -55,7 +54,7 @@ export default function DetailHotel() {
                                 <li className="flex items-center gap-2">
                                     <HeartFilledIcon />
                                     Buffet
-                                </li>                                
+                                </li>
                                 <li className="flex items-center gap-2">
                                     <HeartFilledIcon />
                                     Massage
@@ -93,7 +92,7 @@ export default function DetailHotel() {
                             Đánh giá về khách sạn chúng tôi
                         </h3>
                         <CarouselComment />
-                        <FavoriteButton />
+                        <DiscountBar />
                     </div>
                 </div>
                 <div className="flex flex-col mt-4">
@@ -121,19 +120,20 @@ export default function DetailHotel() {
                         FAQ (Câu hỏi thường xuyên về khách sạn)
                     </h2>
                     <p className="font-thin">
-                       Những câu hỏi thường gặp mà khách hàng hay hỏi về khách sạn chúng tôi 
+                        Những câu hỏi thường gặp mà khách hàng hay hỏi về khách sạn chúng tôi
                     </p>
                     <div className="flex flex-row justify-around items-center gap-8">
-                        <img src={catFAQ} alt={catFAQ} className="w-40 md:w-60 h-auto"/>
+                        <img src={catFAQ} alt={catFAQ} className="w-40 md:w-60 h-auto" />
                         <div className="w-full md:w-3/4">
                             <AccordionFAQHotel />
                         </div>
-                    </div>  
+                    </div>
                 </div>
             </div>
             <div className="mt-2">
                 <CarouselCard cardList={CardListStaticData} title="Những khách sạn bạn có thể quan tâm" />
             </div>
+            <ChatButton />
         </MainLayout>
     )
 }

@@ -1,9 +1,9 @@
 import { Navigate, Outlet } from "react-router-dom"
-import Cookies from 'js-cookie';
+import useAuth from "../hooks/useAuth";
 
 function AuthenticatedGuard() {
 
-    if (Cookies.get('token')){
+    if (localStorage.getItem('token')){
         return <Navigate to="/login" replace />;
     }
 

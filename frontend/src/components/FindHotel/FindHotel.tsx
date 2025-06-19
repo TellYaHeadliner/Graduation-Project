@@ -8,6 +8,7 @@ import { Provinces } from "../../constants/Provinces";
 import useFindHotel from "../../hooks/useFindHotel";
 import { vi } from "date-fns/locale/vi";
 import { useAppContext } from "../../context/AppContext";
+import { findHotelSchemas } from "../../guards/findHotelSchemas";
 
 registerLocale("vi", vi);
 
@@ -49,7 +50,6 @@ export default function FindHotel() {
         }
         else {
             setIsNull(true);
-            setError("Vui lòng nhập đầy đủ địa điểm, thời gian, số lượng người và phòng");
         }
 
         const handleClickOutside = (event: MouseEvent) => {
@@ -68,6 +68,21 @@ export default function FindHotel() {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
+        const result = findHotelSchemas.safeParse({
+            province,
+            dateRange: startDate && endDate ? `${startDate}-${endDate}` : "",
+            adults,
+            children,
+            rooms,
+            withPets
+        })
+
+        if (!result.success){
+            setIsNull(true);
+            setError(result.error.errors[0].message)
+            return;
+        }
+
         const queryParams = new URLSearchParams({
             ...(province && { province }),
             ...(startDate && { startDate: formatDate(startDate) }),
@@ -85,10 +100,11 @@ export default function FindHotel() {
             <form className="flex flex-nowrap items-center mt-4 md:justify w-full" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-1" dir="ltr">
                     <select
+                        value={state.findHotel.province || "" }
                         onChange={(e) => dispatch({ type: 'SET_PROVINCE', payload: e.target.value })}
                         name="province"
                         id="province"
-                        className="w-30 sm:w-30 2xl:w-50 2xl:h-15 px-4 py-2 border-2 border-accent rounded-s-lg 2xl:text-lg shadow-sm focus:outline-none focus:ring-secondary overflow-hidden "
+                        className="w-30 sm:w-50 2xl:w-60 2xl:h-15 px-4 py-2 border-2 border-accent rounded-s-lg 2xl:text-lg shadow-sm focus:outline-none focus:ring-secondary overflow-hidden "
                     >
                         <option value="" disabled hidden>
                             Tỉnh/ Thành phố
@@ -194,7 +210,7 @@ export default function FindHotel() {
                     </button>
                 </div>
             </form>
-            { isNull && (
+            { error && (
                 <div className="text-red-700">
                     { error }
                 </div>

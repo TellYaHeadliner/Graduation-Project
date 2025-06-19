@@ -7,6 +7,7 @@ import { Currency } from '../../utils/Currency';
 import { useAuthCheck } from "../../hooks/useAuthCheck";
 
 import "./CardItem.css"
+import { BadHotelBadge, DiscountPriceBadge, GoodHotelBadge } from "../Badge/BadgeCardItem";
 
 interface CardItemProps {
     title: string;
@@ -64,31 +65,17 @@ const AlertDialogComp: React.FC<AlertDialogCompProps> = ({ open, onOpenChange })
 const TagScore: React.FC<TagScoreProp> = ({ star }) => {
     if (star < 3) {
         return (
-            <span className="inline-block bg-red-600 text-white text-xs px-2 py-1 rounded mr-2">
-                Bad hotel
-            </span>
+            <BadHotelBadge />
         )
     }
     if (star >= 4 && star <= 5) {
         return (
-            <span className="inline-block bg-blue-900 text-white text-xs px-2 py-1 rounded mr-2">
-                Good hotel
-            </span>
+            <GoodHotelBadge />
         )
     }
     return null;
 }
 
-const TagDiscount: React.FC<TagDiscountPrice> = ({ discountPrice }) => {
-    if (discountPrice) {
-        return (
-            <span className="inline-block bg-yellow-400 text-white text-xs px-2 py-1 rounded">
-                Có giảm giá !
-            </span>
-        )
-    }
-    return null;
-}
 
 export default function CardItem({ title, address, star, price, reviewCount, discountPrice }: CardItemProps) {
 
@@ -136,7 +123,7 @@ export default function CardItem({ title, address, star, price, reviewCount, dis
                     </span>
                     <div>
                         <TagScore star={star} />
-                        <TagDiscount discountPrice={discountPrice} />
+                        <DiscountPriceBadge discountPrice={discountPrice} />
                     </div>
                     <span className="block w-full text-right text-gray-500">
                         {discountPrice ? (

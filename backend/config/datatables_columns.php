@@ -481,4 +481,38 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'combo_services' => [
+        'name' => [
+            'title' => 'Tên dịch vụ',
+            'icon' => 'ti ti-tag',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'default_unit' => [
+            'title' => 'Đơn vị tính',
+            'icon' => 'ti ti-ruler',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'base_price' => [
+            'title' => 'Giá gốc',
+            'icon' => 'ti ti-currency-dollar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'quantity' => [
+            'title' => 'Số lượng',
+            'icon' => 'ti ti-hash',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

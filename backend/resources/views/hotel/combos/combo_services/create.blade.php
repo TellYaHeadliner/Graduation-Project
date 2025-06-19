@@ -6,10 +6,11 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
-            <x-form :action="route('hotel.combo.store',Auth()->user()->id)" type="post" :validate="true">
+            <x-form :action="route('hotel.combo_service.store', ['hotel_id' => Auth()->user()->id, 'combo_id' => $combo_id])" type="post"
+                :validate="true">
                 <div class="row justify-content-center">
-                    @include('hotel.combos.forms.create-left')
-                    @include('hotel.combos.forms.create-right')
+                    @include('hotel.combos.combo_services.forms.create-left')
+                    @include('hotel.combos.combo_services.forms.create-right')
                 </div>
             </x-form>
         </div>
@@ -24,4 +25,5 @@
 @endpush
 
 @push('custom-js')
+    @include('hotel.combos.combo_services.scripts.scripts')
 @endpush

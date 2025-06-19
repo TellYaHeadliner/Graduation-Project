@@ -9,10 +9,10 @@
     </div>
     <div class="card mb-3">
         <div class="card-header">
-            <span><i class="ti ti-check"></i>{{ __(' Đang hoạt động') }}</span>
+            <span><i class="ti ti-check"></i>{{ __(' Đang áp dụng') }}</span>
         </div>
         <div class="card-body p-2">
-            <x-input-switch name="status" value="1" :label="__('Đang hoạt động?')" />
+            <x-input-switch name="status" value="1" :label="__('Đang áp dụng?')" />
         </div>
     </div>
 

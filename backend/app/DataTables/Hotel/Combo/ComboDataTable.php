@@ -25,13 +25,13 @@ class ComboDataTable extends BaseDataTable
     public function setView(): void
     {
         $this->view = [
-            'name' => 'hotel.combo.datatable.name',
-            'short_description' => 'hotel.combo.datatable.short_description',
-            'combo_price' => 'hotel.combo.datatable.combo_price',
-            'original_price' => 'hotel.combo.datatable.original_price',
-            'combo_services' => 'hotel.combo.datatable.combo_services',
-            'status' => 'hotel.combo.datatable.status',
-            'action' => 'hotel.combo.datatable.action',
+            'name' => 'hotel.combos.datatable.name',
+            'short_description' => 'hotel.combos.datatable.short_description',
+            'combo_price' => 'hotel.combos.datatable.combo_price',
+            'original_price' => 'hotel.combos.datatable.original_price',
+            'combo_services' => 'hotel.combos.datatable.combo_services',
+            'status' => 'hotel.combos.datatable.status',
+            'action' => 'hotel.combos.datatable.action',
         ];
     }
 

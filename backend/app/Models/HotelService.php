@@ -29,8 +29,13 @@ class HotelService extends Model
 
     public function combos()
     {
-        return $this->belongsToMany(Combo::class, 'combo_services','hotel_service_id','combo_id')
+        return $this->belongsToMany(Combo::class, 'combo_services', 'hotel_service_id', 'combo_id')
             ->withPivot('quantity')
             ->withTimestamps();
+    }
+
+    public function comboServices()
+    {
+        return $this->hasMany(ComboService::class, 'hotel_service_id');
     }
 }

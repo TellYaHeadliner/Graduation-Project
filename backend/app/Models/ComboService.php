@@ -19,7 +19,11 @@ class ComboService extends Model
         return $this->belongsTo(Combo::class,'combo_id');
     }
 
+    public function hotelService(){
+        return $this->belongsTo(HotelService::class,'hotel_service_id','id');
+    }
+
     public function service(){
-        return $this->belongsTo(Service::class,'service_id');
+        return $this->hasOneThrough(Service::class, HotelService::class, 'id', 'id', 'hotel_service_id', 'service_id');
     }
 }

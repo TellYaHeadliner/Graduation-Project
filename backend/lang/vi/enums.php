@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Attribute\AttributeStatus;
+use App\Enums\Combo\ComboStatus;
 use App\Enums\CommissionRule\CommissionRuleStatus;
 use App\Enums\Hotel\HotelStatus;
 use App\Enums\HotelRule\HotelRuleChildPolicy;
@@ -79,6 +80,10 @@ return [
     CommissionRuleStatus::class => [
         CommissionRuleStatus::Inactive->value => 'Tạm ngưng áp dụng',
         CommissionRuleStatus::Active->value => 'Đang áp dụng',
+    ],
+    ComboStatus::class => [
+        ComboStatus::Inactive->value => 'Tạm ngưng áp dụng',
+        ComboStatus::Active->value => 'Đang áp dụng',
     ],
     HotelServiceStatus::class => [
         HotelServiceStatus::INACTIVE->value => 'Đang bảo trì',

@@ -46,5 +46,6 @@ Route::prefix('/search')->as('search.')->group(function () {
         Route::get('/banks', [App\Http\Controllers\Search\BankSearchSelectController::class, 'selectSearch'])->name('bank');
         Route::get('/users', [App\Http\Controllers\Search\UserSearchSelectController::class, 'selectSearch'])->name('user');
         Route::get('/services', [App\Http\Controllers\Search\ServiceSearchSelectController::class, 'selectSearch'])->name('service');
+        Route::get('/bed-types', [App\Http\Controllers\Search\BedTypeSearchSelectController::class, 'selectSearch'])->name('bed_type');
     });
 });

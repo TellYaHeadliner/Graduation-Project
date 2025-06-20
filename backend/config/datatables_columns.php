@@ -515,4 +515,62 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'room_types' => [
+        'name' => [
+            'title' => 'Tên loại phòng',
+            'icon' => 'ti ti-tag',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'area' => [
+            'title' => 'Diện tích',
+            'icon' => 'ti ti-ruler-measure',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'room_quantity' => [
+            'title' => 'Số luợng phòng',
+            'icon' => 'ti ti-building-warehouse',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'room_code' => [
+            'title' => 'Mã phòng',
+            'icon' => 'ti ti-barcode',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'bed_type_id' => [
+            'title' => 'Loại giường',
+            'icon' => 'ti ti-bed',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'bed_quantity' => [
+            'title' => 'Số lượng giường',
+            'icon' => 'ti ti-hash',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'variants' => [
+            'title' => 'Biến thể',
+            'icon' => 'ti ti-box-multiple',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

@@ -17,13 +17,15 @@ return new class extends Migration
             $table->id();
             $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
             $table->string('name');
-            $table->double('area');
-            $table->integer('room_quantity');
-            $table->char('room_code'); 
-            $table->longText('gallery')->nullable(); 
-            $table->tinyInteger('status')->default(1); 
+            $table->string('description')->nullable();
+            $table->double('area')->nullable();
+            $table->integer('room_quantity')->nullable();
+            $table->char('room_code')->nullable();
+            $table->longText('gallery')->nullable();
+            $table->foreignId('bed_type_id')->nullable()->constrained('bed_types')->onDelete('set null');
+            $table->integer('bed_quantity')->default(1);
+            $table->tinyInteger('status')->default(1);
             $table->timestamps();
-
         });
     }
 

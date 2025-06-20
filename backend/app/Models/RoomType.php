@@ -18,13 +18,9 @@ class RoomType extends Model
     public function rooms(){
         return $this->hasMany(Room::class,'room_type_id');
     }
-    public function roomTypeBeds(){
-        return $this->hasMany(RoomTypeBed::class,'room_type_id');
-    }
-    public function bedTypes(){
-        return $this->belongsToMany(BedType::class, 'room_type_beds', 'room_type_id', 'bed_type_id')
-                    ->withPivot('quantity')
-                    ->withTimestamps();
+    public function bedType()
+    {
+        return $this->belongsTo(BedType::class, 'bed_type_id');
     }
     public function roomTypeAmenities()
     {

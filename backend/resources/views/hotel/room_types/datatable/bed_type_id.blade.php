@@ -1,0 +1,2 @@
+{{ $bedType->name }}
+

@@ -20,6 +20,7 @@
                     <select name="type" class="form-select">
                         <option value="text">Text</option>
                         <option value="number">Number</option>
+                        <option value="number">Number</option>
                     </select>
                 </div>
             </div>

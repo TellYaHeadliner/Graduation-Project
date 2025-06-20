@@ -8,6 +8,7 @@ use App\Enums\HotelRule\HotelRuleChildPolicy;
 use App\Enums\HotelRule\HotelRulePetPolicy;
 use App\Enums\HotelService\HotelServiceStatus;
 use App\Enums\Notification\NotificationStatus;
+use App\Enums\RoomType\RoomTypeStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Enums\Service\ServiceStatus;
 use App\Enums\User\UserGender;
@@ -21,6 +22,7 @@ use App\Enums\Voucher\VoucherStatus;
 use App\Models\CommissionRule;
 use App\Models\HotelRule;
 use App\Models\HotelService;
+use App\Models\RoomType;
 use App\Models\Service;
 use App\Models\Voucher;
 
@@ -88,6 +90,11 @@ return [
     HotelServiceStatus::class => [
         HotelServiceStatus::INACTIVE->value => 'Đang bảo trì',
         HotelServiceStatus::Active->value => 'Đang hoạt động',
+    ],
+    RoomTypeStatus::class => [
+        RoomTypeStatus::Discontinued->value => 'Ngừng hoạt động',
+        RoomTypeStatus::Active->value => 'Đang hoạt động',
+        RoomTypeStatus::TemporarilyUnavailable->value => 'Hết phòng tạm thời',
     ],
     HotelRulePetPolicy::class => [
         HotelRulePetPolicy::Allowed->value => 'Cho phép',

@@ -25,7 +25,7 @@ class UserApiRequest extends BaseRequest
                 'regex:/((09|03|07|08|05)+([0-9]{8})\b)/',
             ],
             'address' => ['nullable', 'string'],
-            'avatar' => ['nullable', 'string'],
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'birthday' => ['nullable', 'date_format:Y-m-d'],
             'gender' => ['required', new Enum(UserGender::class)],
             'password' => ['required', 'string'],

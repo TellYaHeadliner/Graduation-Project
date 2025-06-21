@@ -1,10 +1,15 @@
 import { Navigate, Outlet } from "react-router-dom"
 import useAuth from "../hooks/useAuth";
+import { Spinner } from "@radix-ui/themes";
 
 function AuthenticatedGuard() {
+    const { user, loading } = useAuth();
 
-    if (localStorage.getItem('token')){
-        return <Navigate to="/login" replace />;
+    if (loading){
+        return <Spinner />
+    }
+    if (!user && location.pathname !== "/"){
+        return <Navigate to="/" replace />;
     }
 
     return <Outlet />;

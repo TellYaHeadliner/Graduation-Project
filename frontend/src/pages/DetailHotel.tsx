@@ -12,12 +12,22 @@ import { CardListStaticData } from "../utils/CardListStaticData";
 import catFAQ from "../assets/cat_faq.png"
 import ChatButton from "../components/Chat/ChatButton";
 import DiscountBar from "../components/Discount/DiscountBar";
+import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
+
+const breadcrumbItems = [
+    { label: "Trang chủ", href: "/" },
+    { label: "Khách sạn", href: "/hotels" },
+    { label: "Khách sạn ABC", active: true },
+  ];
 
 export default function DetailHotel() {
 
     return (
         <MainLayout>
             <div className="flex lg:mx-26 flex-col text-black">
+                <div className="my-4">
+                    <Breadcrumb items={breadcrumbItems} />
+                </div>
                 <h1 className="text-3xl font-bold">
                     Khách sạn Bình Minh
                 </h1>

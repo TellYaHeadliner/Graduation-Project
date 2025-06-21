@@ -7,7 +7,7 @@ interface TitleState {
 interface TitleAction { type: 'SET_TITLE'; payload: string }
 
 const initialState: TitleState = {
-    title: 'Trang chủ'
+    title: 'Roomix'
 };
 
 function reducer(state: TitleState, action: TitleAction): TitleState {

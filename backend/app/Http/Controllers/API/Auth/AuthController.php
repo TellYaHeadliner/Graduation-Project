@@ -80,6 +80,16 @@ class AuthController extends Controller
             $this->data['password'] = Hash::make($this->data['password']);
             $this->data['status'] = UserStatus::Active->value;
             $this->data['role'] = UserRole::Customer->value;
+
+            if ($request->hasFile('avatar')) {
+                $file = $request->file('avatar');
+
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $this->data['avatar'] = $fileName;
+
+                $file->move(public_path('assets/images'), $fileName);
+            }
+
             User::create($this->data);
             DB::commit();
             return response()->json([

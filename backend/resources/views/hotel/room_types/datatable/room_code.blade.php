@@ -1,2 +1,2 @@
-{{ $code }}
+{{ $room_code }}
 

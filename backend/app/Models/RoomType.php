@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoomType\RoomTypeStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,9 @@ class RoomType extends Model
     use HasFactory;
     protected $table = 'room_types';
     protected $guarded = [];
-    protected $casts = [];
+    protected $casts = [
+        'status' => RoomTypeStatus::class,
+    ];
 
     public function hotel(){
         return $this->belongsTo(Hotel::class,'hotel_id');
@@ -20,7 +23,7 @@ class RoomType extends Model
     }
     public function bedType()
     {
-        return $this->belongsTo(BedType::class, 'bed_type_id');
+        return $this->belongsTo(BedType::class, 'bed_type_id', 'id');
     }
     public function roomTypeAmenities()
     {

@@ -1,2 +1,1 @@
-{{ $bedType->name }}
-
+{{ $model->bedType->name ?? '' }}

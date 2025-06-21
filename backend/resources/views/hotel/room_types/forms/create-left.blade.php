@@ -1,7 +1,7 @@
 <div class="col-12 col-md-9">
-    <div class="card">
+    <div class="card mb-3">
         <div class="card-header justify-content-center">
-            <h2 class="mb-0">{{ __('Thông tin dịch vụ') }}</h2>
+            <h2 class="mb-0">{{ __('Thông tin loại phòng') }}</h2>
         </div>
         <div class="row card-body">
 
@@ -17,7 +17,7 @@
             <div class="col-md-6 col-12">
                 <div class="mb-3">
                     <label class="control-label">{{ __('Mã loại phòng') }}:</label>
-                    <x-input type="text" name="room_code" :value="old('room_code')" :required="true"
+                    <x-input type="text" name="room_code" :value="old('room_code')" 
                         placeholder="{{ __('Mã loại phòng') }}" />
                 </div>
             </div>
@@ -27,7 +27,7 @@
                 <div class="mb-3">
                     <label class="control-label">{{ __('Số lượng phòng') }}:</label>
                     <x-input type="number" name="room_quantity" id="room_quantity" min="1" step="1"
-                        :value="old('room_quantity')" :required="true" :placeholder="__('Số lượng phòng')" />
+                        :value="old('room_quantity')"  :placeholder="__('Số lượng phòng')" />
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
                 <div class="mb-3">
                     <label class="control-label">{{ __('Số lượng giường') }}:</label>
                     <x-input type="number" name="bed_quantity" id="bed_quantity" min="1" step="1"
-                        :value="old('bed_quantity')" :required="true" :placeholder="__('Số lượng giường')" />
+                        :value="old('bed_quantity')"  :placeholder="__('Số lượng giường')" />
                 </div>
             </div>
              {{-- area --}}
@@ -63,7 +63,7 @@
                 <div class="mb-3">
                     <label class="control-label">{{ __('Diện tích(m²)') }}:</label>
                     <x-input type="number" name="area" id="area" min="1" :value="old('area')"
-                       :required="true" :placeholder="__('Diện tích(m²)')" />
+                        :placeholder="__('Diện tích(m²)')" />
                 </div>
             </div>
 
@@ -72,6 +72,39 @@
                     <label class="control-label">{{ __('Mô tả ngắn') }}:</label>
                     <textarea name="description" class="ckeditor visually-hidden">{{ old('description') }}</textarea>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header justify-content-center">
+            <h2 class="mb-0">{{ __('Danh sách tiện nghi') }}</h2>
+        </div>
+        <div class="row card-body">
+            <div class="accordion accordion-flush" id="accordionFlushExample">
+                @foreach ($amenitiesTree as $key => $parent)
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="{{ 'heading-' . $key }}">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="{{'#' . $key }}" aria-expanded="false" aria-controls="{{ $key }}">
+                                {{ $parent['name'] }}
+                            </button>
+                        </h2>
+                        <div id="{{ $key }}" class="accordion-collapse collapse" aria-labelledby="{{ 'heading-' . $key }}"
+                            data-bs-parent="#accordionFlushExample">
+                            <div class="accordion-body">
+                                <div class="d-flex flex-wrap">
+                                    @foreach($parent['children'] as $key => $value)
+                                        <div class="form-check m-2">
+                                            <input class="form-check-input" type="checkbox" id="{{ $key }}" value="{{ $key }}"
+                                                name="amenities[]">
+                                            <label class="form-check-label" for="{{ $key }}">{{ $value }}</label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
         </div>
     </div>

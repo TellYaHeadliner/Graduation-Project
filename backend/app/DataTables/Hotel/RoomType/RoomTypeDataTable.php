@@ -52,7 +52,7 @@ class RoomTypeDataTable extends BaseDataTable
 
     public function query()
     {
-        return RoomType::with(['bedType'])->where('hotel_id', Auth()->user()->id)->orderBy('created_at', 'desc');
+        return $this->repository::with('bedType')->where('hotel_id', Auth()->user()->id)->orderBy('created_at', 'desc');
     }
 
     protected function setCustomColumns(): void
@@ -67,10 +67,8 @@ class RoomTypeDataTable extends BaseDataTable
             'area' => $this->view['area'],
             'room_quantity' => $this->view['room_quantity'],
             'room_code' => $this->view['room_code'],
-            'bed_type_id' => $this->view['bed_type_id'],
             'bed_quantity' => $this->view['bed_quantity'],
             'status' => $this->view['status'],
-
         ];
     }
 
@@ -79,6 +77,7 @@ class RoomTypeDataTable extends BaseDataTable
         $this->customAddColumns = [
             'action' => $this->view['action'],
             'variants' => $this->view['variants'],
+            'bed_type_id' => $this->view['bed_type_id'],
         ];
     }
 

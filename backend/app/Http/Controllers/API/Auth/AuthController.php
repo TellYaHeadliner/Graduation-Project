@@ -80,6 +80,16 @@ class AuthController extends Controller
             $this->data['password'] = Hash::make($this->data['password']);
             $this->data['status'] = UserStatus::Active->value;
             $this->data['role'] = UserRole::Customer->value;
+
+            if ($request->hasFile('avatar')) {
+                $file = $request->file('avatar');
+
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $this->data['avatar'] = $fileName;
+
+                $file->move(public_path('assets/images'), $fileName);
+            }
+
             User::create($this->data);
             DB::commit();
             return response()->json([
@@ -206,10 +216,10 @@ class AuthController extends Controller
 
     public function socialCallback($id, $status)
     {
-        if(!$status){
+        if (!$status) {
             return response()->json([
                 'message' => 'Đăng nhập với facebook thất bại.'
-            ],500);
+            ], 500);
         }
         $payLoad = [
             'sub' => $id,

@@ -15,6 +15,6 @@ class BedType extends Model
 
     public function roomTypes()
     {
-        return $this->hasMany(RoomType::class, 'bed_type_id');
+        return $this->hasMany(RoomType::class, 'bed_type_id', 'id');
     }
 }

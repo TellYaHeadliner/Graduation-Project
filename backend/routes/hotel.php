@@ -75,7 +75,7 @@ Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
             Route::delete('/{hotel_id}/xoa/{combo_id}/{hotel_service_id}', 'delete')->name('delete');
         });
     });
-    // Rooms
+    // Room-types
     Route::prefix('/room-types')->as('room_type.')->group(function () {
         Route::controller(App\Http\Controllers\Hotel\RoomType\RoomTypeController::class)->group(function () {
 
@@ -103,6 +103,21 @@ Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
             Route::put('/{hotel_id}/{room_type_id}/sua', 'update')->name('update');
 
             Route::delete('/{hotel_id}/{room_type_id}/xoa/{id}', 'delete')->name('delete');
+        });
+    });
+    // Room-Type-Variants
+    Route::prefix('/rooms')->as('room.')->group(function () {
+        Route::controller(App\Http\Controllers\Hotel\Room\RoomController::class)->group(function () {
+
+            Route::get('/{hotel_id}/them', 'create')->name('create');
+            Route::post('/{hotel_id}/them', 'store')->name('store');
+
+            Route::get('/{hotel_id}', 'index')->name('index');
+            Route::get('/{hotel_id}/sua/{id}', 'edit')->name('edit');
+
+            Route::put('/{hotel_id}/sua', 'update')->name('update');
+
+            Route::delete('/{hotel_id}/xoa/{id}', 'delete')->name('delete');
         });
     });
 

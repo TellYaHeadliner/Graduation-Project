@@ -8,6 +8,7 @@ use App\Enums\HotelRule\HotelRuleChildPolicy;
 use App\Enums\HotelRule\HotelRulePetPolicy;
 use App\Enums\HotelService\HotelServiceStatus;
 use App\Enums\Notification\NotificationStatus;
+use App\Enums\Room\RoomStatus;
 use App\Enums\RoomType\RoomTypeStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Enums\Service\ServiceStatus;
@@ -104,5 +105,13 @@ return [
         HotelRuleChildPolicy::Allowed->value => 'Cho phép',
         HotelRuleChildPolicy::NotAllowed->value => 'Không cho phép',
     ],
-    
+    RoomStatus::class => [
+        RoomStatus::Inactive->value     => 'Không hoạt động',
+        RoomStatus::Active->value       => 'Sẵn sàng',
+        RoomStatus::Booked->value       => 'Đã đặt',
+        RoomStatus::CheckedIn->value    => 'Đang ở',
+        RoomStatus::Maintenance->value  => 'Bảo trì',
+        RoomStatus::Cleaning->value     => 'Đang dọn',
+    ],
+
 ];

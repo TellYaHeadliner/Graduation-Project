@@ -7,11 +7,11 @@
 
     <div class="page-body">
         <div class="container-xl">
-            <x-form :action="route('hotel.hotel_service.update',Auth()->user()->id)" type="put" :validate="true">
-                <x-input type="hidden" name="id" :value="$hotel_service->id" />
+            <x-form :action="route('hotel.room_type.update', Auth()->user()->id)" type="put" :validate="true">
+                <x-input type="hidden" name="id" :value="$room_type->id" />
                 <div class="row justify-content-center">
-                    @include('hotel.hotel_services.forms.edit-left')
-                    @include('hotel.hotel_services.forms.edit-right')
+                    @include('hotel.room_types.forms.edit-left')
+                    @include('hotel.room_types.forms.edit-right')
                 </div>
             </x-form>
         </div>
@@ -19,13 +19,12 @@
 @endsection
 
 @push('libs-js')
-<!-- ckfinder js -->
-<script src="{{ asset('/libs/ckeditor/ckeditor.js') }}"></script>
-<script src="{{ asset('/libs/select2/dist/js/select2.min.js') }}"></script>
-<script src="{{ asset('/libs/ckeditor/adapters/jquery.js') }}"></script>
+    @include('ckfinder::setup')
+    <script src="{{ asset('/libs/ckeditor/ckeditor.js') }}"></script>
+    <script src="{{ asset('/libs/select2/dist/js/select2.min.js') }}"></script>
+    <script src="{{ asset('/libs/ckeditor/adapters/jquery.js') }}"></script>
 @endpush
 
-
 @push('custom-js')
-    @include('hotel.hotel_services.scripts.scripts')
+    @include('hotel.room_types.scripts.scripts')
 @endpush

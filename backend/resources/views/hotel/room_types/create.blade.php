@@ -17,7 +17,7 @@
 @endsection
 
 @push('libs-js')
-    <!-- ckfinder js -->
+    @include('ckfinder::setup')
     <script src="{{ asset('/libs/ckeditor/ckeditor.js') }}"></script>
     <script src="{{ asset('/libs/select2/dist/js/select2.min.js') }}"></script>
     <script src="{{ asset('/libs/ckeditor/adapters/jquery.js') }}"></script>

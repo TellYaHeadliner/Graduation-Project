@@ -15,11 +15,12 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('room_type_id')->constrained('room_types')->onDelete('cascade');
-            $table->char('code',50)->unique();
+            $table->foreignId('variant_id')
+                ->constrained('room_type_variants')
+                ->onDelete('cascade'); 
+            $table->char('code', 50)->unique();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();
-
         });
     }
 

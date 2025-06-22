@@ -94,9 +94,8 @@ class RoomTypeController extends Controller
             $this->data['status'] = $this->data['status'] ?? RoomTypeStatus::Discontinued->value;
             $this->data['hotel_id'] = $hotel_id;
             $bedTypeId = $this->data['bed_type_id'] ?? null;
-            $createRoom = $this->data['create_room'] ?? false;
             $amenities = $this->data['amenities'] ?? null;
-            unset($this->data['bed_type_id'], $this->data['amenities'], $this->data['create_room']);
+            unset($this->data['bed_type_id'], $this->data['amenities']);
 
             $roomType = RoomType::create($this->data);
             if ($bedTypeId) {
@@ -105,17 +104,6 @@ class RoomTypeController extends Controller
             }
             if ($amenities) {
                 $roomType->amenities()->attach($amenities);
-            }
-            if ($createRoom && $this->data['room_quantity'] > 0) {
-                $room = [];
-                for ($i = 1; $i <= $this->data['room_quantity']; $i++) {
-                    $room[] = [
-                        'room_type_id' => $roomType->id,
-                        'code' => ($this->data['room_code'] ?? 'PHONG') . " " . $i,
-                        'status' => RoomStatus::Active->value
-                    ];
-                }
-                $roomType->rooms()->createMany($room);
             }
             DB::commit();
             return redirect()->route($this->route['index'], $hotel_id)->with('success', 'Thêm thành công');

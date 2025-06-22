@@ -16,8 +16,7 @@ return new class extends Migration
         Schema::create('variant_attributes', function (Blueprint $table) {
             $table->foreignId('variant_id')->constrained('room_type_variants')->onDelete('cascade');
             $table->foreignId('attribute_id')->constrained('attributes')->onDelete('cascade');
-            $table->string('attribute_value', 250);
-            $table->boolean('is_active')->default(true);
+            $table->string('attribute_value', 250)->nullable();
             $table->timestamps();
             $table->primary(['variant_id', 'attribute_id']);
         });

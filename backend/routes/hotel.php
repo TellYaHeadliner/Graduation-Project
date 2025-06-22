@@ -91,7 +91,7 @@ Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
         });
     });
     // Room-Type-Variants
-    Route::prefix('/room-type-variants')->as('room_type_vartiant.')->group(function () {
+    Route::prefix('/room-type-variants')->as('room_type_variant.')->group(function () {
         Route::controller(App\Http\Controllers\Hotel\RoomType\RoomTypeVariantController::class)->group(function () {
 
             Route::get('/{hotel_id}/{room_type_id}/them', 'create')->name('create');
@@ -105,7 +105,7 @@ Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
             Route::delete('/{hotel_id}/{room_type_id}/xoa/{id}', 'delete')->name('delete');
         });
     });
-    // Room-Type-Variants
+    // Rooms
     Route::prefix('/rooms')->as('room.')->group(function () {
         Route::controller(App\Http\Controllers\Hotel\Room\RoomController::class)->group(function () {
 

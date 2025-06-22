@@ -573,4 +573,46 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'room-type-variants' => [
+        'name' => [
+            'title' => 'Tên loại phòng',
+            'icon' => 'ti ti-tag',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'base_price' => [
+            'title' => 'Giá gốc',
+            'icon' => 'ti ti-currency-dollar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle',
+            'width' => '120px'
+        ],
+        'discount_price' => [
+            'title' => 'Giá giảm',
+            'icon' => 'ti ti-discount-2',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle',
+            'width' => '120px'
+        ],
+        'attributes' => [
+            'title' => 'Các lựa chọn',
+            'icon' => 'ti ti-list-details',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

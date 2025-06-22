@@ -10,6 +10,7 @@ use App\Enums\HotelService\HotelServiceStatus;
 use App\Enums\Notification\NotificationStatus;
 use App\Enums\Room\RoomStatus;
 use App\Enums\RoomType\RoomTypeStatus;
+use App\Enums\RoomTypeVariant\RoomTypeVariantStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Enums\Service\ServiceStatus;
 use App\Enums\User\UserGender;
@@ -96,6 +97,11 @@ return [
         RoomTypeStatus::Discontinued->value => 'Ngừng hoạt động',
         RoomTypeStatus::Active->value => 'Đang hoạt động',
         RoomTypeStatus::TemporarilyUnavailable->value => 'Hết phòng tạm thời',
+    ],
+    RoomTypeVariantStatus::class => [
+        RoomTypeVariantStatus::Inactive->value => 'Ngừng hoạt động',
+        RoomTypeVariantStatus::Active->value => 'Đang hoạt động',
+        RoomTypeVariantStatus::OutOfStock->value => 'Hết phòng tạm thời',
     ],
     HotelRulePetPolicy::class => [
         HotelRulePetPolicy::Allowed->value => 'Cho phép',

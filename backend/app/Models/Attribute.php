@@ -11,4 +11,11 @@ class Attribute extends Model
     protected $table = 'attributes';
     protected $guarded = [];
     protected $casts = [];
+
+    public function variants()
+    {
+        return $this->belongsToMany(RoomTypeVariant::class, 'variant_attributes', 'attribute_id', 'variant_id')
+            ->withPivot('attribute_value')
+            ->withTimestamps();
+    }
 }

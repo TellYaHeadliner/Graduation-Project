@@ -1,43 +1,34 @@
 import { lazy, Suspense } from "react"
 import { Route } from "react-router-dom"
-import AuthenticatedGuard from "../guards/AuthenticatedGuard"
 import { PATH } from "../constants/Paths"
-import LoadingSpinner from "../components/Loading/LoadingSpinner"
-import Payment from "../pages/Payment/Payment"
-import InfoPayment from "../pages/Payment/InfoPayment"
+
 
 const Home = lazy(() => import("../pages/Home"))
 const ResultSearch = lazy(() => import("../pages/ResultSearch"))
 const DetailHotel = lazy(() => import("../pages/DetailHotel"))
+const LoadingPage = lazy(() => import("../pages/LoadingPage"))
+
 
 export default function HomeRoutes() {
     return (
-        <Route element={<AuthenticatedGuard />}>
+        <>
             <Route path={PATH.HOME} element={
-                <Suspense fallback={<LoadingSpinner />}>
+                <Suspense fallback={<LoadingPage />}>
                     <Home />
                 </Suspense>
             } />
             <Route path={PATH.KETQUATIMKIEM} element={
-                <Suspense fallback={<LoadingSpinner />}>
+                <Suspense fallback={<LoadingPage />}>
                     <ResultSearch />
                 </Suspense>
             } />
             <Route path={PATH.CHITIETKHACHSAN} element={
-                <Suspense fallback={<LoadingSpinner />}>
+                <Suspense fallback={<LoadingPage />}>
                     <DetailHotel />
                 </Suspense>
             } />
-            <Route path={PATH.THANHTOAN} element={
-                <Suspense fallback={<LoadingSpinner />}>
-                    <Payment />
-                </Suspense>
-            } />
-            <Route path={PATH.THONGTINTHANHTOAN} element={
-                <Suspense fallback={<LoadingSpinner />}>
-                    <InfoPayment />
-                </Suspense>
-            } />
-        </Route>
+        </>
+
+
     )
 }

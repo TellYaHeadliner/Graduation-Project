@@ -1,16 +1,15 @@
-import { Routes, Route, BrowserRouter } from "react-router-dom"
+import { Routes } from "react-router-dom"
 import HomeRoutes from "./routes/HomeRoutes"
 import AuthRoutes from "./routes/AuthRoutes"
+import ProtectedRoutes from "./routes/ProtectedRoutes"
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-          {AuthRoutes()}
-          {HomeRoutes()}
-      </Routes>
-    </BrowserRouter>
-
+    <Routes>
+        {AuthRoutes()}
+        {HomeRoutes()}
+        {ProtectedRoutes()}
+    </Routes>
   )
 }
 

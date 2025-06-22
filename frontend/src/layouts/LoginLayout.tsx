@@ -4,6 +4,7 @@ import { Theme } from "@radix-ui/themes"
 import useTitle from "../hooks/useTitle"
 import logoLight from "../assets/light-logo.png"
 import background from "../assets/HoChiMinhCity.png"
+import { ToastContainer } from "react-toastify"
 
 interface Props {
     children: ReactNode
@@ -21,6 +22,7 @@ export default function LoginLayout(props: Props) {
                     {children}
                 </div>
             </div>
+            <ToastContainer position="top-right" />
         </Theme>
     )     
 }

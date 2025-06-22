@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { paymentSchemas, PaymentSchema } from "../../guards/paymentSchemas"
+import { paymentSchemas, PaymentSchema } from "../../schemas/paymentSchemas"
 
 export default function FormPayment() {
 

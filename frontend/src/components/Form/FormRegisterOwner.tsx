@@ -1,6 +1,6 @@
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { registerOwnerSchema } from "../../guards/registerOwnerSchemas"; // Đường dẫn tùy bạn
+import { registerOwnerSchema } from "../../schemas/registerOwnerSchemas"; // Đường dẫn tùy bạn
 import { z } from "zod";
 import React, { useEffect, useState } from "react";
 

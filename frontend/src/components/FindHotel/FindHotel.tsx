@@ -8,7 +8,7 @@ import { Provinces } from "../../constants/Provinces";
 import useFindHotel from "../../hooks/useFindHotel";
 import { vi } from "date-fns/locale/vi";
 import { useAppContext } from "../../context/AppContext";
-import { findHotelSchemas } from "../../guards/findHotelSchemas";
+import { findHotelSchemas } from "../../schemas/findHotelSchemas";
 
 registerLocale("vi", vi);
 

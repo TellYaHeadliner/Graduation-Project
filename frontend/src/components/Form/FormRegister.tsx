@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { registerSchema, RegisterSchema } from "../../guards/registerSchemas"
+import { registerSchema, RegisterSchema } from "../../schemas/registerSchemas"
 import { useState } from "react";
 import authApi from "../../api/Auth.api";
 import { ErrorUtils } from "../../utils/Error";

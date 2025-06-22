@@ -13,6 +13,7 @@ export interface User {
 }
 
 export interface UserResponse {
+    fullname: string;
     message: string;
     data: {
         user: User;

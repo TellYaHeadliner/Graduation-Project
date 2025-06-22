@@ -1,5 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer, ReactNode } from 'react';
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 
 // Types
 interface AuthState {
@@ -114,14 +115,29 @@ const AppContext = createContext<{
   dispatch: React.Dispatch<Action>;
 } | undefined>(undefined);
 
+const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 1,
+        refetchOnWindowFocus: false,
+        staleTime: 1000 * 60
+      },
+      mutations: {
+        retry: 0
+      }
+    }
+})
+
 // Provider component
 export function AppProvider({ children }: { children: ReactNode }) {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <AppContext.Provider value={{ state, dispatch }}>
+    <QueryClientProvider client={queryClient}>
+      <AppContext.Provider value={{ state, dispatch }}>
       {children}
-    </AppContext.Provider>
+      </AppContext.Provider>
+    </QueryClientProvider>
   );
 }
 

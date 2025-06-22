@@ -37,7 +37,7 @@ export default function PriceSlider({ numberRoom, nightCount }: PriceSliderProps
 
 
     return (
-        <div className="p-4 rounded-lg text-black border shadow-lg">
+        <div className="p-4 rounded-lg border border-gray-200 text-black shadow-lg">
             <div className="flex justify-between items-start mb-2">
                 <div>
                     <span className="block text-sm font-semibold ">Khoảng giá</span>

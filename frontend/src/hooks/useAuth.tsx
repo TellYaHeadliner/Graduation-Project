@@ -1,28 +1,17 @@
 /* eslint-disable no-console */
-import { useEffect, useState } from "react";
 import { User } from '../types/UserTypes';
-import authApi from "../api/Auth.api";
+import { useUserInfoQuery } from "../react-query/useUserInfoQuery";
 
 
-export default function useAuth(){
-    const [user, setUser] = useState<User | null>(null);
-    const [loading, setLoading] = useState(true);
+export default function useAuth() {
+  const { data, isLoading, isError } = useUserInfoQuery();
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-              const userInfoResponse = await authApi.userInfo();
-              setUser(userInfoResponse.data.user);
-              setLoading(false);
-            } catch (error) {
-              setUser(null);
-              console.error(error)
-              setLoading(false)
-            } 
-        };
-        fetchUser();
-    }, [user]);
+  const user: User | null = isError ? null : data?.data?.user ?? null;
+  console.log(user)
 
-    return { user, loading };
+  return {
+    user,
+    loading: isLoading,
+  };
 }
 

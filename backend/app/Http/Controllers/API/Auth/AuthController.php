@@ -216,10 +216,10 @@ class AuthController extends Controller
 
     public function socialCallback($id, $status)
     {
-        if(!$status){
+        if (!$status) {
             return response()->json([
                 'message' => 'Đăng nhập với facebook thất bại.'
-            ],500);
+            ], 500);
         }
         $payLoad = [
             'sub' => $id,

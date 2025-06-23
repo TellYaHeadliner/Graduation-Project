@@ -8,6 +8,9 @@ use App\Enums\HotelRule\HotelRuleChildPolicy;
 use App\Enums\HotelRule\HotelRulePetPolicy;
 use App\Enums\HotelService\HotelServiceStatus;
 use App\Enums\Notification\NotificationStatus;
+use App\Enums\Room\RoomStatus;
+use App\Enums\RoomType\RoomTypeStatus;
+use App\Enums\RoomTypeVariant\RoomTypeVariantStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Enums\Service\ServiceStatus;
 use App\Enums\User\UserGender;
@@ -21,6 +24,7 @@ use App\Enums\Voucher\VoucherStatus;
 use App\Models\CommissionRule;
 use App\Models\HotelRule;
 use App\Models\HotelService;
+use App\Models\RoomType;
 use App\Models\Service;
 use App\Models\Voucher;
 
@@ -89,6 +93,16 @@ return [
         HotelServiceStatus::INACTIVE->value => 'Đang bảo trì',
         HotelServiceStatus::Active->value => 'Đang hoạt động',
     ],
+    RoomTypeStatus::class => [
+        RoomTypeStatus::Discontinued->value => 'Ngừng hoạt động',
+        RoomTypeStatus::Active->value => 'Đang hoạt động',
+        RoomTypeStatus::TemporarilyUnavailable->value => 'Hết phòng tạm thời',
+    ],
+    RoomTypeVariantStatus::class => [
+        RoomTypeVariantStatus::Inactive->value => 'Ngừng hoạt động',
+        RoomTypeVariantStatus::Active->value => 'Đang hoạt động',
+        RoomTypeVariantStatus::OutOfStock->value => 'Hết phòng tạm thời',
+    ],
     HotelRulePetPolicy::class => [
         HotelRulePetPolicy::Allowed->value => 'Cho phép',
         HotelRulePetPolicy::NotAllowed->value => 'Không cho phép',
@@ -97,5 +111,13 @@ return [
         HotelRuleChildPolicy::Allowed->value => 'Cho phép',
         HotelRuleChildPolicy::NotAllowed->value => 'Không cho phép',
     ],
-    
+    RoomStatus::class => [
+        RoomStatus::Inactive->value     => 'Không hoạt động',
+        RoomStatus::Active->value       => 'Sẵn sàng',
+        RoomStatus::Booked->value       => 'Đã đặt',
+        RoomStatus::CheckedIn->value    => 'Đang ở',
+        RoomStatus::Maintenance->value  => 'Bảo trì',
+        RoomStatus::Cleaning->value     => 'Đang dọn',
+    ],
+
 ];

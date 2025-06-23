@@ -12,15 +12,12 @@
                         placeholder="{{ __('Tên thuộc tính') }}" />
                 </div>
             </div>
-
-            <!-- parent_id -->
+            <!-- name -->
             <div class="col-12">
                 <div class="mb-3">
-                    <label class="control-label">{{ __('Kiểu dữ liệu') }}:</label>
-                    <select name="type" class="form-select">
-                        <option value="text">Text</option>
-                        <option value="number">Number</option>
-                    </select>
+                    <label class="control-label">{{ __('Loại thuộc tính') }}:</label>
+                    <x-input type="text" name="type" :value="old('type')" :required="true"
+                        placeholder="{{ __('Loại thuộc tính') }}" />
                 </div>
             </div>
         </div>

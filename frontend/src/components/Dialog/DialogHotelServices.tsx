@@ -2,7 +2,6 @@ import { DialogContent } from "@radix-ui/react-dialog";
 import { Dialog } from "radix-ui";
 import TabService from "../Tab/TabService";
 import { Cross1Icon } from "@radix-ui/react-icons";
-import { Button } from "@radix-ui/themes";
 import ButtonBook from "../Button/ButtonBook";
 
 

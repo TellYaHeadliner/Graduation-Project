@@ -1,7 +1,9 @@
 export interface GhiChuType {
-  note1: string | null;
-  note2: string | null;
-  note3: string | null;
+  adults: number;
+  children: number;
+  isHaveBreakfast: boolean;
+  isSmoking: boolean;
+  cancelBooking: string;
 }
 
 export interface TableRoomType {
@@ -11,6 +13,7 @@ export interface TableRoomType {
   soLuong: number;          
   soLuongKhach: number;    
   giaPhong: number;  
+  giaGiam: number | null;
   ghiChu: GhiChuType[];
 }
 
@@ -24,11 +27,14 @@ export const tableRoomData: TableRoomType[] = [
     giaPhong: 850000,
     ghiChu: [
       {
-        note1: "Hoàn tiền 100%",
-        note2: "Miễn phí hủy phòng trước 24h",
-        note3: "Có bao gồm bữa sáng"
+        adults: 0,
+        children: 0,
+        isHaveBreakfast: false,
+        isSmoking: false,
+        cancelBooking: ""
       }
-    ]
+    ],
+    giaGiam: 720000
   },
   {
     key: '2',
@@ -39,11 +45,14 @@ export const tableRoomData: TableRoomType[] = [
     giaPhong: 650000,
     ghiChu: [
       {
-        note1: "Không hoàn tiền",
-        note2: "Không bao gồm bữa sáng",
-        note3: null
+        adults: 0,
+        children: 0,
+        isHaveBreakfast: false,
+        isSmoking: false,
+        cancelBooking: ""
       }
-    ]
+    ],
+    giaGiam: null
   },
   {
     key: '3',
@@ -54,11 +63,14 @@ export const tableRoomData: TableRoomType[] = [
     giaPhong: 1200000,
     ghiChu: [
       {
-        note1: "Có dịch vụ spa miễn phí",
-        note2: "Check-in sớm miễn phí",
-        note3: "Hồ bơi riêng"
+        adults: 0,
+        children: 0,
+        isHaveBreakfast: false,
+        isSmoking: false,
+        cancelBooking: ""
       }
-    ]
+    ],
+    giaGiam: 900000
   },
   {
     key: '4',
@@ -69,10 +81,13 @@ export const tableRoomData: TableRoomType[] = [
     giaPhong: 1500000,
     ghiChu: [
       {
-        note1: "Phù hợp cho nhóm hoặc gia đình",
-        note2: "Miễn phí xe đưa đón sân bay",
-        note3: "Có khu vui chơi trẻ em"
+        adults: 2,
+        children: 1,
+        isHaveBreakfast: false,
+        isSmoking: false,
+        cancelBooking: ""
       }
-    ]
+    ],
+    giaGiam: null
   },
 ];

@@ -27,6 +27,12 @@ export default function TableServices({ data }: TableServicesProps) {
               <Table.ColumnHeaderCell className="text-left">
                 Tên dịch vụ
               </Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>
+                Đơn vị tính
+              </Table.ColumnHeaderCell>
+              <Table.ColumnHeaderCell>
+                Mô tả
+              </Table.ColumnHeaderCell>
               <Table.ColumnHeaderCell className="text-right">
                 Giá
               </Table.ColumnHeaderCell>

@@ -9,4 +9,8 @@ export class Currency{
         const newFormatVND = new Intl.NumberFormat("vi-VN").format(price);
         return `${newFormatVND} VNĐ`;
     }
+
+    static percent(price: number, priceDiscount: number): string {
+        return `${Math.round(((price - priceDiscount) / price) * 100)} %`;
+    }
 }

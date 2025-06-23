@@ -13,6 +13,7 @@ import catFAQ from "../assets/cat_faq.png"
 import ChatButton from "../components/Chat/ChatButton";
 import DiscountBar from "../components/Discount/DiscountBar";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
+import DialogHotelServices from "../components/Dialog/DialogHotelServices";
 
 const breadcrumbItems = [
     { label: "Trang chủ", href: "/" },
@@ -113,6 +114,9 @@ export default function DetailHotel() {
                         <FindHotel />
                     </div>
                     <TableRoom data={tableRoomData} />
+                    <div className="flex justify-end py-3">
+                        <DialogHotelServices />
+                    </div>
                 </div>
                 <div>
                     <h2 className="text-xl font-bold mt-2">

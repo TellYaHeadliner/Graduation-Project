@@ -8,7 +8,7 @@
 								<div class="container-xl">
 												<div class="card">
 																<div class="card-header justify-content-between">
-																				<h2 class="mb-0">{{ __('Danh sách Dịch vụ') }}</h2>
+																				<h2 class="mb-0">{{ __('Danh sách Phòng') }}</h2>
 																</div>
 																<div class="card-body">
 																				<div class="table-responsive position-relative">
@@ -29,5 +29,5 @@
 @push('custom-js')
 				{{ $dataTable->scripts() }}
 
-				@include('hotel.hotel_services.scripts.datatable')
+				@include('hotel.rooms.scripts.datatable')
 @endpush

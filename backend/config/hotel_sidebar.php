@@ -86,5 +86,18 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý Phòng',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-door"></i>',
+        'sub' => [
+            [
+                'title' => 'DS Phòng',
+                'routeName' => 'hotel.room.index',
+                'icon' => '<i class="ti ti-list"></i>',
+                'param' => true,
+            ]
+        ]
+    ],
 
 ];

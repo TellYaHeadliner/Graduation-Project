@@ -32,6 +32,7 @@ class LoginController extends Controller
     {
         $this->data = $request->validated();
 
+
         if (Auth::attempt(['email' => $this->data['email'], 'password' => $this->data['password']])) {
             $request->session()->regenerate();
             if (Auth()->user()->status === UserStatus::Deactivated) {

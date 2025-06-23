@@ -39,4 +39,6 @@ Route::controller(App\Http\Controllers\API\Auth\AuthController::class)
         Route::get('/facebook/redirect', 'redirectToFacebook')->name('facebook.redirect');
         Route::get('/facebook/callback', 'handleFacebookCallback')->name('facebook.callback');
         Route::get('/social-callback/{id}/{status}', 'socialCallback')->name('social_callback');
-    });
+});
+
+

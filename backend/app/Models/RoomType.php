@@ -15,8 +15,9 @@ class RoomType extends Model
         'status' => RoomTypeStatus::class,
     ];
 
-    public function hotel(){
-        return $this->belongsTo(Hotel::class,'hotel_id');
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class, 'hotel_id');
     }
     public function bedType()
     {
@@ -24,7 +25,7 @@ class RoomType extends Model
     }
     public function roomTypeAmenities()
     {
-        return $this->hasMany(RoomTypeAmenity::class,'room_type_id');
+        return $this->hasMany(RoomTypeAmenity::class, 'room_type_id');
     }
     public function amenities()
     {
@@ -32,11 +33,12 @@ class RoomType extends Model
     }
     public function bookingDetails()
     {
-        return $this->hasMany(BookingDetail::class,'room_type_id');
+        return $this->hasMany(BookingDetail::class, 'room_type_id');
     }
     public function variants()
     {
-        return $this->hasMany(RoomTypeVariant::class,'room_type_id');
+        return $this->hasMany(RoomTypeVariant::class, 'room_type_id');
     }
+
 
 }

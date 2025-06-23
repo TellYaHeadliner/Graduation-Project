@@ -615,4 +615,32 @@ return [
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'rooms' => [
+        'code' => [
+            'title' => 'Tên phòng',
+            'icon' => 'ti ti-tag',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'room_type' => [
+            'title' => 'Loại phòng',
+            'icon' => 'ti ti-tag',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti-toggle-right',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
 ];

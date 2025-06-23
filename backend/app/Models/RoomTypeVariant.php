@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoomTypeVariant\RoomTypeVariantStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,9 @@ class RoomTypeVariant extends Model
     use HasFactory;
     protected $table = 'room_type_variants';
     protected $guarded = [];
-    protected $casts = [];
+    protected $casts = [
+        'status' => RoomTypeVariantStatus::class,
+    ];
     public $timestamps = true;
 
     public function roomType()

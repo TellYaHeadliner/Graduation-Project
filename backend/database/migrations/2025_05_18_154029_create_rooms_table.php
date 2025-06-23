@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('variant_id')
                 ->constrained('room_type_variants')
-                ->onDelete('cascade'); 
+                ->onDelete('cascade');
+            $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
             $table->char('code', 50)->unique();
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

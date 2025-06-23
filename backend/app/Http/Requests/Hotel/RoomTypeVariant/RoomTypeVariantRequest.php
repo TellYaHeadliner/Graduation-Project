@@ -38,18 +38,18 @@ class RoomTypeVariantRequest extends BaseRequest
     protected function methodPut()
     {
         return [
-            'id' => ['required', 'exists:App\Models\RoomType,id'],
+            'id' => ['required', 'exists:App\Models\RoomTypeVariant,id'],
             'base_price' => 'required|numeric|min:0',
             'discount_price' => 'required|numeric|min:0',
             'season_id' => 'nullable|exists:seasons,id',
-            'discount_type' => 'required|in:0,1',
+            'discount_type' => 'nullable|in:0,1',
             'discount_value_price' => 'nullable|numeric',
             'discount_value_percent' => 'nullable|numeric',
             'attribute.guest' => 'required|integer|min:1',
             'attribute.children' => 'nullable|integer|min:0',
             'attribute.meal' => 'nullable|boolean',
             'attribute.smoking' => 'nullable|boolean',
-            'attribute.cancel' => 'required|in:free_before_and_fee_after,no_refund',
+            'attribute.cancel' => 'nullable|in:free_before and fee_after,no_refund',
             'fee_type' => 'nullable|in:0,1',
             'fee_amount_price' => 'nullable|numeric|min:0',
             'fee_amount_percent' => 'nullable|numeric|min:0|max:100',

@@ -122,7 +122,7 @@
             <div class="col-md-6 col-12" id="fee_amount_group">
                 <div class="mb-3">
                     <label class="control-label">{{ __('Mức phí huỷ') }}:</label>
-                    <x-input-price name="fee_amount_price" id="fee_amount_price" :value="old('fee_amount')" :required="true" :placeholder="__('Mức phí huỷ')" />
+                    <x-input-price name="fee_amount_price" id="fee_amount_price" :value="old('fee_amount')" :placeholder="__('Mức phí huỷ')" />
                     <x-input style="display: none;" name="fee_amount_percent" id="fee_amount_percent" :value="old('fee_amount_percent')" :placeholder="__('%')" />
                 </div>
             </div>

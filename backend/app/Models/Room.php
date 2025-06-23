@@ -26,14 +26,19 @@ class Room extends Model
         return $this->hasOneThrough(
             RoomType::class,
             RoomTypeVariant::class,
-            'id',            
-            'id',            
-            'variant_id',    
-            'room_type_id'   
+            'id',
+            'id',
+            'variant_id',
+            'room_type_id'
         );
     }
     public function bookingDetails()
     {
         return $this->hasMany(BookingDetail::class, 'room_id');
+    }
+
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class, 'hotel_id');
     }
 }

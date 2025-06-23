@@ -1,13 +1,15 @@
 import { Navigate, Outlet } from "react-router-dom"
-import { useSelector } from "react-redux"
-import { RootState } from "../redux/store"
-import Cookies from 'js-cookie';
+import useAuth from "../hooks/useAuth";
+import { Spinner } from "@radix-ui/themes";
 
 function AuthenticatedGuard() {
-    const isAuthenticated = useSelector((state: RootState) => state.auth.isAuthenticated);
+    const { user, loading } = useAuth();
 
-    if (!isAuthenticated && Cookies.get('token')){
-        return <Navigate to="/login" replace />;
+    if (loading){
+        return <Spinner />
+    }
+    if (!user && location.pathname !== "/"){
+        return <Navigate to="/" replace />;
     }
 
     return <Outlet />;

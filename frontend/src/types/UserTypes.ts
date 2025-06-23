@@ -3,14 +3,23 @@ export interface User {
     fullname: string;
     email: string;
     phone: string;
-    birthDay?: Date;
+    birthDay?: string;
     gender?: number;
     address?: string;
     avatar?: string;
     role: number;
     status: number;
+    created_at: string;
+}
+
+export interface UserResponse {
+    message: string;
+    data: {
+        user: User;
+    }
 }
 
 export interface LoginResponse {
     message: string;
+    status: number;
 }

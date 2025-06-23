@@ -8,6 +8,8 @@ import {
 import { useEffect, useState } from "react";
   
 import AvatarCustom from "../Avatar/AvatarCustom"
+import { PATH } from "../../constants/Paths";
+import authApi from "../../api/Auth.api";
 
 interface NavUserProps{
     usernameProp: string;
@@ -17,10 +19,18 @@ export default function NavUser({ usernameProp }: NavUserProps){
 
     const [username, setUserName] = useState<string>("");
 
-    useEffect(() => {
-        const newUserName = usernameProp.match(/[A-Z]/g)?.slice(0, 2).join('') || "";
+    const logOut = async () => {
+      const logOutResponse = await authApi.logOut();
+      if (logOutResponse){
+        window.location.reload();
+      }
+    }
 
-        setUserName(newUserName);
+    useEffect(() => {
+        if (typeof usernameProp === 'string'){
+          const newUserName = usernameProp.match(/[A-Z]/g)?.slice(0, ).join('') || "";
+          setUserName(newUserName);
+        }
     }, [usernameProp])
 
     return (
@@ -34,29 +44,22 @@ export default function NavUser({ usernameProp }: NavUserProps){
           align="end"
         >
           <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
-            <a href="">
+            <a href={PATH.THONGTINGUOIDUNG}>
               Thông tin cá nhân
             </a>
           </MenubarItem>
           <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
-            <a href="">
-              My booking 
-            </a>
-          </MenubarItem>
-          <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
-            <a href="">
+            <a href={PATH.LICHSUBOOKING}>
               Lịch sử booking
             </a>
           </MenubarItem>
           <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
-            <a href="">
+            <a href={PATH.KHACHSANYEUTHICH}>
               Khách sạn yêu thích
             </a>
           </MenubarItem>
-          <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100">
-            <a href="">
+          <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100" onClick={logOut}>
             Đăng xuất
-            </a>
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>

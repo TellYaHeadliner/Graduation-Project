@@ -1,7 +1,6 @@
-import { useSelector } from "react-redux";
 import logoHeader from "../../assets/light-logo.png"
 import React, { useEffect, useState } from "react";
-import { RootState } from "../../redux/store";
+import { useAppContext } from "../../context/AppContext";
 
 interface Step{
     label: string;
@@ -18,9 +17,9 @@ const initialSteps: Step[] = [
 
 
 export default function HeaderPayment(){
-
+    const { state } = useAppContext();
+    const pageTitle = state.pageTitle.pageTitle;
     const [steps, setSteps] = useState<Step[]>(initialSteps);
-    const pageTitle = useSelector((state: RootState) => state.pageTitleSlice.pageTitle);
 
     useEffect(() => {
         setSteps(prevSteps =>

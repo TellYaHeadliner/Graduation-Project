@@ -50,7 +50,7 @@ services:
       - ./backend/docker/php.ini:/usr/local/etc/php/php.ini
       - ./backend/storage:/var/www/storage  # Use specific path for storage
     ports:
-      - "9000:9000"  # Consider if this needs to be exposed externally
+      - "8000:8000"  
     networks:
       - app-network
     environment:
@@ -69,7 +69,7 @@ services:
       sh -c "composer install &&
              php artisan key:generate &&
              php artisan migrate &&
-             php artisan serve --host=0.0.0.0 --port=9000"
+             php artisan serve --host=0.0.0.0 --port=8000"
     restart: unless-stopped
 
   nginx:
@@ -92,7 +92,7 @@ services:
     restart: unless-stopped
     environment:
       NGROK_AUTHTOKEN: ${NGROK_AUTHTOKEN}
-    command: http localhost:9000
+    command: http localhost:8000
     depends_on:
       - backend
     networks:

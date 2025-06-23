@@ -1,16 +1,11 @@
-
-import { useDispatch } from "react-redux";
 import useTitle from "../../hooks/useTitle";
 import PaymentLayout from "../../layouts/PaymentLayout";
-import { setPageTitle } from "../../redux/slices/titlePaymentSlice";
 import DataListInfoPayment from "../../components/DataList/DataListInfoPayment";
 
 export default function InfoPayment() {
-    const dispatch = useDispatch();
     const title = "Xem lại thông tin";
     useTitle(title);
 
-    dispatch(setPageTitle(title));
 
     return (
         <PaymentLayout>

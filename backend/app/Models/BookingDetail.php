@@ -15,16 +15,21 @@ class BookingDetail extends Model
 
     public function booking()
     {
-        return $this->belongsTo(Booking::class,'booking_id');
+        return $this->belongsTo(Booking::class, 'booking_id');
     }
 
     public function roomType()
     {
-        return $this->belongsTo(RoomType::class,'room_type_id');
+        return $this->belongsTo(RoomType::class, 'room_type_id');
     }
 
     public function variant()
     {
         return $this->belongsTo(RoomTypeVariant::class, 'room_type_variant_id');
+    }
+
+    public function room()
+    {
+        return $this->belongsTo(Room::class, 'room_id');
     }
 }

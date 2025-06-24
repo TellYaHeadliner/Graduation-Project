@@ -18,11 +18,11 @@ return new class extends Migration
                 $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
                 $table->foreignId('room_type_id')->constrained('room_types')->onDelete('cascade');
                 $table->foreignId('room_type_variant_id')->constrained('room_type_variants')->onDelete('cascade');
+                $table->foreignId('room_id')->nullable()->constrained('rooms')->onDelete('set null');
                 $table->integer('quantity')->default(1);
                 $table->integer('price_per_room')->default(0);
                 $table->integer('total_price')->default(0);
                 $table->timestamps();
-               
         });
     }
 

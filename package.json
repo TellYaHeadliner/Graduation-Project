@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@types/slug": "^5.0.9",
+    "slug": "^11.0.0"
+  }
+}

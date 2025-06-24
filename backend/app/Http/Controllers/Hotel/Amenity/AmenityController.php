@@ -53,7 +53,7 @@ class AmenityController extends Controller
         ]);
     }
 
-    public function buildAmenityTree($grouped)
+    public static function buildAmenityTree($grouped)
     {
         $result = [];
 

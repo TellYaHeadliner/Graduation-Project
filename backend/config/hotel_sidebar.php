@@ -67,5 +67,37 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Quản lý Loại phòng',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-bed"></i>',
+        'sub' => [
+            [
+                'title' => 'Thêm Loại phòng',
+                'routeName' => 'hotel.room_type.create',
+                'icon' => '<i class="ti ti-plus"></i>',
+                'param' => true,
+            ],
+            [
+                'title' => 'DS Loại phòng',
+                'routeName' => 'hotel.room_type.index',
+                'icon' => '<i class="ti ti-list"></i>',
+                'param' => true,
+            ]
+        ]
+    ],
+    [
+        'title' => 'Quản lý Phòng',
+        'routeName' => null,
+        'icon' => '<i class="ti ti-door"></i>',
+        'sub' => [
+            [
+                'title' => 'DS Phòng',
+                'routeName' => 'hotel.room.index',
+                'icon' => '<i class="ti ti-list"></i>',
+                'param' => true,
+            ]
+        ]
+    ],
 
 ];

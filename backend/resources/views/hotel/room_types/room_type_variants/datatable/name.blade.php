@@ -1,0 +1,1 @@
+{{ $model->roomType->name }}

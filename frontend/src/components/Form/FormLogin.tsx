@@ -4,11 +4,9 @@ import { loginSchema, LoginSchema } from "../../schemas/loginSchemas"
 import { PATH } from "../../constants/Paths";
 import { FaFacebook, FaGoogle } from "react-icons/fa6"
 import { Button } from "@radix-ui/themes";
-import { useNavigate } from "react-router-dom";
 import DialogLoginComplete from "../Dialog/DialogLoginComplete";
 import { useState } from "react";
 import { useLoginMutation } from '../../react-query/useLoginMutation';
-import LoadingPage from "../../pages/LoadingPage";
 import DialogLoading from "../Dialog/DialogLoading";
 
 

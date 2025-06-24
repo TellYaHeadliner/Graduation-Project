@@ -13,13 +13,12 @@
                 </div>
             </div>
 
+             <!-- name -->
             <div class="col-12">
                 <div class="mb-3">
-                    <label class="control-label">{{ __('Kiểu dữ liệu') }}:</label>
-                    <select name="type" class="form-select">
-                        <option value="text" {{ old('type',$attribute->type ?? '') == 'text' ? 'selected' : '' }}>Text</option>
-                        <option value="number" {{ old('type',$attribute->type ?? '') == 'number' ? 'selected' : '' }}>Number</option>
-                    </select>
+                    <label class="control-label">{{ __('Loại thuộc tính') }}:</label>
+                    <x-input type="text" name="type" :value="$attribute->type" :required="true"
+                        placeholder="{{ __('Loại thuộc tính') }}" />
                 </div>
             </div>
         </div>

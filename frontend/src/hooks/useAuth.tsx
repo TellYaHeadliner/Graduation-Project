@@ -7,7 +7,6 @@ export default function useAuth() {
   const { data, isLoading, isError } = useUserInfoQuery();
 
   const user: User | null = isError ? null : data?.data?.user ?? null;
-  console.log(user)
 
   return {
     user,

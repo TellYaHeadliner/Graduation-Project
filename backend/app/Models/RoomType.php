@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoomType\RoomTypeStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,25 +11,21 @@ class RoomType extends Model
     use HasFactory;
     protected $table = 'room_types';
     protected $guarded = [];
-    protected $casts = [];
+    protected $casts = [
+        'status' => RoomTypeStatus::class,
+    ];
 
-    public function hotel(){
-        return $this->belongsTo(Hotel::class,'hotel_id');
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class, 'hotel_id');
     }
-    public function rooms(){
-        return $this->hasMany(Room::class,'room_type_id');
-    }
-    public function roomTypeBeds(){
-        return $this->hasMany(RoomTypeBed::class,'room_type_id');
-    }
-    public function bedTypes(){
-        return $this->belongsToMany(BedType::class, 'room_type_beds', 'room_type_id', 'bed_type_id')
-                    ->withPivot('quantity')
-                    ->withTimestamps();
+    public function bedType()
+    {
+        return $this->belongsTo(BedType::class, 'bed_type_id', 'id');
     }
     public function roomTypeAmenities()
     {
-        return $this->hasMany(RoomTypeAmenity::class,'room_type_id');
+        return $this->hasMany(RoomTypeAmenity::class, 'room_type_id');
     }
     public function amenities()
     {
@@ -36,11 +33,12 @@ class RoomType extends Model
     }
     public function bookingDetails()
     {
-        return $this->hasMany(BookingDetail::class,'room_type_id');
+        return $this->hasMany(BookingDetail::class, 'room_type_id');
     }
     public function variants()
     {
-        return $this->hasMany(RoomTypeVariant::class,'room_type_id');
+        return $this->hasMany(RoomTypeVariant::class, 'room_type_id');
     }
+
 
 }

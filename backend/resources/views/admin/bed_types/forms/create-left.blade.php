@@ -8,7 +8,7 @@
             <div class="col-12">
                 <div class="mb-3">
                     <label class="control-label">{{ __('Tên loại giường') }}:</label>
-                    <x-input type="text" name="name" :value="old('name')" :required="true" placeholder="{{ __('Tên tiện ích') }}" />
+                    <x-input type="text" name="name" :value="old('name')" :required="true" placeholder="{{ __('Tên loại giường') }}" />
                 </div>
             </div>
 

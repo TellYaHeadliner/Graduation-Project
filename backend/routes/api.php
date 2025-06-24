@@ -47,4 +47,10 @@ Route::controller(App\Http\Controllers\API\Hotel\HotelController::class)
     ->group(function () {
         Route::get('/hotel-seasons/{name?}', 'listHotelSeasons')->name('listHotelSeasons');
         Route::get('/detail-hotel/{id?}', 'detailHotel')->name('detailHotel');
-    });
+});
+Route::controller(App\Http\Controllers\API\RoomType\RoomTypeController::class)
+    ->prefix('/room-types')
+    ->as('room_type.')
+    ->group(function () {
+        Route::get('/{hotel_id?}/{check_in?}/{check_out?}/{guest?}/{children?}/{room_quantity?}', 'getRoomTypeHotel')->name('getRoomTypeHotel');
+});

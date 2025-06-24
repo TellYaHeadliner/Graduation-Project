@@ -11,10 +11,8 @@ enum RoomStatus: int
 
     case Inactive = 0;
     case Active = 1;
-    case Booked = 2;
-    case CheckedIn = 3;
-    case Maintenance = 4;
-    case Cleaning = 5;
+    case Maintenance = 2;
+    case Cleaning = 3;
 
 
     public function badge(): string
@@ -22,8 +20,6 @@ enum RoomStatus: int
         return match ($this) {
             RoomStatus::Inactive     => 'bg-gray-lt',
             RoomStatus::Active       => 'bg-green-lt',
-            RoomStatus::Booked       => 'bg-blue-lt',
-            RoomStatus::CheckedIn    => 'bg-indigo-lt ',
             RoomStatus::Maintenance  => 'bg-yellow-lt ',
             RoomStatus::Cleaning     => 'bg-orange-lt ',
         };

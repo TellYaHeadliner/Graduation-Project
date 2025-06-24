@@ -114,8 +114,6 @@ return [
     RoomStatus::class => [
         RoomStatus::Inactive->value     => 'Không hoạt động',
         RoomStatus::Active->value       => 'Sẵn sàng',
-        RoomStatus::Booked->value       => 'Đã đặt',
-        RoomStatus::CheckedIn->value    => 'Đang ở',
         RoomStatus::Maintenance->value  => 'Bảo trì',
         RoomStatus::Cleaning->value     => 'Đang dọn',
     ],

@@ -34,6 +34,13 @@ class RoomTypeVariant extends Model
             ->withPivot(['discount_type', 'discount_value'])
             ->withTimestamps();
     }
+
+    public function seasonPrices()
+    {
+        return $this->hasMany(RoomTypeSeasonPrice::class);
+    }
+
+
     public function bookingDetails()
     {
         return $this->hasMany(BookingDetail::class, 'room_type_variant_id');

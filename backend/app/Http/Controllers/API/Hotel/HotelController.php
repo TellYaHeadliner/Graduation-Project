@@ -29,15 +29,13 @@ class HotelController extends Controller
             'data' => [
                 'hotels' => $hotels
             ]
-        ]);
+        ],200);
     }
     public function detailHotel(Request $request)
     {
         $id = $request->query('id');
         $hotel = Hotel::with([
             'roomTypes.variants.seasons',
-            'roomTypes.variants.rooms',
-            'roomTypes.variants.attributes',
             'hotelRule'
         ])->find($id);
         return response()->json([
@@ -45,6 +43,6 @@ class HotelController extends Controller
             'data' => [
                 'hotel' => $hotel
             ]
-        ]);
+        ],200);
     }
 }

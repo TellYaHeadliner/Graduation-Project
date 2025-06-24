@@ -113,7 +113,7 @@ Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
             Route::post('/{hotel_id}/{room_type_variant_id}/them', 'store')->name('store');
 
             Route::get('/{hotel_id}', 'index')->name('index');
-            Route::get('/{hotel_id}/{room_type_variant_id}sua/{id}', 'edit')->name('edit');
+            Route::get('/{hotel_id}/{room_type_variant_id}/sua/{id}', 'edit')->name('edit');
 
             Route::put('/{hotel_id}/{room_type_variant_id}/sua', 'update')->name('update');
 

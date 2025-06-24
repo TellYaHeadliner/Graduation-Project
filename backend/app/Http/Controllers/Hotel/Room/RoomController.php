@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Hotel\Room;
 use App\DataTables\Hotel\Room\RoomDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Hotel\Room\RoomRequest;
+use App\Models\Room;
 use App\Models\RoomTypeVariant;
 use Exception;
 use Illuminate\Http\Request;
@@ -66,6 +67,10 @@ class RoomController extends Controller
             $this->data['code'] =  $room_type_variant->roomType->room_code . '-' . trim($this->data['code']);
             $this->data['hotel_id'] = $room_type_variant->roomType->hotel_id;
 
+            if (Room::where('code', $this->data['code'])->exists()) {
+                 return redirect()->route($this->route['create'], ['hotel_id' => $hotel_id, 'room_type_variant_id' => $room_type_variant_id])->with('error', 'Thêm thất bại');
+            }
+
             RoomTypeVariant::find($room_type_variant_id)->rooms()->create($this->data);
 
             DB::commit();
@@ -74,6 +79,55 @@ class RoomController extends Controller
             DB::rollback();
             Log::error($e->getMessage());
             return redirect()->route($this->route['create'], ['hotel_id' => $hotel_id, 'room_type_variant_id' => $room_type_variant_id])->with('error', 'Thêm thất bại');
+        }
+    }
+    public function edit($hotel_id, $room_type_variant_id, $id)
+    {
+        $room = Room::find($id);
+        $room_type_variant = RoomTypeVariant::with('roomType')->find($room_type_variant_id);
+        return view($this->view['edit'], [
+            'breadcrumbs' => $this->crums->add(
+                __('Danh sách phòng'),
+                route($this->route['index'], $hotel_id)
+            )->add('Cập nhập thông tin phòng'),
+            'room' => $room,
+            'room_type_variant' => $room_type_variant,
+            'RoomStatus' => \App\Enums\Room\RoomStatus::asSelectArray(),
+        ]);
+    }
+
+    public function update($hotel_id, $room_type_variant_id, RoomRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+            $this->data = $request->validated();
+
+            $room = Room::find($this->data['id']);
+
+            if ($room->code !== $this->data['code'] && Room::where('code', $this->data['code'])->exists()) {
+                return redirect()->route($this->route['edit'], ['hotel_id' => $hotel_id, 'room_type_variant_id' => $room_type_variant_id, 'id' => $this->data['id']])->with('error', 'Cập nhập thất bại');
+            }
+            $room->update($this->data);
+
+            DB::commit();
+            return redirect()->route($this->route['index'], $hotel_id)->with('success', 'Cập nhập thành công');
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::error($e->getMessage());
+            return redirect()->route($this->route['edit'], ['hotel_id' => $hotel_id, 'room_type_variant_id' => $room_type_variant_id, 'id' => $this->data['id']])->with('error', 'Cập nhập thất bại');
+        }
+    }
+    public function delete($hotel_id, $room_type_variant_id, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $this->data = Room::find($id);
+            $this->data->delete();
+            DB::commit();
+            return redirect()->route($this->route['index'], $hotel_id)->with('success', 'Xóa thành công');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->route($this->route['index'], $hotel_id)->with('error', 'Xóa thất bại');
         }
     }
 }

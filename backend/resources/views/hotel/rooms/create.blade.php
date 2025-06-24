@@ -24,5 +24,5 @@
 @endpush
 
 @push('custom-js')
-    @include('hotel.rooms.scripts.scripts')
+
 @endpush

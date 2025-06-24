@@ -7,11 +7,11 @@
 
     <div class="page-body">
         <div class="container-xl">
-            <x-form :action="route('hotel.hotel_service.update',Auth()->user()->id)" type="put" :validate="true">
-                <x-input type="hidden" name="id" :value="$hotel_service->id" />
+            <x-form :action="route('hotel.room.update',['hotel_id' => Auth()->user()->id, 'room_type_variant_id' => $room->variant_id])" type="put" :validate="true">
+                <x-input type="hidden" name="id" :value="$room->id" />
                 <div class="row justify-content-center">
-                    @include('hotel.hotel_services.forms.edit-left')
-                    @include('hotel.hotel_services.forms.edit-right')
+                    @include('hotel.rooms.forms.edit-left')
+                    @include('hotel.rooms.forms.edit-right')
                 </div>
             </x-form>
         </div>
@@ -27,5 +27,4 @@
 
 
 @push('custom-js')
-    @include('hotel.hotel_services.scripts.scripts')
 @endpush

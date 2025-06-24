@@ -43,7 +43,10 @@ class RoomTypeVariantController extends Controller
     {
         $room_type = RoomType::find($room_type_id);
         return $dataTable->with('room_type_id', $room_type_id)->render($this->view['index'], [
-            'breadcrumbs' => $this->crums->add(__('Danh sách Loại phòng')),
+            'breadcrumbs' => $this->crums->add(
+                __('Danh sách Loại phòng'),
+                route('hotel.room_type.index', $hotel_id)
+            )->add('Danh sách biến thể'),
             'room_type' => $room_type,
         ]);
     }

@@ -12,7 +12,7 @@
             <span><i class="ti ti-check"></i>{{ __(' Trạng thái') }}</span>
         </div>
         <div class="card-body p-2">
-            <select name="role" class="form-select">
+            <select name="status" class="form-select">
                 @foreach($RoomStatus as $value => $label)
                     <option value="{{ $value }}" {{ $value == 1 ? 'selected' : '' }}>{{ $label }}</option>
                 @endforeach

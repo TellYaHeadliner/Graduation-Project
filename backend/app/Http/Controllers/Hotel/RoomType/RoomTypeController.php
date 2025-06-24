@@ -126,7 +126,10 @@ class RoomTypeController extends Controller
             $roomTypeAmenities[] = $item->id;
         }
         return view($this->view['edit'], [
-            'breadcrumbs' => $this->crums->add(__('Danh sách tiện nghi')),
+            'breadcrumbs' => $this->crums->add(
+                __('Danh sách Loại phòng'),
+                route($this->route['index'], $hotel_id)
+            )->add('Cập nhập thông tin loại phòng'),
             'roomTypeAmenities' => $roomTypeAmenities,
             'amenitiesTree' => $amenitiesTree,
             'room_type' => $room_type,

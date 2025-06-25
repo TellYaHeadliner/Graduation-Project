@@ -2,6 +2,7 @@ import * as Accordion from '@radix-ui/react-accordion';
 import { ChevronDownIcon } from '@radix-ui/react-icons';
 
 
+
 export default function AccordionFAQHotel() {
     return (
         <div className="rounded-lg border border-gray-700">

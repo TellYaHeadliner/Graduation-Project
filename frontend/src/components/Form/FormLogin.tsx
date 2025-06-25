@@ -69,7 +69,7 @@ export default function FormLogin() {
                     Google
                 </Button>
             </div>
-            <DialogLoginComplete title="Đăng kí thành công" isOpen={isOpenDialog} />
+            <DialogLoginComplete title="Đăng nhập thành công" isOpen={isOpenDialog} />
             {
                 loginMutation.isPending &&
                 <DialogLoading isOpen={true} />

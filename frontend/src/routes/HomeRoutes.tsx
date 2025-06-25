@@ -1,6 +1,7 @@
 import { lazy, Suspense } from "react"
 import { Route } from "react-router-dom"
 import { PATH } from "../constants/Paths"
+import { FindRoomProvider } from "../context/FindRoomContext"
 
 
 const Home = lazy(() => import("../pages/Home"))
@@ -24,7 +25,9 @@ export default function HomeRoutes() {
             } />
             <Route path={PATH.CHITIETKHACHSAN} element={
                 <Suspense fallback={<LoadingPage />}>
-                    <DetailHotel />
+                    <FindRoomProvider>
+                        <DetailHotel />
+                    </FindRoomProvider>
                 </Suspense>
             } />
         </>

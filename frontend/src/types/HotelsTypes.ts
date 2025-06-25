@@ -38,6 +38,7 @@ export interface RoomType {
 }
 
 export interface RoomTypeVariant {
+  attributes: ReactNode;
   id: number;
   room_type_id: number;
   base_price: number;
@@ -46,6 +47,7 @@ export interface RoomTypeVariant {
   status: number;
   created_at: string;
   updated_at: string;
+  available_room_count: number;
   seasons: Season[];
 }
 
@@ -124,10 +126,33 @@ export interface DetailHotel {
   reputation_score: number;
   created_at: string | null;
   updated_at: string;
-  room_types: RoomType[];
   hotel_rule: HotelRule;
+  amenities: Amenity[];
+  services: HotelService[];
+  combos: Combo[];
+  vouchers: Voucher[];
 }
 
+export interface Combo {
+  id: number;
+  hotel_id: number;
+  name: string;
+  short_description: string | null;
+  combo_price: number;
+  original_price: number;
+  status: number;
+  created_at: string;
+  updated_at: string;
+  combo_services: ComboService[];
+}
+
+export interface ComboService {
+  combo_id: number;
+  hotel_service_id: number;
+  quantity: number;
+  created_at: string;
+  updated_at: string;
+}
 export interface HotelRule {
   id: number;
   check_in_time: string;
@@ -147,6 +172,61 @@ export interface SeasonPivot {
   discount_value: number;
   created_at: string | null;
   updated_at: string | null;
+}
+
+export interface Amenity {
+  id: number;
+  name: string;
+  parent_id: number;
+  created_at: string;
+  updated_at: string;
+  pivot: {
+    hotel_id: number;
+    amenity_id: number;
+    created_at: string;
+    updated_at: string;
+  };
+}
+
+export interface HotelService {
+  id: number;
+  name: string;
+  default_unit: string;
+  status: number;
+  created_at: string;
+  updated_at: string;
+  pivot: {
+    hotel_id: number;
+    service_id: number;
+    short_description: string | null;
+    base_price: number;
+    promo_price: number | null;
+    status: number;
+    created_at: string;
+    updated_at: string;
+  };
+}
+
+export interface Voucher {
+  id: number;
+  code: string;
+  discount_type: number;
+  discount_value: number;
+  max_discount_value: number;
+  min_order_value: number;
+  is_active: number;
+  start_date: string;
+  end_date: string;
+  hotel_scope: number;
+  customer_scope: number;
+  created_at: string;
+  updated_at: string;
+  pivot: {
+    hotel_id: number;
+    voucher_id: number;
+    created_at: string;
+    updated_at: string;
+  };
 }
 
 

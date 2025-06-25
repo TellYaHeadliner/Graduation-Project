@@ -1,5 +1,4 @@
 import { Dialog } from "radix-ui";
-import { CheckIcon } from "@radix-ui/react-icons";
 import LoadingSpinner from "../Loading/LoadingSpinner";
 
 interface DialogLoadingProps{

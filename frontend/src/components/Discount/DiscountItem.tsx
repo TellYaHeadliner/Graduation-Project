@@ -1,16 +1,19 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 interface DiscountItemProps {
+  discountType: number;
   discountCode: string;
-  description: string;
-  dateDiscount: Date;
+  discountValue: number;
+  minDiscountValue: number;
+  maxDiscountValue: number;
+  startDate: string;
+  endDate: string;
 }
 
 export default function DiscountItem({
   discountCode,
-  description,
-  dateDiscount,
-}: DiscountItemProps) {
+  startDate,
+  endDate}: DiscountItemProps) {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -22,6 +25,11 @@ export default function DiscountItem({
       console.error('Lỗi khi copy:', err);
     }
   };
+
+  const formatDate = (dateString: string) => {
+    const [year, month, day] = dateString.split("-")
+    return `${Number(day)}/${Number(month)}/${year}`;
+  }
 
   return (
     <div className="rounded-lg border border-gray-300 p-3 shadow-sm bg-white space-y-2">
@@ -35,10 +43,8 @@ export default function DiscountItem({
         </button>
       </div>
 
-      <p className="text-sm font-medium text-gray-800">{description}</p>
-
       <div className="text-xs text-gray-400">
-        Hạn sử dụng: {dateDiscount.toLocaleDateString('vi-VN')}
+        Hạn sử dụng: {formatDate(startDate)} - {formatDate(endDate)}
       </div>
     </div>
   );

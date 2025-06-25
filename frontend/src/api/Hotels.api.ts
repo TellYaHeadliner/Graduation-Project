@@ -1,5 +1,6 @@
 import api from "./axiosConfig"
 import { DetailHotelResponse, HotelResponse } from '../types/HotelsTypes';
+import { RoomTypeResponse } from "../types/RoomTypes";
 
 const hotelApi = {
     getHotelSeasons: (): Promise<HotelResponse> => {
@@ -18,7 +19,7 @@ const hotelApi = {
         })
     },
 
-    getRoomTypes: (hotel_id: number, check_in: string, check_out: string, guest: number, children: number, room_quantity: number): Promise<HotelResponse> => {
+    getRoomTypes: (hotel_id: number, check_in: string, check_out: string, guest: number, children: number, room_quantity: number): Promise<RoomTypeResponse> => {
         return api.get('/room-types', {
             params: {
                 hotel_id, check_in, check_out, guest, children, room_quantity

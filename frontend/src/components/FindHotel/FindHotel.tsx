@@ -7,46 +7,46 @@ import { useNavigate } from "react-router-dom";
 import { Provinces } from "../../constants/Provinces";
 import useFindHotel from "../../hooks/useFindHotel";
 import { vi } from "date-fns/locale/vi";
-import { useAppContext } from "../../context/AppContext";
+import { useFindHotelContext } from "../../context/FindHotelContext";
 import { findHotelSchemas } from "../../schemas/findHotelSchemas";
 
 registerLocale("vi", vi);
 
 export default function FindHotel() {
     const [isOpen, setIsOpen] = useState(false);
-    const [isNull, setIsNull] = useState(false);
+    const [, setIsNull] = useState(false);
     const [error, setError] = useState("");
     const dropdownRef = useRef<HTMLDivElement | null>(null);
     const toggleOpen = () => setIsOpen((prev) => !prev);
     const navigate = useNavigate(); 
-    const { state, dispatch } = useAppContext();
+    const { state, dispatch } = useFindHotelContext();
     const {
         province,
         dateRange,
         adults,
         children,
         rooms,
-        withPets,
-    } = state.findHotel;
+    } = state;
     
-    const [startDate, endDate] = dateRange;
+    const [startDate, endDate] = [
+        typeof state.dateRange[0] === 'string' ? new Date(state.dateRange[0]) : null,
+        typeof state.dateRange[1] === 'string' ? new Date(state.dateRange[1]) : null
+    ];
 
     const { provinceFromQuery, 
             startDateFromQuery, 
             endDateFromQuery, 
             adultsFromQuery, 
             childrenFromQuery, 
-            roomsFromQuery, 
-            withPetsFromQuery } = useFindHotel();
+            roomsFromQuery } = useFindHotel();
     
     useEffect(() => {
-        if (provinceFromQuery && startDateFromQuery && endDateFromQuery && adultsFromQuery && childrenFromQuery && roomsFromQuery && withPetsFromQuery){
+        if (provinceFromQuery && startDateFromQuery && endDateFromQuery && adultsFromQuery && childrenFromQuery && roomsFromQuery){
             dispatch({ type: 'SET_PROVINCE', payload: provinceFromQuery });
             dispatch({ type: 'SET_DATE_RANGE', payload: [startDateFromQuery, endDateFromQuery] });
             dispatch({ type: 'SET_ADULTS', payload: adultsFromQuery });
             dispatch({ type: 'SET_CHILDREN', payload: childrenFromQuery });
             dispatch({ type: 'SET_ROOMS', payload: roomsFromQuery });
-            dispatch({ type: 'SET_WITH_PETS', payload: withPetsFromQuery });
         }
         else {
             setIsNull(true);
@@ -60,7 +60,7 @@ export default function FindHotel() {
 
         document.addEventListener("mousedown", handleClickOutside)
         return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, [provinceFromQuery, startDateFromQuery, endDateFromQuery, adultsFromQuery, childrenFromQuery, roomsFromQuery, withPetsFromQuery, dispatch]);
+    }, [provinceFromQuery, startDateFromQuery, endDateFromQuery, adultsFromQuery, childrenFromQuery, roomsFromQuery, dispatch]);
 
     const formatDate = (date: Date | null) =>
         date ? date.toISOString().split("T")[0] : "";
@@ -74,7 +74,6 @@ export default function FindHotel() {
             adults,
             children,
             rooms,
-            withPets
         })
 
         if (!result.success){
@@ -89,8 +88,7 @@ export default function FindHotel() {
             ...(endDate && { endDate: formatDate(endDate) }),
             adults: adults.toString(),
             children: children.toString(),
-            rooms: rooms.toString(),
-            withPets: withPets ? "true" : "false",
+            rooms: rooms.toString()
         })
 
         navigate(`/search?${queryParams.toString()}`)
@@ -100,7 +98,7 @@ export default function FindHotel() {
             <form className="flex flex-nowrap items-center mt-4 md:justify w-full" onSubmit={handleSubmit}>
                 <div className="flex flex-col gap-1" dir="ltr">
                     <select
-                        value={state.findHotel.province || "" }
+                        value={state.province || "" }
                         onChange={(e) => dispatch({ type: 'SET_PROVINCE', payload: e.target.value })}
                         name="province"
                         id="province"
@@ -124,7 +122,11 @@ export default function FindHotel() {
                         selectsRange
                         startDate={startDate}
                         endDate={endDate}
-                        onChange={(update: [Date | null, Date | null]) => dispatch({ type: 'SET_DATE_RANGE', payload: update })}
+                        onChange={(update: [Date | null, Date | null]) => {
+                            const start = update[0] instanceof Date ? update[0].toISOString().split('T')[0] : null;
+                            const end = update[1] instanceof Date ? update[1].toISOString().split('T')[0] : null;
+                            dispatch({ type: 'SET_DATE_RANGE', payload: [start, end] });
+                        }}
                         dateFormat="dd/MM/yyyy"
                         locale="vi"
                         className="px-3 py-2 w-60 sm:w-60 2xl:w-100 2xl:h-15 2xl:text-lg border-2 border-accent"
@@ -140,7 +142,7 @@ export default function FindHotel() {
                         className="flex items-center bg-white justify-center gap-2 border-2 border-accent px-4 py-3 transition">
                         <PersonIcon className="text-gray-700 w-5 h-5 " />
                         <span className="text-sm sm:text-base text-gray-800 whitespace-nowrap overflow-hidden text-ellipsis">
-                            {adults} Người lớn · {children} Trẻ em · {rooms} Phòng {withPets ? "· thú cưng" : ""}
+                            {adults} Người lớn · {children} Trẻ em · {rooms} Phòng
                         </span>
                         <ChevronDownIcon className="text-gray-700 w-5 h-5" />
                     </button>
@@ -174,20 +176,6 @@ export default function FindHotel() {
                                 </div>
                             </div>
                         ))}
-
-                        {/* Thú cưng */}
-                        <div className="flex justify-between items-center">
-                            <span>Thú cưng</span>
-                            <label className="flex items-center gap-2 cursor-pointer">
-                                <input
-                                    type="checkbox"
-                                    checked={withPets}
-                                    onChange={() => dispatch({ type: 'SET_WITH_PETS', payload: !withPets })}
-                                    className="w-4 h-4"
-                                />
-                                <span className="text-sm">Mang theo</span>
-                            </label>
-                        </div>
 
                         <button
                             type="button"

@@ -1,29 +1,27 @@
+/* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer, ReactNode } from 'react';
 
 export interface FindHotelParams {
   province: string;
-  dateRange: [Date | null, Date | null];
+  dateRange: [string | null, string | null];
   adults: number;
   children: number;
   rooms: number;
-  withPets: boolean;
 }
 
 type FindHotelAction =
   | { type: 'SET_PROVINCE'; payload: string }
-  | { type: 'SET_DATE_RANGE'; payload: [Date | null, Date | null] }
+  | { type: 'SET_DATE_RANGE'; payload: [string | null, string | null] }
   | { type: 'SET_ADULTS'; payload: number }
   | { type: 'SET_CHILDREN'; payload: number }
-  | { type: 'SET_ROOMS'; payload: number }
-  | { type: 'SET_WITH_PETS'; payload: boolean };
+  | { type: 'SET_ROOMS'; payload: number };
 
 const initialState: FindHotelParams = {
   province: '',
   dateRange: [null, null],
-  adults: 2,
+  adults: 0,
   children: 0,
-  rooms: 1,
-  withPets: false,
+  rooms: 0,
 };
 
 function reducer(state: FindHotelParams, action: FindHotelAction): FindHotelParams {
@@ -38,8 +36,6 @@ function reducer(state: FindHotelParams, action: FindHotelAction): FindHotelPara
       return { ...state, children: action.payload };
     case 'SET_ROOMS':
       return { ...state, rooms: action.payload };
-    case 'SET_WITH_PETS':
-      return { ...state, withPets: action.payload };
     default:
       return state;
   }

@@ -31,18 +31,22 @@ class HotelController extends Controller
             ]
         ],200);
     }
+    
     public function detailHotel(Request $request)
     {
         $id = $request->query('id');
         $hotel = Hotel::with([
-            'roomTypes.variants.seasons',
-            'hotelRule'
+            'hotelRule',
+            'amenities',
+            'services',
+            'combos.comboServices.service',
+            'vouchers'
         ])->find($id);
         return response()->json([
             'message' => 'Chi tiết khách sạn.',
             'data' => [
                 'hotel' => $hotel
             ]
-        ],200);
+        ], 200);
     }
 }

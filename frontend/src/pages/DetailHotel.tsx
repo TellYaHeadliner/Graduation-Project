@@ -1,14 +1,9 @@
 import MainLayout from "../layouts/MainLayout";
 import locationPin from "../assets/location-pin.svg"
 import CarouselComment from "../components/CustomCarousel/CarouselComment";
-import { HeartFilledIcon } from "@radix-ui/react-icons";
 import TableRoom from "../components/Table/TableRoom";
-import { tableRoomData } from "../utils/TableRoomStaticData";
-import FindHotel from "../components/FindHotel/FindHotel";
 import DataListRule from "../components/DataList/DataListRule";
 import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
-import CarouselCard from "../components/CustomCarousel/CarouselCard";
-import { CardListStaticData } from "../utils/CardListStaticData";
 import catFAQ from "../assets/cat_faq.png"
 import ChatButton from "../components/Chat/ChatButton";
 import DiscountBar from "../components/Discount/DiscountBar";
@@ -16,18 +11,22 @@ import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import DialogHotelServices from "../components/Dialog/DialogHotelServices";
 import { useParams } from "react-router-dom";
 import { useHotelDetailQuery } from "../react-query/useHotelDetailQuery";
-import { useEffect } from "react";
 import useTitle from "../hooks/useTitle";
-
-
+import { CheckIcon } from "@radix-ui/react-icons";
+import FindRoom from "../components/FindHotel/FindRoom";
+import { useFindRoomContext } from "../context/FindRoomContext";
+import { useHotelRoomTypesQuery } from '../react-query/useHotelRoomTypesQuery';
+import { useState } from "react";
 
 
 export default function DetailHotel() {
 
     const { id } = useParams();
+    const { state } =  useFindRoomContext();
     const getDetailHotel = useHotelDetailQuery(Number(id));
     const title = getDetailHotel.data?.data?.hotel?.name
     useTitle(title ?? "Đang tải")
+
 
     const breadcrumbItems = [
         { label: "Trang chủ", href: "/" },
@@ -37,8 +36,8 @@ export default function DetailHotel() {
 
     const galleyString = getDetailHotel.data?.data.hotel.gallery;
     const listGalley = galleyString?.split(",") ?? [];
-
-
+    const [isSearchRoomType, setIsSearchRoomType] = useState(false);
+    const getRoomType = useHotelRoomTypesQuery(Number(id), state.dateRange[0] , state.dateRange[1], state.adults, state.children, state.rooms, isSearchRoomType)
     return (
         <MainLayout>
             <div className="flex lg:mx-26 2xl:mx-47 flex-col text-black">
@@ -53,10 +52,10 @@ export default function DetailHotel() {
                     {getDetailHotel.data?.data.hotel.address}
                 </div>
                 <div className="flex gap-4">
-                    <img src={`${import.meta.env.VITE_API_URL}${listGalley[0]}`} alt="" className="w-2/3 h-64 bg-gray-300"/>
+                    <img src={`${import.meta.env.VITE_URL}${listGalley[0]}`} alt="" className="w-2/3 h- bg-gray-300" />
                     <div className="grid grid-cols-1 gap-4 w-1/3">
-                        <img src={listGalley[1]} alt="" className="h-30 rounded bg-gray-300"/>
-                        <img src={listGalley[2]} alt="" className="h-30 rounded bg-gray-300"/>
+                        <img src={listGalley[1]} alt="" className="h-30 rounded bg-gray-300" />
+                        <img src={listGalley[2]} alt="" className="h-30 rounded bg-gray-300" />
                     </div>
                 </div>
                 <div className="flex flex-row mt-4">
@@ -68,52 +67,44 @@ export default function DetailHotel() {
                         </h2>
                         <div>
                             <ul className="flex flex-row flex-wrap gap-4 mt-2">
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Free WiFi
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Buffet
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Massage
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Hồ bơi vô cực
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Phòng xông hơi
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Massage
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Massage
-                                </li>
+                                {getDetailHotel.data?.data?.hotel?.amenities.map((amenity) => (
+                                    <li key={amenity.id} className="flex items-center gap-1">
+                                        <CheckIcon className="text-green-300 font-semibold w-6 h-6" />
+                                        {amenity.name}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <h2 className="text-lg font-semibold mt-2">
+                            Các dịch vụ chúng tôi có
+                        </h2>
+                        <div>
+                            <ul className="flex flex-row flex-wrap gap-4 mt-2">
+                                {getDetailHotel.data?.data?.hotel?.services.map((service) => (
+                                    <li key={service.id} className="flex items-center gap-1">
+                                        <CheckIcon className="text-green-300 font-semibold w-6 h-6" />
+                                        {service.name}
+                                    </li>
+                                ))}
                             </ul>
                         </div>
 
                     </div>
                     <div className="w-1/2 space-y-4 flex flex-wrap justify-start">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15675.627299399666!2d106.68599318715822!3d10.818442200000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752893ce3dd19b%3A0x5bbb4a49c123be78!2zS0jDgUNIIFPhuqBOIELDjE5IIE1JTkg!5e0!3m2!1svi!2s!4v1749129751015!5m2!1svi!2s"
+                            src={`https://www.google.com/maps?q=${encodeURIComponent(getDetailHotel.data?.data?.hotel?.address ?? "")}&output=embed`}
                             width={800}
                             height={400}
                             style={{ border: 0 }}
                             loading="lazy"
+                            allowFullScreen
                             referrerPolicy="no-referrer-when-downgrade"
                         />
                         <h3 className="text-lg font-bold">
                             Đánh giá về khách sạn chúng tôi
                         </h3>
                         <CarouselComment />
-                        <DiscountBar />
+                        <DiscountBar discountList={getDetailHotel.data?.data.hotel.vouchers || []}/>
                     </div>
                 </div>
                 <div className="flex flex-col mt-4">
@@ -121,9 +112,9 @@ export default function DetailHotel() {
                         Lựa chọn loại phòng
                     </h2>
                     <div className="mb-4">
-                        <FindHotel />
+                        <FindRoom onSearch={() => setIsSearchRoomType(true)}/>
                     </div>
-                    <TableRoom data={tableRoomData} />
+                    <TableRoom datas={getRoomType.data?.data.list ?? []} />
                     <div className="flex justify-end py-3">
                         <DialogHotelServices />
                     </div>
@@ -136,7 +127,7 @@ export default function DetailHotel() {
                         Bạn nên biết khi sử dụng khách sạn của chúng tôi
                     </p>
                     <div className="mt-2">
-                        <DataListRule />
+                        <DataListRule hotelRule={getDetailHotel.data?.data.hotel.hotel_rule} />
                     </div>
                 </div>
                 <div>

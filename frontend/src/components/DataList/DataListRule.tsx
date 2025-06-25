@@ -1,13 +1,18 @@
 import { DataList } from "@radix-ui/themes";
+import { HotelRule } from '../../types/HotelsTypes';
 
-export default function DataListRule() {
+interface DataListRuleProps{
+    hotelRule: HotelRule | undefined;
+}
+
+export default function DataListRule({ hotelRule } : DataListRuleProps) {
     return (
         <div className="rounded-lg border border-gray-300 p-4">
             <DataList.Root>
                 <DataList.Item className="border-b border-gray-300 py-2">
                     <DataList.Label className="border-r border-gray-300">Check-in</DataList.Label>
                     <DataList.Value>
-                        Từ 15:00 đến 23:00<br />
+                        Từ {hotelRule?.check_in_time.slice(0, 5)} <br />
                         Khách cần xuất trình giấy tờ tùy thân có ảnh và thẻ tín dụng khi nhận phòng.<br />
                         Vui lòng thông báo trước cho chỗ nghỉ thời gian đến của bạn.
                     </DataList.Value>
@@ -15,48 +20,26 @@ export default function DataListRule() {
 
                 <DataList.Item className="border-b border-gray-300 py-2">
                     <DataList.Label className="border-r border-gray-300">Check-out</DataList.Label>
-                    <DataList.Value>Từ 00:00 đến 11:00</DataList.Value>
+                    <DataList.Value>Từ {hotelRule?.check_out_time.slice(0, 5)}</DataList.Value>
                 </DataList.Item>
 
+
                 <DataList.Item className="border-b border-gray-300 py-2">
-                    <DataList.Label className="border-r border-gray-300">Huỷ/đặt cọc</DataList.Label>
-                    <DataList.Value>
-                        Chính sách huỷ và đặt cọc thay đổi theo loại chỗ nghỉ.
+                    <DataList.Label className="border-r border-gray-300">Cho phép trẻ em</DataList.Label>
+                    <DataList.Value className="border-r border-gray-300">
+                        {hotelRule?.child_policy === 1 ? "Cho phép trẻ em" : "Không cho phép trẻ em"}
                     </DataList.Value>
-                </DataList.Item>
-
-                <DataList.Item className="border-b border-gray-300 py-2">
-                    <DataList.Label className="border-r border-gray-300">Trẻ em và giường</DataList.Label>
-                    <DataList.Value className="space-y-2">
-                        <div className="flex flex-wrap">
-                            <div>
-                                <strong>Child policies</strong><br />
-                                Children of any age are welcome.<br />
-                                To see correct prices and occupancy info, please add the number of children in your group and their ages to your search.
-                            </div>
-                            <div>
-                                <strong>Cot and extra bed policies</strong><br />
-                                Cots and extra beds are not available at this property.
-                            </div>
-                        </div>
-        
-                    </DataList.Value>
-                </DataList.Item>
-
-                <DataList.Item className="border-b border-gray-300 py-2">
-                    <DataList.Label className="border-r border-gray-300">Giới hạn độ tuổi</DataList.Label>
-                    <DataList.Value>Không có giới hạn độ tuổi khi nhận phòng</DataList.Value>
                 </DataList.Item>
 
                 <DataList.Item className="border-b border-gray-300 py-2">
                     <DataList.Label className="border-r border-gray-300">Thú cưng</DataList.Label>
-                    <DataList.Value>Không cho phép mang theo thú cưng</DataList.Value>
+                    <DataList.Value>{hotelRule?.pet_policy === 1 ? "Khách hàng có thể mang thú cưng" : "Khách hàng không được phép mang thú cưng"}</DataList.Value>
                 </DataList.Item>
 
                 <DataList.Item className="border-b border-gray-300 py-2">
-                    <DataList.Label className="border-r border-gray-300">Đặt theo nhóm</DataList.Label>
+                    <DataList.Label className="border-r border-gray-300">Phụ phí giường</DataList.Label>
                     <DataList.Value>
-                        Khi đặt trên 10 phòng, có thể áp dụng các chính sách và phụ phí khác.
+                        {hotelRule?.extra_bed_fee === 1 ? "Có phụ phí giường giá 100,000 VNĐ/giường" : "Không có phụ phí giường"}
                     </DataList.Value>
                 </DataList.Item>
             </DataList.Root>

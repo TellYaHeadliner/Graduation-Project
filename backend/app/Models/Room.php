@@ -16,22 +16,11 @@ class Room extends Model
         'status' => RoomStatus::class,
     ];
 
-    public function variant()
-    {
-        return $this->belongsTo(RoomTypeVariant::class, 'variant_id');
-    }
-
     public function roomType()
     {
-        return $this->hasOneThrough(
-            RoomType::class,
-            RoomTypeVariant::class,
-            'id',
-            'id',
-            'variant_id',
-            'room_type_id'
-        );
+        return $this->belongsTo(RoomType::class, 'room_type_id');
     }
+
     public function bookingDetails()
     {
         return $this->hasMany(BookingDetail::class, 'room_id');

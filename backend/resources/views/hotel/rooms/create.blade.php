@@ -6,7 +6,7 @@
 @section('content')
     <div class="page-body">
         <div class="container-xl">
-            <x-form :action="route('hotel.room.store',['hotel_id'=>Auth()->user()->id,'room_type_variant_id' => $room_type_variant->id])" type="post" :validate="true">
+            <x-form :action="route('hotel.room.store',['hotel_id'=>Auth()->user()->id,'room_type_id' => $room_type->id])" type="post" :validate="true">
                 <div class="row justify-content-center">
                     @include('hotel.rooms.forms.create-left')
                     @include('hotel.rooms.forms.create-right')

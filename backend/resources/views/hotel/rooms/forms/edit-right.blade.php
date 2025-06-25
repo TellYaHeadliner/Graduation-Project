@@ -5,7 +5,7 @@
         </div>
         <div class="card-body p-2 d-flex justify-content-between">
             <x-button.submit :title="__('Cập nhật')" />
-            <x-button.modal-delete data-route="{{ route('hotel.room.delete', ['hotel_id' => Auth()->user()->id,'id'=>$room->id,'room_type_variant_id'=>$room->variant_id]) }}"
+            <x-button.modal-delete data-route="{{ route('hotel.room.delete', ['hotel_id' => Auth()->user()->id,'id'=>$room->id,'room_type_id'=>$room->room_type_id]) }}"
                 :title="__('Xóa')" />
         </div>
     </div>

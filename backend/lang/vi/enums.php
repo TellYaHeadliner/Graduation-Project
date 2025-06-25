@@ -1,6 +1,7 @@
 <?php
 
 use App\Enums\Attribute\AttributeStatus;
+use App\Enums\Booking\BookingStatus;
 use App\Enums\Combo\ComboStatus;
 use App\Enums\CommissionRule\CommissionRuleStatus;
 use App\Enums\Hotel\HotelStatus;
@@ -13,6 +14,7 @@ use App\Enums\RoomType\RoomTypeStatus;
 use App\Enums\RoomTypeVariant\RoomTypeVariantStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Enums\Service\ServiceStatus;
+use App\Enums\Transaction\TransactionStatus;
 use App\Enums\User\UserGender;
 use App\Enums\User\UserRole;
 use App\Enums\User\UserStatus;
@@ -116,6 +118,19 @@ return [
         RoomStatus::Active->value       => 'Sẵn sàng',
         RoomStatus::Maintenance->value  => 'Bảo trì',
         RoomStatus::Cleaning->value     => 'Đang dọn',
+    ],
+    BookingStatus::class => [
+        BookingStatus::Pending->value     => 'Đang chờ thanh toán',
+        BookingStatus::Confirmed->value   => 'Đã xác nhận',
+        BookingStatus::CheckedIn->value   => 'Đã nhận phòng',
+        BookingStatus::CheckedOut->value  => 'Đã trả phòng',
+        BookingStatus::Cancelled->value   => 'Đã hủy',
+        BookingStatus::Refunded->value    => 'Đã hoàn tiền',
+    ],
+    TransactionStatus::class => [
+        TransactionStatus::Success->value   => 'Thành công',
+        TransactionStatus::Failed->value    => 'Thất bại',
+        TransactionStatus::Refunded->value  => 'Đã hoàn tiền',
     ],
 
 ];

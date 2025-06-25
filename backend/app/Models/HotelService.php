@@ -34,6 +34,13 @@ class HotelService extends Model
             ->withTimestamps();
     }
 
+    public function bookings()
+    {
+        return $this->belongsToMany(Booking::class, 'booking_services', 'hotel_service_id', 'booking_id')
+            ->withPivot('quantity', 'price', 'total_price')
+            ->withTimestamps();
+    }
+
     public function comboServices()
     {
         return $this->hasMany(ComboService::class, 'hotel_service_id');

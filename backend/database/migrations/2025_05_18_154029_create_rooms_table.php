@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('rooms', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('variant_id')
-                ->constrained('room_type_variants')
+            $table->foreignId('room_type_id')
+                ->constrained('room_types')
                 ->onDelete('cascade');
             $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
             $table->char('code', 50)->unique();

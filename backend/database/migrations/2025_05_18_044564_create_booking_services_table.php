@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('booking_services', function (Blueprint $table) {
             $table->foreignId('booking_id')->constrained('bookings')->onDelete('cascade');
-            $table->foreignId('service_id')->constrained('services')->onDelete('cascade');
+            $table->foreignId('hotel_service_id')->constrained('hotel_services')->onDelete('cascade');
             $table->integer('quantity')->default(1);
             $table->integer('price')->default(0);
             $table->integer('total_price')->default(0);

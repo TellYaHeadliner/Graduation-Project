@@ -8,7 +8,7 @@
             <div class="col-md-6 col-12">
                 <div class="mb-3">
                     <label
-                        class="control-label">{{ 'Tên phòng = ' . $room_type_variant->roomType->room_code . __(' + Mã phòng ( Ví dụ: ') . $room_type_variant->roomType->room_code . '-1 )' }}:</label>
+                        class="control-label">{{ 'Tên phòng = ' . $room_type->room_code . __(' + Mã phòng ( Ví dụ: ') . $room_type->room_code . ' 1 )' }}:</label>
                     <x-input type="text" name="code" :value="old('code')" :required="true"
                         placeholder="{{ __(' Mã phòng') }}" />
                 </div>

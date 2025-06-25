@@ -44,7 +44,8 @@ class HotelController extends Controller
             'hotelRule',
             'amenities',
             'services',
-            'combos.comboServices',
+            'combos.comboServices.service',
+            'vouchers'
         ])->find($id);
         return response()->json([
             'message' => 'Chi tiết khách sạn.',

@@ -26,6 +26,13 @@ Route::middleware('checkJWT')->group(function () {
         ->group(function () {
             Route::post('/register-hotel', 'registerHotel')->name('registerHotel');
     });
+    Route::controller(App\Http\Controllers\API\Transaction\TransactionController::class)
+        ->prefix('/transactions')
+        ->as('transaction.')
+        ->group(function () {
+            Route::post('/create-booking', 'create_booking')->name('create_booking');
+            Route::get('/callback-vnpay', 'callback_vnpay')->name('callback_vnpay');
+    });
 });
 
 

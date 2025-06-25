@@ -41,8 +41,10 @@ class HotelController extends Controller
     {
         $id = $request->query('id');
         $hotel = Hotel::with([
-            'roomTypes.variants.seasons',
-            'hotelRule'
+            'hotelRule',
+            'amenities',
+            'services',
+            'combos.comboServices',
         ])->find($id);
         return response()->json([
             'message' => 'Chi tiết khách sạn.',

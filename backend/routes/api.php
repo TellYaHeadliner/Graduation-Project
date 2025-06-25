@@ -25,7 +25,7 @@ Route::middleware('checkJWT')->group(function () {
         ->as('hotel.')
         ->group(function () {
             Route::post('/register-hotel', 'registerHotel')->name('registerHotel');
-        });
+    });
 });
 
 

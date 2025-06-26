@@ -7,7 +7,7 @@
 
     <div class="page-body">
         <div class="container-xl">
-            <x-form :action="route('hotel.room.update',['hotel_id' => Auth()->user()->id, 'room_type_variant_id' => $room->variant_id])" type="put" :validate="true">
+            <x-form :action="route('hotel.room.update',['hotel_id' => Auth()->user()->id, 'room_type_id' => $room->room_type_id])" type="put" :validate="true">
                 <x-input type="hidden" name="id" :value="$room->id" />
                 <div class="row justify-content-center">
                     @include('hotel.rooms.forms.edit-left')

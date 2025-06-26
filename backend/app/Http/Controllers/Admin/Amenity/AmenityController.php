@@ -61,8 +61,9 @@ class AmenityController extends Controller
         if (Amenity::where('name', '=', $this->data['name'])->exists()) {
             return redirect()->route($this->route['create'])->with('error', 'Tiện ích đã tồn tại');
         }
+        DB::beginTransaction();
         try {
-            DB::beginTransaction();
+            
             Amenity::create($this->data);
             DB::commit();
             return redirect()->route($this->route['index'])->with('success', 'Thêm thành công');

@@ -3,8 +3,13 @@ import { combos, hotelServices } from "../../utils/HotelServicesStaticData";
 import { useState } from "react";
 import TableCombos from "../Table/TableCombos";
 import TableServices from "../Table/TableServices";
+import { Combo } from "../../types/ListHotelsTypes";
 
-export default function TabService() {
+interface TabServiceProps{
+    combos: Combo[];
+}
+
+export default function TabService({ combos }: TabServiceProps) {
 
     const [selectedService, setSelectedServices] = useState<string[]>([]);
 
@@ -37,7 +42,7 @@ export default function TabService() {
 
             <Tabs.Content value="comboDichVu">
                 <div className="overflow-x-auto">
-                    <TableCombos datas={combos} />
+                    <TableCombos combos={combos ?? []} />
                 </div>  
                 <div className="mt-4">
                     <button className="bg-blue-500 text-white px-2 rounded-sm text-lg">

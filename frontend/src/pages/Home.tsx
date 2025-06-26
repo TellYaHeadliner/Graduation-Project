@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { useHotelSeasonsQuery } from "../react-query/useHotelSeasonsQuery";
 import { ErrorUtils } from "../utils/Error";
 import LoadingSpinner from "../components/Loading/LoadingSpinner";
+import { FindHotelProvider } from "../context/FindHotelContext";
 
 export default function Home() {
     useTitle("Roomix");
@@ -37,7 +38,9 @@ export default function Home() {
                     <p className="mt-4 text-2xl text-gray font-medium text-white">
                         Hãy đặt phòng khách sạn như bạn mong muốn !
                     </p>
-                    <FindHotel />
+                    <FindHotelProvider>
+                        <FindHotel />
+                    </FindHotelProvider>
                 </div>
             </div>
             <TrendingLocation />

@@ -30,7 +30,12 @@ class RoomTypeController extends Controller
 
 
             $listRoomType = RoomType::with([
-                'variants' => function ($variantQuery) use ($guest, $children, $check_in, $check_out) {
+                'variants' => function ($variantQuery) use (
+                    $guest,
+                    $children,
+                    $check_in,
+                    $check_out
+                ) {
                     $variantQuery
                         ->whereHas('attributes', function ($q) use ($guest) {
                             $q->where('attributes.type', 'guest')
@@ -43,22 +48,22 @@ class RoomTypeController extends Controller
                         ->with([
                             'seasons',
                             'attributes:id,name,type',
-                        ])
-                        ->withCount([
-                            'rooms as available_room_count' => function ($q) use ($check_in, $check_out) {
-                                $q->whereDoesntHave('bookingDetails.booking', function ($q) use ($check_in, $check_out) {
-                                    $q->where('checkin_date', '<', $check_out)
-                                        ->where('checkout_date', '>', $check_in);
-                                });
-                            }
                         ]);
                 },
                 'amenities:id,name',
+                'bedType:id,name',
             ])
                 ->where('hotel_id', $hotel_id)
+                ->withCount([
+                    'rooms as available_room_count' => function ($q) use ($check_in, $check_out) {
+                        $q->whereDoesntHave('bookingDetails.booking', function ($q) use ($check_in, $check_out) {
+                            $q->where('checkin_date', '<',  $check_out)
+                                ->where('checkout_date', '>', $check_in);
+                        });
+                    },
+                ])
                 ->get();
-
-
+                
             return response()->json([
                 'message' => 'Chi tiết loại phòng khách sạn.',
                 'data' => [

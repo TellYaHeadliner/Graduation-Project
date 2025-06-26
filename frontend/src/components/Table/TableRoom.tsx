@@ -1,7 +1,7 @@
 import { Currency } from "../../utils/Currency";
 import DialogDetailHotel from "../Dialog/DialogDetailHotel";
 import { FaUser } from "react-icons/fa6";
-import { RoomType } from "../../types/HotelsTypes";
+import { RoomType } from "../../types/ListHotelsTypes";
 import { useForm } from "react-hook-form";
 import { quantitySchemas } from "../../schemas/quantitySchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,14 +15,22 @@ export default function TableRoom({ datas }: RoomTableProps) {
         return basePrice - priceDiscount;
     }
 
+
     const timeToFreeCancel = () => {
         const getTime = localStorage.getItem('findRoom')
         const data = JSON.parse(getTime ?? "");
         const checkInDate = new Date(data.dateRange?.[0]);
-        const hour = checkInDate.getHours();
-        const minutes = checkInDate.getMinutes();
-        const cancelDeadline = new Date(checkInDate.getTime() - 24 * 60 * 60 * 1000)
-        return `${cancelDeadline.toLocaleDateString('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh' })} + ${hour}:${minutes}`
+
+        const vnTime = new Date(checkInDate.getTime() - 24 * 60 * 60 * 1000)
+        const pad = (n: number) => n.toString().padStart(2, '0');
+
+        const dd = pad(vnTime.getDate());
+        const MM = pad(vnTime.getMonth() + 1);
+        const yyyy = pad(vnTime.getMonth() + 1);
+        const hh = pad(vnTime.getHours());
+        const mm = pad(vnTime.getMinutes());
+
+        return `${dd}/${MM}/${yyyy} ${hh}:${mm}`
     }
 
     const {
@@ -33,7 +41,7 @@ export default function TableRoom({ datas }: RoomTableProps) {
     } = useForm<quantitySchemas>({
         resolver: zodResolver(quantitySchemas),
         defaultValues: {
-            quantity: 1,
+            quantity: 0,
         },
     });
 
@@ -67,13 +75,10 @@ export default function TableRoom({ datas }: RoomTableProps) {
                             <tr className="border-t border-gray-300" key={data.id}>
                                 <td className="px-4 py-3 border-r border-gray-500">
                                     <div className="font-medium text-blue-700 hover:underline cursor-pointer ">
-                                        <DialogDetailHotel title={data.name} />
+                                        <DialogDetailHotel title={data.name} area={data.area} amenities={[]}/>
                                     </div>
                                     <div className="text-sm text-gray-600">
                                         Loại phòng: {data.room_code}
-                                    </div>
-                                    <div className="text-xs font-thin">
-                                        Diện tích: {data.area} m <sup>2</sup>
                                     </div>
                                     <div className="text-sm font-normal">
                                         {data.description === null ? "" : data.description}
@@ -102,16 +107,16 @@ export default function TableRoom({ datas }: RoomTableProps) {
                                 </td>
 
                                 <td className="px-4 py-3 border-r border-gray-500 text-end">
-                                    {data.variants[0]?.available_room_count > 0 && (
+                                    {data.available_room_count > 0 && (
                                         <input type="number"
                                             {...register("quantity", { valueAsNumber: true })}
                                             className="w-10 px-2 py-1 border border-gray-300 rounded text-sm"
-                                            min={1}
-                                            max={data.variants[0].available_room_count}
+                                            min={0}
+                                            max={data.available_room_count}
                                         />
                                     )}
                                     {
-                                        data.variants.length === 0 && (
+                                        data.available_room_count === 0 && (
                                             <p className="text-red-500 text-lg">
                                                 Hết phòng
                                             </p>
@@ -121,11 +126,6 @@ export default function TableRoom({ datas }: RoomTableProps) {
                                 <td className="px-4 py-3 border-r border-gray-500 text end">
                                     {data.variants[0]?.attributes[0]?.pivot && (
                                         <ul className="list-disc list-inside">
-                                            <li>
-                                                {data.variants[0]?.attributes[0]?.pivot.attribute_value && (
-                                                    <>Người lớn: {data.variants[0].attributes[0].pivot.attribute_value} người</>
-                                                )}
-                                            </li>
                                             <li>
                                                 {data.variants[0]?.attributes[1]?.pivot.attribute_value && (
                                                     <>Trẻ em: {data.variants[0].attributes[0].pivot.attribute_value} người</>

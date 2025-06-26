@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Transaction\TransactionStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,7 +11,9 @@ class Transaction extends Model
     use HasFactory;
     protected $table = 'transactions';
     protected $guarded = [];
-    protected $casts = [];
+    protected $casts = [
+        'payment_status' => TransactionStatus::class
+    ];
 
     public function booking()
     {
@@ -22,6 +25,11 @@ class Transaction extends Model
     }
     public function voucher()
     {
-        return $this->belongsTo(Voucher::class,'voucher_id');
+        return $this->belongsTo(Voucher::class, 'voucher_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

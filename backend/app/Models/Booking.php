@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\Booking\BookingStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -11,7 +12,9 @@ class Booking extends Model
 
     protected $table = 'bookings';
     protected $guarded = [];
-    protected $casts = [];
+    protected $casts = [
+        'status' => BookingStatus::class
+    ];
 
     public function user(){
         return $this->belongsTo(User::class,'customer_id');
@@ -25,7 +28,7 @@ class Booking extends Model
         return $this->hasMany(Transaction::class,'booking_id');
     }
 
-    public function bookingDetail(){
+    public function bookingDetails(){
         return $this->hasMany(BookingDetail::class,'booking_id');
     }
 
@@ -37,9 +40,9 @@ class Booking extends Model
         return $this->hasOne(Review::class,'booking_id');
     }
 
-    public function services(){
-        return $this->belongsToMany(Service::class,'booking_services','booking_id','service_id')
-                    ->withPivot(['quanlity','price','total_price'])
+    public function hotelServices(){
+        return $this->belongsToMany(HotelService::class,'booking_services','booking_id','hotel_service_id')
+                    ->withPivot(['quantity','price','total_price'])
                     ->withTimestamps();
     }
 

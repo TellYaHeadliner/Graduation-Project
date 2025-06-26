@@ -81,7 +81,7 @@ const CardItem: React.FC<CardItemProps> = ({
       {/* Hình ảnh */}
       <div className="relative">
         <img
-          src={import.meta.env.VITE_API_URL + avatar}
+          src={import.meta.env.VITE_URL + avatar}
           className="w-full h-40 object-cover"
         />
         <button

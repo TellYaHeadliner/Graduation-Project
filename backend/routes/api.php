@@ -20,6 +20,19 @@ Route::middleware('checkJWT')->group(function () {
             Route::get('/user-info', 'userInfo')->name('info');
         });
     });
+    Route::controller(App\Http\Controllers\API\Hotel\HotelController::class)
+        ->prefix('/hotels')
+        ->as('hotel.')
+        ->group(function () {
+            Route::post('/register-hotel', 'registerHotel')->name('registerHotel');
+    });
+    Route::controller(App\Http\Controllers\API\Transaction\TransactionController::class)
+        ->prefix('/transactions')
+        ->as('transaction.')
+        ->group(function () {
+            Route::post('/create-booking', 'create_booking')->name('create_booking');
+            Route::get('/callback-vnpay', 'callback_vnpay')->name('callback_vnpay');
+    });
 });
 
 
@@ -40,17 +53,17 @@ Route::controller(App\Http\Controllers\API\Auth\AuthController::class)
         Route::get('/social-callback/{id}/{status}', 'socialCallback')->name('social_callback');
     });
 
-
 Route::controller(App\Http\Controllers\API\Hotel\HotelController::class)
     ->prefix('/hotels')
     ->as('hotel.')
     ->group(function () {
         Route::get('/hotel-seasons/{name?}', 'listHotelSeasons')->name('listHotelSeasons');
         Route::get('/detail-hotel/{id?}', 'detailHotel')->name('detailHotel');
-});
+    });
+
 Route::controller(App\Http\Controllers\API\RoomType\RoomTypeController::class)
     ->prefix('/room-types')
     ->as('room_type.')
     ->group(function () {
         Route::get('/{hotel_id?}/{check_in?}/{check_out?}/{guest?}/{children?}/{room_quantity?}', 'getRoomTypeHotel')->name('getRoomTypeHotel');
-});
+    });

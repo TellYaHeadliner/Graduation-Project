@@ -1,15 +1,14 @@
-import { CombosType } from '../../utils/HotelServicesStaticData';
-import { Radio } from '@radix-ui/themes';
 import { Currency } from "../../utils/Currency";
 import { useState } from 'react';
+import { Combo } from '../../types/ListHotelsTypes';
 
 interface TableComboProps {
-    datas: CombosType[];
+    combos: Combo[];
 }
 
-export default function TableCombos({ datas }: TableComboProps) {
+export default function TableCombos({ combos }: TableComboProps) {
 
-    const [selectedCombo, setSelectedCombo] = useState<CombosType | null>(null);
+    const [selectedCombo, setSelectedCombo] = useState<Combo | null>(null);
 
     return (
         <div className="overflow-x-auto">
@@ -23,42 +22,37 @@ export default function TableCombos({ datas }: TableComboProps) {
             </tr>
           </thead>
           <tbody>
-            {datas.map((data, index) => (
+            {combos?.map((data, index) => (
               <tr key={index} className="hover:bg-gray-100 border border-black">
                 <td>
                   <div className="flex items-start justify-center h-full">
                     <input
                       type="radio"
-                      id={data.tenCombo}
-                      value={data.tenCombo}
-                      checked={selectedCombo?.tenCombo === data.tenCombo}
+                      id={String(data.id)}
+                      value={data.name}
+                      checked={selectedCombo?.name === data.name}
                       onClick={() => setSelectedCombo(data)}
                     />
                   </div>
                   
                 </td>
                 <td className="px-4 py-3 border border-black align-top">
-                  <div className="font-semibold text-base">{data.tenCombo}</div>
-                  <div className="text-sm text-gray-600">{data.moTa}</div>
+                  <div className="font-semibold text-base">{data.name}</div>
+                  <div className="text-sm text-gray-600">{data.short_description}</div>
                 </td>
                 <td className="px-4 py-3 border border-black align-top">
                   <ul className="list-disc list-inside space-y-1">
-                    {data.dichVu.map((dataDichVu, i) => (
-                      <li key={i}>
-                        {dataDichVu.ten} / {dataDichVu.soLuong}
+                      <li>
+                        
                       </li>
-                    ))}
                   </ul>
                 </td>
                 <td className="px-4 py-3 border border-black text-right align-top">
                   <div className="text-sm text-gray-500 line-through">
-                    {Currency.formatVND(data.giaGoc)}
+                    {Currency.formatVND(data.original_price)}
                   </div>
                   <div className="text-red-600 font-bold text-base">
-                    {Currency.formatVND(data.giaCombo)}
-                  </div>
-                  <div className="text-yellow-300 font-bold text-xl">
-                    {data.uuDai}%
+                    {Currency.formatVND(data.combo_price)}
                   </div>
                 </td>
               </tr>

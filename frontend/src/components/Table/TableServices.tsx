@@ -1,7 +1,7 @@
 import { Table } from "@radix-ui/themes";
-import { hotelServiceType } from '../../utils/HotelServicesStaticData';
 import { Currency } from "../../utils/Currency";
 import { useState } from "react";
+import { hotelServiceType } from "../../utils/HotelServicesStaticData";
 
 interface TableServicesProps{
     data: hotelServiceType[];

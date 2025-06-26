@@ -15,12 +15,7 @@ class Service extends Model
         'status' => ServiceStatus::class
     ];
 
-    public function bookings()
-    {
-        return $this->belongsToMany(Booking::class, 'booking_services', 'service_id', 'booking_id')
-            ->withPivot('quantity', 'price', 'total_price')
-            ->withTimestamps();
-    }
+
     public function hotels()
     {
         return $this->belongsToMany(Hotel::class, 'hotel_services', 'service_id', 'hotel_id')

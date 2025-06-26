@@ -1,5 +1,5 @@
 import { DataList } from "@radix-ui/themes";
-import { HotelRule } from '../../types/HotelsTypes';
+import { HotelRule } from '../../types/ListHotelsTypes';
 
 interface DataListRuleProps{
     hotelRule: HotelRule | undefined;

@@ -3,9 +3,14 @@ import { Dialog } from "radix-ui";
 import TabService from "../Tab/TabService";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import ButtonBook from "../Button/ButtonBook";
+import DialogDetailHotel from './DialogDetailHotel';
+import { Combo } from "../../types/ListHotelsTypes";
 
+interface DialogDetailHotelServicesProps{
+    combos: Combo[];
+}
 
-export default function DialogHotelServices() {
+export default function DialogHotelServices({ combos }: DialogDetailHotelServicesProps) {
     return (
         <Dialog.Root>
             <Dialog.Trigger>
@@ -20,7 +25,7 @@ export default function DialogHotelServices() {
                                 <Cross1Icon />
                             </Dialog.Close>
                         </div>
-                        <TabService />
+                        <TabService combos={combos}/>
                     </DialogContent>
                 </Dialog.Overlay>
             </Dialog.Portal>

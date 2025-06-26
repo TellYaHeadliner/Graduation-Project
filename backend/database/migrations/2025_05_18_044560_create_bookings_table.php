@@ -22,6 +22,7 @@ return new class extends Migration
             $table->dateTime('checkin_date');
             $table->dateTime('checkout_date');
             $table->text('note')->nullable();
+            $table->integer('cancellation_fee')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
           

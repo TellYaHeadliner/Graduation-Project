@@ -3,7 +3,7 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 import slug from "slug"
 
 import CardItem from "../Card/CardItem";
-import { Hotel } from '../../types/HotelsTypes';
+import { Hotel } from '../../types/ListHotelsTypes';
 interface CardListProps {
   cardList: Hotel[] | undefined;
   title: string;

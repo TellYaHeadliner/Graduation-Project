@@ -1,5 +1,5 @@
 import DiscountItem from './DiscountItem';
-import { Voucher } from '../../types/HotelsTypes';
+import { Voucher } from '../../types/ListHotelsTypes';
 
 interface DiscountBarProps {
   discountList: Voucher[];

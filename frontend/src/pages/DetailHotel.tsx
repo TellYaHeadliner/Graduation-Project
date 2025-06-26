@@ -24,6 +24,7 @@ export default function DetailHotel() {
     const { id } = useParams();
     const { state } =  useFindRoomContext();
     const getDetailHotel = useHotelDetailQuery(Number(id));
+    console.log(getDetailHotel);
     const title = getDetailHotel.data?.data?.hotel?.name
     useTitle(title ?? "Đang tải")
 
@@ -114,9 +115,11 @@ export default function DetailHotel() {
                     <div className="mb-4">
                         <FindRoom onSearch={() => setIsSearchRoomType(true)}/>
                     </div>
-                    <TableRoom datas={getRoomType.data?.data.list ?? []} />
+                    <div>
+                        <TableRoom datas={getRoomType.data?.data.list ?? []} />
+                    </div>
                     <div className="flex justify-end py-3">
-                        <DialogHotelServices />
+                        <DialogHotelServices combos={getDetailHotel.data?.data.hotel.combos ?? [] }/>
                     </div>
                 </div>
                 <div>

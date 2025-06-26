@@ -85,7 +85,7 @@ class AuthController extends Controller
                 $file = $request->file('avatar');
 
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $this->data['avatar'] = $fileName;
+                $this->data['avatar'] = '/assets/images/'.$fileName;
 
                 $file->move(public_path('assets/images'), $fileName);
             }

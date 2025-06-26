@@ -46,8 +46,4 @@ class RoomTypeVariant extends Model
         return $this->hasMany(BookingDetail::class, 'room_type_variant_id');
     }
 
-    public function rooms()
-    {
-        return $this->hasMany(Room::class, 'variant_id');
-    }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\RoomType;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\RoomTypeResource;
 use App\Models\RoomType;
 use App\Models\RoomTypeVariant;
 use Carbon\Carbon;
@@ -67,7 +68,7 @@ class RoomTypeController extends Controller
             return response()->json([
                 'message' => 'Chi tiết loại phòng khách sạn.',
                 'data' => [
-                    'list' => $listRoomType
+                    'list' => RoomTypeResource::collection($listRoomType),
                 ]
             ], 200);
         } catch (Exception $e) {

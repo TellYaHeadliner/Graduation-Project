@@ -6,6 +6,7 @@ use App\Enums\Hotel\HotelStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Hotel\HotelRequest;
+use App\Http\Resources\HotelDetailResource;
 use App\Models\Hotel;
 use Exception;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ class HotelController extends Controller
         return response()->json([
             'message' => 'Chi tiết khách sạn.',
             'data' => [
-                'hotel' => $hotel
+                'hotel' => new HotelDetailResource($hotel),
             ]
         ], 200);
     }

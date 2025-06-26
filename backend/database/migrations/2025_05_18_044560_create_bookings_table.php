@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('customer_id')->constrained('users')->onDelete('cascade');
             $table->foreignId('hotel_id')->constrained('hotels')->onDelete('cascade');
+            $table->foreignId('voucher_id')->nullable()->constrained('vouchers')->nullOnDelete();
             $table->char('booking_code', 50)->unique();
             $table->integer('total_amount')->default(0);
             $table->dateTime('checkin_date');
@@ -25,7 +26,6 @@ return new class extends Migration
             $table->integer('cancellation_fee')->nullable();
             $table->tinyInteger('status')->default(0);
             $table->timestamps();
-          
         });
     }
 

@@ -1,5 +1,6 @@
 import api from "./axiosConfig"
 import { HotelResponse } from '../types/ListHotelsTypes';
+import { DetailHotelResponse } from "../types/DetailHotelTypes";
 import { RoomTypeResponse } from "../types/RoomTypes";
 
 const hotelApi = {

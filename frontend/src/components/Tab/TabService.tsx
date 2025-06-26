@@ -1,22 +1,16 @@
 import { Tabs } from "@radix-ui/themes";
-import { combos, hotelServices } from "../../utils/HotelServicesStaticData";
-import { useState } from "react";
 import TableCombos from "../Table/TableCombos";
 import TableServices from "../Table/TableServices";
-import { Combo } from "../../types/ListHotelsTypes";
+import { Combo, Service } from "../../types/DetailHotelTypes";
 
-interface TabServiceProps{
+
+interface TabServiceProps {
     combos: Combo[];
+    services: Service[];
 }
 
-export default function TabService({ combos }: TabServiceProps) {
-
-    const [selectedService, setSelectedServices] = useState<string[]>([]);
-
-    const toggleService = (service: string) => {
-        setSelectedServices((prev) => prev.includes(service) ? prev.filter((item) => item !== service) : [...prev, service])
-    }
-
+export default function TabService({ combos, services }: TabServiceProps) {
+   
     return (
         <Tabs.Root defaultValue="comboDichVu" orientation="horizontal" className="w-full space-y-4">
             <Tabs.List className="flex flex-wrap gap-2 border-b pb-2">
@@ -42,8 +36,8 @@ export default function TabService({ combos }: TabServiceProps) {
 
             <Tabs.Content value="comboDichVu">
                 <div className="overflow-x-auto">
-                    <TableCombos combos={combos ?? []} />
-                </div>  
+                    <TableCombos combos={combos ?? []}/>
+                </div>
                 <div className="mt-4">
                     <button className="bg-blue-500 text-white px-2 rounded-sm text-lg">
                         Thanh toán
@@ -52,14 +46,14 @@ export default function TabService({ combos }: TabServiceProps) {
             </Tabs.Content>
 
             <Tabs.Content value="dichVuRiengLe" className="mt-4 block">
-               <div className="overflow-x-auto">
-                    <TableServices data={hotelServices}/>
-               </div>
-               <div className="mt-4">
+                <div className="overflow-x-auto">
+                    <TableServices data={services} />
+                </div>
+                <div className="mt-4">
                     <button className="bg-blue-500 text-white px-2 rounded-sm text-lg">
                         Thanh toán
                     </button>
-               </div>
+                </div>
             </Tabs.Content>
         </Tabs.Root>
     )

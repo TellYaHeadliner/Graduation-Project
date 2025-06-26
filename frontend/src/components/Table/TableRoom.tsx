@@ -1,7 +1,7 @@
 import { Currency } from "../../utils/Currency";
 import DialogDetailHotel from "../Dialog/DialogDetailHotel";
-import { FaUser } from "react-icons/fa6";
-import { RoomType } from "../../types/ListHotelsTypes";
+import { FaChild, FaUser } from "react-icons/fa6";
+import { RoomType } from "../../types/RoomTypes";
 import { useForm } from "react-hook-form";
 import { quantitySchemas } from "../../schemas/quantitySchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,9 +11,6 @@ interface RoomTableProps {
 }
 
 export default function TableRoom({ datas }: RoomTableProps) {
-    const showPrice = (basePrice: number, priceDiscount: number): number => {
-        return basePrice - priceDiscount;
-    }
 
 
     const timeToFreeCancel = () => {
@@ -26,7 +23,7 @@ export default function TableRoom({ datas }: RoomTableProps) {
 
         const dd = pad(vnTime.getDate());
         const MM = pad(vnTime.getMonth() + 1);
-        const yyyy = pad(vnTime.getMonth() + 1);
+        const yyyy = pad(vnTime.getFullYear() + 1);
         const hh = pad(vnTime.getHours());
         const mm = pad(vnTime.getMinutes());
 
@@ -37,7 +34,6 @@ export default function TableRoom({ datas }: RoomTableProps) {
         register,
         handleSubmit,
         formState: { errors },
-        setValue,
     } = useForm<quantitySchemas>({
         resolver: zodResolver(quantitySchemas),
         defaultValues: {
@@ -52,14 +48,14 @@ export default function TableRoom({ datas }: RoomTableProps) {
                     <tr className="bg-blue-700 text-white">
                         <th className="text-left px-4 py-2 border-r border-gray-500">Loại phòng </th>
                         <th className="text-left px-4 py-2 border-r border-gray-500">Số lượng người</th>
-                        <th className="text-left px-4 py-2 border-r border-gray-500">
+                        <th className="px-4 py-2 border-r border-gray-500 text-end">
                             Giá phòng
                         </th>
-                        <th className="text-left px-4 py-2 border-r border-gray-500">
+                        <th className="text-end px-4 py-2 border-r border-gray-500">
                             Lựa chọn số lượng
                         </th>
-                        <th className="text-left px-4 py-2 border-r border-gray-500">
-                            Các lựa chọn
+                        <th className="text-left px-2 py-2 border-r border-gray-500">
+                            Ghi chú
                         </th>
                     </tr>
                 </thead>
@@ -71,93 +67,117 @@ export default function TableRoom({ datas }: RoomTableProps) {
                             </td>
                         </tr>
                     ) : (
-                        datas?.map((data) => (
-                            <tr className="border-t border-gray-300" key={data.id}>
-                                <td className="px-4 py-3 border-r border-gray-500">
-                                    <div className="font-medium text-blue-700 hover:underline cursor-pointer ">
-                                        <DialogDetailHotel title={data.name} area={data.area} amenities={[]}/>
-                                    </div>
-                                    <div className="text-sm text-gray-600">
-                                        Loại phòng: {data.room_code}
-                                    </div>
-                                    <div className="text-sm font-normal">
-                                        {data.description === null ? "" : data.description}
-                                    </div>
-                                </td>
-                                <td className="px-4 py-3 border-r border-gray-500">
-                                    <div className="flex">
-                                        {Array.from({ length: data.bed_quantity }).map((_, index) => (
-                                            <FaUser key={index} className="w-7 h-7 font-bold" />
-                                        ))}
-                                    </div>
-                                </td>
-                                <td className="px-4 py-3 border-r border-gray-500 text-end">
-                                    {
-                                        data.variants.length > 0 && (
-                                            <div>
-                                                <p className="font-medium text-xs cursor pointer line-through">
-                                                    {Currency.formatVND(data.variants[0]?.base_price)}
-                                                </p>
-                                                <p className="font-bold text-lg text-red-500 cursor pointer">
-                                                    {Currency.formatVND(showPrice(data.variants[0].base_price, data.variants[0].seasons[0].pivot.discount_value))}
-                                                </p>
-                                            </div>
-                                        )
-                                    }
-                                </td>
+                        datas.map((data, dataIndex) => {
+                            if (data.variants.length === 0) {
 
-                                <td className="px-4 py-3 border-r border-gray-500 text-end">
-                                    {data.available_room_count > 0 && (
-                                        <input type="number"
-                                            {...register("quantity", { valueAsNumber: true })}
-                                            className="w-10 px-2 py-1 border border-gray-300 rounded text-sm"
-                                            min={0}
-                                            max={data.available_room_count}
-                                        />
-                                    )}
-                                    {
-                                        data.available_room_count === 0 && (
-                                            <p className="text-red-500 text-lg">
-                                                Hết phòng
-                                            </p>
-                                        )
+                                // ⚠️ Phòng không có biến thể
+                                return (
+                                    <tr key={`room-${dataIndex}`} className="border-t border-gray-300">
+                                        <td className="px-4 py-3 border-r">
+                                            <div className="font-medium text-blue-700">
+                                                <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} />
+                                            </div>
+                                            <div className="text-sm text-gray-600">Loại giường: {data.bed?.type_name}</div>
+                                        </td>
+                                        <td className="text-center text-sm text-gray-500 border-r" colSpan={4}>
+                                            Hết phòng
+                                        </td>
+                                    </tr>
+                                );
+                            }
+
+                            // ✅ Phòng có biến thể
+                            return data.variants.map((variant, vIndex) => {
+                                const adults = variant.attributes.find(attr => attr.name === "Người lớn");
+                                const children = variant.attributes.find(attr => attr.name === "Trẻ em");
+                                const notes = variant.attributes.slice(2, 5);
+                                const cancel = variant.attributes.find(attr => attr.name === "Miễn phí huỷ trước 24h và thu phí sau đó");
+                                const isEmptySeasons = variant.seasons.length === 0;
+                                const seasonsPrice = (basePrice: number, discounType = 0, discountValue = 0) => {
+                                    if (discounType === 0) {
+                                        return basePrice - discountValue;
                                     }
-                                </td>
-                                <td className="px-4 py-3 border-r border-gray-500 text end">
-                                    {data.variants[0]?.attributes[0]?.pivot && (
-                                        <ul className="list-disc list-inside">
-                                            <li>
-                                                {data.variants[0]?.attributes[1]?.pivot.attribute_value && (
-                                                    <>Trẻ em: {data.variants[0].attributes[0].pivot.attribute_value} người</>
-                                                )}
-                                            </li>
-                                            <li>
-                                                {data.variants[0]?.attributes[2]?.pivot.attribute_value && (
-                                                    <>{data.variants[0]?.attributes[2]?.pivot.attribute_value == 1 ? "Có bứa ăn sáng" : "Không có bữa ăn sáng"}</>
-                                                )}
-                                            </li>
-                                            <li>
-                                                {data.variants[0]?.attributes[3]?.pivot.attribute_value && (
-                                                    <>{data.variants[0]?.attributes[3]?.pivot.attribute_value == 1 ? "Không được hút thuốc" : "Được hút thuốc"}</>
-                                                )}
-                                            </li>
-                                            <li>
-                                                {data.variants[0]?.attributes[4].type === "free_before and fee_after" && (
-                                                    <>
-                                                    <span>
-                                                        {data.variants[0]?.attributes[4]?.name}
-                                                    </span>
-                                                    <div className="text-xs font-thin">
-                                                        Ghi chú: Trước {timeToFreeCancel()}
-                                                    </div>
-                                                    </>
-                                                )}
-                                            </li>
-                                        </ul>
-                                    )}
-                                </td>
-                            </tr>
-                        ))
+                                    if (discounType === 1) {
+                                        return basePrice - (basePrice * (discountValue / 100));
+                                    }
+                                    return basePrice;
+                                }
+
+                                const seasons = variant.seasons
+
+                                return (
+                                    <tr key={`${dataIndex}-${vIndex}`} className="border-t border-gray-300">
+                                        {vIndex === 0 && (
+                                            <td rowSpan={data.variants.length} className="px-4 py-3 border-r align-top">
+                                                <div className="font-medium text-blue-700">
+                                                    <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} />
+                                                </div>
+                                                <div className="text-sm text-gray-600">Loại giường: {data.bed?.type_name}</div>
+                                            </td>
+                                        )}
+
+                                        {/* Số lượng người */}
+                                        <td className="px-4 py-3 border-r">
+                                            {adults &&
+                                                Array.from({ length: adults.value }).map((_, i) => (
+                                                    <FaUser key={`adult-${vIndex}-${i}`} className="inline-block w-5 h-5 text-blue-600 mr-1" />
+                                                ))}
+                                            {children &&
+                                                Array.from({ length: children.value }).map((_, i) => (
+                                                    <FaChild key={`child-${vIndex}-${i}`} className="inline-block w-5 h-5 text-pink-500 mr-1" />
+                                                ))}
+                                        </td>
+
+                                        {/* Giá phòng */}
+                                        <td className="px-4 py-3 border-r text-end">
+                                            {isEmptySeasons && !variant.discount_price && (
+                                                <p className="font-medium cursor-pointer">{Currency.formatVND(variant.base_price)}</p>
+                                            )}
+                                            {seasons.length > 0 && (
+                                                <div>
+                                                    <p className="font-thin text-xs line-through cursor-pointer">
+                                                        {Currency.formatVND(variant.base_price)}
+                                                    </p>
+                                                    {variant.seasons.map((season, index) => (
+                                                        <p className="text-red-500 font-medium cursor-pointer text-end" key={index}>
+                                                            {season.name}: {Currency.formatVND(seasonsPrice(variant.base_price, season.discount_type, season.discount_value))}
+                                                        </p>
+                                                    ))}
+
+                                                </div>
+                                            )}
+                                        </td>
+
+                                        {/* Số lượng đặt */}
+                                        <td className="px-4 py-3 border-r text-end">
+                                            {data.available_room_count && (
+                                                <input
+                                                    type="number"
+                                                    {...register("quantity")}
+                                                    min={0}
+                                                    max={data.available_room_count}
+                                                    className="w-14 border border-gray-300 rounded px-2 py-1 text-sm"
+                                                />
+                                            )}
+                                        </td>
+
+                                        {/* Ghi chú */}
+                                        <td className="px-6 py-3 border-r text-sm text-gray-700">
+                                            <ul className="list-disc pl-4">
+                                                {notes.map((note, index) => (
+                                                    <li key={index}>{note.name}</li>
+                                                ))}
+                                            </ul>
+                                            {cancel && (
+                                                <p className="text-xs font-thin text-gray-500 mt-1 italic">
+                                                    Ghi chú: Phải huỷ đặt phòng trước {timeToFreeCancel()} sau thời gian đó giá hủy là {Currency.formatVND(cancel.value)}
+                                                </p>
+                                            )}
+                                        </td>
+                                    </tr>
+                                );
+                            });
+                        })
                     )}
                 </tbody>
             </table>

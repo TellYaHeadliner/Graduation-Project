@@ -1,12 +1,11 @@
 import MainLayout from "../layouts/MainLayout";
 import locationPin from "../assets/location-pin.svg"
-import CarouselComment from "../components/CustomCarousel/CarouselComment";
+// import CarouselComment from "../components/CustomCarousel/CarouselComment";
 import TableRoom from "../components/Table/TableRoom";
 import DataListRule from "../components/DataList/DataListRule";
 import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
 import catFAQ from "../assets/cat_faq.png"
 import ChatButton from "../components/Chat/ChatButton";
-import DiscountBar from "../components/Discount/DiscountBar";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import DialogHotelServices from "../components/Dialog/DialogHotelServices";
 import { useParams } from "react-router-dom";
@@ -24,7 +23,6 @@ export default function DetailHotel() {
     const { id } = useParams();
     const { state } =  useFindRoomContext();
     const getDetailHotel = useHotelDetailQuery(Number(id));
-    console.log(getDetailHotel);
     const title = getDetailHotel.data?.data?.hotel?.name
     useTitle(title ?? "Đang tải")
 
@@ -68,8 +66,8 @@ export default function DetailHotel() {
                         </h2>
                         <div>
                             <ul className="flex flex-row flex-wrap gap-4 mt-2">
-                                {getDetailHotel.data?.data?.hotel?.amenities.map((amenity) => (
-                                    <li key={amenity.id} className="flex items-center gap-1">
+                                {getDetailHotel.data?.data?.hotel.amenities.map((amenity) => (
+                                    <li key={amenity.name} className="flex items-center gap-1">
                                         <CheckIcon className="text-green-300 font-semibold w-6 h-6" />
                                         {amenity.name}
                                     </li>
@@ -101,11 +99,10 @@ export default function DetailHotel() {
                             allowFullScreen
                             referrerPolicy="no-referrer-when-downgrade"
                         />
-                        <h3 className="text-lg font-bold">
+                        {/* <h3 className="text-lg font-bold">
                             Đánh giá về khách sạn chúng tôi
                         </h3>
-                        <CarouselComment />
-                        <DiscountBar discountList={getDetailHotel.data?.data.hotel.vouchers || []}/>
+                        <CarouselComment /> */}
                     </div>
                 </div>
                 <div className="flex flex-col mt-4">
@@ -119,7 +116,7 @@ export default function DetailHotel() {
                         <TableRoom datas={getRoomType.data?.data.list ?? []} />
                     </div>
                     <div className="flex justify-end py-3">
-                        <DialogHotelServices combos={getDetailHotel.data?.data.hotel.combos ?? [] }/>
+                        <DialogHotelServices combos={getDetailHotel.data?.data.hotel.combos ?? []} services={getDetailHotel.data?.data.hotel.services ?? []}/>
                     </div>
                 </div>
                 <div>
@@ -130,7 +127,7 @@ export default function DetailHotel() {
                         Bạn nên biết khi sử dụng khách sạn của chúng tôi
                     </p>
                     <div className="mt-2">
-                        <DataListRule hotelRule={getDetailHotel.data?.data.hotel.hotel_rule} />
+                        <DataListRule hotelRule={getDetailHotel.data?.data.hotel.rules} />
                     </div>
                 </div>
                 <div>

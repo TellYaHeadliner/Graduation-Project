@@ -1,7 +1,5 @@
-/* eslint-disable no-console */
-import { User } from '../types/UserTypes';
+ import { User } from '../types/UserTypes';
 import { useUserInfoQuery } from "../react-query/useUserInfoQuery";
-
 
 export default function useAuth() {
   const { data, isLoading, isError } = useUserInfoQuery();

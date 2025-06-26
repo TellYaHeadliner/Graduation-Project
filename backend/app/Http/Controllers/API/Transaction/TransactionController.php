@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API\Transaction;
 
+use App\Enums\Booking\BookingStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Transaction\TransactionRequest;
 use App\Models\Booking;
@@ -14,22 +15,63 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+
 
 class TransactionController extends Controller
 {
     public function create_booking(TransactionRequest $request)
     {
+        DB::beginTransaction();
         try {
+            $booking = Booking::create([
+                'customer_id' => $request->user_id,
+                'hotel_id' => $request->hotel_id,
+                'booking_code' => 'RMX' . now()->format('Ymd') . Str::upper(Str::random(6)),
+                'total_amount' => 0,
+                'checkin_date' => $request->checkin_date,
+                'checkout_date' => $request->checkout_date,
+                'note' => $request->note ?? '',
+                'status' => BookingStatus::Pending->value,
+            ]);
+            $create_room = $this->attachRoomTypeAndCalcTotal($booking, $request->booking_details);
+            if (!$create_room['success']) {
+                return response()->json([
+                    'message' => $create_room['message'] ?? 'Lỗi tạo phòng',
+                ], 500);
+            }
+
+            if ($request->booking_combos && !empty($request->booking_combos)) {
+                $combos = $this->attachCombosAndCalcTotal($booking, $request->booking_combos);
+                if (!$combos['success']) {
+                    return response()->json([
+                        'message' => $combos['message'] ?? 'Có lỗi khi gắn combo'
+                    ], 500);
+                }
+            }
+            if ($request->booking_services && !empty($request->booking_services)) {
+                $services = $this->attachHotelServicesAndCalcTotal($booking, $request->booking_services);
+                if (!$services['success']) {
+                    return response()->json([
+                        'message' => $services['message'] ?? 'Có lỗi khi gắn combo'
+                    ], 500);
+                }
+            }
+
+            $total = ($combos['total'] ?? 0) + ($services['total'] ?? 0) + $booking->bookingDetails->sum('price_per_room');
+            $booking->update(['total_amount' => $total]);
+
+            
+            DB::commit();
             return response()->json([
-                'data' => $request->all()
+                'message' => 'tạo thành công đơn hàng chuẩn bị thanh toán.'
             ], 200);
         } catch (Exception $e) {
-            Log::error('attachCombosAndCalcTotal: ' . $e->getMessage(), [
-            ]);
-            return [
-                'success' => false,
-                'message' => 'Có lỗi khi gắn combo: ' . $e->getMessage(),
-            ];
+            DB::rollback();
+            Log::error('create booking: ' . $e->getMessage(), []);
+            return response()->json([
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
 
@@ -121,7 +163,7 @@ class TransactionController extends Controller
                 'total'   => $total,
             ];
         } catch (Exception $e) {
-            Log::error('attachCombosAndCalcTotal: ' . $e->getMessage(), [
+            Log::error('attachHotelServiceAndCalcTotal: ' . $e->getMessage(), [
                 'booking_id' => $booking->id,
                 'items'      => $items,
             ]);
@@ -155,7 +197,10 @@ class TransactionController extends Controller
                 }
 
                 $roomVariant = RoomTypeVariant::with(['seasons', 'attributes'])->find($item['room_type_variant_id']);
-
+                if (!$roomVariant) {
+                    DB::rollBack();
+                    return ['success' => false, 'message' => 'Không tìm thấy biến thể phòng.'];
+                }
                 $price = $roomVariant->discount_price ?: $roomVariant->base_price;
 
                 $season = $roomVariant->seasons->where('status', 1)->first();
@@ -189,20 +234,19 @@ class TransactionController extends Controller
             $booking->update([
                 'cancellation_fee' => $cancellation_fee
             ]);
-            $booking->save();
             DB::commit();
             return [
                 'success' => true,
             ];
         } catch (Exception $e) {
             DB::rollback();
-            Log::error('attachCombosAndCalcTotal: ' . $e->getMessage(), [
+            Log::error('attachRoomTypeAndCalcTotal: ' . $e->getMessage(), [
                 'booking_id' => $booking->id,
                 'items'      => $items,
             ]);
             return [
                 'success' => false,
-                'message' => 'Có lỗi khi gắn services: ' . $e->getMessage(),
+                'message' => 'Có lỗi khi gắn room: ' . $e->getMessage(),
             ];
         }
     }

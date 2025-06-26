@@ -23,10 +23,6 @@ class Transaction extends Model
     {
         return $this->belongsTo(Hotel::class, 'hotel_id');
     }
-    public function voucher()
-    {
-        return $this->belongsTo(Voucher::class, 'voucher_id');
-    }
 
     public function user()
     {

@@ -30,7 +30,6 @@ class RoomTypeController extends Controller
 
 
             $listRoomType = RoomType::with([
-                // Lấy các biến thể phù hợp sức chứa
                 'variants' => function ($variantQuery) use (
                     $guest,
                     $children,
@@ -38,21 +37,18 @@ class RoomTypeController extends Controller
                     $check_out
                 ) {
                     $variantQuery
-                        // ≥ guest
                         ->whereHas('attributes', function ($q) use ($guest) {
                             $q->where('attributes.type', 'guest')
                                 ->whereRaw('CAST(variant_attributes.attribute_value AS UNSIGNED) >= ?', [$guest]);
                         })
-                        // ≥ children
                         ->whereHas('attributes', function ($q) use ($children) {
                             $q->where('attributes.type', 'children')
                                 ->whereRaw('CAST(variant_attributes.attribute_value AS UNSIGNED) >= ?', [$children]);
                         })
-                        // Pre-load quan hệ phụ
                         ->with([
                             'seasons',
                             'attributes:id,name,type',
-                        ]);      
+                        ]);
                 },
                 'amenities:id,name',
                 'bedType:id,name',
@@ -66,8 +62,8 @@ class RoomTypeController extends Controller
                         });
                     },
                 ])
-
                 ->get();
+                
             return response()->json([
                 'message' => 'Chi tiết loại phòng khách sạn.',
                 'data' => [

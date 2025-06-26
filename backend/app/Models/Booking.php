@@ -28,7 +28,7 @@ class Booking extends Model
         return $this->hasMany(Transaction::class,'booking_id');
     }
 
-    public function bookingDetail(){
+    public function bookingDetails(){
         return $this->hasMany(BookingDetail::class,'booking_id');
     }
 

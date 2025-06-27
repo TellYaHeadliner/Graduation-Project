@@ -30,8 +30,6 @@ class HotelRequest extends BaseRequest
             'bank_account_name' => ['required', 'string'],
             'bank_name' => ['required', 'string'],
             'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
-            'gallery' => ['nullable', 'array'],
-            'gallery.*' => ['string', 'regex:/\.(jpg|jpeg|png|webp)$/i'],
         ];
     }
 

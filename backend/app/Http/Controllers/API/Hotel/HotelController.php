@@ -75,15 +75,6 @@ class HotelController extends Controller
                 $file->move(public_path('assets/images'), $fileName);
             }
 
-            if ($request->hasFile('gallery')) {
-                $this->data['gallery'] = [];
-                foreach ($request->file('gallery') as $file) {
-                    $fileName = time() . '_' . $file->getClientOriginalName();
-                    $this->data['gallery'][] = '/assets/images/' . $fileName;
-                    $file->move(public_path('assets/images'), $fileName);
-                }
-                $this->data['gallery'] = implode(',', $this->data['gallery']);
-            }
             Hotel::create($this->data);
             DB::commit();
             return response()->json([

@@ -8,6 +8,7 @@ use App\Enums\Transaction\TransactionType;
 use App\Enums\Voucher\VoucherStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Transaction\TransactionRequest;
+use App\Mail\BookingSuccessMail;
 use App\Models\Booking;
 use App\Models\Combo;
 use App\Models\HotelService;
@@ -20,6 +21,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 
@@ -185,6 +187,12 @@ class TransactionController extends Controller
                 'status' => BookingStatus::Confirmed->value,
             ]);
 
+            $booking = $transaction->booking;
+
+            $booking->loadMissing(['user', 'hotel' , 'hotel.hotelRule']);
+
+            Mail::to($booking->user->email)->send(new BookingSuccessMail($booking));
+
             return redirect()->away('http://127.0.0.1:5173/lich-su-booking?status=success&message=' . urlencode('Thanh toán thành công'));
         } else {
             $transaction->booking->delete();
@@ -307,8 +315,8 @@ class TransactionController extends Controller
                             ->whereIn('status', [
                                 BookingStatus::Pending->value,
                                 BookingStatus::Confirmed->value,
-                                BookingStatus::CheckedIn->value,  
-                                BookingStatus::CheckedOut->value,  
+                                BookingStatus::CheckedIn->value,
+                                BookingStatus::CheckedOut->value,
                             ]);
                     })
                     ->orderBy('code', 'asc')

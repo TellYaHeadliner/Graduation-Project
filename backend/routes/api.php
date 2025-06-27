@@ -25,14 +25,24 @@ Route::middleware('checkJWT')->group(function () {
         ->as('hotel.')
         ->group(function () {
             Route::post('/register-hotel', 'registerHotel')->name('registerHotel');
-    });
+        });
     Route::controller(App\Http\Controllers\API\Transaction\TransactionController::class)
         ->prefix('/transactions')
         ->as('transaction.')
         ->group(function () {
             Route::post('/create-booking', 'create_booking')->name('create_booking');
             Route::get('/callback-vnpay', 'callback_vnpay')->name('callback_vnpay');
-    });
+
+            Route::post('/refund-booking', 'refund_booking')->name('refund_booking');
+            Route::get('/callback-refund-vnpay', 'callback_refund_vnpay')->name('callback_refund_vnpay');
+        });
+    Route::controller(App\Http\Controllers\API\Booking\BookingController::class)
+        ->prefix('/bookings')
+        ->as('booking.')
+        ->group(function () {
+            Route::get('/history/{status?}', 'history')->name('history');
+            Route::get('/detail/{id?}', 'detail')->name('detail');
+        });
 });
 
 

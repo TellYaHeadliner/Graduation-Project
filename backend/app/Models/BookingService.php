@@ -14,11 +14,16 @@ class BookingService extends Model
     protected $casts = [];
     public $timestamps = true;
 
-    public function booking(){
-        return $this->belongsTo(Booking::class,'booking_id');
+    public function booking()
+    {
+        return $this->belongsTo(Booking::class, 'booking_id');
     }
     public function service()
     {
-        return $this->belongsTo(Service::class,'service_id');
+        return $this->belongsTo(Service::class, 'service_id');
+    }
+    public function hotelService()
+    {
+        return $this->belongsTo(HotelService::class, 'hotel_service_id');
     }
 }

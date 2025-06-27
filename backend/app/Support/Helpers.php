@@ -1,4 +1,5 @@
 <?php
+
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
@@ -173,5 +174,130 @@ if (!function_exists('getBoundsByName')) {
         }
 
         return null;
+    }
+
+    function format_money(int|float $v): string
+    {
+        return number_format($v, 0, ',', '.') . '₫';
+    }
+
+    /**
+     * Tạo mô tả đơn hàng chi tiết kèm giá gốc - giảm - tổng.
+     *
+     * @param  \App\Models\Booking  $booking  Đối tượng booking đã eager-load:
+     *         bookingDetails.roomTypeVariant.roomType,
+     *         bookingServices.hotelService,
+     *         bookingCombos.combo,
+     *         voucher (nullable)
+     *
+     * @return string
+     */
+    function buildOrderDescriptionDetailed(\App\Models\Booking $booking): string
+    {
+        $lines        = [];
+        $totalOrigin  = 0;
+        $totalPayable = 0;
+
+        foreach ($booking->bookingDetails as $detail) {
+            $variant = $detail->variant;
+            $roomType = $variant?->roomType;
+
+            if (!$variant || !$roomType) {
+                $lines[] = "🛏 (Phòng không xác định)";
+                continue;
+            }
+
+            $roomName = $roomType->name ?? 'Phòng';
+            $qty      = $detail->quantity ?? 1;
+            $origin   = $variant->discount_price ?: $variant->base_price;
+            $final    = $detail->price_per_room ?? 0;
+
+            $discLbl = $origin == $final
+                ? ''
+                : ' → ' . format_money($final) .
+                ' (-' . format_money($origin - $final) . ')';
+
+            $totalOrigin  += $origin * $qty;
+            $totalPayable += $final  * $qty;
+
+            $lines[] = "🛏 {$roomName} ({$qty} phòng x " . format_money($origin) . $discLbl . ')';
+        }
+
+        /** 🧾 Dịch vụ */
+        if ($booking->bookingServices->count()) {
+            $serviceParts = [];
+            foreach ($booking->bookingServices as $item) {
+                $sv = $item->hotelService;
+
+                if (!$sv) continue;
+
+                $name     = $sv->service->name;
+                $qty      = $item->quantity;
+                $origin   = $sv->promo_price != null && $sv->promo_price > 0  ? $sv->promo_price : $sv->base_price ;
+                $final    = $item->price ?? $final; 
+
+                $discLbl = $origin == $final
+                    ? ''
+                    : ' → ' . format_money($final) .
+                    ' (-' . format_money($origin - $final) . ')';
+
+                $serviceParts[] = "{$name} ({$qty} x " . format_money($origin) . $discLbl . ')';
+
+                $totalOrigin  += $origin * $qty;
+                $totalPayable += $final  * $qty;
+            }
+            $lines[] = '🧾 Dịch vụ: ' . implode(', ', $serviceParts);
+        }
+
+        /** 🎁 Combo */
+        if ($booking->bookingCombos->count()) {
+            $comboParts = [];
+            foreach ($booking->bookingCombos as $item) {
+                $combo = $item->combo;
+
+                if (!$combo) continue;
+
+                $name     = $combo->name;
+                $qty      = $item->quantity;
+                $origin   = $combo->combo_price ?? 0;
+                $final    = $item->price ?? 0;
+
+                $discLbl = $origin == $final
+                    ? ''
+                    : ' → ' . format_money($final) .
+                    ' (-' . format_money($origin - $final) . ')';
+
+                $comboParts[] = "{$name} ({$qty} x " . format_money($origin) . $discLbl . ')';
+
+                $totalOrigin  += $origin * $qty;
+                $totalPayable += $final  * $qty;
+            }
+            $lines[] = '🎁 Combo: ' . implode(', ', $comboParts);
+        }
+
+        /** 🎟️ Voucher */
+        if ($booking->voucher) {
+            $v        = $booking->voucher;
+            $discount = 0;
+
+            if ($v->discount_type == 0) {
+                $discount = $v->discount_value;
+            } else {
+                $discount = min(
+                    $totalPayable * ($v->discount_value / 100),
+                    $v->max_discount_value ?? PHP_INT_MAX
+                );
+            }
+
+            $totalPayable -= $discount;
+            $lines[] = "🎟️ Voucher: {$v->code} (-" . format_money($discount) . ')';
+        }
+
+        /** 💰 Tổng */
+        $saved = $totalOrigin - $totalPayable;
+        $lines[] = '💰 Tổng tiền: ' . format_money($totalPayable) .
+            ($saved > 0 ? ' (Tiết kiệm ' . format_money($saved) . ')' : '');
+
+        return implode("\n", $lines);
     }
 }

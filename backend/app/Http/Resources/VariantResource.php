@@ -22,6 +22,7 @@ class VariantResource extends JsonResource
             'seasons' => $this->seasons->map(fn($s) => [
                 'id'            => $s->id,
                 'name'          => $s->name,
+                'discount_type' => $s->pivot->discount_type,
                 'discount_value' => $s->pivot->discount_value,
             ]),
 

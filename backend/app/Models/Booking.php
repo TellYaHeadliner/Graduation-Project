@@ -64,4 +64,15 @@ class Booking extends Model
             ->withPivot(['quanlity', 'price', 'total_price'])
             ->withTimestamps();
     }
+
+    public function bookingServices()
+    {
+        return $this->hasMany(BookingService::class, 'booking_id');
+    }
+
+    public function bookingCombos()
+    {
+        return $this->hasMany(BookingCombo::class, 'booking_id');
+    }
+
 }

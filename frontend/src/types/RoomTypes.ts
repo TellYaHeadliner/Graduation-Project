@@ -17,7 +17,7 @@ interface Amenity{
   name: string;
 }
 
-interface Variant{
+export interface Variant{
   id: number;
   base_price: number;
   discount_price: number | null;

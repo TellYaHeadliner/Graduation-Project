@@ -3,8 +3,6 @@ import locationPin from "../assets/location-pin.svg"
 // import CarouselComment from "../components/CustomCarousel/CarouselComment";
 import TableRoom from "../components/Table/TableRoom";
 import DataListRule from "../components/DataList/DataListRule";
-import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
-import catFAQ from "../assets/cat_faq.png"
 import ChatButton from "../components/Chat/ChatButton";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
 import DialogHotelServices from "../components/Dialog/DialogHotelServices";
@@ -16,7 +14,7 @@ import FindRoom from "../components/FindHotel/FindRoom";
 import { useFindRoomContext } from "../context/FindRoomContext";
 import { useHotelRoomTypesQuery } from '../react-query/useHotelRoomTypesQuery';
 import { useState } from "react";
-
+import { BookingDetail } from "../types/PaymentTypes";
 
 export default function DetailHotel() {
 
@@ -25,7 +23,6 @@ export default function DetailHotel() {
     const getDetailHotel = useHotelDetailQuery(Number(id));
     const title = getDetailHotel.data?.data?.hotel?.name
     useTitle(title ?? "Đang tải")
-
 
     const breadcrumbItems = [
         { label: "Trang chủ", href: "/" },
@@ -37,6 +34,9 @@ export default function DetailHotel() {
     const listGalley = galleyString?.split(",") ?? [];
     const [isSearchRoomType, setIsSearchRoomType] = useState(false);
     const getRoomType = useHotelRoomTypesQuery(Number(id), state.dateRange[0] , state.dateRange[1], state.adults, state.children, state.rooms, isSearchRoomType)
+    
+    const [bookingDetails, setBookingDetails] = useState<BookingDetail[]>([]);
+
     return (
         <MainLayout>
             <div className="flex lg:mx-26 2xl:mx-47 flex-col text-black">
@@ -109,14 +109,20 @@ export default function DetailHotel() {
                     <h2 className="text-xl font-semibold">
                         Lựa chọn loại phòng
                     </h2>
+
                     <div className="mb-4">
                         <FindRoom onSearch={() => setIsSearchRoomType(true)}/>
                     </div>
                     <div>
-                        <TableRoom datas={getRoomType.data?.data.list ?? []} />
+                        <TableRoom datas={getRoomType.data?.data.list ?? []} onChange={setBookingDetails}/>
                     </div>
-                    <div className="flex justify-end py-3">
-                        <DialogHotelServices combos={getDetailHotel.data?.data.hotel.combos ?? []} services={getDetailHotel.data?.data.hotel.services ?? []}/>
+
+                    <div className="flex justify-end py-3 items-center">
+                        <DialogHotelServices
+                            combos={getDetailHotel.data?.data.hotel.combos ?? []}
+                            services={getDetailHotel.data?.data.hotel.services ?? []}
+                            hasSelectedRoom={bookingDetails.length > 0}
+                        />
                     </div>
                 </div>
                 <div>
@@ -130,7 +136,7 @@ export default function DetailHotel() {
                         <DataListRule hotelRule={getDetailHotel.data?.data.hotel.rules} />
                     </div>
                 </div>
-                <div>
+                {/* <div>
                     <h2 className="text-xl font-bold mt-2">
                         FAQ (Câu hỏi thường xuyên về khách sạn)
                     </h2>
@@ -143,7 +149,7 @@ export default function DetailHotel() {
                             <AccordionFAQHotel />
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
             {/* <div className="mt-2">
                 <CarouselCard cardList={CardListStaticData} title="Những khách sạn bạn có thể quan tâm" />

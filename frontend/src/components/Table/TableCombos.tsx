@@ -1,23 +1,46 @@
+/* eslint-disable @typescript-eslint/consistent-indexed-object-style */
 import { Currency } from "../../utils/Currency";
 import { Combo } from '../../types/DetailHotelTypes';
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { quantitySchemas } from "../../schemas/quantitySchemas";
-
+import { useState } from "react";
 
 interface TableComboProps {
   combos: Combo[];
+  onChange: (data: { combo_id: number; quantity: number }[]) => void;
 }
 
-export default function TableCombos({ combos }: TableComboProps) {
-  const {
-    register
-  } = useForm<quantitySchemas>({
-    resolver: zodResolver(quantitySchemas),
-    defaultValues: {
-      quantity: 0,
-    },
-  });
+export default function TableCombos({ combos, onChange }: TableComboProps) {
+  const [selectedCombos, setSelectedCombos] = useState<({ [key: number]: number })> ({});
+
+  const handleQuantityChange = (comboId: number, quantity: number) => {
+    const updated = { ...selectedCombos, [comboId]: quantity};
+    setSelectedCombos(updated);
+    
+    const formatted = Object.entries(updated)
+    .filter(([_, qty]) => qty > 0)
+    .map(([id, qty]) => {
+      const combo = combos.find(c => c.id === Number(id));
+      return {
+        combo_id: Number(id),
+        quantity: qty,
+        name: combo?.name || ""
+      };
+    });
+
+    localStorage.setItem('infoSelectedCombos', JSON.stringify(formatted));
+    onChange(formatted)
+  }
+
+  const getQuantity = () => {
+    const stored = localStorage.getItem('infoSelectedCombos')
+    if (stored){
+      const quantities = JSON.parse(localStorage.getItem('infoSelectedCombos') || '[]')
+            .map((item: { combo_id: number; quantity: number }) => item.quantity);
+      return quantities;
+    }
+    return 0;
+  }
+
+
 
   return (
     <div className="overflow-x-auto">
@@ -35,18 +58,20 @@ export default function TableCombos({ combos }: TableComboProps) {
             <tr key={index} className="hover:bg-gray-100 border border-black">
               <td className="px-4 py-3 border border-black">
                 <div className="flex items-start justify-center h-full">
-                  {data.services.map((service) => (
-                    <input
-                      key={`input-${data.id}-${service.id}`}
-                      type="number"
-                      id={String(data.id)}
-                      value={service.quantity}
-                      {...register("quantity")}
-                      className="w-15"
-                      min={1}
-                      max={service.quantity}
-                    />
-                  ))}
+                  {data.services.map((service) => {  
+                    return (
+                      <input
+                        key={`input-${data.id}-${service.id}`}
+                        type="number"
+                        min={0}
+                        max={data.services[0].quantity}
+                        value={getQuantity()}
+                        onChange={(e) => {
+                          handleQuantityChange(data.id, Number(e.target.value)
+                        )}}
+                      />
+                    );
+                  })}
                 </div>
               </td>
               <td className="px-4 border border-black">

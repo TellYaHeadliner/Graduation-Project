@@ -1,16 +1,85 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { Currency } from "../../utils/Currency";
 import DialogDetailHotel from "../Dialog/DialogDetailHotel";
 import { FaChild, FaUser } from "react-icons/fa6";
 import { RoomType } from "../../types/RoomTypes";
-import { useForm } from "react-hook-form";
-import { quantitySchemas } from "../../schemas/quantitySchemas";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
 
-interface RoomTableProps {
+interface TableRoomProps {
     datas: RoomType[];
+    onChange: (bookingDetails: {
+        room_type_id: number;
+        room_type_variant_id: number;
+        quantity: number;
+        name: string;
+    }[]) => void;
 }
 
-export default function TableRoom({ datas }: RoomTableProps) {
+export default function TableRoom({ datas, onChange }: TableRoomProps) {
+
+    const [quantities, setQuantities] = useState<Record<string, number>>({});
+    const handleQuantityChange = (roomTypeId: number, variantId: number, quantity: number) => {
+        const key = `${roomTypeId}-${variantId}`;
+        const updated = { ...quantities, [key]: quantity };
+        setQuantities(updated);
+
+        const details = Object.entries(updated).filter(([_, q]) => q > 0)
+        .map(([key, quantity]) => {
+            const [room_type_id, room_type_variant_id] = key.split("-").map(Number);
+            const room = datas.find(d => d.id === room_type_id);
+            return {
+                room_type_id,
+                room_type_variant_id,
+                quantity,
+                name: room?.name || ""
+            };
+        });
+        localStorage.setItem('infoSelectedRoom', JSON.stringify(details));
+        onChange(details);
+    }
+
+    function seasonsPrice(basePrice: number, discounType = 0, discountValue = 0): number {
+        if (discounType === 0) {
+            return basePrice - discountValue;
+        }
+        if (discounType === 1) {
+            return basePrice - (basePrice * (discountValue / 100));
+        }
+        return basePrice;
+    }
+
+    const calculateTotalRooms = (): number => {
+        let total = 0;
+
+        Object.entries(quantities).forEach(([key, quantity]) => {
+            if (quantity <= 0) return;
+
+            const [roomTypeIdStr, variantIdStr] = key.split("-");
+            const roomTypeId = Number(roomTypeIdStr);
+            const variantId = Number(variantIdStr);
+
+            const room = datas.find(d => d.id === roomTypeId);
+            const variant = room?.variants.find(v => v.id === variantId);
+
+            if (!variant) return;
+
+            let price = variant.base_price;
+
+            if (variant.seasons.length > 0) {
+                const firstSeason = variant.seasons[0]; // hoặc chọn theo logic khác
+                price = seasonsPrice(price, firstSeason.discount_type, firstSeason.discount_value);
+            }
+
+            total += price * quantity;
+        });
+
+        localStorage.setItem('totalRoom', JSON.stringify(total))
+        return total;
+    }
+
+    useEffect(() => {
+        calculateTotalRooms();
+    }, [quantities])
 
 
     const timeToFreeCancel = () => {
@@ -29,17 +98,6 @@ export default function TableRoom({ datas }: RoomTableProps) {
 
         return `${dd}/${MM}/${yyyy} ${hh}:${mm}`
     }
-
-    const {
-        register,
-        handleSubmit,
-        formState: { errors },
-    } = useForm<quantitySchemas>({
-        resolver: zodResolver(quantitySchemas),
-        defaultValues: {
-            quantity: 0,
-        },
-    });
 
     return (
         <div className="overflow-x-auto">
@@ -93,17 +151,8 @@ export default function TableRoom({ datas }: RoomTableProps) {
                                 const notes = variant.attributes.slice(2, 5);
                                 const cancel = variant.attributes.find(attr => attr.name === "Miễn phí huỷ trước 24h và thu phí sau đó");
                                 const isEmptySeasons = variant.seasons.length === 0;
-                                const seasonsPrice = (basePrice: number, discounType = 0, discountValue = 0) => {
-                                    if (discounType === 0) {
-                                        return basePrice - discountValue;
-                                    }
-                                    if (discounType === 1) {
-                                        return basePrice - (basePrice * (discountValue / 100));
-                                    }
-                                    return basePrice;
-                                }
-
                                 const seasons = variant.seasons
+
 
                                 return (
                                     <tr key={`${dataIndex}-${vIndex}`} className="border-t border-gray-300">
@@ -153,10 +202,14 @@ export default function TableRoom({ datas }: RoomTableProps) {
                                             {data.available_room_count && (
                                                 <input
                                                     type="number"
-                                                    {...register("quantity")}
                                                     min={0}
                                                     max={data.available_room_count}
+                                                    value={quantities[`${data.id}-${variant.id}`] || ""}
+                                                    onChange={(e) => {
+                                                        handleQuantityChange(data.id, variant.id, Number(e.target.value))
+                                                    }}
                                                     className="w-14 border border-gray-300 rounded px-2 py-1 text-sm"
+
                                                 />
                                             )}
                                         </td>

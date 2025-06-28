@@ -1,12 +1,10 @@
 import { z } from "zod"
 
 export const paymentSchemas = z.object({
-    fullname: z.string().nonempty(),
-    email: z.string().nonempty(),
-    phone: z.string().nonempty(),
-    address: z.string().min(1, "Vui lòng nhập địa chỉ"),
-    request: z.string().nullable(),
-    checkIn: z.string().nonempty("Vui lòng chọn thời gian check-in")
+    hotel_id: z.number(),
+    check_in: z.string(),
+    check_out: z.string(),
+    note: z.string().nullable(),
 })
 
 export type PaymentSchema = z.infer<typeof paymentSchemas>;

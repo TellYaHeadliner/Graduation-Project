@@ -1,12 +1,42 @@
-import { Table } from "@radix-ui/themes";
+/* eslint-disable @typescript-eslint/consistent-indexed-object-style */
 import { Currency } from "../../utils/Currency";
 import { Service } from "../../types/DetailHotelTypes"
-
+import { useState } from "react";
 interface TableServicesProps {
   data: Service[];
+  onChange: (data: { hotel_service_id: number; quantity: number; name: string }[]) => void;
 }
 
-export default function TableServices({ data }: TableServicesProps) {
+export default function TableServices({ data, onChange }: TableServicesProps) {
+  const [selectedService, setSelectedService] = useState<({ [key: number]: number })> ({});
+
+  const handleQuantityChange = (hotel_service_id: number, quantity: number) => {
+    const updated = { ...selectedService, [hotel_service_id]: quantity};
+    setSelectedService(updated)
+
+    const formatted = Object.entries(updated)
+    .filter(([_, quantity]) => quantity > 0)
+    .map(([id, quantity]) => {
+      const service = data.find(s => s.id === Number(id));
+      return {
+        hotel_service_id: Number(id),
+        quantity,
+        name: service?.name || ""
+      };
+    });
+    localStorage.setItem('infoSelectedService', JSON.stringify(formatted));
+    onChange(formatted);
+  }
+
+  const getQuanitity = (id: number) => {
+    const stored = JSON.parse(localStorage.getItem('infoSelectedService') || '[]')
+    if (stored){
+      return stored.find((item: { hotel_service_id: number; quantity: number }) => item.hotel_service_id === id)?.quantity ?? 0;
+    }
+    return 0;
+  }
+  
+
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full table-auto border border-gray-200  rounded-md">
@@ -28,8 +58,10 @@ export default function TableServices({ data }: TableServicesProps) {
               <td className="text-center px-4 py-2">
                 <input
                   type="number"
-                  min={1}
+                  min={0}
+                  value={getQuanitity(service.id)}
                   className="w-16 text-center px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  onChange={(e) => handleQuantityChange(service.id, Number(e.target.value))}
                 />
               </td>
               <td className="px-4 py-2">
@@ -60,8 +92,6 @@ export default function TableServices({ data }: TableServicesProps) {
                   )
                 }
               </td>
-
-
             </tr>
           ))}
         </tbody>

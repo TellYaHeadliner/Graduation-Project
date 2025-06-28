@@ -4,18 +4,30 @@ import TabService from "../Tab/TabService";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import ButtonBook from "../Button/ButtonBook";
 import { Combo, Service } from "../../types/DetailHotelTypes";
+import { useState } from "react";
 
 interface DialogDetailHotelServicesProps {
     combos: Combo[];
     services: Service[];
+    hasSelectedRoom: boolean;
 }
 
-export default function DialogHotelServices({ combos, services }: DialogDetailHotelServicesProps) {
+export default function DialogHotelServices({ combos, services, hasSelectedRoom }: DialogDetailHotelServicesProps) {
+
+    const [, setComboSelections] = useState<{ combo_id: number; quantity: number }[]>([]);
+    const [, setServiceSelections] = useState<{ hotel_service_id: number; quantity: number }[]>([]);
+    
     return (
         <Dialog.Root>
-            <Dialog.Trigger>
-                <ButtonBook />
-            </Dialog.Trigger>
+            { hasSelectedRoom ? (
+                <Dialog.Trigger>
+                    <ButtonBook />
+                </Dialog.Trigger>
+            ): (
+                <div className="text-red-500 text-sm font-medium mt-2">
+                    Vui lòng chọn trước khi chọn dịch vụ
+                </div>
+            )}
             <Dialog.Portal>
                 <Dialog.Overlay className="fixed inset-0 bg-black/50 z-40">
                     <DialogTitle className="hidden">Chọn dịch vụ</DialogTitle>
@@ -26,8 +38,13 @@ export default function DialogHotelServices({ combos, services }: DialogDetailHo
                                 <Cross1Icon />
                             </Dialog.Close>
                         </div>
-                        <TabService combos={combos} services={services} />
-                    </DialogContent>
+                        <TabService 
+                            combos={combos} 
+                            services={services} 
+                            onComboChange={setComboSelections} 
+                            onServiceChange={setServiceSelections}
+                        />
+                    </DialogContent> 
                 </Dialog.Overlay>
             </Dialog.Portal>
         </Dialog.Root>

@@ -27,6 +27,8 @@ Route::middleware('checkJWT')->group(function () {
         ->as('hotel.')
         ->group(function () {
             Route::post('/register-hotel', 'registerHotel')->name('registerHotel');
+            Route::post('/favorites', 'favorites')->name('favorites');
+            Route::get('/list-favorites', 'list_favorites')->name('list_favorites');
         });
     Route::controller(App\Http\Controllers\API\Transaction\TransactionController::class)
         ->prefix('/transactions')

@@ -6,8 +6,10 @@ use App\Enums\Hotel\HotelStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Hotel\HotelRequest;
+use App\Http\Resources\FavoriteHotelResource;
 use App\Http\Resources\HotelDetailResource;
 use App\Models\Hotel;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -89,5 +91,44 @@ class HotelController extends Controller
                 'data' => []
             ], 500);
         }
+    }
+
+    public function favorites(Request $request)
+    {
+        DB::beginTransaction();
+        try {
+            $user = User::find($request->user_id);
+
+            $favorited = $user->favorites()->where('hotel_id', $request->hotel_id)->exists();
+
+            if ($favorited) {
+                $user->favorites()->detach($request->hotel_id);
+                $message = 'Đã xóa khỏi danh sách yêu thích';
+            } else {
+                $user->favorites()->attach($request->hotel_id);
+                $message = 'Đã thêm vào danh sách yêu thích';
+            }
+
+            DB::commit();
+            return response()->json([
+                'message' => $message,
+                'data' => []
+            ], 200);
+        } catch (Exception $e) {
+            DB::rollback();
+            Log::error('Lỗi yêu thích: ' . $e->getMessage());
+            return response()->json([
+                'message' => 'Có lỗi khi yêu thích:' . $e->getMessage(),
+                'data' => []
+            ], 500);
+        }
+    }
+    public function list_favorites(Request $request)
+    {
+        $user = User::with('favorites')->findOrFail($request->user_id);
+
+        return response()->json([
+            'data' => FavoriteHotelResource::collection($user->favorites),
+        ]);
     }
 }

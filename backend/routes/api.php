@@ -29,6 +29,7 @@ Route::middleware('checkJWT')->group(function () {
             Route::post('/register-hotel', 'registerHotel')->name('registerHotel');
             Route::post('/favorites', 'favorites')->name('favorites');
             Route::get('/list-favorites', 'list_favorites')->name('list_favorites');
+            Route::get('/search/{check_in?}/{check_out?}/{address?}/{guest?}/{children?}/{quantity?}', 'search_hotel')->name('search_hotel');
         });
     Route::controller(App\Http\Controllers\API\Transaction\TransactionController::class)
         ->prefix('/transactions')

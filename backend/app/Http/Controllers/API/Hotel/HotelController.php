@@ -49,7 +49,8 @@ class HotelController extends Controller
             'amenities',
             'services',
             'combos.comboServices.service',
-            'vouchers'
+            'vouchers',
+            'hotelServices'
         ])->find($id);
         return response()->json([
             'message' => 'Chi tiết khách sạn.',
@@ -131,5 +132,10 @@ class HotelController extends Controller
         return response()->json([
             'data' => FavoriteHotelResource::collection($user->favorites),
         ]);
+    }
+
+    public function searh_hotel($check_in = null, $check_out = null, $address = null, $guest = null, $children = null, $quantity = 1)
+    {
+
     }
 }

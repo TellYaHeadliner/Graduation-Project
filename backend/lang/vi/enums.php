@@ -15,6 +15,7 @@ use App\Enums\RoomTypeVariant\RoomTypeVariantStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Enums\Service\ServiceStatus;
 use App\Enums\Transaction\TransactionStatus;
+use App\Enums\Transaction\TransactionType;
 use App\Enums\User\UserGender;
 use App\Enums\User\UserRole;
 use App\Enums\User\UserStatus;
@@ -131,6 +132,13 @@ return [
         TransactionStatus::Success->value   => 'Thành công',
         TransactionStatus::Failed->value    => 'Thất bại',
         TransactionStatus::Refunded->value  => 'Đã hoàn tiền',
+        TransactionStatus::Processing->value  => 'Đang thanh toán',
     ],
+    TransactionType::class => [
+        TransactionType::Holding->value => 'Hệ thống đang giữ tiền',
+        TransactionType::Release->value => 'Trả cho khách sạn',
+        TransactionType::Refund->value  => 'Hoàn tiền khách',
+    ],
+
 
 ];

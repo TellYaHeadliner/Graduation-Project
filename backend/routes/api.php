@@ -18,6 +18,8 @@ Route::middleware('checkJWT')->group(function () {
     Route::prefix('/users')->as('user.')->group(function () {
         Route::controller(App\Http\Controllers\API\User\UserController::class)->group(function () {
             Route::get('/user-info', 'userInfo')->name('info');
+            Route::put('/update', 'update')->name('update');
+            Route::put('/forgot-password', 'forgot_password')->name('forgot_password');
         });
     });
     Route::controller(App\Http\Controllers\API\Hotel\HotelController::class)
@@ -25,14 +27,26 @@ Route::middleware('checkJWT')->group(function () {
         ->as('hotel.')
         ->group(function () {
             Route::post('/register-hotel', 'registerHotel')->name('registerHotel');
-    });
+            Route::post('/favorites', 'favorites')->name('favorites');
+            Route::get('/list-favorites', 'list_favorites')->name('list_favorites');
+        });
     Route::controller(App\Http\Controllers\API\Transaction\TransactionController::class)
         ->prefix('/transactions')
         ->as('transaction.')
         ->group(function () {
             Route::post('/create-booking', 'create_booking')->name('create_booking');
             Route::get('/callback-vnpay', 'callback_vnpay')->name('callback_vnpay');
-    });
+
+            Route::post('/refund-booking', 'refund_booking')->name('refund_booking');
+            Route::get('/callback-refund-vnpay', 'callback_refund_vnpay')->name('callback_refund_vnpay');
+        });
+    Route::controller(App\Http\Controllers\API\Booking\BookingController::class)
+        ->prefix('/bookings')
+        ->as('booking.')
+        ->group(function () {
+            Route::get('/history/{status?}', 'history')->name('history');
+            Route::get('/detail/{id?}', 'detail')->name('detail');
+        });
 });
 
 

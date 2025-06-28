@@ -10,6 +10,8 @@ import { Currency } from "../../utils/Currency";
 import { useForm } from "react-hook-form";
 import { PaymentSchema, paymentSchemas } from "../../schemas/paymentSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { BookingPayload } from "../../types/TransactionTypes";
+import { usePaymentMutation } from "../../react-query/usePaymentMutation";
 ;
 
 
@@ -28,14 +30,37 @@ export default function Payment() {
     const getServiceToal = Number(JSON.parse(localStorage.getItem('serviceTotal') ?? '[]'));
     const getTotalRoom = Number(JSON.parse(localStorage.getItem('totalRoom') ?? '[]'));
     const total = getComboTotal + getServiceToal + getTotalRoom;
-
-    const onSubmit = (data: any) => {
-        console.log(data);
-    }
+    const findRoom = JSON.parse(localStorage.getItem('findRoom') ?? '{}');
+    const [checkInDay, checkOutDay ] = findRoom?.dateRange ?? [];
 
     const { register ,handleSubmit } = useForm<PaymentSchema>({
         resolver: zodResolver(paymentSchemas)
     });
+
+    const mutation = usePaymentMutation();
+    
+    const onSubmit = (data: PaymentSchema) => {
+        const getInfoSelectedRoomWithoutName = getInfoSelectedRoom.map(({ name, ...rest }) => rest);
+        const getInfoSelectedComboWithoutName = getInfoSelectedCombos.map(({ name, ...rest }) => rest);
+        const getInfoSelectedServiceWithoutName = getInfoSelectedService.map(({ name, ...rest }) => rest);
+        
+
+
+        const payloadData: BookingPayload = {
+            hotel_id: Number(id),
+            checkin_date: checkInDay,
+            checkout_date: checkOutDay,
+            note: data.note ?? undefined,
+            booking_details: getInfoSelectedRoomWithoutName,
+            booking_combos: getInfoSelectedComboWithoutName,
+            booking_services: getInfoSelectedServiceWithoutName
+        }
+
+        console.log(payloadData);
+        mutation.mutate(payloadData);
+        console.log(mutation.error);
+    }
+
 
     return (
         <PaymentLayout>
@@ -54,17 +79,17 @@ export default function Payment() {
                         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
                             <div>
                                 <label htmlFor="checkIn" className="block-text-sm font-medium text-gray-700">Check-in</label>
-                                <select {...register("check_in")}  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none">
-                                    <option value={getCheckInTime}>
-                                        {getCheckInTime}
+                                <select {...register("check_in")} defaultValue={checkInDay}  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none">
+                                    <option value={checkInDay}>
+                                        {checkInDay}
                                     </option>
                                 </select>
                             </div>
                             <div>
                                 <label htmlFor="checkOut" className="block-text-sm font-medium text-gray-700">Check-out</label>
-                                <select {...register("check_out")} className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none">
-                                    <option value={getCheckOutTime}>
-                                        {getCheckOutTime}
+                                <select {...register("check_out")} defaultValue={checkOutDay} className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none">
+                                    <option value={checkOutDay}>
+                                        {checkOutDay}
                                     </option>
                                 </select>
                             </div>

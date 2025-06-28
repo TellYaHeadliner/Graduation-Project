@@ -34,7 +34,7 @@ class CheckJWT
             
             $request->merge(['user_id' => $decode->sub]);
         } catch (\Firebase\JWT\ExpiredException $err) {
-            return response()->json(['error' => 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.'], 401);
+            return response()->json(['error' => 'Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.'], 400);
         } catch (\Exception $err) {
             return response()->json(['error' => 'Token không hợp lệ.'], 401);
         }

@@ -34,6 +34,7 @@ export default function DetailHotel() {
     const listGalley = galleyString?.split(",") ?? [];
     const [isSearchRoomType, setIsSearchRoomType] = useState(false);
     const getRoomType = useHotelRoomTypesQuery(Number(id), state.dateRange[0] , state.dateRange[1], state.adults, state.children, state.rooms, isSearchRoomType)
+    console.log(getDetailHotel.data?.data.hotel);
     
     const [bookingDetails, setBookingDetails] = useState<BookingDetail[]>([]);
 

@@ -28,7 +28,7 @@ class UserApiRequest extends BaseRequest
             'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'birthday' => ['nullable', 'date_format:Y-m-d'],
             'gender' => ['required', new Enum(UserGender::class)],
-            'password' => ['required', 'string'],
+            'password' => ['required', 'string' , 'min:8'],
             // 'status' => ['nullable'],
             // 'role' => ['required', new Enum(UserRole::class)],
         ];
@@ -37,18 +37,17 @@ class UserApiRequest extends BaseRequest
     protected function methodPut()
     {
         return [
-            'id' => ['required', 'exists:App\Models\User,id'],
             'fullname' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:App\Models\User,email,' . $this->id],
+            'email' => ['required', 'email', 'unique:App\Models\User,email'],
             'phone' => [
                 'nullable',
                 'regex:/((09|03|07|08|05)+([0-9]{8})\b)/',
             ],
             'address' => ['nullable', 'string'],
-            'avatar' => ['nullable', 'string'],
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
             'birthday' => ['nullable', 'date_format:Y-m-d'],
             'gender' => ['required', new Enum(UserGender::class)],
-            'password' => ['nullable', 'string', 'confirmed'],
+            'password_new' => ['nullable', 'string' , 'min:8'],
             // 'status' => ['nullable'],
             // 'role' => ['required', new Enum(UserRole::class)],
         ];

@@ -8,6 +8,7 @@ use App\Enums\Transaction\TransactionType;
 use App\Enums\Voucher\VoucherStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Transaction\TransactionRequest;
+use App\Mail\BookingSuccessMail;
 use App\Models\Booking;
 use App\Models\Combo;
 use App\Models\HotelService;
@@ -16,10 +17,12 @@ use App\Models\RoomType;
 use App\Models\RoomTypeVariant;
 use App\Models\Transaction;
 use App\Models\Voucher;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 
@@ -32,6 +35,22 @@ class TransactionController extends Controller
 
             $combos = ['total' => 0];
             $services = ['total' => 0];
+
+            if (Booking::where('customer_id', $request->user_id)
+                ->where('checkin_date', '<',  $request->checkout_date)
+                ->where('checkout_date', '>', $request->checkin_date)
+                ->whereIn('status', [
+                    BookingStatus::Pending->value,
+                    BookingStatus::Confirmed->value,
+                    BookingStatus::CheckedIn->value,
+                ])->exists()
+            ) {
+                return response()->json([
+                    'message' => 'Không thể đặt booking mới vì bạn đã có một booking trong thời gian này',
+                    'data' => []
+                ]);
+            }
+
 
             $booking = Booking::create([
                 'customer_id' => $request->user_id,
@@ -67,8 +86,24 @@ class TransactionController extends Controller
                     ], 500);
                 }
             }
+            $booking->loadMissing([
+                'bookingDetails.Variant.roomType',
+                'bookingServices.hotelService',
+                'bookingCombos.combo',
+                'voucher',
+            ]);
 
-            $total = ($combos['total'] ?? 0) + ($services['total'] ?? 0) + $booking->bookingDetails->sum('price_per_room');
+            $nights = Carbon::parse($booking->checkout_date)->diffInDays(Carbon::parse($booking->checkin_date));
+            $nights = max($nights, 1);
+
+            $roomTotal = $booking->bookingDetails
+                ->map(function ($detail) use ($nights) {
+                    $price = is_numeric($detail->price_per_room) ? $detail->price_per_room : 0;
+                    return $price * $nights;
+                })
+                ->sum();
+
+            $total = ($combos['total'] ?? 0) + ($services['total'] ?? 0) + $roomTotal;
 
             if ($request->filled('voucher_id')) {
                 $voucher = $this->checkVoucher($request->voucher_id, $total);
@@ -91,13 +126,6 @@ class TransactionController extends Controller
             $total = max(0, $total);
             $booking->total_amount = $total;
             $booking->save();
-
-            $booking->loadMissing([
-                'bookingDetails.Variant.roomType',
-                'bookingServices.hotelService',
-                'bookingCombos.combo',
-                'voucher',
-            ]);
 
             $transaction = Transaction::create([
                 'booking_id' => $booking->id,
@@ -184,6 +212,12 @@ class TransactionController extends Controller
             $transaction->booking->update([
                 'status' => BookingStatus::Confirmed->value,
             ]);
+
+            $booking = $transaction->booking;
+
+            $booking->loadMissing(['user', 'hotel', 'hotel.hotelRule']);
+
+            Mail::to($booking->user->email)->send(new BookingSuccessMail($booking));
 
             return redirect()->away('http://127.0.0.1:5173/lich-su-booking?status=success&message=' . urlencode('Thanh toán thành công'));
         } else {
@@ -307,8 +341,8 @@ class TransactionController extends Controller
                             ->whereIn('status', [
                                 BookingStatus::Pending->value,
                                 BookingStatus::Confirmed->value,
-                                BookingStatus::CheckedIn->value,  
-                                BookingStatus::CheckedOut->value,  
+                                BookingStatus::CheckedIn->value,
+                                BookingStatus::CheckedOut->value,
                             ]);
                     })
                     ->orderBy('code', 'asc')

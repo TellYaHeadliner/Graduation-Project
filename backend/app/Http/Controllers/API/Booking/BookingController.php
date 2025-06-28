@@ -44,7 +44,7 @@ class BookingController extends Controller
         $booking = Booking::with([
             'hotel',
             'voucher',
-            'user:id,fullname,email,phone', 
+            'user:id,fullname,email,phone',
 
             'bookingDetails.room:id,code',
             'bookingDetails.roomType:id,name',
@@ -57,9 +57,15 @@ class BookingController extends Controller
         ])
             ->find($request->id);
 
+        if (!$booking) {
+             return response()->json([
+            'message' => 'Không tìm thấy đơn đặt',
+            'data' => []
+        ]);
+        }
 
         return response()->json([
-            'message' => 'lịch sử booking',
+            'message' => 'Chi tiết đơn đặt phòng',
             'data' => new BookingDetailResource($booking),
         ]);
     }

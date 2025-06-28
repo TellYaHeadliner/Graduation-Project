@@ -18,6 +18,8 @@ Route::middleware('checkJWT')->group(function () {
     Route::prefix('/users')->as('user.')->group(function () {
         Route::controller(App\Http\Controllers\API\User\UserController::class)->group(function () {
             Route::get('/user-info', 'userInfo')->name('info');
+            Route::put('/update', 'update')->name('update');
+            Route::put('/forgot-password', 'forgot_password')->name('forgot_password');
         });
     });
     Route::controller(App\Http\Controllers\API\Hotel\HotelController::class)

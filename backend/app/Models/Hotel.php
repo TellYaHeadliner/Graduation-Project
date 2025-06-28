@@ -58,7 +58,7 @@ class Hotel extends Model
     public function services()
     {
         return $this->belongsToMany(Service::class, 'hotel_services', 'hotel_id', 'service_id')
-            ->withPivot('short_description', 'base_price', 'promo_price', 'status')
+            ->withPivot('id','short_description', 'base_price', 'promo_price', 'status')
             ->withTimestamps();
     }
 

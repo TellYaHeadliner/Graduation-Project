@@ -41,7 +41,7 @@ class HotelDetailResource extends JsonResource
             ]),
 
             'services'  => $this->services->map(fn($s) => [
-                'id' => $s->id,
+                'id' => $s->pivot->id,
                 'name' => $s->name,
                 'default_unit' => $s->default_unit,
                 'short_description' => $s->short_description,

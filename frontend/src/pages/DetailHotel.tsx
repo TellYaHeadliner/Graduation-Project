@@ -15,6 +15,7 @@ import { useFindRoomContext } from "../context/FindRoomContext";
 import { useHotelRoomTypesQuery } from '../react-query/useHotelRoomTypesQuery';
 import { useState } from "react";
 import { BookingDetail } from "../types/PaymentTypes";
+import { Skeleton } from "@radix-ui/themes";
 
 export default function DetailHotel() {
 
@@ -34,34 +35,44 @@ export default function DetailHotel() {
     const listGalley = galleyString?.split(",") ?? [];
     const [isSearchRoomType, setIsSearchRoomType] = useState(false);
     const getRoomType = useHotelRoomTypesQuery(Number(id), state.dateRange[0] , state.dateRange[1], state.adults, state.children, state.rooms, isSearchRoomType)
-    console.log(getDetailHotel.data?.data.hotel);
-    
+
     const [bookingDetails, setBookingDetails] = useState<BookingDetail[]>([]);
 
     return (
         <MainLayout>
             <div className="flex lg:mx-26 2xl:mx-47 flex-col text-black">
-                <div className="my-4">
+                <div className="my-3">
                     <Breadcrumb items={breadcrumbItems} />
                 </div>
                 <h1 className="text-3xl font-bold">
-                    {getDetailHotel.data?.data.hotel.name}
+                    {getDetailHotel.isPending ? <Skeleton width="1090px" height="36px" /> : getDetailHotel.data?.data.hotel.name}
                 </h1>
-                <div className="text-thin text-md flex items-center gap-1">
+
+                <div className="text-thin text-md flex items-center gap-1 my-2">
                     <img src={locationPin} alt={locationPin} className="w-6 h-6 inline" />
+                    {
+                        getDetailHotel.isPending && (
+                            <Skeleton width="3000px" />
+                        )
+                    }
                     {getDetailHotel.data?.data.hotel.address}
                 </div>
-                <div className="flex gap-4">
+                {/* <div className="flex gap-4">
                     <img src={`${import.meta.env.VITE_URL}${listGalley[0]}`} alt="" className="w-2/3 h- bg-gray-300" />
                     <div className="grid grid-cols-1 gap-4 w-1/3">
                         <img src={listGalley[1]} alt="" className="h-30 rounded bg-gray-300" />
                         <img src={listGalley[2]} alt="" className="h-30 rounded bg-gray-300" />
                     </div>
-                </div>
+                </div> */}
                 <div className="flex flex-row mt-4">
                     <div className="lg:w-1/2 w-full mr-4">
+
                         <h3 className="text-lg font-semibold">Về khách sạn chúng tôi:</h3>
-                        <div className="text-lg text-justify" dangerouslySetInnerHTML={{ __html: getDetailHotel.data?.data.hotel.description ?? "" }} />
+                        { getDetailHotel.isPending ? (
+                            <Skeleton height="100px"/>
+                        ): (
+                            <div className="text-lg text-justify" dangerouslySetInnerHTML={{ __html: getDetailHotel.data?.data.hotel.description ?? "" }} />
+                        )}
                         <h2 className="text-lg font-semibold mt-2">
                             Các tiện nghi chúng tôi có
                         </h2>
@@ -78,6 +89,9 @@ export default function DetailHotel() {
                         <h2 className="text-lg font-semibold mt-2">
                             Các dịch vụ chúng tôi có
                         </h2>
+                        {getDetailHotel.isPending && (
+                            <Skeleton height="500px"/>
+                        )}
                         <div>
                             <ul className="flex flex-row flex-wrap gap-4 mt-2">
                                 {getDetailHotel.data?.data?.hotel?.services.map((service) => (

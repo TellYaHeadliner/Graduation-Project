@@ -24,13 +24,13 @@ export default function TableHistory() {
 
   const handleDelete = (id: number) => {
     alert(`Hủy khách sạn ID ${id}`);
-    // TODO: Gọi API xoá
+    
   };
 
   return (
-    <div className="overflow-x-auto border rounded-xl shadow">
-      <table className="min-w-full divide-y divide-gray-200 text-sm text-left">
-        <thead className="bg-gray-100">
+    <div className="overflow-x-auto border rounded-xl mx-auto">
+      <table typeof="1" className="w-6xl table-auto text-sm text-left border border-gray-300">
+        <thead className="bg-blue-700 text-white">
           <tr>
             <th className="p-3">
               <input
@@ -57,9 +57,9 @@ export default function TableHistory() {
                   onChange={() => toggleSelect(hotel.id)}
                 />
               </td>
-              <td className="p-3 font-medium">{hotel.name}</td>
-              <td className="p-3">{hotel.address}</td>
-              <td className="p-3">
+              <td className="p-3 font-medium text-gray-500">{hotel.name}</td>
+              <td className="p-3 text-gray-500">{hotel.address}</td>
+              <td className="p-3 text-gray-500">
                 <span
                   className={`px-2 py-1 rounded text-xs font-semibold ${
                     hotel.status === "Hoạt động"

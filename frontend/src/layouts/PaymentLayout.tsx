@@ -2,6 +2,7 @@ import { ReactNode } from "react"
 
 import { Theme } from "@radix-ui/themes"
 import HeaderPayment from "../components/Header/HeaderPayment"
+import { ToastContainer } from "react-toastify"
 
 interface Props {
     children: ReactNode
@@ -17,6 +18,7 @@ export default function PaymentLayout(props: Props) {
             <main className="flex-1">
                 {children}
             </main>
+            <ToastContainer position="top-right" />
         </Theme>
     )
 } 

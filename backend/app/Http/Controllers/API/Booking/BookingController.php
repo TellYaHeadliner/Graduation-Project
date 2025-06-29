@@ -28,7 +28,7 @@ class BookingController extends Controller
             ->when($request->status == 4, function ($query) {
                 $query->where('status', 4);
             }, function ($query) {
-                $query->whereIn('status', [1, 2, 3]);
+                $query->whereIn('status', [1, 2, 3,0]);
             })
             ->get();
 

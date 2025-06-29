@@ -1,23 +1,22 @@
 import { ReactNode } from "react"
 import { Theme } from "@radix-ui/themes"
 import Header from "../components/Header/Header"
-import Footer from "../components/Footer/Footer"
+
 
 interface Props {
     children: ReactNode
 }
 
-export default function MainLayout(props: Props) {
+export default function PersonalLayout(props: Props) {
 
     const { children } = props
 
     return (
-        <Theme>
+        <Theme className="min-h-screen flex flex-col overflow-x-hidden">
             <Header />
             <main className="flex-1">
                 {children}
             </main>
-            <Footer />
         </Theme>
     )
 }

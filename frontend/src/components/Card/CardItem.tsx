@@ -15,6 +15,7 @@ import {
 import TooltipReputation from "../Tooltip/TooltipReputation";
 
 interface CardItemProps {
+  id: number;
   name: string;
   address: string;
   star_rating: number;
@@ -66,6 +67,7 @@ const TagScore: React.FC<{ reputation_score: number }> = ({ reputation_score }) 
 };
 
 const CardItem: React.FC<CardItemProps> = ({
+  id,
   name,
   address,
   star_rating,
@@ -74,7 +76,7 @@ const CardItem: React.FC<CardItemProps> = ({
   discountPrice,
   avatar
 }) => {
-  const { isDialogOpen, closeDialog, checkAuth } = useAuthCheck();
+  const { isDialogOpen, closeDialog, checkAuth } = useAuthCheck(id);
 
   return (
     <div className="w-[270px] h-[330px] rounded-xl shadow-md overflow-hidden relative hover:bg-accent hover:shadow-2xl card holographic-card">

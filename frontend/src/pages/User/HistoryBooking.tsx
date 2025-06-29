@@ -1,10 +1,13 @@
-import MainLayout from "../../layouts/MainLayout";
+import PersonalLayout from "../../layouts/PersonalLayout";
 
 import useTitle from "../../hooks/useTitle";
 import TableHistory from "../../components/Table/TableHistory";
-import {  useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import DialogTransactionComplete from '../../components/Dialog/DialogTransactionComplete';
+import { useBookingHistoryQuery } from "../../react-query/useBookingHistoryQuery";
+import { Spinner } from "@radix-ui/themes";
+
 
 export default function HistoryBooking() {
     useTitle("Lịch sử booking");
@@ -15,13 +18,15 @@ export default function HistoryBooking() {
     const [isTransactionComplete, setIsTransactionComplete] = useState(false);
 
     useEffect(() => {
-        if (message === "Thanh toán thành công" && status === "success"){
+        if (message === "Thanh toán thành công" && status === "success") {
             setIsTransactionComplete(true);
         }
     }, [message, status])
 
+    const getBookingHistory = useBookingHistoryQuery();
+
     return (
-        <MainLayout>
+        <PersonalLayout>
             {
                 isTransactionComplete && (
                     <DialogTransactionComplete isOpen={isTransactionComplete} onClose={() => setIsTransactionComplete(false)} />
@@ -32,12 +37,18 @@ export default function HistoryBooking() {
                     <h1 className="font-bold text-xl mb-2">
                         Tất cả khách sạn đang đặt phòng
                     </h1>
-                    <div>
-                        <TableHistory />
-                    </div>
+                    {
+                        getBookingHistory.isPending ? (
+                            <Spinner />
+                        ) : (
+                            <div>
+                                <TableHistory datas={getBookingHistory.data?.data ?? []}/>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
-            
-        </MainLayout>
+
+        </PersonalLayout>
     )
 }

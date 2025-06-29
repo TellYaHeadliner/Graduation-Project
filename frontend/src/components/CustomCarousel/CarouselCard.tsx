@@ -15,6 +15,7 @@ export default function CarouselCard({ cardList, title }: CardListProps) {
     <div key={card.name}>
       <Link href={`/${slug(card.name)}/${card.id}`}>
         <CardItem
+          id={card.id}
           avatar={card.avatar}
           name={card.name}
           address={card.address}

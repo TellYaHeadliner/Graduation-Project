@@ -13,11 +13,11 @@ interface BreadcrumbProps{
 export default function Breadcrumb({ items }: BreadcrumbProps) {
     return (
       <nav className="flex text-sm text-gray-600" aria-label="Breadcrumb">
-        <ol className="inline-flex items-center space-x-1 md:space-x-3">
+        <ol className="inline-flex items-center ">
           {items.map((item, index) => (
             <li key={index} className="inline-flex items-center">
               {index !== 0 && (
-                <ChevronRightIcon className="w-4 h-4 mx-1 text-gray-400" />
+                <ChevronRightIcon className="w-4 h-4text-gray-400" />
               )}
               {item.href && !item.active ? (
                 <a

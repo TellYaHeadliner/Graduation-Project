@@ -1,14 +1,13 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { loginSchema, LoginSchema } from "../../guards/loginSchemas"
+import { loginSchema, LoginSchema } from "../../schemas/loginSchemas"
 import { PATH } from "../../constants/Paths";
 import { FaFacebook, FaGoogle } from "react-icons/fa6"
 import { Button } from "@radix-ui/themes";
-import authApi from "../../api/Auth.api";
-import { useNavigate } from "react-router-dom";
 import DialogLoginComplete from "../Dialog/DialogLoginComplete";
 import { useState } from "react";
-import { ErrorUtils } from "../../utils/Error";
+import { useLoginMutation } from '../../react-query/useLoginMutation';
+import DialogLoading from "../Dialog/DialogLoading";
 
 
 export default function FormLogin() {
@@ -19,22 +18,17 @@ export default function FormLogin() {
     } = useForm<LoginSchema>({
         resolver: zodResolver(loginSchema),
     });
-    const navigate = useNavigate();
     const [isOpenDialog, setIsOpenDialog] = useState(false);
-    const errorUtils = new ErrorUtils();
+    const loginMutation = useLoginMutation();
 
     const onSubmit = async (data: LoginSchema) => {
         try {
-            const responseLogin = await authApi.login(data.email, data.password);
-    
+            const responseLogin = await loginMutation.mutateAsync({ email: data.email, password: data.password })
             if (responseLogin) {
               setIsOpenDialog(true);
-              setTimeout(() => {
-                navigate("/");
-              }, 3000);
             }
           } catch (error) {
-            errorUtils.handleError(error);
+            console.error(error)
           }
     }
 
@@ -75,8 +69,11 @@ export default function FormLogin() {
                     Google
                 </Button>
             </div>
-            <DialogLoginComplete title="Đăng kí thành công" isOpen={isOpenDialog} />
-            
+            <DialogLoginComplete title="Đăng nhập thành công" isOpen={isOpenDialog} />
+            {
+                loginMutation.isPending &&
+                <DialogLoading isOpen={true} />
+            }
         </form>
     )
 }

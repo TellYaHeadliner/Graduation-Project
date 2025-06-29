@@ -40,6 +40,7 @@ class HotelController extends Controller
             ]
         ], 200);
     }
+    
     public function detailHotel(Request $request)
     {
         $id = $request->query('id');

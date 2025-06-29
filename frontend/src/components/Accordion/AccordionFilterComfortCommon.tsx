@@ -8,7 +8,7 @@ interface AFCCProps{
 
 export default function AccordiionFilterComfortCommon({ title }: AFCCProps){
     return (
-        <div className="p-4 rounded-lg border text-black">
+        <div className="p-4 rounded-lg border border-gray-200 text-black">
         <Accordion.Root type="single" defaultValue="item-1" collapsible>
             <Accordion.Item value="item-1">
                 <Accordion.Header>

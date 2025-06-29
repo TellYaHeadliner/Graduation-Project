@@ -1,11 +1,14 @@
 import { Dialog } from "radix-ui";
 import { Cross1Icon } from "@radix-ui/react-icons";
+import { Amenity } from "../../types/RoomTypes";
 
 interface DialogDetailHotelProps {
     title: string;
+    area: number;
+    amenities: Amenity[];
 }
 
-export default function DialogDetailHotel({ title }: DialogDetailHotelProps) {
+export default function DialogDetailHotel({ title, area, amenities }: DialogDetailHotelProps) {
     return (
         <Dialog.Root>
             <Dialog.Trigger className="text-blue-600 underline">
@@ -41,45 +44,20 @@ export default function DialogDetailHotel({ title }: DialogDetailHotelProps) {
                             <div className="text-sm space-y-4">
                                 <div>
                                     <p>
-                                        📏 <strong>Kích thước phòng:</strong> 20 m²
+                                    📏 <strong>Kích thước phòng:</strong> {area} m²
                                     </p>
-                                    <p>🛏️ 2 giường đôi</p>
-                                </div>
-
-                                <div>
-                                    <h3 className="font-semibold">Trong phòng tắm riêng của bạn:</h3>
-                                    <ul className="list-disc list-inside grid grid-cols-2 gap-x-4">
-                                        <li>Bồn tắm</li>
-                                        <li>Khăn tắm</li>
-                                        <li>Đồ vệ sinh cá nhân miễn phí</li>
-                                        <li>Dép</li>
-                                        <li>Vòi sen</li>
-                                        <li>Máy sấy tóc</li>
-                                        <li>Chậu rửa vệ sinh (bidet)</li>
-                                        <li>Khăn tắm/Bộ khăn trải giường (có thu phí)</li>
-                                        <li>Nhà vệ sinh</li>
-                                        <li>Giấy vệ sinh</li>
-                                    </ul>
                                 </div>
 
                                 <div>
                                     <h3 className="font-semibold">Tiện nghi:</h3>
                                     <ul className="list-disc list-inside grid grid-cols-2 gap-x-4">
-                                        <li>Điều hòa không khí</li>
-                                        <li>Các tầng trên đi lên bằng thang máy</li>
-                                        <li>Ra trải giường</li>
-                                        <li>Giá treo quần áo</li>
-                                        <li>Ổ điện gần giường</li>
-                                        <li>Thiết bị báo carbon monoxide</li>
-                                        <li>Bàn làm việc</li>
-                                        <li>Tủ lạnh</li>
-                                        <li>Ấm đun nước điện</li>
+                                       {amenities.map((amenity) => (
+                                            <li>
+                                                {amenity.name}
+                                            </li>
+                                       ))}
                                     </ul>
                                 </div>
-
-                                <p>
-                                    <strong>Hút thuốc:</strong> Không hút thuốc
-                                </p>
                             </div>
                         </div>
                     </Dialog.Content>

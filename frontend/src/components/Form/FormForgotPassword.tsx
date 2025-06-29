@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { forgotPasswordSchema, ForgotPasswordSchema } from '../../guards/forgotPasswordSchemas';
+import { forgotPasswordSchema, ForgotPasswordSchema } from '../../schemas/forgotPasswordSchemas';
 import { useNavigate } from "react-router-dom";
 import { PATH } from "../../constants/Paths"
 

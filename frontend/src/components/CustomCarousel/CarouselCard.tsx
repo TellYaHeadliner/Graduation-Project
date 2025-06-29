@@ -1,28 +1,28 @@
 import AliceCarousel, { Link } from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
+import slug from "slug"
 
 import CardItem from "../Card/CardItem";
-import { CardItemType } from "../../utils/CardListStaticData";
-
+import { Hotel } from '../../types/ListHotelsTypes';
 interface CardListProps {
-  cardList: CardItemType[];
+  cardList: Hotel[] | undefined;
   title: string;
 }
 
-
 export default function CarouselCard({ cardList, title }: CardListProps) {
 
-  const items = cardList.map((card) => (
-    <div key={card.key}>
-      <Link href="">
+  const items = cardList?.map((card) => (
+    <div key={card.name}>
+      <Link href={`/${slug(card.name)}/${card.id}`}>
         <CardItem
-          title={card.title}
+          avatar={card.avatar}
+          name={card.name}
           address={card.address}
-          star={card.star}
-          price={card.price}
-          reviewCount={card.reviewCount}
-          discountPrice={card.discountPrice}
-        />
+          star_rating={card.star_rating}
+          reputation_score={card.reputation_score} 
+          price={card.room_types[0].variants[0].base_price} 
+          discountPrice={card.room_types[0].variants[0].discount_price}        
+          />
       </Link>
     </div>
   ));

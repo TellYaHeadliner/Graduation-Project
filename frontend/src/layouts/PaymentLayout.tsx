@@ -7,17 +7,16 @@ interface Props {
     children: ReactNode
 }
 
-export default function PaymentLayout(props: Props){
+export default function PaymentLayout(props: Props) {
 
     const { children } = props
 
     return (
         <Theme>
-            <HeaderPayment/>
+            <HeaderPayment />
             <main className="flex-1">
                 {children}
             </main>
         </Theme>
-
     )
 } 

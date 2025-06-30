@@ -6,11 +6,12 @@ export const PATH = {
     QUENMATKHAU: "/quen-mat-khau",
     MAILGUI: "/mail-gui",
     KETQUATIMKIEM: "/search",
-    CHITIETKHACHSAN: "/chi-tiet-khach-san",
-    THANHTOAN: "/thanh-toan",
+    CHITIETKHACHSAN: "/:slug/:id",
+    THANHTOAN: "/thanh-toan/:id",
     THONGTINTHANHTOAN: "/xem-lai-thong-tin",
     THONGTINGUOIDUNG: "/thong-tin-nguoi-dung",
     LICHSUBOOKING: "/lich-su-booking",
     KHACHSANYEUTHICH: "/khach-san-yeu-thich",
-    DANGKITAIKHOANKHACHSAN: "/dang-ki-tai-khoan-khach-san"
+    DANGKITAIKHOANKHACHSAN: "/dang-ki-tai-khoan-khach-san",
+    THONGTINBOOKING: "/chi-tiet-booking/:id"
 }

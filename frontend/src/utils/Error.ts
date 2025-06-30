@@ -11,12 +11,17 @@ export class ErrorUtils{
 
         if (isAxiosError(error) && error.status === 400){
             toast.error(error.message);
-            return;;
+            return;
         }
 
         const message = error.message;
         if (message) {
             toast.error(message);
+            return;
+        }
+
+        if (error){
+            toast.error(error);
             return;
         }
     }

@@ -19,5 +19,5 @@ export default function MainLayout(props: Props) {
             </main>
             <Footer />
         </Theme>
-    )     
+    )
 }

@@ -1,70 +1,102 @@
-import { CombosType } from '../../utils/HotelServicesStaticData';
-import { Radio } from '@radix-ui/themes';
+/* eslint-disable @typescript-eslint/consistent-indexed-object-style */
 import { Currency } from "../../utils/Currency";
-import { useState } from 'react';
+import { Combo } from '../../types/DetailHotelTypes';
+import { useState } from "react";
 
 interface TableComboProps {
-    datas: CombosType[];
+  combos: Combo[];
+  onChange: (data: { combo_id: number; quantity: number }[]) => void;
 }
 
-export default function TableCombos({ datas }: TableComboProps) {
+export default function TableCombos({ combos, onChange }: TableComboProps) {
+  const [selectedCombos, setSelectedCombos] = useState<({ [key: number]: number })> ({});
 
-    const [selectedCombo, setSelectedCombo] = useState<CombosType | null>(null);
+  const handleQuantityChange = (comboId: number, quantity: number) => {
+    const updated = { ...selectedCombos, [comboId]: quantity};
+    setSelectedCombos(updated);
+    
+    const formatted = Object.entries(updated)
+    .filter(([_, qty]) => qty > 0)
+    .map(([id, qty]) => {
+      const combo = combos.find(c => c.id === Number(id));
+      return {
+        combo_id: Number(id),
+        quantity: qty,
+        name: combo?.name || ""
+      };
+    });
 
-    return (
-        <div className="overflow-x-auto">
-        <table className="w-full table-auto border-collapse border border-black">
-          <thead>
-            <tr className="bg-blue-700 text-white">
-              <th className="text-center px-4 py-2 border border-black w-12"></th>
-              <th className="text-left px-4 py-2 border border-black w-1/3">Tên combo</th>
-              <th className="text-left px-4 py-2 border border-black w-1/2">Dịch vụ</th>
-              <th className="text-right px-4 py-2 border border-black w-1/6">Giá</th>
+    localStorage.setItem('infoSelectedCombos', JSON.stringify(formatted));
+    onChange(formatted)
+  }
+
+  const getQuantity = () => {
+    const stored = localStorage.getItem('infoSelectedCombos')
+    if (stored){
+      const quantities = JSON.parse(localStorage.getItem('infoSelectedCombos') || '[]')
+            .map((item: { combo_id: number; quantity: number }) => item.quantity);
+      return quantities;
+    }
+    return 0;
+  }
+
+
+
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full table-auto border-collapse border border-black">
+        <thead>
+          <tr className="bg-blue-700 text-white">
+            <th className="text-center px-6 py-2 border border-black w-20 ">Số lượng</th>
+            <th className="text-left px-4 py-2 border border-black w-1/3">Tên combo</th>
+            <th className="text-left px-4 py-2 border border-black w-1/2">Dịch vụ</th>
+            <th className="text-right px-4 py-2 border border-black w-1/6">Giá</th>
+          </tr>
+        </thead>
+        <tbody>
+          {combos?.map((data, index) => (
+            <tr key={index} className="hover:bg-gray-100 border border-black">
+              <td className="px-4 py-3 border border-black">
+                <div className="flex items-start justify-center h-full">
+                  {data.services.map((service) => {  
+                    return (
+                      <input
+                        key={`input-${data.id}-${service.id}`}
+                        type="number"
+                        min={0}
+                        max={data.services[0].quantity ?? 0}
+                        value={getQuantity()}
+                        onChange={(e) => {
+                          handleQuantityChange(data.id, Number(e.target.value)
+                        )}}
+                      />
+                    );
+                  })}
+                </div>
+              </td>
+              <td className="px-4 border border-black">
+                <div className="font-semibold text-base">{data.name}</div>
+                <div className="text-sm text-gray-600">{data.short_description}</div>
+              </td>
+              <td className="px-4 border border-black">
+                <ul className="list-disc list-inside space-y-1">
+                  {data.services.map((service) => (
+                    <li key={`service-${data.id}-${service.id}`}>{service.name}</li>
+                  ))}
+                </ul>
+              </td>
+              <td className="px-4 py-3 border border-black text-right">
+                <div className="text-sm text-gray-500 line-through">
+                  {Currency.formatVND(data.original_price)}
+                </div>
+                <div className="text-red-600 font-bold text-base">
+                  {Currency.formatVND(data.combo_price)}
+                </div>
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {datas.map((data, index) => (
-              <tr key={index} className="hover:bg-gray-100 border border-black">
-                <td>
-                  <div className="flex items-start justify-center h-full">
-                    <input
-                      type="radio"
-                      id={data.tenCombo}
-                      value={data.tenCombo}
-                      checked={selectedCombo?.tenCombo === data.tenCombo}
-                      onClick={() => setSelectedCombo(data)}
-                    />
-                  </div>
-                  
-                </td>
-                <td className="px-4 py-3 border border-black align-top">
-                  <div className="font-semibold text-base">{data.tenCombo}</div>
-                  <div className="text-sm text-gray-600">{data.moTa}</div>
-                </td>
-                <td className="px-4 py-3 border border-black align-top">
-                  <ul className="list-disc list-inside space-y-1">
-                    {data.dichVu.map((dataDichVu, i) => (
-                      <li key={i}>
-                        {dataDichVu.ten} / {dataDichVu.soLuong}
-                      </li>
-                    ))}
-                  </ul>
-                </td>
-                <td className="px-4 py-3 border border-black text-right align-top">
-                  <div className="text-sm text-gray-500 line-through">
-                    {Currency.formatVND(data.giaGoc)}
-                  </div>
-                  <div className="text-red-600 font-bold text-base">
-                    {Currency.formatVND(data.giaCombo)}
-                  </div>
-                  <div className="text-yellow-300 font-bold text-xl">
-                    {data.uuDai}%
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    )
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
 }

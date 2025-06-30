@@ -4,8 +4,8 @@ export const registerSchema = z
   .object({
     fullname: z.string().min(1, "Vui lòng nhập đầy đủ họ và tên"),
     email: z.string().email("Email không hợp lệ").min(1, "Vui lòng nhập email"),
-    password: z.string().min(1, "Vui lòng nhập mật khẩu"),
-    confirmPassword: z.string().min(1, "Vui lòng nhập mật khẩu xác nhận"),
+    password: z.string().min(6, "Vui lòng nhập mật khẩu ít nhất 6 kí tự"),
+    confirmPassword: z.string().min(6, "Vui lòng nhập xác nhận mật khẩu ít nhất 6 kí tự"),
     phone: z
       .string()
       .max(10, "Số điện thoại không vượt quá 10 số")

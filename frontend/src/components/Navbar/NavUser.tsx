@@ -9,7 +9,8 @@ import { useEffect, useState } from "react";
   
 import AvatarCustom from "../Avatar/AvatarCustom"
 import { PATH } from "../../constants/Paths";
-import authApi from "../../api/Auth.api";
+import { useLogOut } from "../../react-query/useLogOut";
+import DialogLoading from "../Dialog/DialogLoading";
 
 interface NavUserProps{
     usernameProp: string;
@@ -18,13 +19,7 @@ interface NavUserProps{
 export default function NavUser({ usernameProp }: NavUserProps){
 
     const [username, setUserName] = useState<string>("");
-
-    const logOut = async () => {
-      const logOutResponse = await authApi.logOut();
-      if (logOutResponse){
-        window.location.reload();
-      }
-    }
+    const logOut = useLogOut();
 
     useEffect(() => {
         if (typeof usernameProp === 'string'){
@@ -58,11 +53,16 @@ export default function NavUser({ usernameProp }: NavUserProps){
               Khách sạn yêu thích
             </a>
           </MenubarItem>
-          <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100" onClick={logOut}>
+          <MenubarItem className="cursor-pointer px-3 py-2 rounded-md text-sm text-gray-700 hover:bg-gray-100" onClick={() => logOut.mutate()} disabled={logOut.isPending}>
             Đăng xuất
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
+      {
+        logOut.isPending && (
+          <DialogLoading isOpen={true} />
+        )
+      }
     </Menubar>
     )
 }

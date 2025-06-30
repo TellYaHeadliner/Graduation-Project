@@ -1,118 +1,144 @@
 import MainLayout from "../layouts/MainLayout";
 import locationPin from "../assets/location-pin.svg"
-import CarouselComment from "../components/CustomCarousel/CarouselComment";
-import { HeartFilledIcon } from "@radix-ui/react-icons";
+// import CarouselComment from "../components/CustomCarousel/CarouselComment";
 import TableRoom from "../components/Table/TableRoom";
-import { tableRoomData } from "../utils/TableRoomStaticData";
-import FindHotel from "../components/FindHotel/FindHotel";
 import DataListRule from "../components/DataList/DataListRule";
-import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
-import CarouselCard from "../components/CustomCarousel/CarouselCard";
-import { CardListStaticData } from "../utils/CardListStaticData";
-import catFAQ from "../assets/cat_faq.png"
 import ChatButton from "../components/Chat/ChatButton";
-import DiscountBar from "../components/Discount/DiscountBar";
 import Breadcrumb from "../components/Breadcrumb/Breadcrumb";
-
-const breadcrumbItems = [
-    { label: "Trang chủ", href: "/" },
-    { label: "Khách sạn", href: "/hotels" },
-    { label: "Khách sạn ABC", active: true },
-  ];
+import DialogHotelServices from "../components/Dialog/DialogHotelServices";
+import { useParams } from "react-router-dom";
+import { useHotelDetailQuery } from "../react-query/useHotelDetailQuery";
+import useTitle from "../hooks/useTitle";
+import { CheckIcon } from "@radix-ui/react-icons";
+import FindRoom from "../components/FindHotel/FindRoom";
+import { useFindRoomContext } from "../context/FindRoomContext";
+import { useHotelRoomTypesQuery } from '../react-query/useHotelRoomTypesQuery';
+import { useState } from "react";
+import { BookingDetail } from "../types/PaymentTypes";
+import { Skeleton } from "@radix-ui/themes";
 
 export default function DetailHotel() {
 
+    const { id } = useParams();
+    const { state } =  useFindRoomContext();
+    const getDetailHotel = useHotelDetailQuery(Number(id));
+    const title = getDetailHotel.data?.data?.hotel?.name
+    useTitle(title ?? "Đang tải")
+
+    const breadcrumbItems = [
+        { label: "Trang chủ", href: "/" },
+        { label: "Khách sạn", href: "/hotels" },
+        { label: getDetailHotel.data?.data.hotel.name ?? "Đang tải", active: true },
+    ];
+
+    const galleyString = getDetailHotel.data?.data.hotel.gallery;
+    const listGalley = galleyString?.split(",") ?? [];
+    const [isSearchRoomType, setIsSearchRoomType] = useState(false);
+    const getRoomType = useHotelRoomTypesQuery(Number(id), state.dateRange[0] , state.dateRange[1], state.adults, state.children, state.rooms, isSearchRoomType)
+
+    const [bookingDetails, setBookingDetails] = useState<BookingDetail[]>([]);
+
     return (
         <MainLayout>
-            <div className="flex lg:mx-26 flex-col text-black">
-                <div className="my-4">
+            <div className="flex lg:mx-26 2xl:mx-47 flex-col text-black">
+                <div className="my-3">
                     <Breadcrumb items={breadcrumbItems} />
                 </div>
                 <h1 className="text-3xl font-bold">
-                    Khách sạn Bình Minh
+                    {getDetailHotel.isPending ? <Skeleton width="1090px" height="36px" /> : getDetailHotel.data?.data.hotel.name}
                 </h1>
-                <div className="text-thin text-md flex items-center gap-1">
+
+                <div className="text-thin text-md flex items-center gap-1 my-2">
                     <img src={locationPin} alt={locationPin} className="w-6 h-6 inline" />
-                    451/23 Đường 14, phường 2, TP. Bà Rịa - Vũng Tàu
+                    {
+                        getDetailHotel.isPending && (
+                            <Skeleton width="3000px" />
+                        )
+                    }
+                    {getDetailHotel.data?.data.hotel.address}
                 </div>
-                <div className="flex gap-4">
-                    <div className="w-2/3 h-64 bg-gray-300">
-                        
+                {/* <div className="flex gap-4">
+                    <img src={`${import.meta.env.VITE_URL}${listGalley[0]}`} alt="" className="w-2/3 h- bg-gray-300" />
+                    <div className="grid grid-cols-1 gap-4 w-1/3">
+                        <img src={listGalley[1]} alt="" className="h-30 rounded bg-gray-300" />
+                        <img src={listGalley[2]} alt="" className="h-30 rounded bg-gray-300" />
                     </div>
-                    <div className="grid grid-cols-2 gap-4 w-1/3">
-                        <div className="h-30 bg-gray-300 rounded"></div>
-                        <div className="h-30 bg-gray-300 rounded"></div>
-                        <div className="h-30 bg-gray-300 rounded"></div>
-                        <div className="h-30 bg-gray-300 rounded"></div>
-                    </div>
-                </div>
+                </div> */}
                 <div className="flex flex-row mt-4">
                     <div className="lg:w-1/2 w-full mr-4">
+
                         <h3 className="text-lg font-semibold">Về khách sạn chúng tôi:</h3>
-                        <p className="text-lg text-justify">
-                            On the other hand, we denounce with righteous indignation and dislike men who are so beguiled and demoralized by the charms of pleasure of the moment, so blinded by desire, that they cannot foresee the pain and trouble that are bound to ensue; and equal blame belongs to those who fail in their duty through weakness of will, which is the same as saying through shrinking from toil and pain. These cases are perfectly simple and easy to distinguish. In a free hour, when our power of choice is untrammelled and when nothing prevents our being able to do what we like best, every pleasure is to be welcomed and every pain avoided. But in certain circumstances and owing to the claims of duty or the obligations of business it will frequently occur that pleasures have to be repudiated and annoyances accepted. The wise man therefore always holds in these matters to this principle of selection: he rejects pleasures to secure other greater pleasures, or else he endures pains to avoid worse pains
-                        </p>
+                        { getDetailHotel.isPending ? (
+                            <Skeleton height="100px"/>
+                        ): (
+                            <div className="text-lg text-justify" dangerouslySetInnerHTML={{ __html: getDetailHotel.data?.data.hotel.description ?? "" }} />
+                        )}
                         <h2 className="text-lg font-semibold mt-2">
                             Các tiện nghi chúng tôi có
                         </h2>
                         <div>
                             <ul className="flex flex-row flex-wrap gap-4 mt-2">
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Free WiFi
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Buffet
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Massage
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Hồ bơi vô cực
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Phòng xông hơi
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Massage
-                                </li>
-                                <li className="flex items-center gap-2">
-                                    <HeartFilledIcon />
-                                    Massage
-                                </li>
+                                {getDetailHotel.data?.data?.hotel.amenities.map((amenity) => (
+                                    <li key={amenity.name} className="flex items-center gap-1">
+                                        <CheckIcon className="text-green-300 font-semibold w-6 h-6" />
+                                        {amenity.name}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                        <h2 className="text-lg font-semibold mt-2">
+                            Các dịch vụ chúng tôi có
+                        </h2>
+                        {getDetailHotel.isPending && (
+                            <Skeleton height="500px"/>
+                        )}
+                        <div>
+                            <ul className="flex flex-row flex-wrap gap-4 mt-2">
+                                {getDetailHotel.data?.data?.hotel?.services.map((service) => (
+                                    <li key={service.id} className="flex items-center gap-1">
+                                        <CheckIcon className="text-green-300 font-semibold w-6 h-6" />
+                                        {service.name}
+                                    </li>
+                                ))}
                             </ul>
                         </div>
 
                     </div>
                     <div className="w-1/2 space-y-4 flex flex-wrap justify-start">
                         <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15675.627299399666!2d106.68599318715822!3d10.818442200000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752893ce3dd19b%3A0x5bbb4a49c123be78!2zS0jDgUNIIFPhuqBOIELDjE5IIE1JTkg!5e0!3m2!1svi!2s!4v1749129751015!5m2!1svi!2s"
-                            width={700}
-                            height={355}
+                            src={`https://www.google.com/maps?q=${encodeURIComponent(getDetailHotel.data?.data?.hotel?.address ?? "")}&output=embed`}
+                            width={800}
+                            height={400}
                             style={{ border: 0 }}
                             loading="lazy"
+                            allowFullScreen
                             referrerPolicy="no-referrer-when-downgrade"
                         />
-                        <h3 className="text-lg font-bold">
+                        {/* <h3 className="text-lg font-bold">
                             Đánh giá về khách sạn chúng tôi
                         </h3>
-                        <CarouselComment />
-                        <DiscountBar />
+                        <CarouselComment /> */}
                     </div>
                 </div>
                 <div className="flex flex-col mt-4">
                     <h2 className="text-xl font-semibold">
                         Lựa chọn loại phòng
                     </h2>
+
                     <div className="mb-4">
-                        <FindHotel />
+                        <FindRoom onSearch={() => setIsSearchRoomType(true)}/>
                     </div>
-                    <TableRoom data={tableRoomData} />
+                    <div>
+                        <TableRoom datas={getRoomType.data?.data.list ?? []} onChange={setBookingDetails}/>
+                    </div>
+
+                    <div className="flex justify-end py-3 items-center">
+                        <DialogHotelServices
+                            combos={getDetailHotel.data?.data.hotel.combos ?? []}
+                            services={getDetailHotel.data?.data.hotel.services ?? []}
+                            hasSelectedRoom={bookingDetails.length > 0}
+                        />
+                    </div>
                 </div>
                 <div>
                     <h2 className="text-xl font-bold mt-2">
@@ -122,10 +148,10 @@ export default function DetailHotel() {
                         Bạn nên biết khi sử dụng khách sạn của chúng tôi
                     </p>
                     <div className="mt-2">
-                        <DataListRule />
+                        <DataListRule hotelRule={getDetailHotel.data?.data.hotel.rules} />
                     </div>
                 </div>
-                <div>
+                {/* <div>
                     <h2 className="text-xl font-bold mt-2">
                         FAQ (Câu hỏi thường xuyên về khách sạn)
                     </h2>
@@ -138,11 +164,11 @@ export default function DetailHotel() {
                             <AccordionFAQHotel />
                         </div>
                     </div>
-                </div>
+                </div> */}
             </div>
-            <div className="mt-2">
+            {/* <div className="mt-2">
                 <CarouselCard cardList={CardListStaticData} title="Những khách sạn bạn có thể quan tâm" />
-            </div>
+            </div> */}
             <ChatButton />
         </MainLayout>
     )

@@ -1,11 +1,9 @@
 import { Button, DataList } from "@radix-ui/themes";
 import { Currency } from "../../utils/Currency";
-import { hotelServices } from "../../utils/HotelServicesStaticData";
+
 
 export default function DataListInfoPayment() {
-    const temp = hotelServices.slice(0, 12);
 
-    const total = 1000000 + 2000000 + temp.reduce((sum, item) => sum + item.price, 0);
     return (
         <div className="rounded-lg bg-gray-100 border p-4">
             <div className="flex items-start">
@@ -70,13 +68,6 @@ export default function DataListInfoPayment() {
                                 <td className="p-2">1 phòng</td>
                                 <td className="p-2">{Currency.formatVND(2000000)}</td>
                             </tr>
-                            {temp.map((data, index) => (
-                                <tr key={index} className="border-t">
-                                    <td className="p-2">{data.name}</td>
-                                    <td className="p-2">1 dịch vụ</td>
-                                    <td className="p-2">{Currency.formatVND(data.price)}</td>
-                                </tr>
-                            ))}
                         </tbody>
                     </table>
                     </div>
@@ -88,7 +79,7 @@ export default function DataListInfoPayment() {
             <div className="text-right">
                 <h2 className="text-lg font-semibold">Tổng tiền:</h2>
                 <div className="text-2xl font-bold text-blue-700">
-                    {Currency.formatVND(total)}
+                    
                 </div>
                 <Button>
                     Thanh toán

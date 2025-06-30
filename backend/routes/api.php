@@ -29,7 +29,6 @@ Route::middleware('checkJWT')->group(function () {
             Route::post('/register-hotel', 'registerHotel')->name('registerHotel');
             Route::post('/favorites', 'favorites')->name('favorites');
             Route::get('/list-favorites', 'list_favorites')->name('list_favorites');
-            Route::get('/search/{check_in?}/{check_out?}/{address?}/{guest?}/{children?}/{quantity?}', 'search_hotel')->name('search_hotel');
         });
     Route::controller(App\Http\Controllers\API\Transaction\TransactionController::class)
         ->prefix('/transactions')
@@ -74,11 +73,19 @@ Route::controller(App\Http\Controllers\API\Hotel\HotelController::class)
     ->group(function () {
         Route::get('/hotel-seasons/{name?}', 'listHotelSeasons')->name('listHotelSeasons');
         Route::get('/detail-hotel/{id?}', 'detailHotel')->name('detailHotel');
+        Route::post('/search', 'search_hotel')->name('search_hotel');
+    });
+
+Route::controller(App\Http\Controllers\API\Amenity\AmenityController::class)
+    ->prefix('/amenities')
+    ->as('amenity.')
+    ->group(function () {
+        Route::get('/', 'listAmenity')->name('listAmenity');
     });
 
 Route::controller(App\Http\Controllers\API\RoomType\RoomTypeController::class)
     ->prefix('/room-types')
     ->as('room_type.')
     ->group(function () {
-        Route::get('/{hotel_id?}/{check_in?}/{check_out?}/{guest?}/{children?}/{room_quantity?}', 'getRoomTypeHotel')->name('getRoomTypeHotel');
+        Route::post('/{hotel_id?}/{check_in?}/{check_out?}/{guest?}/{children?}/{room_quantity?}', 'getRoomTypeHotel')->name('getRoomTypeHotel');
     });

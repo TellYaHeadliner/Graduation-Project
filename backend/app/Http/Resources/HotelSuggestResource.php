@@ -33,6 +33,7 @@ class HotelSuggestResource extends JsonResource
 
         $is_chinh_sach_huy = $bestVariant->attributes->where('type', 'free_before and fee_after')->isNotEmpty();
         $guest = $bestVariant->attributes->firstWhere('type', 'guest');
+        $children = $bestVariant->attributes->firstWhere('type', 'children');
 
 
         return [
@@ -49,6 +50,7 @@ class HotelSuggestResource extends JsonResource
                 'bed_type'      => $bestVariant->roomType->bedType->name,
                 'bed_quantity'      => $bestVariant->roomType->bed_quantity,
                 'guest'      => $guest->pivot->attribute_value ?? null,
+                'children'      => $children->pivot->attribute_value ?? null,
                 'cancellation'  => $is_chinh_sach_huy ? 'Miễn phí hủy' : null,
             ],
         ];

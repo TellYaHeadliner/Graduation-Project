@@ -156,20 +156,16 @@ class HotelController extends Controller
 
         $hotels = Hotel::query()
 
-            // Lọc theo địa chỉ
             ->when(!empty($address), function ($q) use ($address) {
                 $q->whereRaw('LOWER(address) LIKE ?', ['%' . mb_strtolower($address) . '%']);
             })
 
-
-            // Lọc theo tiện nghi
             ->when(!empty($amenities), function ($q) use ($amenities) {
                 foreach ($amenities as $amenityId) {
                     $q->whereHas('amenities', fn($q2) => $q2->where('amenities.id', $amenityId));
                 }
             })
 
-            // Lọc những khách sạn có ít nhất 1 roomType còn đủ phòng và variant phù hợp
             ->whereHas('roomTypes', function ($roomTypeQ) use ($checkIn, $checkOut, $quantity, $guest, $children, $minPrice, $maxPrice) {
 
                 // Đếm số phòng còn trống

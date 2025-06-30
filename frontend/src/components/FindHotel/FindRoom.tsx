@@ -57,11 +57,23 @@ export default function FindRoom({ onSearch }: FindRoomProps) {
                         startDate={startDate}
                         endDate={endDate}
                         onChange={([start, end]: [Date | null, Date | null]) => {
+                            
                             const formatDate = (date: Date | null) =>
-                                date ? date.toISOString().split('T')[0] : null;
+                                date ? date.toLocaleDateString("sv-SE").split('T')[0] : null;
 
                             const formattedStart = formatDate(start);
                             const formattedEnd = formatDate(end);
+
+                            let numberOfNights = 0;
+
+                            if (start && end) {
+                                const startDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
+                                const endDate = new Date(end.getFullYear(), end.getMonth(), end.getDate());
+                                const diffTime = endDate.getTime() - startDate.getTime();
+                                numberOfNights = diffTime / (1000 * 60 * 60 * 24); 
+                            }
+
+                            localStorage.setItem('numberOfNights', JSON.stringify(numberOfNights));
 
                             dispatch({
                                 type: 'SET_DATE_RANGE',

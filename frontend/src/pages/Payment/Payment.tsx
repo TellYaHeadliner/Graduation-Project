@@ -1,5 +1,5 @@
-
-import { data, useParams } from "react-router-dom";
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import { useParams } from "react-router-dom";
 import CardHotel from "../../components/Card/CardHotel";
 import DataListRoomPayment from "../../components/DataList/DataListRoomPayment";
 import DataListServicesPayment from "../../components/DataList/DataListServicesPayment";
@@ -10,9 +10,11 @@ import { Currency } from "../../utils/Currency";
 import { useForm } from "react-hook-form";
 import { PaymentSchema, paymentSchemas } from "../../schemas/paymentSchemas";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { BookingPayload } from "../../types/TransactionTypes";
+import { BookingDetailPayload, BookingPayload, BookingServicePayload, ComboPayload } from "../../types/TransactionTypes";
 import { usePaymentMutation } from "../../react-query/usePaymentMutation";
-;
+import { ErrorUtils } from "../../utils/Error";
+import DialogLoading from "../../components/Dialog/DialogLoading";
+
 
 
 export default function Payment() {
@@ -21,8 +23,6 @@ export default function Payment() {
     useTitle(title);
 
     const getHotelDetail = useHotelDetailQuery(Number(id)).data?.data.hotel
-    const getCheckInTime = useHotelDetailQuery(Number(id)).data?.data.hotel.rules.check_in_time;
-    const getCheckOutTime = useHotelDetailQuery(Number(id)).data?.data.hotel.rules.check_out_time;
     const getInfoSelectedRoom = JSON.parse(localStorage.getItem('infoSelectedRoom') ?? '[]');
     const getInfoSelectedCombos = JSON.parse(localStorage.getItem('infoSelectedCombos') ?? '[]');
     const getInfoSelectedService = JSON.parse(localStorage.getItem('infoSelectedService') ?? '[]');
@@ -38,13 +38,13 @@ export default function Payment() {
     });
 
     const mutation = usePaymentMutation();
+    type WithName<T> = T & { name: string };
     
     const onSubmit = (data: PaymentSchema) => {
-        const getInfoSelectedRoomWithoutName = getInfoSelectedRoom.map(({ name, ...rest }) => rest);
-        const getInfoSelectedComboWithoutName = getInfoSelectedCombos.map(({ name, ...rest }) => rest);
-        const getInfoSelectedServiceWithoutName = getInfoSelectedService.map(({ name, ...rest }) => rest);
-        
-
+        const getInfoSelectedRoomWithoutName = (getInfoSelectedRoom as WithName<BookingDetailPayload>[]).map(({ name, ...rest }) => rest);
+        const getInfoSelectedComboWithoutName = (getInfoSelectedCombos as WithName<ComboPayload>[]).map(({ name, ...rest }) => rest);
+        const getInfoSelectedServiceWithoutName = (getInfoSelectedService as WithName<BookingServicePayload>[]).map(({ name, ...rest }) => rest);
+        const errorHandler = new ErrorUtils();
 
         const payloadData: BookingPayload = {
             hotel_id: Number(id),
@@ -55,10 +55,22 @@ export default function Payment() {
             booking_combos: getInfoSelectedComboWithoutName,
             booking_services: getInfoSelectedServiceWithoutName
         }
+        mutation.mutate(payloadData, {
+            onSuccess: (data) => {
+                const message = data?.message;
+                if (message == "Không thể đặt booking mới vì bạn đã có một booking trong thời gian này"){
+                    errorHandler.handleError(message)
+                }
+                const url = data?.url;
 
-        console.log(payloadData);
-        mutation.mutate(payloadData);
-        console.log(mutation.error);
+                if (url){
+                    window.open(url, "_self");
+                }
+            },
+            onError: (error) => {
+                errorHandler.handleError(error);
+            }
+        })
     }
 
 
@@ -115,6 +127,11 @@ export default function Payment() {
                         </div>
                     </div>
                 </div>
+                {
+                    mutation.isPending && (
+                        <DialogLoading isOpen={true} />
+                    )
+                }
             </div>
         </PaymentLayout>
     )

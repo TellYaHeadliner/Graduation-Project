@@ -16,7 +16,7 @@ interface TableRoomProps {
 }
 
 export default function TableRoom({ datas, onChange }: TableRoomProps) {
-
+    const numberOfNights = JSON.parse(localStorage.getItem('numberOfNights') || '0');
     const [quantities, setQuantities] = useState<Record<string, number>>({});
     const handleQuantityChange = (roomTypeId: number, variantId: number, quantity: number) => {
         const key = `${roomTypeId}-${variantId}`;
@@ -40,10 +40,10 @@ export default function TableRoom({ datas, onChange }: TableRoomProps) {
 
     function seasonsPrice(basePrice: number, discounType = 0, discountValue = 0): number {
         if (discounType === 0) {
-            return basePrice - discountValue;
+            return (basePrice - discountValue) ;
         }
         if (discounType === 1) {
-            return basePrice - (basePrice * (discountValue / 100));
+            return basePrice - (basePrice * (discountValue / 100)) ;
         }
         return basePrice;
     }
@@ -70,7 +70,7 @@ export default function TableRoom({ datas, onChange }: TableRoomProps) {
                 price = seasonsPrice(price, firstSeason.discount_type, firstSeason.discount_value);
             }
 
-            total += price * quantity;
+            total += price * quantity * Number(numberOfNights);
         });
 
         localStorage.setItem('totalRoom', JSON.stringify(total))

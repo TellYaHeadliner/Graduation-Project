@@ -1,24 +1,26 @@
 import { useState } from "react";
 import { toast } from "react-toastify"
+import { useFavorite } from "../react-query/useFavorite";
 
 interface UseAuthCheckInterface {
     isDialogOpen: boolean;
     openDialog: () => void;
     closeDialog: () => void;
     checkAuth: () => void;
+    id: number
 }
 
-export function useAuthCheck(): UseAuthCheckInterface {
+export function useAuthCheck(id : number): UseAuthCheckInterface {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const openDialog = () => setIsDialogOpen(true);
     const closeDialog = () => setIsDialogOpen(false);
+    const favorite = useFavorite();
+
 
     const checkAuth = () => {
-        // Có thể đổi thành session thành local mỗi lần check tính năng
-        const token = sessionStorage.getItem("token");
-
-        if (!token){
+        favorite.mutate(id)
+        if (favorite.isError) {
             openDialog();
         }
         else {
@@ -27,10 +29,11 @@ export function useAuthCheck(): UseAuthCheckInterface {
     };
 
     return {
-    openDialog,
-    closeDialog,
-    checkAuth,
-    isDialogOpen,
-}
+        openDialog,
+        closeDialog,
+        checkAuth,
+        isDialogOpen,
+        id
+    }
 
 }

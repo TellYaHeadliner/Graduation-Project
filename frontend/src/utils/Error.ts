@@ -19,5 +19,10 @@ export class ErrorUtils{
             toast.error(message);
             return;
         }
+
+        if (error){
+            toast.error(error);
+            return;
+        }
     }
 }

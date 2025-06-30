@@ -17,7 +17,6 @@ export default function Home() {
     useTitle("Roomix");
 
     const getHotelSeasonResponse = useHotelSeasonsQuery();
-    console.log(getHotelSeasonResponse.data?.data)
 
     useEffect(() => {
         if (getHotelSeasonResponse.isError) {

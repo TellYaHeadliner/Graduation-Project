@@ -59,7 +59,7 @@ export default function TableServices({ data, onChange }: TableServicesProps) {
                 <input
                   type="number"
                   min={0}
-                  value={getQuanitity(service.id)}
+                  value={getQuanitity(service.id) ?? 0}
                   className="w-16 text-center px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500"
                   onChange={(e) => handleQuantityChange(service.id, Number(e.target.value))}
                 />

@@ -64,7 +64,7 @@ export default function TableCombos({ combos, onChange }: TableComboProps) {
                         key={`input-${data.id}-${service.id}`}
                         type="number"
                         min={0}
-                        max={data.services[0].quantity}
+                        max={data.services[0].quantity ?? 0}
                         value={getQuantity()}
                         onChange={(e) => {
                           handleQuantityChange(data.id, Number(e.target.value)

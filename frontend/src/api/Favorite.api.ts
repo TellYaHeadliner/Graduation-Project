@@ -1,8 +1,6 @@
 import { MessageResponse, SCFResponse } from "../types/FavoritesTypes";
 import api from "./axiosConfig"
 
-
-
 const favoriteApi = {
     toggleFavorite: (hotel_id: number): Promise<MessageResponse> => {
         return api.post('/hotels/favorites', null,{

@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { toast } from "react-toastify"
 import { useFavorite } from "../react-query/useFavorite";
 
 interface UseAuthCheckInterface {
@@ -10,7 +9,7 @@ interface UseAuthCheckInterface {
     id: number
 }
 
-export function useAuthCheck(id : number): UseAuthCheckInterface {
+export function useAuthCheck(id : number): UseAuthCheckInterface & { isPending: boolean} {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
 
     const openDialog = () => setIsDialogOpen(true);
@@ -19,12 +18,14 @@ export function useAuthCheck(id : number): UseAuthCheckInterface {
 
 
     const checkAuth = () => {
+        if (!id){
+            console.warn("Không có id, không thể gọi mutate");
+            return;
+        }
+        
         favorite.mutate(id)
         if (favorite.isError) {
             openDialog();
-        }
-        else {
-            toast.success("Khách sạn của bạn đã được lưu vào danh sách yêu thích")
         }
     };
 
@@ -33,7 +34,8 @@ export function useAuthCheck(id : number): UseAuthCheckInterface {
         closeDialog,
         checkAuth,
         isDialogOpen,
-        id
+        id,
+        isPending: favorite.isPending,
     }
 
 }

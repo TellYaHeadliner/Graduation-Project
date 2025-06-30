@@ -23,6 +23,8 @@ interface CardItemProps {
   reputation_score: number;
   discountPrice: number | null;
   avatar: string;
+  slug: string;
+  is_favorite: boolean;
 }
 
 interface AlertDialogCompProps {
@@ -74,12 +76,16 @@ const CardItem: React.FC<CardItemProps> = ({
   price,
   reputation_score,
   discountPrice,
-  avatar
+  avatar,
+  slug,
+  is_favorite
 }) => {
-  const { isDialogOpen, closeDialog, checkAuth } = useAuthCheck(id);
+  const { isDialogOpen, closeDialog, checkAuth, isPending } = useAuthCheck(id);
+  const navigate = useNavigate();
+
 
   return (
-    <div className="w-[270px] h-[330px] rounded-xl shadow-md overflow-hidden relative hover:bg-accent hover:shadow-2xl card holographic-card">
+    <div onClick={() => navigate(`/${slug}/${id}`)} className="w-[270px] h-[330px] rounded-xl shadow-md overflow-hidden relative hover:bg-accent hover:shadow-2xl card holographic-card">
       {/* Hình ảnh */}
       <div className="relative">
         <img
@@ -87,15 +93,16 @@ const CardItem: React.FC<CardItemProps> = ({
           className="w-full h-40 object-cover"
         />
         <button
-          className="absolute top-2 right-2 bg-white hover:bg-accent text-red-500 p-1 rounded-full shadow z-10"
           onClick={(e) => {
             e.stopPropagation();
             e.preventDefault();
             checkAuth();
           }}
+          disabled={isPending}
           type="button"
+          className="absolute top-2 right-2 bg-white hover:bg-accent p-1 rounded-full shadow z-10"
         >
-          <HeartFilledIcon className="w-5 h-5" />
+          <HeartFilledIcon className={`w-5 h-5 transition-colors duration-300 ${is_favorite ? "text-red-500" : "text-gray-400"}`} />
         </button>
       </div>
 

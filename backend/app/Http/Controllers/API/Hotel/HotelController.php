@@ -274,11 +274,12 @@ class HotelController extends Controller
                                     ->when(!$minPrice && $maxPrice, function ($q) use ($maxPrice) {
                                         $q->whereRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE base_price END <= ?', [$maxPrice]);
                                     })
-                                    ->with('attributes');
+                                    ->with(['attributes','seasons']);
                             },
-                            'bedType:id,name'
+                            'bedType:id,name',
                         ]);
-                }
+                },
+                'amenities'
             ])
 
             // Đánh giá trung bình và số lượng

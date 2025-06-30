@@ -41,6 +41,7 @@ class HotelSuggestResource extends JsonResource
             'id'            => $this->id,
             'name'          => $this->name,
             'address'       => $this->address,
+            'avatar'       => $this->avatar,
             'average_star'  => round($this->reviews_avg_star, 1),
             'total_reviews' => $this->reviews_count,
             'amenities' =>$this->amenities->map(fn($item)=>[

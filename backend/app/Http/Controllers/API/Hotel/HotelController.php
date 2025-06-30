@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers\API\Hotel;
 
+use App\Enums\Booking\BookingStatus;
 use App\Enums\Hotel\HotelStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Hotel\HotelRequest;
 use App\Http\Resources\FavoriteHotelResource;
 use App\Http\Resources\HotelDetailResource;
+use App\Http\Resources\HotelSuggestResource;
 use App\Models\Hotel;
 use App\Models\User;
 use Exception;
@@ -134,8 +136,165 @@ class HotelController extends Controller
         ]);
     }
 
-    public function searh_hotel($check_in = null, $check_out = null, $address = null, $guest = null, $children = null, $quantity = 1)
+    public function search_hotel(Request $request)
     {
+        $address    = $request->address;
+        $amenities  = $request->amenities ?? [];
+        $guest      = $request->guest ?? 1;
+        $children   = $request->children ?? 0;
+        $checkIn    = $request->checkin;
+        $checkOut   = $request->checkout;
+        $minPrice   = $request->min_price;
+        $maxPrice   = $request->max_price;
+        $quantity   = $request->quantity ?? 1;
+        $minRating  = $request->min_rating;
 
+        if (!$checkIn || !$checkOut) {
+            return response()->json([
+                'message' => 'Phải chọn ngày giờ check-in và check-out'
+            ], 400);
+        }
+
+        $hotels = Hotel::query()
+
+            ->when(!empty($address), function ($q) use ($address) {
+                $q->whereRaw('LOWER(address) LIKE ?', ['%' . mb_strtolower($address) . '%']);
+            })
+
+            ->when(!empty($amenities), function ($q) use ($amenities) {
+                foreach ($amenities as $amenityId) {
+                    $q->whereHas('amenities', fn($q2) => $q2->where('amenities.id', $amenityId));
+                }
+            })
+
+            ->whereHas('roomTypes', function ($roomTypeQ) use ($checkIn, $checkOut, $quantity, $guest, $children, $minPrice, $maxPrice) {
+
+                // Đếm số phòng còn trống
+                $roomTypeQ->withCount(['rooms as available_room_count' => function ($roomQ) use ($checkIn, $checkOut) {
+                    $roomQ->whereDoesntHave(
+                        'bookingDetails',
+                        fn($bd) =>
+                        $bd->whereHas(
+                            'booking',
+                            fn($b) =>
+                            $b->where('checkin_date', '<',  $checkOut)
+                                ->where('checkout_date', '>', $checkIn)
+                                ->whereIn('status', [
+                                    BookingStatus::Pending->value,
+                                    BookingStatus::Confirmed->value,
+                                    BookingStatus::CheckedIn->value,
+                                ])
+                        )
+                    );
+                }])
+                    ->having('available_room_count', '>=', $quantity)
+
+                    // RoomType phải có ít nhất 1 variant phù hợp
+                    ->whereHas('variants', function ($variantQ) use ($guest, $children, $checkIn, $checkOut, $minPrice, $maxPrice) {
+                        $variantQ
+                            ->whereHas('attributes', function ($q) use ($guest) {
+                                $q->where('attributes.type', 'guest')
+                                    ->whereRaw('CAST(variant_attributes.attribute_value AS UNSIGNED) >= ?', [$guest]);
+                            })
+                            ->whereHas('attributes', function ($q) use ($children) {
+                                $q->where('attributes.type', 'children')
+                                    ->whereRaw('CAST(variant_attributes.attribute_value AS UNSIGNED) >= ?', [$children]);
+                            })
+                            ->whereDoesntHave('bookingDetails', function ($d) use ($checkIn, $checkOut) {
+                                $d->whereHas('booking', function ($b) use ($checkIn, $checkOut) {
+                                    $b->where('checkin_date', '<',  $checkOut)
+                                        ->where('checkout_date', '>', $checkIn)
+                                        ->whereIn('status', [
+                                            BookingStatus::Pending->value,
+                                            BookingStatus::Confirmed->value,
+                                            BookingStatus::CheckedIn->value,
+                                        ]);
+                                });
+                            })
+                            ->when($minPrice && $maxPrice, function ($q) use ($minPrice, $maxPrice) {
+                                $q->whereRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE base_price END BETWEEN ? AND ?', [$minPrice, $maxPrice]);
+                            })
+                            ->when($minPrice && !$maxPrice, function ($q) use ($minPrice) {
+                                $q->whereRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE base_price END >= ?', [$minPrice]);
+                            })
+                            ->when(!$minPrice && $maxPrice, function ($q) use ($maxPrice) {
+                                $q->whereRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE base_price END <= ?', [$maxPrice]);
+                            });
+                    });
+            })
+
+            // Load các quan hệ
+            ->with([
+                'roomTypes' => function ($roomTypeQ) use ($guest, $children, $checkIn, $checkOut, $minPrice, $maxPrice, $quantity) {
+                    $roomTypeQ->withCount(['rooms as available_room_count' => function ($roomQ) use ($checkIn, $checkOut) {
+                        $roomQ->whereDoesntHave(
+                            'bookingDetails',
+                            fn($bd) =>
+                            $bd->whereHas(
+                                'booking',
+                                fn($b) =>
+                                $b->where('checkin_date', '<',  $checkOut)
+                                    ->where('checkout_date', '>', $checkIn)
+                                    ->whereIn('status', [
+                                        BookingStatus::Pending->value,
+                                        BookingStatus::Confirmed->value,
+                                        BookingStatus::CheckedIn->value,
+                                    ])
+                            )
+                        );
+                    }])
+                        ->having('available_room_count', '>=', $quantity)
+                        ->with([
+                            'variants' => function ($variantQ) use ($guest, $children, $checkIn, $checkOut, $minPrice, $maxPrice) {
+                                $variantQ
+                                    ->whereHas('attributes', function ($q) use ($guest) {
+                                        $q->where('attributes.type', 'guest')
+                                            ->whereRaw('CAST(variant_attributes.attribute_value AS UNSIGNED) >= ?', [$guest]);
+                                    })
+                                    ->whereHas('attributes', function ($q) use ($children) {
+                                        $q->where('attributes.type', 'children')
+                                            ->whereRaw('CAST(variant_attributes.attribute_value AS UNSIGNED) >= ?', [$children]);
+                                    })
+                                    ->whereDoesntHave('bookingDetails', function ($d) use ($checkIn, $checkOut) {
+                                        $d->whereHas('booking', function ($b) use ($checkIn, $checkOut) {
+                                            $b->where('checkin_date', '<',  $checkOut)
+                                                ->where('checkout_date', '>', $checkIn)
+                                                ->whereIn('status', [
+                                                    BookingStatus::Pending->value,
+                                                    BookingStatus::Confirmed->value,
+                                                    BookingStatus::CheckedIn->value,
+                                                ]);
+                                        });
+                                    })
+                                    ->when($minPrice && $maxPrice, function ($q) use ($minPrice, $maxPrice) {
+                                        $q->whereRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE base_price END BETWEEN ? AND ?', [$minPrice, $maxPrice]);
+                                    })
+                                    ->when($minPrice && !$maxPrice, function ($q) use ($minPrice) {
+                                        $q->whereRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE base_price END >= ?', [$minPrice]);
+                                    })
+                                    ->when(!$minPrice && $maxPrice, function ($q) use ($maxPrice) {
+                                        $q->whereRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE base_price END <= ?', [$maxPrice]);
+                                    })
+                                    ->with('attributes');
+                            },
+                            'bedType:id,name'
+                        ]);
+                }
+            ])
+
+            // Đánh giá trung bình và số lượng
+            ->withAvg('reviews', 'star')
+            ->withCount('reviews')
+
+            // Lọc theo sao
+            ->when($minRating, fn($q) =>
+            $q->having('reviews_avg_star', '>=', $minRating));
+
+        $results = $hotels->get();
+
+        return response()->json([
+            'message' => 'Danh sách khách sạn tìm kiếm',
+            'data' => HotelSuggestResource::collection($results),
+        ]);
     }
 }

@@ -21,11 +21,5 @@ class Review extends Model
     public function booking(){
         return $this->belongsTo(Booking::class, 'booking_id');
     }
-    public function reviewCategories(){
-        return $this->belongsToMany(ReviewCategory::class, 'review_category_scores','review_id','category_id')
-                    ->withPivot('score')
-                    ->withTimestamps();
-    }
-
 
 }

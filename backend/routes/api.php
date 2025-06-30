@@ -87,5 +87,5 @@ Route::controller(App\Http\Controllers\API\RoomType\RoomTypeController::class)
     ->prefix('/room-types')
     ->as('room_type.')
     ->group(function () {
-        Route::post('/{hotel_id?}/{check_in?}/{check_out?}/{guest?}/{children?}/{room_quantity?}', 'getRoomTypeHotel')->name('getRoomTypeHotel');
+        Route::get('/{hotel_id?}/{check_in?}/{check_out?}/{guest?}/{children?}/{room_quantity?}', 'getRoomTypeHotel')->name('getRoomTypeHotel');
     });

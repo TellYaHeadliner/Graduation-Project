@@ -1,0 +1,1 @@
+<span class="price">{{ format_price($amount) }}</span>

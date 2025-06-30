@@ -71,7 +71,6 @@ Route::middleware(['roleCheck:Admin'])->group(function () {
             Route::put('/updateHotel-Approval', 'updateHotelApproval')->name('updateHotelApproval');
 
             Route::delete('/xoaHotel-Approval/{id}', 'deleteHotelApproval')->name('deleteHotelApproval');
-
         });
     });
     // Service
@@ -158,6 +157,17 @@ Route::middleware(['roleCheck:Admin'])->group(function () {
             Route::put('/sua', 'update')->name('update');
 
             Route::delete('/xoa/{id}', 'delete')->name('delete');
+        });
+    });
+    Route::prefix('/transactions')->as('transaction.')->group(function () {
+        Route::controller(App\Http\Controllers\Admin\Transaction\TransactionController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+        });
+    });
+    Route::prefix('/bookings')->as('booking.')->group(function () {
+        Route::controller(App\Http\Controllers\Admin\Booking\BookingController::class)->group(function () {
+            Route::get('/', 'index')->name('index');
+            Route::get('/sua/{id}', 'edit')->name('edit');
         });
     });
 

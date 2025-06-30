@@ -41,7 +41,7 @@
                     <label class="control-label">{{ __('Loại phí') }}:</label>
                     <x-select name="discount_type" id="discount_type_select">
                         <option value="0">Số tiền cố định</option>
-                        <option value="1">Giảm giá theo phần trăm</option>
+                        {{-- <option value="1">Giảm giá theo phần trăm</option> --}}
                     </x-select>
                 </div>
             </div>
@@ -115,7 +115,7 @@
                     <label class="control-label">{{ __('Loại phí') }}:</label>
                     <x-select name="fee_type" id="fee_type_select">
                         <option value="0">Số tiền cố định</option>
-                        <option value="1">Giảm giá theo phần trăm</option>
+                        {{-- <option value="1">Giảm giá theo phần trăm</option> --}}
                     </x-select>
                 </div>
             </div>

@@ -52,7 +52,9 @@ class HotelController extends Controller
             'services',
             'combos.comboServices.service',
             'vouchers',
-            'hotelServices'
+            'hotelServices',
+            'reviews.user',
+            'reviews.booking.bookingDetails.roomType'
         ])->find($id);
         return response()->json([
             'message' => 'Chi tiết khách sạn.',

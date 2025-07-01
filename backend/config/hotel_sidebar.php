@@ -30,6 +30,20 @@ return [
         'sub' => []
     ],
     [
+        'title' => 'DS Giao dịch',
+        'routeName' => 'hotel.transaction.index',
+        'icon' => '<i class="ti ti-wallet"></i>',
+        'param' => true,
+        'sub' => []
+    ],
+    [
+        'title' => 'DS Booking',
+        'routeName' => 'hotel.booking.index',
+        'icon' => '<i class="ti ti-calendar-check"></i>',
+        'param' => true,
+        'sub' => []
+    ],
+    [
         'title' => 'Quản lý dịch vụ',
         'routeName' => null,
         'icon' => '<i class="ti ti-package"></i>',

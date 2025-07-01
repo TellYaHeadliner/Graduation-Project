@@ -11,6 +11,7 @@ use App\Http\Requests\API\Transaction\TransactionRequest;
 use App\Mail\BookingSuccessMail;
 use App\Models\Booking;
 use App\Models\Combo;
+use App\Models\Hotel;
 use App\Models\HotelService;
 use App\Models\Room;
 use App\Models\RoomType;
@@ -51,13 +52,14 @@ class TransactionController extends Controller
                 ]);
             }
 
+            $hotel = Hotel::with('hotelRule')->find($request->hotel_id);
 
             $booking = Booking::create([
                 'customer_id' => $request->user_id,
                 'hotel_id' => $request->hotel_id,
                 'booking_code' => 'RMX' . now()->format('Ymd') . Str::upper(Str::random(6)),
                 'total_amount' => 0,
-                'checkin_date' => $request->checkin_date,
+                'checkin_date' => $request->checkin_date,     
                 'checkout_date' => $request->checkout_date,
                 'note' => $request->note ?? '',
                 'status' => BookingStatus::Pending->value,
@@ -125,6 +127,11 @@ class TransactionController extends Controller
             }
             $total = max(0, $total);
             $booking->total_amount = $total;
+
+            $checkinDateTime = Carbon::parse($request->checkin_date . ' ' . $hotel->hotelRule->check_in_time);
+            $checkoutDateTime = Carbon::parse($request->checkout_date . ' ' . $hotel->hotelRule->check_out_time);
+            $booking->checkin_date =$checkinDateTime;
+            $booking->checkout_date =$checkoutDateTime;
             $booking->save();
 
             $transaction = Transaction::create([
@@ -187,7 +194,7 @@ class TransactionController extends Controller
             DB::commit();
             return response()->json([
                 'message' => 'Chuyển sang trang thanh toán',
-                'url' => $vnp_Url
+                'url' => $vnp_Url,
             ], 200);
         } catch (Exception $e) {
             DB::rollback();
@@ -208,6 +215,7 @@ class TransactionController extends Controller
                 'payment_status' => TransactionStatus::Success->value,
                 'paid_at' => now(),
             ]);
+
 
             $transaction->booking->update([
                 'status' => BookingStatus::Confirmed->value,

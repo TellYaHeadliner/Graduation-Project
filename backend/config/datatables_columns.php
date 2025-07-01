@@ -652,7 +652,7 @@ return [
         ],
         'hotel_id' => [
             'title' => 'Khách sạn',
-            'icon' => 'ti ti-building', 
+            'icon' => 'ti ti-building',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
@@ -664,31 +664,31 @@ return [
         ],
         'transaction_type' => [
             'title' => 'Loại giao dịch',
-            'icon' => 'ti ti-credit-card', 
+            'icon' => 'ti ti-credit-card',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
         'transaction_code' => [
             'title' => 'Mã giao dịch hệ thống',
-            'icon' => 'ti ti-credit-card', 
+            'icon' => 'ti ti-credit-card',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
         'amount' => [
             'title' => 'Số tiền',
-            'icon' => 'ti ti-currency-dollar', 
+            'icon' => 'ti ti-currency-dollar',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
         'payment_status' => [
             'title' => 'Trạng thái thanh toán',
-            'icon' => 'ti ti-flag', 
+            'icon' => 'ti ti-flag',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
         'paid_at' => [
             'title' => 'Thời gian thanh toán',
-            'icon' => 'ti ti-clock-hour-4', 
+            'icon' => 'ti ti-clock-hour-4',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
@@ -696,39 +696,156 @@ return [
     'booking_admin' => [
         'hotel_id' => [
             'title' => 'Khách sạn',
-            'icon' => 'ti ti-building', 
+            'icon' => 'ti ti-building-skyscraper',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
         'customer_id' => [
             'title' => 'Khách hàng',
-            'icon' => 'ti ti-user',
+            'icon' => 'ti ti-user-circle',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
         'booking_code' => [
             'title' => 'Mã booking',
-            'icon' => 'ti ti-credit-card', 
+            'icon' => 'ti ti-ticket',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'total_amount' => [
+            'title' => 'Số tiền',
+            'icon' => 'ti ti-currency-dollar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'checkin_date' => [
+            'title' => 'Thời gian check-in',
+            'icon' => 'ti ti-login',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'checkout_date' => [
+            'title' => 'Thời gian check-out',
+            'icon' => 'ti ti-logout',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'cancellation_fee' => [
+            'title' => 'Phí hủy',
+            'icon' => 'ti ti-report-money',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti ti-flag',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+    'transaction_hotel' => [
+        'booking_id' => [
+            'title' => 'Mã đặt phòng',
+            'icon' => 'ti ti-receipt',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'user_id' => [
+            'title' => 'Khách hàng',
+            'icon' => 'ti ti-user',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'transaction_type' => [
+            'title' => 'Loại giao dịch',
+            'icon' => 'ti ti-credit-card',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'transaction_code' => [
+            'title' => 'Mã giao dịch hệ thống',
+            'icon' => 'ti ti-credit-card',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
         'amount' => [
             'title' => 'Số tiền',
-            'icon' => 'ti ti-currency-dollar', 
+            'icon' => 'ti ti-currency-dollar',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
         'payment_status' => [
             'title' => 'Trạng thái thanh toán',
-            'icon' => 'ti ti-flag', 
+            'icon' => 'ti ti-flag',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
         'paid_at' => [
             'title' => 'Thời gian thanh toán',
-            'icon' => 'ti ti-clock-hour-4', 
+            'icon' => 'ti ti-clock-hour-4',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
     ],
+    'booking_hotel' => [
+        'customer_id' => [
+            'title' => 'Khách hàng',
+            'icon' => 'ti ti-user-circle',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'booking_code' => [
+            'title' => 'Mã booking',
+            'icon' => 'ti ti-ticket',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'total_amount' => [
+            'title' => 'Số tiền',
+            'icon' => 'ti ti-currency-dollar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'checkin_date' => [
+            'title' => 'Thời gian check-in',
+            'icon' => 'ti ti-login',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'checkout_date' => [
+            'title' => 'Thời gian check-out',
+            'icon' => 'ti ti-logout',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'cancellation_fee' => [
+            'title' => 'Phí hủy',
+            'icon' => 'ti ti-report-money',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'status' => [
+            'title' => 'Trạng thái',
+            'icon' => 'ti ti-flag',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+        'action' => [
+            'title' => 'Thao tác',
+            'icon' => 'ti-settings',
+            'orderable' => false,
+            'exportable' => false,
+            'printable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
+    ],
+
 ];

@@ -21,8 +21,8 @@ class BookingResource extends JsonResource
             'address' => $this->hotel->address,
 
             'total_price' => $this->total_amount,
-            'check_in' => format_date($this->checkin_date,'d-m-Y'),
-            'check_out' => format_date($this->checkout_date,'d-m-Y'),
+            'check_in' => format_date($this->checkin_date,'d-m-Y H:i'),
+            'check_out' => format_date($this->checkout_date,'d-m-Y H:i'),
             'status' => $this->status->description()
         ];
     }

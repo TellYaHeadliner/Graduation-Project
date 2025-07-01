@@ -42,7 +42,7 @@ class HotelController extends Controller
             ]
         ], 200);
     }
-    
+
     public function detailHotel(Request $request)
     {
         $id = $request->query('id');
@@ -140,16 +140,16 @@ class HotelController extends Controller
 
     public function search_hotel(Request $request)
     {
-        $address    = $request->address;
-        $amenities  = $request->amenities ?? [];
-        $guest      = $request->guest ?? 1;
-        $children   = $request->children ?? 0;
-        $checkIn    = $request->checkin;
-        $checkOut   = $request->checkout;
-        $minPrice   = $request->min_price;
-        $maxPrice   = $request->max_price;
-        $quantity   = $request->quantity ?? 1;
-        $minRating  = $request->min_rating;
+        $address    = $request->string('address')->trim();
+        $amenities  = $request->input('amenities', []);
+        $guest      = (int) $request->input('guest', 1);
+        $children   = (int) $request->input('children', 0);
+        $checkIn    = $request->date('checkin');
+        $checkOut   = $request->date('checkout');
+        $minPrice   = $request->input('min_price');
+        $maxPrice   = $request->input('max_price');
+        $quantity   = (int) $request->input('quantity', 1);
+        $minRating  = $request->input('min_rating');
 
         if (!$checkIn || !$checkOut) {
             return response()->json([
@@ -277,7 +277,7 @@ class HotelController extends Controller
                                     ->when(!$minPrice && $maxPrice, function ($q) use ($maxPrice) {
                                         $q->whereRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE base_price END <= ?', [$maxPrice]);
                                     })
-                                    ->with(['attributes','seasons']);
+                                    ->with(['attributes', 'seasons']);
                             },
                             'bedType:id,name',
                         ]);

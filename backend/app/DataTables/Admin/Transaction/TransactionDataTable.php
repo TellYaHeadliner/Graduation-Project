@@ -32,6 +32,7 @@ class TransactionDataTable extends BaseDataTable
             'transaction_type' => 'admin.transaction.datatable.transaction_type',
             'transaction_code' => 'admin.transaction.datatable.transaction_code',
             'amount' => 'admin.transaction.datatable.amount',
+            'commission_amount' => 'admin.transaction.datatable.commission_amount',
             'payment_status' => 'admin.transaction.datatable.payment_status',
             'paid_at' => 'admin.transaction.datatable.paid_at',
         ];
@@ -40,9 +41,9 @@ class TransactionDataTable extends BaseDataTable
     public function setColumnSearch(): void
     {
 
-        $this->columnAllSearch = [0, 1, 2, 3, 4, 5, 6];
+        $this->columnAllSearch = [0, 1, 2, 3, 4, 5, 6, 7];
 
-        $this->columnSearchDate = [7];
+        $this->columnSearchDate = [8];
 
         $this->columnSearchSelect = [
             [
@@ -50,7 +51,7 @@ class TransactionDataTable extends BaseDataTable
                 'data' => TransactionType::asSelectArray(),
             ],
             [
-                'column' => 6,
+                'column' => 7,
                 'data' => TransactionStatus::asSelectArray(),
             ],
         ];
@@ -75,6 +76,7 @@ class TransactionDataTable extends BaseDataTable
             'transaction_type' => $this->view['transaction_type'],
             'transaction_code' => $this->view['transaction_code'],
             'amount' => $this->view['amount'],
+            'commission_amount' => $this->view['commission_amount'],
             'payment_status' => $this->view['payment_status'],
             'paid_at' => '{{ date("d-m-Y H:i:s", strtotime($paid_at)) }}',
         ];
@@ -87,7 +89,7 @@ class TransactionDataTable extends BaseDataTable
 
     protected function setCustomRawColumns(): void
     {
-        $this->customRawColumns = ['booking_id', 'user_id', 'hotel_id', 'transaction_type', 'transaction_code', 'amount', 'payment_status', 'paid_at'];
+        $this->customRawColumns = ['booking_id', 'commission_amount','user_id', 'hotel_id', 'transaction_type', 'transaction_code', 'amount', 'payment_status', 'paid_at'];
     }
 
     public function setCustomFilterColumns(): void

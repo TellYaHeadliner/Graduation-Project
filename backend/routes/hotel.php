@@ -121,6 +121,20 @@ Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
         });
     });
 
+    Route::prefix('/transactions')->as('transaction.')->group(function () {
+        Route::controller(App\Http\Controllers\Hotel\Transaction\TransactionController::class)->group(function () {
+            Route::get('/{hotel_id}', 'index')->name('index');
+        });
+    });
+    Route::prefix('/bookings')->as('booking.')->group(function () {
+        Route::controller(App\Http\Controllers\Hotel\Booking\BookingController::class)->group(function () {
+            Route::get('/{hotel_id}', 'index')->name('index');
+            Route::get('/{hotel_id}/sua/{id}', 'edit')->name('edit');
+
+            Route::put('/{hotel_id}/sua', 'update')->name('update');
+        });
+    });
+
     Route::prefix('/search')->as('search.')->group(function () {
         Route::prefix('/select')->as('select.')->group(function () {
             Route::get('/{hotel_id}/hotel-services', [App\Http\Controllers\Hotel\HotelService\HotelServiceSearchSelectController::class, 'selectSearch'])->name('hotel_service');

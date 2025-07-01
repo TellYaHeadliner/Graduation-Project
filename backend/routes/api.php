@@ -47,6 +47,13 @@ Route::middleware('checkJWT')->group(function () {
             Route::get('/history/{status?}', 'history')->name('history');
             Route::get('/detail/{id?}', 'detail')->name('detail');
         });
+    Route::controller(App\Http\Controllers\API\Review\ReviewController::class)
+        ->prefix('/reviews')
+        ->as('review.')
+        ->group(function () {
+            Route::get('/check/{hotel_id?}', 'check_review')->name('check_review');
+            Route::post('/', 'create')->name('create');
+        });
 });
 
 

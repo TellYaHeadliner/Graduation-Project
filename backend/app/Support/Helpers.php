@@ -295,6 +295,7 @@ if (!function_exists('getBoundsByName')) {
 
         /** 💰 Tổng */
         $saved = $totalOrigin - $totalPayable;
+        $totalPayble = 
         $lines[] = '💰 Tổng tiền: ' . format_money($totalPayable) .
             ($saved > 0 ? ' (Tiết kiệm ' . format_money($saved) . ')' : '');
 

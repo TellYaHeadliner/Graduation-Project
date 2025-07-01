@@ -81,6 +81,18 @@ return [
         ]
     ],
     [
+        'title' => 'DS Giao dịch',
+        'routeName' => 'admin.transaction.index',
+        'icon' => '<i class="ti ti-list"></i>',
+        'sub' => []
+    ],
+        [
+        'title' => 'DS Booking',
+        'routeName' => 'admin.booking.index',
+        'icon' => '<i class="ti ti-list"></i>',
+        'sub' => []
+    ],
+    [
         'title' => 'Quản lý dịch vụ',
         'routeName' => null,
         'icon' => '<i class="ti ti-server"></i>',

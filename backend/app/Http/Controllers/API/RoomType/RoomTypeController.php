@@ -75,6 +75,9 @@ class RoomTypeController extends Controller
                         });
                     }
                 ])
+                ->when($room_quantity, function ($q) use ($room_quantity) {
+                    $q->having('available_room_count', '>=', $room_quantity);
+                })
                 ->get();
 
 

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->char('transaction_code', 50);
             $table->char('original_code', 50)->nullable();
             $table->integer('amount');
+            $table->integer('commission_amount')->nullable();
             $table->tinyInteger('payment_status');
             $table->dateTime('paid_at')->nullable();
             $table->timestamps();

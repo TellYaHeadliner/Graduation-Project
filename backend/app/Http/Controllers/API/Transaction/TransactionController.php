@@ -59,7 +59,7 @@ class TransactionController extends Controller
                 'hotel_id' => $request->hotel_id,
                 'booking_code' => 'RMX' . now()->format('Ymd') . Str::upper(Str::random(6)),
                 'total_amount' => 0,
-                'checkin_date' => $request->checkin_date,     
+                'checkin_date' => $request->checkin_date,
                 'checkout_date' => $request->checkout_date,
                 'note' => $request->note ?? '',
                 'status' => BookingStatus::Pending->value,
@@ -107,8 +107,8 @@ class TransactionController extends Controller
 
             $total = ($combos['total'] ?? 0) + ($services['total'] ?? 0) + $roomTotal;
 
-            if ($request->filled('voucher_id')) {
-                $voucher = $this->checkVoucher($request->voucher_id, $total);
+            if ($request->filled('voucher')) {
+                $voucher = $this->checkVoucher($request->voucher, $total);
                 if (!$voucher['success']) {
                     return response()->json([
                         'message' => $voucher['message']
@@ -130,8 +130,8 @@ class TransactionController extends Controller
 
             $checkinDateTime = Carbon::parse($request->checkin_date . ' ' . $hotel->hotelRule->check_in_time);
             $checkoutDateTime = Carbon::parse($request->checkout_date . ' ' . $hotel->hotelRule->check_out_time);
-            $booking->checkin_date =$checkinDateTime;
-            $booking->checkout_date =$checkoutDateTime;
+            $booking->checkin_date = $checkinDateTime;
+            $booking->checkout_date = $checkoutDateTime;
             $booking->save();
 
             $transaction = Transaction::create([
@@ -400,8 +400,11 @@ class TransactionController extends Controller
                     ]);
                 }
             };
+
+            $nights = Carbon::parse($booking->checkout_date)->diffInDays(Carbon::parse($booking->checkin_date));
+            $nights = max($nights, 1);
             $booking->update([
-                'cancellation_fee' => $cancellation_fee
+                'cancellation_fee' => $cancellation_fee * $nights
             ]);
             DB::commit();
             return [
@@ -420,9 +423,9 @@ class TransactionController extends Controller
         }
     }
 
-    public function checkVoucher($voucher_id, $total_amount)
+    public function checkVoucher($voucher, $total_amount)
     {
-        $voucher = Voucher::find($voucher_id);
+        $voucher = Voucher::where('code',$voucher)->first();
 
         if (!$voucher) {
             return ['success' => false, 'message' => 'Voucher không tồn tại'];

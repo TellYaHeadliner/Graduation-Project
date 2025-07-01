@@ -72,7 +72,6 @@ export default function FindHotel() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [provinceFromQuery, startDateFromQuery, endDateFromQuery, adultsFromQuery, childrenFromQuery, roomsFromQuery, dispatch]);
 
-    const hotelSearch = useHotelSearch();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -91,15 +90,7 @@ export default function FindHotel() {
             return;
         }
         
-        const payload: PayloadSearchParams = {
-            address: province,
-            checkin: startDate,
-            checkout: endDate,
-            guest: adults,
-            children: children,
-        }
-
-        hotelSearch.mutate(payload);
+        
         navigate(`/search?address=${province}&checkin=${startDate}&checkout=${endDate}&guest=${adults}&children=${children}`);
     }
     return (
@@ -212,11 +203,7 @@ export default function FindHotel() {
                     {error}
                 </div>
             )}
-            {
-                hotelSearch.isPending && (
-                    <DialogLoading isOpen={true} />
-                )
-            }
+
         </div>
     );
 }

@@ -9,7 +9,8 @@ import { FilterProvider } from "../context/FilterContext";
 import { CardSearch } from "../types/SearchTypes";
 import useQuery from "../hooks/useQuery";
 import { useHotelSearch } from "../react-query/useHotelSearch";
-import { useQueryClient } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
+import slug from "slug";
 
 
 export default function ResultSearch() {
@@ -27,9 +28,9 @@ export default function ResultSearch() {
         children: Number(queryParams.get("children") ?? "0"),
     }
 
-    const cached = useQueryClient().getQueryData(['search-result', payload]);
-    const data = cached?.data || [];
-    console.log(data)
+    const hotelSearch = useHotelSearch(payload, true);
+    const data = hotelSearch.data?.data
+
 
     return (
         <MainLayout>
@@ -44,11 +45,13 @@ export default function ResultSearch() {
                         <FindHotelProvider>
                             <FindHotel />
                         </FindHotelProvider>
-                        {/* {
+                        {
                             data?.map((item: CardSearch) => (
-                                <CardItemSearch data={item} />
+                                <Link key={item.id} to={`/${slug(item.name)}/${item.id}`}>
+                                    <CardItemSearch data={item} />
+                                </Link>
                             ))
-                        } */}
+                        }
                     </div>
                     
                 </div>

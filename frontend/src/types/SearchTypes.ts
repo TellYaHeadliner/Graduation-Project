@@ -1,9 +1,11 @@
+import { Amentity } from "./AmentityTypes";
+
 export interface CardSearch{
     id: number;
     name: string;
     address: string;
-    avarage_star: number;
-    total_review: number;
+    average_star: number;
+    total_reviews: number;
     avatar: string;
     room_type: {
         name: string;
@@ -15,6 +17,8 @@ export interface CardSearch{
         children: number;
         cancellation: string;
     }
+    amenities: Amentity[];
+    seasons: string;
 }
 
 export interface PayloadSearchParams{
@@ -23,6 +27,7 @@ export interface PayloadSearchParams{
     children: number;
     checkin: string | null;
     checkout: string | null;
+    amenties?: number[];
 }
 
 export interface SearchResponse{

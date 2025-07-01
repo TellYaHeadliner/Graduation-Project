@@ -80,7 +80,7 @@ Route::controller(App\Http\Controllers\API\Hotel\HotelController::class)
     ->group(function () {
         Route::get('/hotel-seasons/{name?}', 'listHotelSeasons')->name('listHotelSeasons');
         Route::get('/detail-hotel/{id?}', 'detailHotel')->name('detailHotel');
-        Route::post('/search', 'search_hotel')->name('search_hotel');
+        Route::get('/search', 'search_hotel')->name('search_hotel');
     });
 
 Route::controller(App\Http\Controllers\API\Amenity\AmenityController::class)

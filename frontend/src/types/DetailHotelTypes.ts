@@ -47,7 +47,7 @@ export interface Combo{
     services: Service[];
 }
 
-interface Voucher{
+export interface Voucher{
     id: number;
     code: string;
     discount: {

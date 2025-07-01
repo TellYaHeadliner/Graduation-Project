@@ -45,6 +45,7 @@ export default function CarouselCard({ cardList, title }: CardListProps) {
         mouseTracking
         controlsStrategy="alternate"
         disableDotsControls
+        autoPlay={false}
         responsive={{
           0: {
             items: 1,

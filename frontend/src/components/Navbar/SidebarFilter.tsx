@@ -17,7 +17,7 @@ export default function NavBarFilter({ amenties }: Props){
             <AccordionFilterStar onFilterChange={updateStars}/>
             {
                 amenties.map((amentity) => (
-                    <div>
+                    <div key={amentity.id}>
                         <AccordiionFilterComfortCommon title={amentity.name} children={amentity.children}/>
                     </div>
                 ))

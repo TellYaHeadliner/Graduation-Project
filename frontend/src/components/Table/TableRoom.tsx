@@ -4,6 +4,7 @@ import DialogDetailHotel from "../Dialog/DialogDetailHotel";
 import { FaChild, FaUser } from "react-icons/fa6";
 import { RoomType } from "../../types/RoomTypes";
 import { useEffect, useState } from "react";
+import LoadingSpinner from "../Loading/LoadingSpinner";
 
 interface TableRoomProps {
     datas: RoomType[];
@@ -13,9 +14,10 @@ interface TableRoomProps {
         quantity: number;
         name: string;
     }[]) => void;
+    isLoading?: boolean
 }
 
-export default function TableRoom({ datas, onChange }: TableRoomProps) {
+export default function TableRoom({ datas, onChange, isLoading }: TableRoomProps) {
     const numberOfNights = JSON.parse(localStorage.getItem('numberOfNights') || '0');
     const [quantities, setQuantities] = useState<Record<string, number>>({});
     const handleQuantityChange = (roomTypeId: number, variantId: number, quantity: number) => {
@@ -100,7 +102,7 @@ export default function TableRoom({ datas, onChange }: TableRoomProps) {
     }
 
     return (
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto ">
             <table typeof="1" className="min-w-full table-auto border border-gray-300">
                 <thead>
                     <tr className="bg-blue-700 text-white">
@@ -118,7 +120,15 @@ export default function TableRoom({ datas, onChange }: TableRoomProps) {
                     </tr>
                 </thead>
                 <tbody>
-                    {datas.length === 0 ? (
+                    {isLoading ? (
+                        <tr>
+                            <td colSpan={5} className="text-center py-4 text-blue-600 font-semibold animate-pulse">
+                                <div className="flex justify-center items-center">
+                                    <LoadingSpinner />
+                                </div>
+                            </td>
+                        </tr>
+                    ) : datas.length === 0 ? (
                         <tr>
                             <td colSpan={5} className="text-center py-4 text-gray-500">
                                 Không có dữ liệu
@@ -152,6 +162,13 @@ export default function TableRoom({ datas, onChange }: TableRoomProps) {
                                 const cancel = variant.attributes.find(attr => attr.name === "Miễn phí huỷ trước 24h và thu phí sau đó");
                                 const isEmptySeasons = variant.seasons.length === 0;
                                 const seasons = variant.seasons
+
+                                const getSelectedCountByRoomType = (roomTypeId: number) => {
+                                    return Object.entries(quantities).reduce((total, [key, value]) => {
+                                        const [rId] = key.split("-").map(Number);
+                                        return rId === roomTypeId ? total + value : total;
+                                    }, 0);
+                                };
 
 
                                 return (
@@ -199,20 +216,32 @@ export default function TableRoom({ datas, onChange }: TableRoomProps) {
 
                                         {/* Số lượng đặt */}
                                         <td className="px-4 py-3 border-r text-end">
-                                            <select 
-                                            name="room_quantity" 
-                                            value={quantities[`${data.id}-${variant.id}`] || ""}
-                                            onChange={(e) => {
-                                                handleQuantityChange(data.id, variant.id, Number(e.target.value))
-                                            }}
+                                            <select
+                                                name="room_quantity"
+                                                value={quantities[`${data.id}-${variant.id}`] || ""}
+                                                onChange={(e) => {
+                                                    handleQuantityChange(data.id, variant.id, Number(e.target.value));
+                                                }}
                                             >
                                                 <option value={0}>0 phòng</option>
-                                                {data.available_room_count &&
-                                                    Array.from({ length: data.available_room_count }, (_, i) => (
-                                                        <option key={i + 1} value={i + 1}>
-                                                            {i + 1} phòng
-                                                        </option>
-                                                    ))
+                                                {
+                                                    data.available_room_count &&
+                                                    Array.from({ length: data.available_room_count }, (_, i) => {
+                                                        const selectedCount = getSelectedCountByRoomType(data.id);
+                                                        const currentValue = i + 1;
+                                                        const currentSelected = quantities[`${data.id}-${variant.id}`] || 0;
+                                                        const remaining = data.available_room_count - (selectedCount - currentSelected);
+
+                                                        return (
+                                                            <option
+                                                                key={currentValue}
+                                                                value={currentValue}
+                                                                disabled={currentValue > remaining}
+                                                            >
+                                                                {currentValue} phòng
+                                                            </option>
+                                                        );
+                                                    })
                                                 }
                                             </select>
                                         </td>

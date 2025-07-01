@@ -18,7 +18,7 @@ export default function DetailBooking() {
                     Chi tiết đơn đặt phòng
                 </h1>
 
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border p-4 rounded-md">
                     <div>
                         <p><span className="font-semibold">Mã đơn: </span>{getDetailBooking.data?.data.booking_code}</p>
                         <p><span className="font-semibold">Ngày tạo: </span>{getDetailBooking.data?.data.created_at}</p>
@@ -30,7 +30,7 @@ export default function DetailBooking() {
                         <p><span className="font-semibold">Tổng tiền: </span> {Currency.formatVND(getDetailBooking.data?.data.total_amount || null)}</p>
                     </div>
 
-                    <div className="flex-items-center gap-4 bg-gray-50 p-4 rounded-md">
+                    <div className="flex-items-center gap-4 bg-gray-50 p-4 rounded-md border ">
                         <img src={import.meta.env.VITE_URL + getDetailBooking.data?.data.hotel.avatar} alt="" className="w-24 h-24 object-cover rounded-md" />
                         <div>
                             <p className="font-semibold text-lg">
@@ -46,7 +46,7 @@ export default function DetailBooking() {
                         <h2 className="font-semibold text-xl mb-2">
                             Thông tin khách hàng
                         </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm border p-4 rounded-md">
                             <p>
                                 <span className="font-semibold">Họ tên: </span> 
                                 {getDetailBooking.data?.data.customer.name}
@@ -67,26 +67,31 @@ export default function DetailBooking() {
                                     <p><span className="font-semibold">Tên phòng: </span> {room.room_code}</p>
                                     <p><span className="font-semibold">Loại phòng: </span> {room.room_type}</p>
                                     <p><span className="font-semibold">Giá: </span> {Currency.formatVND(room.price)}</p>
-                                    {
-                                        getDetailBooking.data.data.cancellation_fee > 0 && (
-                                            <div>
-                                                <Callout.Root className="my-2" color="red">
-                                                    <Callout.Icon>
-                                                        <InfoCircledIcon />
-                                                    </Callout.Icon>
-                                                    <Callout.Text>
-                                                        Bạn có hủy phòng với giá  {Currency.formatVND(getDetailBooking.data.data.cancellation_fee)}
-                                                    </Callout.Text>
-                                                </Callout.Root>
-                                                <Button color="red">
-                                                    Hủy đặt phòng
-                                                </Button>
-                                            </div>
-
-                                        )
-                                    }
                                 </div>
                             ))
+                        }
+                    </div>
+
+                    <div className="border p-4 rounded-md">
+                        <h2 className="font-semibold text-xl mb-2">
+                            Có thể hủy phòng
+                        </h2>
+                        {
+                            getDetailBooking.data?.data.cancellation_fee > 0 && (
+                                <div>
+                                    <Callout.Root className="my-2" color="red">
+                                        <Callout.Icon>
+                                            <InfoCircledIcon />
+                                        </Callout.Icon>
+                                        <Callout.Text>
+                                            Bạn có hủy phòng với giá  {Currency.formatVND(getDetailBooking.data?.data.cancellation_fee)}
+                                        </Callout.Text>
+                                    </Callout.Root>
+                                    <Button color="red">
+                                        Hủy đặt phòng
+                                    </Button>
+                                </div>
+                            )
                         }
                     </div>
 

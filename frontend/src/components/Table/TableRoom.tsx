@@ -105,15 +105,15 @@ export default function TableRoom({ datas, onChange }: TableRoomProps) {
                 <thead>
                     <tr className="bg-blue-700 text-white">
                         <th className="text-left px-4 py-2 border-r border-gray-500">Loại phòng </th>
-                        <th className="text-left px-4 py-2 border-r border-gray-500">Số lượng người</th>
+                        <th className="text-left px-4 py-2 border-r border-gray-500">Người</th>
                         <th className="px-4 py-2 border-r border-gray-500 text-end">
-                            Giá phòng
+                            Giá/Phòng/Đêm
                         </th>
                         <th className="text-end px-4 py-2 border-r border-gray-500">
-                            Lựa chọn số lượng
+                            Số lượng
                         </th>
                         <th className="text-left px-2 py-2 border-r border-gray-500">
-                            Ghi chú
+                            Các lựa chọn
                         </th>
                     </tr>
                 </thead>

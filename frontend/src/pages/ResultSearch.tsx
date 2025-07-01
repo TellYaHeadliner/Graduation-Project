@@ -6,9 +6,10 @@ import FindHotel from "../components/FindHotel/FindHotel";
 import { FindHotelProvider } from "../context/FindHotelContext";
 import { useAmentities } from "../react-query/useAmentites";
 import { FilterProvider } from "../context/FilterContext";
-import { useLocation } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
 import { CardSearch } from "../types/SearchTypes";
+import useQuery from "../hooks/useQuery";
+import { useHotelSearch } from "../react-query/useHotelSearch";
+import { useQueryClient } from "@tanstack/react-query";
 
 
 export default function ResultSearch() {
@@ -16,8 +17,18 @@ export default function ResultSearch() {
     useTitle("Kết quả tìm kiếm");
 
     const amenties = useAmentities();
-    const queryClient = useQueryClient();
-    const data = queryClient.getQueryData(['search-result']);
+    const queryParams = useQuery();
+    
+    const payload = {
+        address: queryParams.get("address") ?? "",
+        checkin: queryParams.get("checkin") ?? "",
+        checkout: queryParams.get("checkout") ?? "",
+        guest: Number(queryParams.get("guest") ?? "1"),
+        children: Number(queryParams.get("children") ?? "0"),
+    }
+
+    const cached = useQueryClient().getQueryData(['search-result', payload]);
+    const data = cached?.data || [];
     console.log(data)
 
     return (
@@ -33,11 +44,11 @@ export default function ResultSearch() {
                         <FindHotelProvider>
                             <FindHotel />
                         </FindHotelProvider>
-                        {
+                        {/* {
                             data?.map((item: CardSearch) => (
                                 <CardItemSearch data={item} />
                             ))
-                        }
+                        } */}
                     </div>
                     
                 </div>

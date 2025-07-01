@@ -1,16 +1,8 @@
-import { useSearchParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useMemo } from 'react';
 
 export default function useQuery() {
-    const [searchParams] = useSearchParams();
+    const { search } = useLocation();
 
-    return {
-        query : searchParams.get("query") || "",
-        pronvice: searchParams.get("pronvice") || "",
-        startDate : searchParams.get("startDate")|| "",
-        endDate : searchParams.get("endDate") || "",
-        adults : searchParams.get("adults") || "",
-        children : searchParams.get("children") || "",
-        rooms : searchParams.get("rooms") || "",
-        withPets : searchParams.get("withPets") || false
-    }
+    return useMemo(() => new URLSearchParams(search), [search]);
 }

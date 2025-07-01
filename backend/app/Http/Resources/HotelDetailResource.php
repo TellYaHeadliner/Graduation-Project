@@ -74,6 +74,15 @@ class HotelDetailResource extends JsonResource
                 'start_date' => $v->start_date,
                 'end_date' => $v->end_date,
             ]),
+            'reviews' => $this->reviews->map(function ($item) {
+                return [
+                    'user_name' => $item->user->fullname,
+                    'star' => $item->star,
+                    'content' => $item->content,
+                    'created_at' => format_date($item->created_at,'m-d-Y H:i'),
+                    'room_type' => $item->booking->bookingDetails->first()->roomType->name
+                ];
+            })
         ];
     }
 }

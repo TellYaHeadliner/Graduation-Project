@@ -52,7 +52,9 @@ class HotelController extends Controller
             'services',
             'combos.comboServices.service',
             'vouchers',
-            'hotelServices'
+            'hotelServices',
+            'reviews.user',
+            'reviews.booking.bookingDetails.roomType'
         ])->find($id);
         return response()->json([
             'message' => 'Chi tiết khách sạn.',
@@ -275,11 +277,12 @@ class HotelController extends Controller
                                     ->when(!$minPrice && $maxPrice, function ($q) use ($maxPrice) {
                                         $q->whereRaw('CASE WHEN discount_price > 0 THEN discount_price ELSE base_price END <= ?', [$maxPrice]);
                                     })
-                                    ->with('attributes');
+                                    ->with(['attributes','seasons']);
                             },
-                            'bedType:id,name'
+                            'bedType:id,name',
                         ]);
-                }
+                },
+                'amenities'
             ])
 
             // Đánh giá trung bình và số lượng

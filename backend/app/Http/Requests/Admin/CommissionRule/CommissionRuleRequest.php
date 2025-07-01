@@ -15,8 +15,8 @@ class CommissionRuleRequest extends BaseRequest
     {
         return [
             'note' => ['nullable', 'string'],
-            'min_amount' => ['required', 'numeric', 'min:0', 'lte:max_amount'],
-            'max_amount' => ['required', 'numeric', 'min:0', 'gte:min_amount'],
+            'min_amount' => ['required', 'numeric', 'min:0'],
+            'max_amount' => ['required', 'numeric', 'min:0'],
             'commission_percent' => ['required', 'numeric', 'min:0'],
             'is_active' => ['nullable']
         ];
@@ -27,8 +27,8 @@ class CommissionRuleRequest extends BaseRequest
         return [
             'id' => ['required', 'exists:App\Models\CommissionRule,id'],
             'note' => ['nullable', 'string'],
-            'min_amount' => ['required', 'numeric', 'min:0', 'lte:max_amount'],
-            'max_amount' => ['required', 'numeric', 'min:0', 'gte:min_amount'],
+            'min_amount' => ['required', 'numeric', 'min:0'],
+            'max_amount' => ['required', 'numeric', 'min:0'],
             'commission_percent' => ['required', 'numeric', 'min:0'],
             'is_active' => ['nullable']
         ];

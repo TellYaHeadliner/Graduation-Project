@@ -73,7 +73,6 @@ export default function FindHotel() {
     }, [provinceFromQuery, startDateFromQuery, endDateFromQuery, adultsFromQuery, childrenFromQuery, roomsFromQuery, dispatch]);
 
     const hotelSearch = useHotelSearch();
-    const queryClient = useQueryClient();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -100,18 +99,8 @@ export default function FindHotel() {
             children: children,
         }
 
-        hotelSearch.mutate(payload, {
-            onSuccess: (data) => {
-                queryClient.setQueryData(['search-result'], data.data);
-                navigate(`/search?${new URLSearchParams(payload as any).toString()}`);
-            },
-
-            onError: (error) => {
-                const errorUtils = new ErrorUtils();
-                errorUtils.handleError(error);
-            }
-        })
-
+        hotelSearch.mutate(payload);
+        navigate(`/search?address=${province}&checkin=${startDate}&checkout=${endDate}&guest=${adults}&children=${children}`);
     }
     return (
         <div className="search-booking">

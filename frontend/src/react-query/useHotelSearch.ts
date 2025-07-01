@@ -1,12 +1,14 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import searchApi from "../api/Search.api";
-import { PayloadSearchParams, SearchResponse } from "../types/SearchTypes";
+import { PayloadSearchParams } from "../types/SearchTypes";
 
 export const useHotelSearch = () => {
-    return useMutation<SearchResponse, Error, PayloadSearchParams>({
-        mutationFn: async (payload) => {
-            const response  = await searchApi.search(payload);
-            return response;
-        }
-    })
-}
+    const queryClient = useQueryClient();
+
+    return useMutation({
+        mutationFn: (payload: PayloadSearchParams) => searchApi.search(payload),
+        onSuccess: (data, variables) => {
+            queryClient.setQueryData(['search-result', variables], data);
+        },
+    });
+};

@@ -1,4 +1,4 @@
-import { MessageResponse, SCFResponse } from "../types/FavoritesTypes";
+import { FHResponse, MessageResponse, SCFResponse } from "../types/FavoritesTypes";
 import api from "./axiosConfig"
 
 const favoriteApi = {
@@ -10,9 +10,11 @@ const favoriteApi = {
 
     shortCheckFavorites: (): Promise<SCFResponse> => {
         return api.get('/hotels/list-favorites')
+    },
+
+    favoriteLists: (): Promise<FHResponse> => {
+        return api.get('/hotels/list-favorites')
     }
 }
-
-
 
 export default favoriteApi;

@@ -18,6 +18,10 @@ import { BookingDetail } from "../types/PaymentTypes";
 import { Skeleton } from "@radix-ui/themes";
 import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
 import catFAQ from "../assets/cat_faq.png"
+import { ReviewForm } from "../components/Form/FormReview";
+import { useCheckReviewQuery } from "../react-query/useReview";
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
+import CarouselImage from "../components/CustomCarousel/Carouselmage";
 
 export default function DetailHotel() {
 
@@ -50,6 +54,8 @@ export default function DetailHotel() {
         localStorage.setItem('totalRoom', JSON.stringify(0));
     }, [])
 
+    const checkReview = useCheckReviewQuery(Number(id));
+
     return (
         <MainLayout>
             <div className="flex lg:mx-26 2xl:mx-47 flex-col text-black">
@@ -69,13 +75,9 @@ export default function DetailHotel() {
                     }
                     {getDetailHotel.data?.data.hotel.address}
                 </div>
-                {/* <div className="flex gap-4">
-                    <img src={`${import.meta.env.VITE_URL}${listGalley[0]}`} alt="" className="w-2/3 h- bg-gray-300" />
-                    <div className="grid grid-cols-1 gap-4 w-1/3">
-                        <img src={listGalley[1]} alt="" className="h-30 rounded bg-gray-300" />
-                        <img src={listGalley[2]} alt="" className="h-30 rounded bg-gray-300" />
-                    </div>
-                </div> */}
+                <div className="flex gap-4">
+                    <CarouselImage listGalley={listGalley} />
+                </div>
                 <div className="flex flex-row mt-4">
                     <div className="lg:w-1/2 w-full mr-4">
 
@@ -141,7 +143,7 @@ export default function DetailHotel() {
                         <FindRoom onSearch={() => setIsSearchRoomType(true)}/>
                     </div>
                     <div>
-                        <TableRoom datas={getRoomType.data?.data.list ?? []} onChange={setBookingDetails}/>
+                        <TableRoom isLoading={getRoomType.isPending} datas={getRoomType.data?.data.list ?? []} onChange={setBookingDetails}/>
                     </div>
 
                     <div className="flex justify-end py-3 items-center">
@@ -177,10 +179,26 @@ export default function DetailHotel() {
                         </div>
                     </div>
                 </div>
+
+                <div>
+                    <h2 className="text-xl font-bold mt-2">
+                        Đánh giá khách sạn chúng tôi
+                    </h2>
+                    <p className="font-thin">
+                        Hãy đánh khách sạn chúng tôi
+                    </p>
+                    {
+                        checkReview.isLoading ? (
+                            <LoadingSpinner />
+                        ) : checkReview.error ? (
+                            <div className="text-red-500">Đã xảy ra lỗi khi kiểm tra đánh giá.</div>
+                        ) : (
+                            <ReviewForm hotel_id={Number(id)} />
+                        )
+                    }
+                    
+                </div>
             </div>
-            {/* <div className="mt-2">
-                <CarouselCard cardList={CardListStaticData} title="Những khách sạn bạn có thể quan tâm" />
-            </div> */}
             <ChatButton />
         </MainLayout>
     )

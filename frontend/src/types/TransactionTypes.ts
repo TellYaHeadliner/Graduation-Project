@@ -10,6 +10,7 @@ export interface BookingPayload {
     booking_details: BookingDetailPayload[];
     booking_combos?: ComboPayload[];
     booking_services?: BookingServicePayload[];
+    voucher?: string;
 }
 export interface ComboPayload{
   combo_id: number;

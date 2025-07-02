@@ -1,19 +1,27 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Currency } from "../../utils/Currency";
+import { useFilter } from "../../context/FilterContext";
 
 interface PriceSliderProps {
     numberRoom: number;
     nightCount: number;
 }
 
-const MIN = Currency.formatVND(0);
-const MAX = Currency.formatVND(24000000);
+const MIN = 0
+const MAX = 24000000;
 
 export default function PriceSlider({ numberRoom, nightCount }: PriceSliderProps) {
 
     const minRef = useRef<HTMLInputElement>(null);
     const maxRef = useRef<HTMLInputElement>(null);
     const [ validateError, setValidateError] = useState<string | null>(null);
+
+    const { filter, updatePriceRange } = useFilter();
+
+    useEffect(() => {
+        if (minRef.current) minRef.current.value = filter.minPrice.toString();
+        if (maxRef.current) maxRef.current.value = filter.maxPrice.toString();
+    }, [filter.minPrice, filter.maxPrice])
 
     const handleValidate = () => {
         const min = Number(minRef.current?.value);
@@ -25,15 +33,20 @@ export default function PriceSlider({ numberRoom, nightCount }: PriceSliderProps
             }
             else {
                 setValidateError(null);
+                updatePriceRange(min, max);
             }
         }
     }
 
     const handleReset = () => {
+        const defaultMin = MIN;
+        const defaultMax = MAX;
         if (minRef.current) minRef.current.value = MIN.toString();
         if (maxRef.current) maxRef.current.value = MAX.toString();
         setValidateError(null);
+        updatePriceRange(defaultMin, defaultMax)
     }
+
 
 
     return (
@@ -53,7 +66,7 @@ export default function PriceSlider({ numberRoom, nightCount }: PriceSliderProps
                         type="number"
                         name="min"
                         id="min"
-                        placeholder={MIN.toString()}
+                        placeholder={Currency.formatVND(MIN)}
                         className="w-full rounded px-2 py-1 text-sm"
                         onChange={handleValidate}
                         ref={minRef}
@@ -65,7 +78,7 @@ export default function PriceSlider({ numberRoom, nightCount }: PriceSliderProps
                         type="number"
                         name="max"
                         id="max"
-                        placeholder={MAX.toString()}
+                        placeholder={Currency.formatVND(MAX)}
                         className="w-full rounded px-2 py-1 text-sm"
                         onChange={handleValidate}
                         ref={maxRef}

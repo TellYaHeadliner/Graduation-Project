@@ -14,6 +14,7 @@ import { BookingDetailPayload, BookingPayload, BookingServicePayload, ComboPaylo
 import { usePaymentMutation } from "../../react-query/usePaymentMutation";
 import { ErrorUtils } from "../../utils/Error";
 import DialogLoading from "../../components/Dialog/DialogLoading";
+import DiscountBar from "../../components/Discount/DiscountBar";
 
 
 
@@ -53,7 +54,8 @@ export default function Payment() {
             note: data.note ?? undefined,
             booking_details: getInfoSelectedRoomWithoutName,
             booking_combos: getInfoSelectedComboWithoutName,
-            booking_services: getInfoSelectedServiceWithoutName
+            booking_services: getInfoSelectedServiceWithoutName,
+            voucher: data.code ?? undefined
         }
         mutation.mutate(payloadData, {
             onSuccess: (data) => {
@@ -73,6 +75,8 @@ export default function Payment() {
         })
     }
 
+    const hotelDetail = useHotelDetailQuery(Number(id));
+    const voucherList = hotelDetail.data?.data.hotel.vouchers;
 
     return (
         <PaymentLayout>
@@ -109,12 +113,21 @@ export default function Payment() {
                                 <label htmlFor="note" className="block-text-sm font-medium text-gray-700">Ghi chú</label>
                                 <input {...register("note")} type="text" className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none" />
                             </div>
+                            <div>
+                                <label htmlFor="code" className="block-text-sm font-medium text-gray-700">Voucher (Nếu có)</label>
+                                <input {...register("code")} type="text" className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none" />
+                            </div>
                             <button type="submit" className="py-2 px-4 bg-blue-500 hover:bg-accent text-white font-semibold rounded-lg transition duration-200">
                                 Thanh toán
                             </button>
                         </form>
+                        <div className="mt-2">
+                            <DiscountBar discountList={voucherList ?? []} />
+                        </div>
                     </div>
+
                     <div className="w-1/2 flex flex-col justify-start items-end">
+
                         <CardHotel dataHotel={getHotelDetail} />
                         <div className="mt-2">
                             <DataListRoomPayment infoSelectedRoom={getInfoSelectedRoom} />

@@ -1,19 +1,27 @@
+import { useFilter } from '../../context/FilterContext';
+import { Amentity } from '../../types/AmentityTypes';
 import AccordiionFilterComfortCommon from '../Accordion/AccordionFilterComfortCommon';
 import AccordionFilterStar from '../Accordion/AccordionFilterStar';
-import AccordionFilterSupport from '../Accordion/AccordionFilterSupport';
-import AccordionFilterRate from '../Accordion/AccorditonFilterRate';
 import PriceSlider from './PriceSlider';
 
-export default function NavBarFilter(){
+interface Props{
+    amenties: Amentity[];
+}
+
+export default function NavBarFilter({ amenties }: Props){
+    const { updateStars } = useFilter();
+
     return (
         <nav className="w-64 px-auto rounded space-y-4 py-3 text-sm text-white">
-            <PriceSlider numberRoom={1} nightCount={1} />
-            <AccordionFilterRate />
-            <AccordionFilterStar defaultSelected={[3, 4]} />
-            <AccordiionFilterComfortCommon title="Tiện nghi phổ biến" />
-            <AccordionFilterSupport />
-            <AccordiionFilterComfortCommon title="Tiện nghi độc đáo" />
-            <AccordiionFilterComfortCommon title="Tiện nghi phòng" />
+            <PriceSlider numberRoom={0} nightCount={0} />
+            <AccordionFilterStar onFilterChange={updateStars}/>
+            {
+                amenties.map((amentity) => (
+                    <div key={amentity.id}>
+                        <AccordiionFilterComfortCommon title={amentity.name} children={amentity.children}/>
+                    </div>
+                ))
+            }
         </nav>
     )
 }

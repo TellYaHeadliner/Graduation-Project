@@ -24,6 +24,7 @@ export default function HistoryBooking() {
     }, [message, status])
 
     const getBookingHistory = useBookingHistoryQuery();
+    console.log(getBookingHistory.data?.data)
 
     return (
         <PersonalLayout>
@@ -34,14 +35,14 @@ export default function HistoryBooking() {
             }
             <div className="flex w-full my-4 mx-16">
                 <div className="ml-10">
-                    <h1 className="font-bold text-xl mb-2">
+                    <h1 className="font-bold text-xl mb-2 ml-2">
                         Tất cả khách sạn đang đặt phòng
                     </h1>
                     {
                         getBookingHistory.isPending ? (
                             <Spinner />
                         ) : (
-                            <div>
+                            <div className="overflow-x-auto">
                                 <TableHistory datas={getBookingHistory.data?.data ?? []}/>
                             </div>
                         )

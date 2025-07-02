@@ -1,57 +1,101 @@
-import { CardListStaticData, CardListWithPriceData } from '../../utils/CardListStaticData';
+import { Button } from '@radix-ui/themes';
+import { CardSearch } from '../../types/SearchTypes';
 import { Currency } from '../../utils/Currency';
 
-export default function CardItemSearch() {
-    return (
-        <div className="flex border rounded-lg shadow-md overflow-hidden max-w-4xl">
-        {/* Left section - Image and labels */}
-        <div className="w-1/3 relative">
-          <img
-            src="https://cf.bstatic.com/xdata/images/hotel/square600/665433940.webp?k=89858a85508ff5cc888a9ed0681fda9f8974c5395a383f58a436d266facc8707&o="
-            alt="Hotel"
-            className="w-50 h-50 object-cover"
-          />
-        </div>
+interface CardItemSearchProps {
+  data: CardSearch;
+}
+const showPrice = (basePrice: number, discountPrice: number | null) => (
+  <div className="text-right mt-2">
+    { discountPrice ? (
+      <>
+        <span className="text-red-600 text-lg">{Currency.formatVND(discountPrice)}</span>
+        <span className="text-sm text-gray-500 line-through ml-2">
+          {Currency.formatVND(basePrice)}
+        </span>
+      </>
+    ) : (
+      <span className='text-red-600 font-bold text-lg'>
+        {Currency.formatVND(basePrice)}
+      </span>
+    )}
+  </div>
+)
+
+export default function CardItemSearch({ data }: CardItemSearchProps) {
+
   
-        {/* Middle section - Details */}
-        <div className="w-2/3 p-4 flex flex-col justify-between">
+  return (
+    <div className="flex border rounded-lg shadow-md overflow-hidden max-w-4xl bg-white">
+      {/* Left section - Image and labels */}
+      <div className="basis-2/5 relative bg-gray-100">
+        <img
+          src={import.meta.env.VITE_URL + data?.avatar}
+          className="w-100 h-full object-cover"
+        />
+      </div>
+
+      {/* Middle section - Details */}
+      <div className="basis-2/4 p-4 flex flex-col justify-between">
+        <div>
+          <h2 className="text-lg font-semibold">{data.name}</h2>
+          <div className="flex items-center text-sm text-blue-600 mt-1">
+            <span className="mr-2 py-1 rounded bg-blue-600 px-2 text-white flex items-center gap-1">
+              {data.average_star} 
+            </span>
+            <span>{data.total_reviews} đánh giá</span>
+          </div>
+          <div className="text-sm text-gray-500 mt-1">📍 {data.address}</div>
+        </div>
+        {/* Thêm các tag, tiện nghi tại đây nếu có */}
+        <div className="flex flex-wrap mt-2 gap-1 text-xs text-white">
+          {
+            data.amenities.map((amentity, index) => (
+              <span key={index} className="bg-blue-500 px-2 py-1 rounded">
+                {amentity.name}
+              </span>
+            ))
+          }
+        </div>
+        <div className="mt-3 text-sm text-gray-700 space-y-1">
+          <div className="font-medium text-black">
+            {data.room_type.name}
+          </div>
+
+          <div className="grid grid-cols-2 gap-y-1 mt-1">
+            <div className="flex items-center">
+              <span>
+                🛏️ {data.room_type.bed_quantity} {data.room_type.bed_type}
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span>
+                👤 <span>{data.room_type.guest} người lớn</span>
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span>
+                🧒 <span>{data.room_type.children} trẻ em</span>
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              <span>
+                ✅ <span>{data.room_type.cancellation}</span>
+              </span>
+            </div>
+            <div className="flex items-center gap-1">
+              {showPrice(data.room_type.base_price, data.room_type.discount_price)}
+            </div>
+          </div>
+
           <div>
-            <h2 className="text-lg font-semibold">
-              {CardListStaticData[0].title}
-            </h2>
-            <div className="flex items-center text-sm text-blue-600">
-              <span className="mr-2 px-2 py-1 rounded px-auto bg-blue-500 text-white">70</span>
-              <span>{CardListStaticData[0].reviewCount} đánh giá</span>
-            </div>
-            <div className="text-sm text-gray-500 mt-1">📍 {CardListStaticData[0].address}</div>
-  
-            <div className="flex flex-wrap mt-2 gap-1 text-xs text-gray-600">
-              <span className="bg-gray-100 px-2 py-1 rounded">Bóng bàn</span>
-              <span className="bg-gray-100 px-2 py-1 rounded">Khu vui chơi trẻ em</span>
-              <span className="bg-gray-100 px-2 py-1 rounded">Quần vợt</span>
-              <span className="bg-gray-100 px-2 py-1 rounded">Mát-xa</span>
-              <span className="bg-gray-100 px-2 py-1 rounded">Trung tâm thể dục thể hình</span>
-              <span className="bg-gray-100 px-2 py-1 rounded">1+</span>
-            </div>
-            <div className="flex flex-wrap mt-2 gap-1 text-xs text-white">
-              <span className="bg-red-500 px-2 py-1 rounded">Khuyến mãi</span>
-              <span className="bg-yellow-500 px-2 py-1 rounded">Giảm giá</span>
-              <span className="bg-blue-300 px-2 py-1 rounded">Khuyến mãi cuối tuần</span>
-            </div>
+            <Button>
+              Xem chi tiết phòng
+            </Button>
           </div>
-  
-        </div>
-  
-        <div className="w-1/4 p-4 flex flex-col items-end justify-between bg-white">
-          <div className="text-right mt-2">
-            <div className="text-xl font-bold bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent animate-rainbow">50%</div>
-            <div className="line-through text-gray-400 text-sm">{Currency.formatVND(CardListWithPriceData[0].discountPrice)}</div>
-            <div className="text-orange-600 text-lg font-bold">{Currency.formatVND(CardListWithPriceData[0].price)}</div>
-          </div>
-          <button className="mt-4 bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600">
-            Chọn phòng
-          </button>
+
         </div>
       </div>
-    )
+    </div>
+  )
 }

@@ -25,7 +25,7 @@ export const useFavorite = () => {
         
                 const newData = oldData.data.map((item: any) =>
                   item.id === hotel_id
-                    ? { ...item, is_favorite: !item.is_favorite } // đảo trạng thái
+                    ? { ...item, is_favorite: !item.is_favorite } 
                     : item
                 );
         

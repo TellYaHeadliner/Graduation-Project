@@ -13,9 +13,11 @@ import { CheckIcon } from "@radix-ui/react-icons";
 import FindRoom from "../components/FindHotel/FindRoom";
 import { useFindRoomContext } from "../context/FindRoomContext";
 import { useHotelRoomTypesQuery } from '../react-query/useHotelRoomTypesQuery';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BookingDetail } from "../types/PaymentTypes";
 import { Skeleton } from "@radix-ui/themes";
+import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
+import catFAQ from "../assets/cat_faq.png"
 
 export default function DetailHotel() {
 
@@ -37,6 +39,16 @@ export default function DetailHotel() {
     const getRoomType = useHotelRoomTypesQuery(Number(id), state.dateRange[0] , state.dateRange[1], state.adults, state.children, state.rooms, isSearchRoomType)
 
     const [bookingDetails, setBookingDetails] = useState<BookingDetail[]>([]);
+
+    useEffect(() => {
+        localStorage.setItem('comboTotal', JSON.stringify(0));
+        localStorage.setItem('infoSelectedCombos', JSON.stringify([]));
+        localStorage.setItem('infoSelectedRoom', JSON.stringify([]));
+        localStorage.setItem('infoSelectedService', JSON.stringify([]));
+        localStorage.setItem('numberOfNights', JSON.stringify(0));
+        localStorage.setItem('serviceTotal', JSON.stringify(0));
+        localStorage.setItem('totalRoom', JSON.stringify(0));
+    }, [])
 
     return (
         <MainLayout>
@@ -151,7 +163,7 @@ export default function DetailHotel() {
                         <DataListRule hotelRule={getDetailHotel.data?.data.hotel.rules} />
                     </div>
                 </div>
-                {/* <div>
+                <div>
                     <h2 className="text-xl font-bold mt-2">
                         FAQ (Câu hỏi thường xuyên về khách sạn)
                     </h2>
@@ -164,7 +176,7 @@ export default function DetailHotel() {
                             <AccordionFAQHotel />
                         </div>
                     </div>
-                </div> */}
+                </div>
             </div>
             {/* <div className="mt-2">
                 <CarouselCard cardList={CardListStaticData} title="Những khách sạn bạn có thể quan tâm" />

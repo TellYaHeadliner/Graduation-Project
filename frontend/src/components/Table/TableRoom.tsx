@@ -199,19 +199,22 @@ export default function TableRoom({ datas, onChange }: TableRoomProps) {
 
                                         {/* Số lượng đặt */}
                                         <td className="px-4 py-3 border-r text-end">
-                                            {data.available_room_count && (
-                                                <input
-                                                    type="number"
-                                                    min={0}
-                                                    max={data.available_room_count}
-                                                    value={quantities[`${data.id}-${variant.id}`] || ""}
-                                                    onChange={(e) => {
-                                                        handleQuantityChange(data.id, variant.id, Number(e.target.value))
-                                                    }}
-                                                    className="w-14 border border-gray-300 rounded px-2 py-1 text-sm"
-
-                                                />
-                                            )}
+                                            <select 
+                                            name="room_quantity" 
+                                            value={quantities[`${data.id}-${variant.id}`] || ""}
+                                            onChange={(e) => {
+                                                handleQuantityChange(data.id, variant.id, Number(e.target.value))
+                                            }}
+                                            >
+                                                <option value={0}>0 phòng</option>
+                                                {data.available_room_count &&
+                                                    Array.from({ length: data.available_room_count }, (_, i) => (
+                                                        <option key={i + 1} value={i + 1}>
+                                                            {i + 1} phòng
+                                                        </option>
+                                                    ))
+                                                }
+                                            </select>
                                         </td>
 
                                         {/* Ghi chú */}

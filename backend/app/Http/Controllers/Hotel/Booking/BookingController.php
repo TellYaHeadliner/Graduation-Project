@@ -261,7 +261,6 @@ class BookingController extends Controller
                 }
                 $booking->update(['status' => BookingStatus::Cancelled->value]);
             }
-
             DB::commit();
             return redirect()->route($this->route['index'], ['hotel_id' => $hotel_id])->with('success', 'Cập nhập thành công');
         } catch (Exception $e) {

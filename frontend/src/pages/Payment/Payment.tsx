@@ -30,17 +30,18 @@ export default function Payment() {
     const getComboTotal = Number(JSON.parse(localStorage.getItem('comboTotal') ?? '[]'));
     const getServiceToal = Number(JSON.parse(localStorage.getItem('serviceTotal') ?? '[]'));
     const getTotalRoom = Number(JSON.parse(localStorage.getItem('totalRoom') ?? '[]'));
+    const numberOfNights = JSON.parse(localStorage.getItem('numberOfNights') || '0');
     const total = getComboTotal + getServiceToal + getTotalRoom;
     const findRoom = JSON.parse(localStorage.getItem('findRoom') ?? '{}');
-    const [checkInDay, checkOutDay ] = findRoom?.dateRange ?? [];
+    const [checkInDay, checkOutDay] = findRoom?.dateRange ?? [];
 
-    const { register ,handleSubmit } = useForm<PaymentSchema>({
+    const { register, handleSubmit } = useForm<PaymentSchema>({
         resolver: zodResolver(paymentSchemas)
     });
 
     const mutation = usePaymentMutation();
     type WithName<T> = T & { name: string };
-    
+
     const onSubmit = (data: PaymentSchema) => {
         const getInfoSelectedRoomWithoutName = (getInfoSelectedRoom as WithName<BookingDetailPayload>[]).map(({ name, ...rest }) => rest);
         const getInfoSelectedComboWithoutName = (getInfoSelectedCombos as WithName<ComboPayload>[]).map(({ name, ...rest }) => rest);
@@ -60,12 +61,12 @@ export default function Payment() {
         mutation.mutate(payloadData, {
             onSuccess: (data) => {
                 const message = data?.message;
-                if (message == "Không thể đặt booking mới vì bạn đã có một booking trong thời gian này"){
+                if (message == "Không thể đặt booking mới vì bạn đã có một booking trong thời gian này") {
                     errorHandler.handleError(message)
                 }
                 const url = data?.url;
 
-                if (url){
+                if (url) {
                     window.open(url, "_self");
                 }
             },
@@ -90,12 +91,12 @@ export default function Payment() {
                     </p>
                 </div>
 
-                <div className="flex w-full">
-                    <div className="w-1/2">
+                <div className="flex flex-col lg:flex-row w-full gap-6">
+                    <div className="lg:w-1/2 w-full">
                         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
                             <div>
                                 <label htmlFor="checkIn" className="block-text-sm font-medium text-gray-700">Check-in</label>
-                                <select {...register("check_in")} defaultValue={checkInDay}  className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none">
+                                <select {...register("check_in")} defaultValue={checkInDay} className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none">
                                     <option value={checkInDay}>
                                         {checkInDay}
                                     </option>
@@ -126,7 +127,7 @@ export default function Payment() {
                         </div>
                     </div>
 
-                    <div className="w-1/2 flex flex-col justify-start items-end">
+                    <div className="lg:w-1/2 w-full flex flex-col gap-3">
 
                         <CardHotel dataHotel={getHotelDetail} />
                         <div className="mt-2">
@@ -136,7 +137,7 @@ export default function Payment() {
                             <DataListServicesPayment comboSelection={getInfoSelectedCombos} serviceSelection={getInfoSelectedService} />
                         </div>
                         <div className="bg-gray-100 rounded-xl p-4 text-lg font-medium mt-2 w-[320px]">
-                            Tổng tiền: {Currency.formatVND(total)}
+                            Tổng tiền {Number(numberOfNights)} đêm : {Currency.formatVND(total)}
                         </div>
                     </div>
                 </div>

@@ -3,8 +3,15 @@ import { Currency } from "../../utils/Currency";
 import DialogDetailHotel from "../Dialog/DialogDetailHotel";
 import { FaChild, FaUser } from "react-icons/fa6";
 import { RoomType } from "../../types/RoomTypes";
+import { Rule } from "../../types/DetailHotelTypes";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../Loading/LoadingSpinner";
+import { CheckIcon } from "@radix-ui/react-icons";
+import { MdOutlineCancel } from "react-icons/md";
+import { LuBedSingle } from "react-icons/lu";
+import { MdBed } from "react-icons/md";
+
+
 
 interface TableRoomProps {
     datas: RoomType[];
@@ -14,40 +21,56 @@ interface TableRoomProps {
         quantity: number;
         name: string;
     }[]) => void;
-    isLoading?: boolean
+    isLoading?: boolean;
+    hotelRule?: Rule
 }
 
-export default function TableRoom({ datas, onChange, isLoading }: TableRoomProps) {
+export default function TableRoom({ datas, onChange, isLoading, hotelRule }: TableRoomProps) {
     const numberOfNights = JSON.parse(localStorage.getItem('numberOfNights') || '0');
     const [quantities, setQuantities] = useState<Record<string, number>>({});
+    const Rule = hotelRule;
     const handleQuantityChange = (roomTypeId: number, variantId: number, quantity: number) => {
         const key = `${roomTypeId}-${variantId}`;
         const updated = { ...quantities, [key]: quantity };
         setQuantities(updated);
 
         const details = Object.entries(updated).filter(([_, q]) => q > 0)
-        .map(([key, quantity]) => {
-            const [room_type_id, room_type_variant_id] = key.split("-").map(Number);
-            const room = datas.find(d => d.id === room_type_id);
-            return {
-                room_type_id,
-                room_type_variant_id,
-                quantity,
-                name: room?.name || ""
-            };
-        });
+            .map(([key, quantity]) => {
+                const [room_type_id, room_type_variant_id] = key.split("-").map(Number);
+                const room = datas.find(d => d.id === room_type_id);
+                const variant = room?.variants.find(v => v.id === room_type_variant_id);
+
+                let finalPrice = variant?.base_price ?? 0;
+
+                if (variant?.discount_price && variant.discount_price > 0) {
+                    finalPrice = variant.discount_price;
+                }
+
+                if (variant?.seasons.length) {
+                    const firstSeason = variant.seasons[0]; 
+                    finalPrice = seasonsPrice(finalPrice, firstSeason.discount_type, firstSeason.discount_value);
+                }
+
+                return {
+                    room_type_id,
+                    room_type_variant_id,
+                    quantity,
+                    name: room?.name || "",
+                    price: finalPrice 
+                };
+            });
         localStorage.setItem('infoSelectedRoom', JSON.stringify(details));
         onChange(details);
     }
 
-    function seasonsPrice(basePrice: number, discounType = 0, discountValue = 0): number {
+    function seasonsPrice(Price: number, discounType = 0, discountValue = 0): number {
         if (discounType === 0) {
-            return (basePrice - discountValue) ;
+            return (Price - discountValue);
         }
         if (discounType === 1) {
-            return basePrice - (basePrice * (discountValue / 100)) ;
+            return Price - (Price * (discountValue / 100));
         }
-        return basePrice;
+        return Price;
     }
 
     const calculateTotalRooms = (): number => {
@@ -65,10 +88,10 @@ export default function TableRoom({ datas, onChange, isLoading }: TableRoomProps
 
             if (!variant) return;
 
-            let price = variant.base_price;
+            let price = (variant.discount_price && variant.discount_price > 0) ? variant.discount_price : variant.base_price;
 
             if (variant.seasons.length > 0) {
-                const firstSeason = variant.seasons[0]; // hoặc chọn theo logic khác
+                const firstSeason = variant.seasons[0];
                 price = seasonsPrice(price, firstSeason.discount_type, firstSeason.discount_value);
             }
 
@@ -95,10 +118,8 @@ export default function TableRoom({ datas, onChange, isLoading }: TableRoomProps
         const dd = pad(vnTime.getDate());
         const MM = pad(vnTime.getMonth() + 1);
         const yyyy = pad(vnTime.getFullYear() + 1);
-        const hh = pad(vnTime.getHours());
-        const mm = pad(vnTime.getMinutes());
 
-        return `${dd}/${MM}/${yyyy} ${hh}:${mm}`
+        return `${dd}/${MM}/${yyyy} ${Rule?.check_in_time}`
     }
 
     return (
@@ -137,8 +158,6 @@ export default function TableRoom({ datas, onChange, isLoading }: TableRoomProps
                     ) : (
                         datas.map((data, dataIndex) => {
                             if (data.variants.length === 0) {
-
-                                // ⚠️ Phòng không có biến thể
                                 return (
                                     <tr key={`room-${dataIndex}`} className="border-t border-gray-300">
                                         <td className="px-4 py-3 border-r">
@@ -154,12 +173,15 @@ export default function TableRoom({ datas, onChange, isLoading }: TableRoomProps
                                 );
                             }
 
-                            // ✅ Phòng có biến thể
+
                             return data.variants.map((variant, vIndex) => {
                                 const adults = variant.attributes.find(attr => attr.name === "Người lớn");
                                 const children = variant.attributes.find(attr => attr.name === "Trẻ em");
                                 const notes = variant.attributes.slice(2, 5);
-                                const cancel = variant.attributes.find(attr => attr.name === "Miễn phí huỷ trước 24h và thu phí sau đó");
+                                const cancel = variant.attributes.find(attr =>
+                                    attr.name === "Miễn phí huỷ trước 24h và thu phí sau đó" ||
+                                    attr.name === "Không hoàn tiền"
+                                );
                                 const isEmptySeasons = variant.seasons.length === 0;
                                 const seasons = variant.seasons
 
@@ -178,7 +200,23 @@ export default function TableRoom({ datas, onChange, isLoading }: TableRoomProps
                                                 <div className="font-medium text-blue-700">
                                                     <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} />
                                                 </div>
-                                                <div className="text-sm text-gray-600">Loại giường: {data.bed?.type_name}</div>
+                                                <div className="text-sm text-gray-600 mt-2 flex items-center gap-1">
+                                                    {data.bed?.quantity} {data.bed?.type_name}
+                                                    {data.bed?.type_name === "Giường Đơn" ? (
+                                                        <LuBedSingle className="w-4 h-4 text-gray-500" />
+                                                    ) : (
+                                                        <MdBed className="w-4 h-4 text-gray-500" />
+                                                    )}
+                                                </div>
+                                                <div className="text-sm text-gray-600 flex flex-wrap gap-2 mt-2">
+                                                    {data.amenities.map((a, index) => (
+                                                        <div key={index} className="flex items-center gap-1">
+                                                            <CheckIcon className="text-green-500 w-4 h-4" />
+                                                            <span>{a.name}</span>
+                                                            {index < data.amenities.length - 1 && <span>,</span>}
+                                                        </div>
+                                                    ))}
+                                                </div>
                                             </td>
                                         )}
 
@@ -188,9 +226,10 @@ export default function TableRoom({ datas, onChange, isLoading }: TableRoomProps
                                                 Array.from({ length: adults.value }).map((_, i) => (
                                                     <FaUser key={`adult-${vIndex}-${i}`} className="inline-block w-5 h-5 text-blue-600 mr-1" />
                                                 ))}
+                                            {adults && children && <span className="mx-1 text-gray-500">+</span>}
                                             {children &&
                                                 Array.from({ length: children.value }).map((_, i) => (
-                                                    <FaChild key={`child-${vIndex}-${i}`} className="inline-block w-5 h-5 text-pink-500 mr-1" />
+                                                    <FaChild key={`child-${vIndex}-${i}`} className="inline-block w-5 h-5 text-blue-500 mr-1" />
                                                 ))}
                                         </td>
 
@@ -199,17 +238,60 @@ export default function TableRoom({ datas, onChange, isLoading }: TableRoomProps
                                             {isEmptySeasons && !variant.discount_price && (
                                                 <p className="font-medium cursor-pointer">{Currency.formatVND(variant.base_price)}</p>
                                             )}
-                                            {seasons.length > 0 && (
+                                            {isEmptySeasons && variant.discount_price && (
                                                 <div>
                                                     <p className="font-thin text-xs line-through cursor-pointer">
                                                         {Currency.formatVND(variant.base_price)}
                                                     </p>
-                                                    {variant.seasons.map((season, index) => (
-                                                        <p className="text-red-500 font-medium cursor-pointer text-end" key={index}>
-                                                            {season.name}: {Currency.formatVND(seasonsPrice(variant.base_price, season.discount_type, season.discount_value))}
+                                                    <div className="flex flex-col items-end gap-1 mt-1">
+                                                        <p className="text-red-500 font-medium cursor-pointer text-end">
+                                                            {Currency.formatVND(variant.discount_price)}
                                                         </p>
-                                                    ))}
+                                                        {variant.base_price > 0 && (
+                                                            <span className="inline-block bg-[#008234] text-white text-xs font-medium rounded-[6px] px-2 py-[2px]">
+                                                                Tiết kiệm {Math.round(((variant.base_price - variant.discount_price) / variant.base_price) * 100)}%
+                                                            </span>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            {seasons.length > 0 && (
+                                                <div>
+                                                    {(variant.discount_price && variant.discount_price > 0)
+                                                        ? (
+                                                            <p className="font-thin text-xs line-through cursor-pointer">
+                                                                {Currency.formatVND(variant.discount_price)}
+                                                            </p>
+                                                        ) : (
+                                                            <p className="font-thin text-xs line-through cursor-pointer">
+                                                                {Currency.formatVND(variant.base_price)}
+                                                            </p>
+                                                        )
+                                                    }
+                                                    {variant.seasons.map((season, index) => {
+                                                        const price = (variant.discount_price && variant.discount_price > 0)
+                                                            ? variant.discount_price
+                                                            : (variant.base_price ?? 0);
 
+                                                        const priceAfter = seasonsPrice(price, season.discount_type, season.discount_value);
+                                                        const discountPercent = Math.round(((price - priceAfter) / price) * 100);
+
+                                                        return (
+                                                            <div className="flex flex-col items-end gap-1 mt-1" key={index}>
+                                                                <p className="text-red-500 font-medium cursor-pointer text-end">
+                                                                    {Currency.formatVND(seasonsPrice(price, season.discount_type, season.discount_value))}
+                                                                </p>
+                                                                <span className="inline-block bg-[#008234] text-white text-xs font-medium rounded-[6px] px-2 py-[2px]">
+                                                                    {season.name}
+                                                                </span>
+                                                                {discountPercent > 0 && (
+                                                                    <span className="inline-block bg-[#008234] text-white text-xs font-medium rounded-[6px] px-2 py-[2px]">
+                                                                        Tiết kiệm {discountPercent}%
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        );
+                                                    })}
                                                 </div>
                                             )}
                                         </td>
@@ -248,15 +330,27 @@ export default function TableRoom({ datas, onChange, isLoading }: TableRoomProps
 
                                         {/* Ghi chú */}
                                         <td className="px-6 py-3 border-r text-sm text-gray-700">
-                                            <ul className="list-disc pl-4">
+                                            <ul className="list-disc">
                                                 {notes.map((note, index) => (
-                                                    <li key={index}>{note.name}</li>
+                                                    <li key={index} className="flex items-start gap-2 mb-1">
+                                                        {note.name.toLowerCase().includes("không hoàn tiền") ? (
+                                                            <MdOutlineCancel className="text-red-500 w-5 h-5 mt-1" />
+                                                        ) : (
+                                                            <CheckIcon className="text-green-500 w-5 h-5 mt-1" />
+                                                        )}
+                                                        <span className="font-medium">{note.name}</span>
+                                                    </li>
                                                 ))}
                                             </ul>
-                                            {cancel && (
-                                                <p className="text-xs font-thin text-gray-500 mt-1 italic">
-                                                    Ghi chú: Phải huỷ đặt phòng trước {timeToFreeCancel()} sau thời gian đó giá hủy là {Currency.formatVND(cancel.value)}
-                                                </p>
+                                            {cancel?.name === "Miễn phí huỷ trước 24h và thu phí sau đó" && (
+                                                <div>
+                                                    <p className="text-xs font-medium text-green-500 mt-1 italic">
+                                                        Miễn phí huỷ đặt phòng trước {timeToFreeCancel()}
+                                                    </p>
+                                                    <p className="text-xs font-medium text-red-500 mt-1 italic">
+                                                        Phí huỷ đặt phòng sau {timeToFreeCancel()} là {Currency.formatVND(cancel.value)}
+                                                    </p>
+                                                </div>
                                             )}
                                         </td>
                                     </tr>

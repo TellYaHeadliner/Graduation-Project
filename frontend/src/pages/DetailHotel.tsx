@@ -59,7 +59,7 @@ export default function DetailHotel() {
     return (
         <MainLayout>
             <div className="flex lg:mx-26 2xl:mx-47 flex-col text-black">
-                <div className="my-3">
+                <div className="my-3 mt-5 font-medium">
                     <Breadcrumb items={breadcrumbItems} />
                 </div>
                 <h1 className="text-3xl font-bold">
@@ -87,7 +87,7 @@ export default function DetailHotel() {
                         ): (
                             <div className="text-lg text-justify" dangerouslySetInnerHTML={{ __html: getDetailHotel.data?.data.hotel.description ?? "" }} />
                         )}
-                        <h2 className="text-lg font-semibold mt-2">
+                        <h2 className="text-lg font-semibold mt-5">
                             Các tiện nghi chúng tôi có
                         </h2>
                         <div>
@@ -100,7 +100,7 @@ export default function DetailHotel() {
                                 ))}
                             </ul>
                         </div>
-                        <h2 className="text-lg font-semibold mt-2">
+                        <h2 className="text-lg font-semibold mt-5">
                             Các dịch vụ chúng tôi có
                         </h2>
                         {getDetailHotel.isPending && (
@@ -134,7 +134,7 @@ export default function DetailHotel() {
                         <CarouselComment /> */}
                     </div>
                 </div>
-                <div className="flex flex-col mt-4">
+                <div className="flex flex-col mt-6">
                     <h2 className="text-xl font-semibold">
                         Lựa chọn loại phòng
                     </h2>
@@ -142,8 +142,8 @@ export default function DetailHotel() {
                     <div className="mb-4">
                         <FindRoom onSearch={() => setIsSearchRoomType(true)}/>
                     </div>
-                    <div>
-                        <TableRoom isLoading={getRoomType.isPending} datas={getRoomType.data?.data.list ?? []} onChange={setBookingDetails}/>
+                    <div >
+                        <TableRoom isLoading={getRoomType.isPending} datas={getRoomType.data?.data.list ?? []} onChange={setBookingDetails} hotelRule={getDetailHotel.data?.data.hotel.rules}/>
                     </div>
 
                     <div className="flex justify-end py-3 items-center">
@@ -154,7 +154,7 @@ export default function DetailHotel() {
                         />
                     </div>
                 </div>
-                <div>
+                <div className="mt-5">
                     <h2 className="text-xl font-bold mt-2">
                         Đây là quy định của khách sạn chúng tôi
                     </h2>
@@ -165,7 +165,7 @@ export default function DetailHotel() {
                         <DataListRule hotelRule={getDetailHotel.data?.data.hotel.rules} />
                     </div>
                 </div>
-                <div>
+                <div className="mt-5">
                     <h2 className="text-xl font-bold mt-2">
                         FAQ (Câu hỏi thường xuyên về khách sạn)
                     </h2>
@@ -180,13 +180,10 @@ export default function DetailHotel() {
                     </div>
                 </div>
 
-                <div>
+                <div className="mt-5 mb-5">
                     <h2 className="text-xl font-bold mt-2">
-                        Đánh giá khách sạn chúng tôi
+                        Đánh giá khách sạn 
                     </h2>
-                    <p className="font-thin">
-                        Hãy đánh khách sạn chúng tôi
-                    </p>
                     {
                         checkReview.isLoading ? (
                             <LoadingSpinner />

@@ -1,11 +1,11 @@
 import { DataList } from "@radix-ui/themes";
 import { Rule } from '../../types/DetailHotelTypes';
 
-interface DataListRuleProps{
+interface DataListRuleProps {
     hotelRule: Rule | undefined;
 }
 
-export default function DataListRule({ hotelRule } : DataListRuleProps) {
+export default function DataListRule({ hotelRule }: DataListRuleProps) {
     return (
         <div className="rounded-lg border border-gray-300 p-4">
             <DataList.Root>
@@ -27,7 +27,13 @@ export default function DataListRule({ hotelRule } : DataListRuleProps) {
                 <DataList.Item className="border-b border-gray-300 py-2">
                     <DataList.Label className="border-r border-gray-300">Cho phép trẻ em</DataList.Label>
                     <DataList.Value className="border-r border-gray-300">
-                        {hotelRule?.child_policy === true ? "Cho phép trẻ em" : "Không cho phép trẻ em"}
+                        {hotelRule?.child_policy === true ? (
+                            <span>
+                                Cho phép trẻ em (Giới hạn độ tuổi: dưới {hotelRule.child_age_limit} tuổi)
+                            </span>
+                        ) : (
+                            <span>Không cho phép trẻ em</span>
+                        )}
                     </DataList.Value>
                 </DataList.Item>
 

@@ -33,6 +33,13 @@ export default function HomeRoutes() {
                     </FindRoomProvider>
                 </Suspense>
             } />
+            <Route path={PATH.TINHTHANH} element={
+                <Suspense fallback={<LoadingPage />}>
+                    <FindRoomProvider>
+                        <ResultSearch />
+                    </FindRoomProvider>
+                </Suspense>
+            } />
         </>
 
 

@@ -12,9 +12,6 @@ import { useHotelSeasonsQuery } from "../react-query/useHotelSeasonsQuery";
 import { ErrorUtils } from "../utils/Error";
 import LoadingSpinner from "../components/Loading/LoadingSpinner";
 import { FindHotelProvider } from "../context/FindHotelContext";
-import { useHotelSearch } from "../react-query/useHotelSearch";
-import DialogLoading from "../components/Dialog/DialogLoading";
-import { useQueryClient } from "@tanstack/react-query";
 
 export default function Home() {
     useTitle("Roomix");

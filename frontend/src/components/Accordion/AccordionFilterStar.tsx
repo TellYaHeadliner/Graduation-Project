@@ -4,7 +4,6 @@ import { useState } from "react";
 
 interface AccordionFilterStarProps {
     onFilterChange?: (selectedStars: number[]) => void;
-    defaultSelected?: number[];
 }
 
 const starOptions = [
@@ -30,8 +29,8 @@ const starOptions = [
     },
 ]
 
-export default function AccordionFilterStar({onFilterChange, defaultSelected = []}: AccordionFilterStarProps){
-    const [selectedStars, setSelectedStars] = useState<number[]>(defaultSelected)
+export default function AccordionFilterStar({onFilterChange}: AccordionFilterStarProps){
+    const [selectedStars, setSelectedStars] = useState<number[]>([]);
 
     const handleStarToggle = (starValue: number) => {
         const newSelection = selectedStars.includes(starValue) ? selectedStars.filter(star => star !== starValue) : [...selectedStars, starValue]
@@ -46,7 +45,7 @@ export default function AccordionFilterStar({onFilterChange, defaultSelected = [
                 <Accordion.Item value="item-1">
                     <Accordion.Header>
                         <Accordion.Trigger className="group flex justify-between items-center font-medium gap-1">
-                            Theo số sao khách sạn
+                            Theo đánh giá trung bình
                             <ChevronDownIcon className="transition-transform duration-200 group-data-[state=open]:rotate-180" />
                         </Accordion.Trigger>
                     </Accordion.Header>

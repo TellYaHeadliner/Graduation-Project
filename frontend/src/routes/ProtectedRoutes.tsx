@@ -6,7 +6,6 @@ import LoadingPage from "../pages/LoadingPage";
 
 
 const Payment = lazy(() => import("../pages/Payment/Payment"))
-const InfoPayment = lazy(() => import("../pages/Payment/InfoPayment"))
 const InfoUser = lazy(() => import("../pages/User/InfoUser"))
 const HistoryBooking = lazy(() => import("../pages/User/HistoryBooking"))
 const FavoriteHotels = lazy(() => import("../pages/User/FavoriteHotels"))
@@ -21,7 +20,6 @@ export default function ProtectedRoutes() {
       <Route path={PATH.THONGTINBOOKING} element={<Suspense fallback={<LoadingPage />}>
         <DetailBooking />
       </Suspense>} />
-      <Route path={PATH.THONGTINTHANHTOAN} element={<Suspense fallback={<LoadingPage />}><InfoPayment /></Suspense>} />
       <Route path={PATH.THONGTINGUOIDUNG} element={<Suspense fallback={<LoadingPage />}><InfoUser /></Suspense>} />
       <Route path={PATH.LICHSUBOOKING} element={<Suspense fallback={<LoadingPage />}><HistoryBooking /></Suspense>} />
       <Route path={PATH.KHACHSANYEUTHICH} element={<Suspense fallback={<LoadingPage />}><FavoriteHotels /></Suspense>} />

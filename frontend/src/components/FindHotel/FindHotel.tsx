@@ -9,6 +9,11 @@ import useFindHotel from "../../hooks/useFindHotel";
 import { vi } from "date-fns/locale/vi";
 import { useFindHotelContext } from "../../context/FindHotelContext";
 import { findHotelSchemas } from "../../schemas/findHotelSchemas";
+import { useHotelSearch } from "../../react-query/useHotelSearch";
+import { ErrorUtils } from '../../utils/Error';
+import { PayloadSearchParams } from "../../types/SearchTypes";
+import DialogLoading from "../Dialog/DialogLoading";
+import { useQueryClient } from "@tanstack/react-query";
 
 registerLocale("vi", vi);
 
@@ -22,7 +27,6 @@ export default function FindHotel() {
     const { state, dispatch } = useFindHotelContext();
     const {
         province,
-        dateRange,
         adults,
         children,
         rooms,
@@ -68,8 +72,6 @@ export default function FindHotel() {
         return () => document.removeEventListener("mousedown", handleClickOutside);
     }, [provinceFromQuery, startDateFromQuery, endDateFromQuery, adultsFromQuery, childrenFromQuery, roomsFromQuery, dispatch]);
 
-    const formatDate = (date: Date | null) =>
-        date ? date.toISOString().split("T")[0] : "";
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -87,17 +89,9 @@ export default function FindHotel() {
             setError(result.error.errors[0].message)
             return;
         }
-
-        const queryParams = new URLSearchParams({
-            ...(province && { province }),
-            ...(startDate && { startDate: startDate }),
-            ...(endDate && { endDate: endDate }),
-            adults: adults.toString(),
-            children: children.toString(),
-            rooms: rooms.toString()
-        })
-
-        navigate(`/search?${queryParams.toString()}`)
+        
+        
+        navigate(`/search?address=${province}&checkin=${startDate}&checkout=${endDate}&guest=${adults}&children=${children}`);
     }
     return (
         <div className="search-booking">
@@ -209,6 +203,7 @@ export default function FindHotel() {
                     {error}
                 </div>
             )}
+
         </div>
     );
 }

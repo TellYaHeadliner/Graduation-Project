@@ -21,7 +21,9 @@ export default function HomeRoutes() {
             } />
             <Route path={PATH.KETQUATIMKIEM} element={
                 <Suspense fallback={<LoadingPage />}>
-                    <ResultSearch />
+                    <FindRoomProvider>
+                        <ResultSearch />
+                    </FindRoomProvider>
                 </Suspense>
             } />
             <Route path={PATH.CHITIETKHACHSAN} element={

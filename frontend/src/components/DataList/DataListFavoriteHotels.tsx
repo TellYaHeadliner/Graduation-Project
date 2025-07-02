@@ -1,21 +1,26 @@
-// import { CardListStaticData } from "../../utils/CardListStaticData";
-// import CardItem from "../Card/CardItem";
+import slug from "slug";
+import { FavoriteHotels } from "../../types/FavoritesTypes";
 
-// export default function DataListFavoriteHotels(){
-//     return (
-//         <div className="grid grid-cols-4 gap-x-6 gap-y-6 mt-4">
-//             {CardListStaticData.map((cardItem) => (
-//                 <a href="">
-//                     <CardItem
-//                         title={cardItem.title}
-//                         address={cardItem.address}
-//                         star={cardItem.star}
-//                         price={cardItem.price}
-//                         reviewCount={cardItem.reviewCount}
-//                         discountPrice={cardItem.discountPrice}
-//                     />
-//                 </a>
-//             ))}
-//         </div>
-//     )
-// }
+import CardFavorite from "../Card/CardFavorite";
+
+interface Props{
+    datas: FavoriteHotels[];
+}
+
+export default function DataListFavoriteHotels({ datas }: Props){
+
+    return (
+        <div className="grid grid-cols-4 gap-x-6 gap-y-6 mt-4">
+            {datas.map((data) => (
+                <CardFavorite 
+                key={data.id}
+                id={data.id} 
+                name={data.name} 
+                address={data.address} 
+                avatar={data.avatar} 
+                slug={slug(data.name)}  
+                />
+            ))}
+        </div>
+    )
+}

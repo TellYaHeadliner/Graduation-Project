@@ -34,6 +34,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
         const updated = { ...quantities, [key]: quantity };
         setQuantities(updated);
 
+
         const details = Object.entries(updated).filter(([_, q]) => q > 0)
             .map(([key, quantity]) => {
                 const [room_type_id, room_type_variant_id] = key.split("-").map(Number);
@@ -162,7 +163,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                                     <tr key={`room-${dataIndex}`} className="border-t border-gray-300">
                                         <td className="px-4 py-3 border-r">
                                             <div className="font-medium text-blue-700">
-                                                <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} />
+                                                <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} galleyList={ data.gallery?.split(",") ?? []}/>
                                             </div>
                                             <div className="text-sm text-gray-600">Loại giường: {data.bed?.type_name}</div>
                                         </td>
@@ -198,7 +199,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                                         {vIndex === 0 && (
                                             <td rowSpan={data.variants.length} className="px-4 py-3 border-r align-top">
                                                 <div className="font-medium text-blue-700">
-                                                    <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} />
+                                                    <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} galleyList={ data.gallery?.split(",") ?? []}/>
                                                 </div>
                                                 <div className="text-sm text-gray-600 mt-2 flex items-center gap-1">
                                                     {data.bed?.quantity} {data.bed?.type_name}

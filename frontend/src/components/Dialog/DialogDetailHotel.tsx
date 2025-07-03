@@ -1,14 +1,16 @@
 import { Dialog } from "radix-ui";
 import { Cross1Icon } from "@radix-ui/react-icons";
 import { Amenity } from "../../types/RoomTypes";
+import CarouselImage from "../CustomCarousel/Carouselmage";
 
 interface DialogDetailHotelProps {
     title: string;
     area: number;
     amenities: Amenity[];
+    galleyList: string[];
 }
 
-export default function DialogDetailHotel({ title, area, amenities }: DialogDetailHotelProps) {
+export default function DialogDetailHotel({ title, area, amenities, galleyList }: DialogDetailHotelProps) {
     return (
         <Dialog.Root>
             <Dialog.Trigger className="text-blue-600 underline">
@@ -29,15 +31,7 @@ export default function DialogDetailHotel({ title, area, amenities }: DialogDeta
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                             {/* Hình ảnh */}
                             <div className="space-y-2">
-                                <div className="bg-gray-300 rounded-md w-full h-64"></div>
-                                <div className="flex gap-2 overflow-x-auto">
-                                    {[...Array(8)].map((_, i) => (
-                                        <div
-                                            key={i}
-                                            className="w-20 h-16 bg-gray-200 object-cover rounded-md border"
-                                        ></div>
-                                    ))}
-                                </div>
+                                <CarouselImage listGalley={galleyList} />
                             </div>
 
                             {/* Thông tin */}

@@ -3,13 +3,10 @@ import { Route } from "react-router-dom"
 import { PATH } from "../constants/Paths"
 import { FindRoomProvider } from "../context/FindRoomContext"
 
-
-
 const Home = lazy(() => import("../pages/Home"))
 const ResultSearch = lazy(() => import("../pages/ResultSearch"))
 const DetailHotel = lazy(() => import("../pages/DetailHotel"))
 const LoadingPage = lazy(() => import("../pages/LoadingPage"))
-
 
 export default function HomeRoutes() {
     return (

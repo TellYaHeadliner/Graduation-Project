@@ -25,7 +25,7 @@ export default function DialogHotelServices({ combos, services, hasSelectedRoom 
                 </Dialog.Trigger>
             ): (
                 <div className="text-red-500 text-sm font-medium mt-2">
-                    Vui lòng chọn trước khi chọn dịch vụ
+                    Vui lòng chọn phòng
                 </div>
             )}
             <Dialog.Portal>

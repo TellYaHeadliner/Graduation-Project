@@ -3,7 +3,7 @@ import { Tabs } from "@radix-ui/themes"
 
 export default function LocationTab() {
     return (
-        <div className="mx-auto lg:px-18 2xl:px-20">
+        <div className="mx-auto lg:px-18 2xl:px-20 my-10">
             <h2 className="text-2xl font-bold mb-6">
                 Các địa điểm du lịch phổ biến ở Việt Nam
             </h2>
@@ -11,7 +11,6 @@ export default function LocationTab() {
                 <Tabs.List>
                     <Tabs.Trigger value="1">Các tỉnh thành phố</Tabs.Trigger>
                     <Tabs.Trigger value="2">Các khách sạn gần nơi bạn du lịch</Tabs.Trigger>
-                    <Tabs.Trigger value="3">Những khách sạn bạn muốn</Tabs.Trigger>
                 </Tabs.List>
 
                 <Tabs.Content value="1" className="my-6 gap-x-6"> 
@@ -31,7 +30,7 @@ export default function LocationTab() {
                             "Thanh Hóa", "Thừa Thiên Huế", "Tiền Giang", "Trà Vinh", "Tuyên Quang",
                             "Vĩnh Long", "Vĩnh Phúc", "Yên Bái"
                         ].map((province) => (
-                            <a key={province} href="#" className="hover:underline text-sm">
+                            <a key={province} href={province} className="hover:underline text-sm">
                                 {province}
                             </a>
                         ))}
@@ -44,16 +43,16 @@ export default function LocationTab() {
                             <h3 className="text-md font-bold">
                                 Miền Nam
                             </h3>
-                            <a href="#" className="hover:underline">
+                            <a href="/Hồ Chí Minh" className="hover:underline">
                                 TP Hồ Chí Minh
                             </a>
-                            <a href="" className="hover:underline">
+                            <a href="/Lâm Đồng" className="hover:underline">
                                 Lâm Đồng
                             </a>
-                            <a href="" className="hover:underline">
+                            <a href="/Kiên Giang" className="hover:underline">
                                 Kiên Giang
                             </a>
-                            <a href="" className="hover:underline">
+                            <a href="/Cần Thơ" className="hover:underline">
                                 Cần Thơ
                             </a>
                         </div>
@@ -61,16 +60,16 @@ export default function LocationTab() {
                             <h3 className="text-md font-bold">
                                 Miền Trung
                             </h3>
-                            <a href="" className="hover:underline">
+                            <a href="/Huế" className="hover:underline">
                                 Huế
                             </a>
-                            <a href="" className="hover:underline">
+                            <a href="/Đà Nẵng" className="hover:underline">
                                 Đà Nẵng
                             </a>
-                            <a href="" className="hover:underline">
+                            <a href="/Quảng Nam" className="hover:underline">
                                 Hội An (Quảng Nam)
                             </a>
-                            <a href="" className="hover:underline">
+                            <a href="/Bình Định" className="hover:underline">
                                 Phú Yên - Bình Định
                             </a>
                         </div>
@@ -78,33 +77,22 @@ export default function LocationTab() {
                             <h3 className="text-md font-bold">
                                 Miền Bắc
                             </h3>
-                            <a href="" className="hover:underline">
+                            <a href="/Hà Nội" className="hover:underline">
                                 Hà Nội
                             </a>
-                            <a href="" className="hover:underline">
+                            <a href="/Quảng Ninh" className="hover:underline">
                                 Hạ Long (Quảng Ninh)
                             </a>
-                            <a href="" className="hover:underline">
+                            <a href="Lào Cai" className="hover:underline">
                                 Sapa (Lào Cai)
                             </a>
-                            <a href="" className="hover:underline">
+                            <a href="Ninh Bình" className="hover:underline">
                                 Ninh Bình
                             </a>
                         </div>
                     </div>
                 </Tabs.Content>
 
-                <Tabs.Content value="3" className="my-6 gap-x-6">
-                <div className="grid grid-cols-5 not-even:lg:grid-cols-5 xl:grid-cols-6 gap-y-4 gap-x-6 text-gray-800">
-                        {[
-                            "Phòng nghỉ tiện nghi", "Dịch vụ dọn phòng hàng ngày", "Dịch vụ giặt là", "Nhà hàng trong khách sạn", "Buffet sáng miễn phí", "Phục vụ đồ ăn tại phòng ", "Quán cà phê hoặc quầy bar", "Spa & massage", "Phòng xông hơi/ Phòng tắm hơi", "Hồ bơi", "Phòng gym", "Bãi đỗ xe miễn phí", "Dịch vụ đưa đón sân bay", "Cho thuê xe máy/ ô tô", "Hỗ trợ đặt taxi, vé máy bay, vé xe", "Phòng gia đình", "Giường phụ, cũi trẻ em", "Khu vui chơi trẻ em", "Cho phép mang thú cưng", "Dịch vụ trông trẻ"
-                        ].map((province) => (
-                            <a key={province} href="#" className="hover:underline text-sm">
-                                {province}
-                            </a>
-                        ))}
-                    </div>
-                </Tabs.Content>
             </Tabs.Root>
         </div>
     )

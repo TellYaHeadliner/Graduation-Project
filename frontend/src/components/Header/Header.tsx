@@ -2,7 +2,7 @@ import Search from '../TextField/Search';
 import logo from "../../assets/light-logo.png"
 import { PATH } from "../../constants/Paths"
 import Person from '../Avatar/Person';
-import TabNavLink from '../Tab/TabNavLink';
+// import TabNavLink from '../Tab/TabNavLink';
 import ButtonRegister from '../Button/ButtonRegister';
 import NavUser from '../Navbar/NavUser';
 import useAuth from '../../hooks/useAuth';
@@ -32,9 +32,9 @@ export default function Header() {
                     }
                 </div>
             </div>
-            <div className="flex flex-row items-center justify-start py-2 ml-4 ">
+            {/* <div className="flex flex-row items-center justify-start py-2 ml-4 ">
                 <TabNavLink />
-            </div>
+            </div> */}
         </header>
     )
 }

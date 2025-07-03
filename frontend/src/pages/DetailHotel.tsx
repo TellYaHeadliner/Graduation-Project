@@ -52,6 +52,7 @@ export default function DetailHotel() {
         localStorage.setItem('numberOfNights', JSON.stringify(0));
         localStorage.setItem('serviceTotal', JSON.stringify(0));
         localStorage.setItem('totalRoom', JSON.stringify(0));
+        localStorage.setItem('findHotel', JSON.stringify({ "dateRange": [null, null], "adults": 0, "children": 0, "rooms": 0 }))
     }, [])
 
     const checkReview = useCheckReviewQuery(Number(id));

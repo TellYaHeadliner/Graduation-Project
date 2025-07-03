@@ -3,13 +3,10 @@ import { Route } from "react-router-dom"
 import { PATH } from "../constants/Paths"
 import { FindRoomProvider } from "../context/FindRoomContext"
 
-
-
 const Home = lazy(() => import("../pages/Home"))
 const ResultSearch = lazy(() => import("../pages/ResultSearch"))
 const DetailHotel = lazy(() => import("../pages/DetailHotel"))
 const LoadingPage = lazy(() => import("../pages/LoadingPage"))
-
 
 export default function HomeRoutes() {
     return (
@@ -30,6 +27,13 @@ export default function HomeRoutes() {
                 <Suspense fallback={<LoadingPage />}>
                     <FindRoomProvider>
                         <DetailHotel />
+                    </FindRoomProvider>
+                </Suspense>
+            } />
+            <Route path={PATH.TINHTHANH} element={
+                <Suspense fallback={<LoadingPage />}>
+                    <FindRoomProvider>
+                        <ResultSearch />
                     </FindRoomProvider>
                 </Suspense>
             } />

@@ -68,6 +68,12 @@ class HotelController extends Controller
     {
         $this->data = $request->validated();
         DB::beginTransaction();
+        if (Hotel::find($request->user_id)) {
+            return response()->json([
+                'message' => 'Bạn đã đăng kí khách sạn!.',
+                'data' => []
+            ], 400);
+        }
         try {
             if ($this->data['star_rating'] && $this->data['star_rating'] == 0) {
                 unset($this->data['star_rating']);
@@ -82,6 +88,8 @@ class HotelController extends Controller
 
                 $file->move(public_path('assets/images'), $fileName);
             }
+
+            $this->data['id'] = $request->user_id;
 
             Hotel::create($this->data);
             DB::commit();

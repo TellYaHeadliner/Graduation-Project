@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef, useState , useEffect } from "react";
 import { MagnifyingGlassIcon, PersonIcon, ChevronDownIcon } from "@radix-ui/react-icons";
 import DatePicker, { registerLocale } from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -34,7 +34,7 @@ export default function FindRoom({ onSearch }: FindRoomProps) {
     const { id } = useParams();
     const formatDate = (date: Date | null): string | null =>
         date ? date.toISOString().split('T')[0] : null;
-      
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         setIsNull(true);
@@ -45,6 +45,15 @@ export default function FindRoom({ onSearch }: FindRoomProps) {
         onSearch();
         return { id, startDate, endDate, adults, children, rooms }
     }
+    useEffect(() => {
+        if (!startDate || !endDate) return;
+
+        const diffTime = endDate.getTime() - startDate.getTime();
+        const nights = Math.max(diffTime / (1000 * 60 * 60 * 24), 1); // ít nhất 1 đêm
+
+        localStorage.setItem('numberOfNights', JSON.stringify(nights));
+    }, [startDate, endDate]);
+
     return (
         <div className="search-booking">
             <form className="flex flex-nowrap items-center mt-4 md:justify w-full" onSubmit={handleSubmit}>
@@ -57,7 +66,7 @@ export default function FindRoom({ onSearch }: FindRoomProps) {
                         startDate={startDate}
                         endDate={endDate}
                         onChange={([start, end]: [Date | null, Date | null]) => {
-                            
+
                             const formatDate = (date: Date | null) =>
                                 date ? date.toLocaleDateString("sv-SE").split('T')[0] : null;
 
@@ -70,7 +79,7 @@ export default function FindRoom({ onSearch }: FindRoomProps) {
                                 const startDate = new Date(start.getFullYear(), start.getMonth(), start.getDate());
                                 const endDate = new Date(end.getFullYear(), end.getMonth(), end.getDate());
                                 const diffTime = endDate.getTime() - startDate.getTime();
-                                numberOfNights = diffTime / (1000 * 60 * 60 * 24); 
+                                numberOfNights = diffTime / (1000 * 60 * 60 * 24);
                             }
 
                             localStorage.setItem('numberOfNights', JSON.stringify(numberOfNights));

@@ -680,6 +680,12 @@ return [
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
+        'commission_amount' => [
+            'title' => 'Số tiền hoa hồng',
+            'icon' => 'ti ti-currency-dollar',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
         'payment_status' => [
             'title' => 'Trạng thái thanh toán',
             'icon' => 'ti ti-flag',

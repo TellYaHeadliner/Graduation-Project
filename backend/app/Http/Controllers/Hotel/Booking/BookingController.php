@@ -4,15 +4,21 @@ namespace App\Http\Controllers\Hotel\Booking;
 
 use App\DataTables\Hotel\Booking\BookingDataTable;
 use App\Enums\Booking\BookingStatus;
+use App\Enums\Transaction\TransactionType;
+use App\Enums\Transaction\TransactionStatus;
 use App\Http\Controllers\Controller;
 use App\Models\Booking;
 use App\Models\CommissionRule;
 use App\Models\Hotel;
+use App\Models\Transaction;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Exception;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class BookingController extends Controller
 {
@@ -113,9 +119,19 @@ class BookingController extends Controller
         try {
             $booking = Booking::find($request->id);
             $hotel = Hotel::find($hotel_id);
+
+            if (!$booking) {
+                return back()->with('error', 'Đơn đặt phòng không tồn tại');
+            }
+
+            if (in_array($booking->status, [BookingStatus::Cancelled, BookingStatus::Refunded])) {
+                return back()->with('error', 'Không thể cập nhật đơn đã hủy hoặc đã hoàn tiền');
+            }
+
+
             if ($request->status < $booking->status->value) {
                 return redirect()->route($this->route['edit'], ['hotel_id' => $hotel_id, 'id' => $request->id])
-                    ->with('error', 'Không thể cập nhập từ ' . \App\Enums\Booking\BookingStatus::getDescription($request->value) . ' xuống' . $booking->status->description());
+                    ->with('error', 'Không thể cập nhập từ ' . \App\Enums\Booking\BookingStatus::getDescription($request->status) . ' trở về ' . $booking->status->description());
             };
             if ($request->status == BookingStatus::Refunded->value) {
                 return redirect()->route($this->route['edit'], ['hotel_id' => $hotel_id, 'id' => $request->id])
@@ -123,12 +139,15 @@ class BookingController extends Controller
             }
 
             if ($request->status == BookingStatus::CheckedIn->value) {
-                $booking->update([
-                    'status' => $request->status
-                ]);
-                // gửi mail thông báo checkin thành công
+                // if (now()->lt($booking->check_in)) {
+                //     return back()->with('error', 'Không thể check-in trước ngày nhận phòng');
+                // }
+                $booking->update(['status' => $request->status]);
             }
             if ($request->status == BookingStatus::CheckedOut->value) {
+                if ($booking->status != BookingStatus::CheckedIn) {
+                    return back()->with('error', 'Chỉ có thể Check-out sau khi Check-in');
+                }
                 $total_amount = $booking->total_amount;
                 $commission = CommissionRule::where('is_active', true)
                     ->where('min_amount', '<=', $booking->total_amount)
@@ -137,9 +156,113 @@ class BookingController extends Controller
                             ->orWhereNull('max_amount');
                     })->orderBy('min_amount', 'desc')
                     ->value('commission_percent') ?? 0.0;
+                $total_release = $booking->total_amount - ($booking->total_amount * $commission / 100);
+                $user = User::where('email', 'admin@gmail.com')->first();
+                Transaction::create([
+                    'booking_id' => $booking->id,
+                    'hotel_id' => $hotel->id,
+                    'user_id' => $user->id,
+                    'transaction_type' => TransactionType::Release->value,
+                    'transaction_code' => 'RMX' . now()->format('YmdHis') . strtoupper(Str::random(4)),
+                    'amount' => $total_release,
+                    'commission_amount' => $booking->total_amount * $commission / 100,
+                    'payment_status' => TransactionStatus::Success->value,
+                    'paid_at' => now(),
+                ]);
 
                 // gửi mail thông báo checkout thành công và chuyển tiền cho khách sạn
+                $booking->update([
+                    'status' => $request->status
+                ]);
             }
+
+            if ($request->status == BookingStatus::Cancelled->value) {
+                if($booking->status == BookingStatus::CheckedOut || $booking->status == BookingStatus::CheckedIn ){
+                     return back()->with('error', 'Không thể hủy sau khi check in hoặc check out');
+                }
+                $tienTra = 0;
+                $tienGiu = 0;
+                $nights = Carbon::parse(format_date($booking->checkin_date, 'd-m-Y'))->diffInDays(Carbon::parse(format_date($booking->checkout_date, 'd-m-Y')));
+                $nights = max($nights, 1);
+                $booking->load([
+                    'bookingDetails.variant.attributes',
+                    'bookingCombos',
+                    'bookingServices'
+                ]);
+                $hoursGap = now()->diffInHours($booking->checkin_date, false);
+                foreach ($booking->bookingDetails as $item) {
+                    $variant = $item->variant;
+
+                    if($variant->attributes->firstWhere('type', 'no_refund')) {
+                        $tienGiu += $item->price_per_room * $nights;
+                        continue;
+                    }
+                    $free_before_and_fee_after = $variant->attributes->firstWhere('type', 'free_before and fee_after');
+                    if ($free_before_and_fee_after) {
+                        if ($hoursGap >= 24) {
+                            $tienTra += $item->price_per_room * $nights;
+                        } else {
+                            $tienTra += ($item->price_per_room * $nights) - ($free_before_and_fee_after->pivot->attribute_value * $nights);
+                            $tienGiu += min($free_before_and_fee_after->pivot->attribute_value, $item->price_per_room) * $nights;
+                        }
+                    }
+                }
+
+                foreach ($booking->bookingCombos as $combo) {
+                    $tienTra += $combo->total_price;
+                }
+                foreach ($booking->bookingServices as $item) {
+                    $tienTra += $item->total_price;
+                }
+
+                $tienTra = min($tienTra, $booking->total_amount - $tienGiu);
+
+                if ($tienTra + $tienGiu > $booking->total_amount) {
+                    $excess = ($tienTra + $tienGiu) - $booking->total_amount;
+                    $tienTra -= $excess;
+                }
+
+                if ($tienTra > 0) {
+                    Transaction::create([
+                        'booking_id' => $booking->id,
+                        'hotel_id' => $booking->hotel_id,
+                        'user_id' => $booking->customer_id,
+                        'transaction_type' => TransactionType::Refund->value,
+                        'transaction_code' => 'RMX' . now()->format('YmdHis') . strtoupper(Str::random(4)),
+                        'amount' => $tienTra,
+                        'payment_status' => TransactionStatus::Success->value,
+                        'paid_at' => now(),
+                    ]);
+                }                
+                $commissionPercent = CommissionRule::where('is_active', true)
+                    ->where('min_amount', '<=', $tienGiu)
+                    ->where(function ($q) use ($tienGiu) {
+                        $q->where('max_amount', '>=', $tienGiu)
+                            ->orWhereNull('max_amount');
+                    })
+                    ->orderBy('min_amount', 'desc')
+                    ->value('commission_percent') ?? 0;
+
+                $payToHotel = $tienGiu - ($tienGiu * $commissionPercent / 100);
+
+                if ($payToHotel > 0) {
+                    $admin = User::where('email', 'admin@gmail.com')->first();
+                    Transaction::create([
+                        'booking_id' => $booking->id,
+                        'hotel_id' => $booking->hotel_id,
+                        'user_id' => $admin->id,
+                        'transaction_type' => TransactionType::Release->value,
+                        'transaction_code' => 'RMX' . now()->format('YmdHis') . strtoupper(Str::random(4)),
+                        'amount' => $payToHotel,
+                        'commission_amount' => $tienGiu * $commissionPercent / 100,
+                        'payment_status' => TransactionStatus::Success->value,
+                        'paid_at' => now(),
+                    ]);
+                }
+                $booking->update(['status' => BookingStatus::Cancelled->value]);
+            }
+            DB::commit();
+            return redirect()->route($this->route['index'], ['hotel_id' => $hotel_id])->with('success', 'Cập nhập thành công');
         } catch (Exception $e) {
             DB::rollBack();
             Log::error($e->getMessage());

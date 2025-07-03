@@ -1,8 +1,11 @@
+import { Currency } from "../../utils/Currency";
+
 interface RoomSelection {
     name: string;
     quantity: number;
     room_type_id: number;
     room_type_variant_id: number;
+    price: number;
 }
 export interface DataListRoomPaymentProps {
     infoSelectedRoom: RoomSelection[];
@@ -13,7 +16,7 @@ export default function DataListRoomPayment({ infoSelectedRoom }: DataListRoomPa
             if (acc[room.room_type_id]) {
                 acc[room.room_type_id].quantity += room.quantity;
             } else {
-                acc[room.room_type_id] = { ...room }; // clone để không mutate input
+                acc[room.room_type_id] = { ...room }; 
             }
             return acc;
         }, {})
@@ -38,7 +41,7 @@ export default function DataListRoomPayment({ infoSelectedRoom }: DataListRoomPa
                         className="flex justify-between font-normal"
                     >
                         <span>{infoData.name}</span>
-                        <span>{infoData.quantity}</span>
+                        <span>{infoData.quantity} x {Currency.formatVND(infoData.price)}</span>
                     </div>
                 ))
             }

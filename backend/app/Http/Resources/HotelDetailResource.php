@@ -30,8 +30,8 @@ class HotelDetailResource extends JsonResource
             'rules' => [
                 'check_in_time' => date('H:i', strtotime($this->hotelRule?->check_in_time)),
                 'check_out_time' => date('H:i', strtotime($this->hotelRule?->check_out_time)),
-                'pet_policy'      => $this->hotelRule?->pet_policy == 1,
-                'child_policy'   => $this->hotelRule?->child_policy == 1,
+                'pet_policy'      => $this->hotelRule->pet_policy->value == 1,
+                'child_policy'   => $this->hotelRule->child_policy->value == 1,
                 'child_age_limit'  => $this->hotelRule?->child_age_limit,
                 'extra_bed_fee'    => $this->hotelRule?->extra_bed_fee,
             ],
@@ -79,7 +79,7 @@ class HotelDetailResource extends JsonResource
                     'user_name' => $item->user->fullname,
                     'star' => $item->star,
                     'content' => $item->content,
-                    'created_at' => format_date($item->created_at,'m-d-Y H:i'),
+                    'created_at' => format_date($item->created_at, 'm-d-Y H:i'),
                     'room_type' => $item->booking->bookingDetails->first()->roomType->name
                 ];
             })

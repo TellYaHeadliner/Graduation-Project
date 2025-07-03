@@ -70,6 +70,7 @@ class RoomTypeVariantController extends Controller
             $this->data['status'] = $this->data['status'] ?? RoomTypeVariantStatus::Inactive->value;
             $this->data['room_type_id'] = $room_type_id;
             $this->data['discount_price'] = $this->data['discount_price'] > 0 ? $this->data['discount_price'] : null;
+            $fee_amount = 0;
             $season = [];
             $season['season_id'] = $this->data['season_id'] ?? null;
             if (isset($season['season_id'])) {
@@ -91,6 +92,15 @@ class RoomTypeVariantController extends Controller
                 unset($this->data['fee_amount_price'], $this->data['fee_amount_percent']);
             } else {
                 unset($this->data['fee_type'], $this->data['fee_amount_price'], $this->data['fee_amount_percent']);
+            }
+
+            $comparePrice = $this->data['discount_price'] ?: $this->data['base_price'];
+
+            if ($fee_amount > $comparePrice) {
+                return redirect()->route($this->route['create'], [
+                    'hotel_id' => $hotel_id,
+                    'room_type_id' => $room_type_id
+                ])->with('error', 'Phí hủy không thể lớn hơn giá phòng');
             }
 
             $roomTypeVariant = RoomType::find($room_type_id)->variants()->create($this->data);
@@ -183,7 +193,7 @@ class RoomTypeVariantController extends Controller
             }
 
             $roomTypeVariant = RoomType::find($room_type_id)->variants()->find($this->data['id']);
-             $roomTypeVariant->update($this->data);
+            $roomTypeVariant->update($this->data);
             if (!empty($season['season_id'])) {
                 $roomTypeVariant->seasons()->sync([
                     $season['season_id'] => [
@@ -191,8 +201,7 @@ class RoomTypeVariantController extends Controller
                         'discount_value' => $season['discount_value'],
                     ]
                 ]);
-            }
-            else {
+            } else {
                 $roomTypeVariant->seasons()->detach();
             }
             if (!empty($attribute)) {

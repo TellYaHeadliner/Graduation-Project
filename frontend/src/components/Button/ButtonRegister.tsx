@@ -3,7 +3,7 @@ export default function ButtonRegister(){
         <div className="hidden md:flex 2xl:flex flex-row items-center gap-1 text-white rounded-sm mr-2 border border-white">
             <a href="/dang-ki-tai-khoan-khach-san">
                 <button type="submit" className="bg-primary text-white px-2 rounded-md flex items-center justify-center w-[40px] h-[40px] gap-2 sm:w-auto sm:px-3 sm:flex sm:flex-row border-secondary hover:bg-accent">
-                    <span className="hidden sm:inline text-lg">Đăng kí khách sạn </span>
+                    <span className="hidden sm:inline text-lg">Đăng kí trở thành đối tác </span>
                 </button>
             </a>
         </div>

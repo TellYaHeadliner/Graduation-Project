@@ -218,6 +218,17 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                                                         </div>
                                                     ))}
                                                 </div>
+                                                {
+                                                    data.available_room_count > 0 ? (
+                                                        <div className="text-red-500 font-thin text-md">
+                                                            Còn {data.available_room_count} phòng trống
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-red-500 font-thin text-md">
+                                                            Hết phòng trống
+                                                        </div>
+                                                    )
+                                                }
                                             </td>
                                         )}
 

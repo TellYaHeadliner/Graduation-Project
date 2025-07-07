@@ -69,6 +69,7 @@ export default function TableCombos({ combos, onChange }: TableComboProps) {
                         onChange={(e) => {
                           handleQuantityChange(data.id, Number(e.target.value)
                         )}}
+                        className="w-16 text-center px-2 py-1 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-indigo-500"
                       />
                     );
                   })}

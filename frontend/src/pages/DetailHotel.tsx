@@ -1,6 +1,5 @@
 import MainLayout from "../layouts/MainLayout";
 import locationPin from "../assets/location-pin.svg"
-// import CarouselComment from "../components/CustomCarousel/CarouselComment";
 import TableRoom from "../components/Table/TableRoom";
 import DataListRule from "../components/DataList/DataListRule";
 import ChatButton from "../components/Chat/ChatButton";
@@ -9,19 +8,21 @@ import DialogHotelServices from "../components/Dialog/DialogHotelServices";
 import { useParams } from "react-router-dom";
 import { useHotelDetailQuery } from "../react-query/useHotelDetailQuery";
 import useTitle from "../hooks/useTitle";
-import { CheckIcon } from "@radix-ui/react-icons";
+import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import FindRoom from "../components/FindHotel/FindRoom";
 import { useFindRoomContext } from "../context/FindRoomContext";
 import { useHotelRoomTypesQuery } from '../react-query/useHotelRoomTypesQuery';
 import { useEffect, useState } from "react";
 import { BookingDetail } from "../types/PaymentTypes";
-import { Skeleton } from "@radix-ui/themes";
+import { Callout, Skeleton } from "@radix-ui/themes";
 import AccordionFAQHotel from "../components/Accordion/AccordionFAQHotel";
 import catFAQ from "../assets/cat_faq.png"
 import { ReviewForm } from "../components/Form/FormReview";
 import { useCheckReviewQuery } from "../react-query/useReview";
 import LoadingSpinner from "../components/Loading/LoadingSpinner";
 import CarouselImage from "../components/CustomCarousel/Carouselmage";
+import { ToastContainer } from "react-toastify";
+import CarouselComment from "../components/CustomCarousel/CarouselComment";
 
 export default function DetailHotel() {
 
@@ -129,10 +130,10 @@ export default function DetailHotel() {
                             allowFullScreen
                             referrerPolicy="no-referrer-when-downgrade"
                         />
-                        {/* <h3 className="text-lg font-bold">
+                        <h3 className="text-lg font-bold">
                             Đánh giá về khách sạn chúng tôi
                         </h3>
-                        <CarouselComment /> */}
+                        <CarouselComment />
                     </div>
                 </div>
                 <div className="flex flex-col mt-6">
@@ -191,13 +192,24 @@ export default function DetailHotel() {
                         ) : checkReview.error ? (
                             <div className="text-red-500">Đã xảy ra lỗi khi kiểm tra đánh giá.</div>
                         ) : (
-                            <ReviewForm hotel_id={Number(id)} />
+                            <div>
+                                <Callout.Root>
+                                    <Callout.Icon>
+                                        <InfoCircledIcon />
+                                    </Callout.Icon>
+                                    <Callout.Text>
+                                        Bạn có đủ quyền đánh giá khách sạn
+                                    </Callout.Text>
+                                </Callout.Root>
+                                <ReviewForm hotel_id={Number(id)} />
+                            </div>
                         )
                     }
                     
                 </div>
             </div>
             <ChatButton />
+            <ToastContainer position="top-right" />
         </MainLayout>
     )
 }

@@ -77,14 +77,15 @@ export default function DetailBooking() {
                             Có thể hủy phòng
                         </h2>
                         {
-                            getDetailBooking.data?.data.cancellation_fee > 0 && (
+                            typeof getDetailBooking.data?.data?.cancellation_fee === 'number' &&
+                            getDetailBooking.data.data.cancellation_fee > 0 && (
                                 <div>
                                     <Callout.Root className="my-2" color="red">
                                         <Callout.Icon>
                                             <InfoCircledIcon />
                                         </Callout.Icon>
                                         <Callout.Text>
-                                            Bạn có hủy phòng với giá  {Currency.formatVND(getDetailBooking.data?.data.cancellation_fee)}
+                                            Bạn có hủy phòng với giá {Currency.formatVND(getDetailBooking.data.data.cancellation_fee)}
                                         </Callout.Text>
                                     </Callout.Root>
                                     <Button color="red">

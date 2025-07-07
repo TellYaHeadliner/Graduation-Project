@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import MainLayout from "../layouts/MainLayout";
 import useTitle from "../hooks/useTitle";
 import SideBarFilter from "../components/Navbar/SidebarFilter";
@@ -9,8 +10,10 @@ import { FilterProvider } from "../context/FilterContext";
 import { CardSearch } from "../types/SearchTypes";
 import useQuery from "../hooks/useQuery";
 import { useHotelSearch } from "../react-query/useHotelSearch";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import slug from "slug";
+import { useEffect, useState } from "react";
+import LoadingSpinner from "../components/Loading/LoadingSpinner";
 
 
 export default function ResultSearch() {
@@ -28,7 +31,28 @@ export default function ResultSearch() {
         children: Number(queryParams.get("children") ?? "0"),
     }
 
-    const hotelSearch = useHotelSearch(payload, true);
+    const location = useLocation();
+    const path = location.pathname;
+    const decodedPath = decodeURIComponent(path.substring(1))
+
+    const defaultLoad = {
+        address: decodedPath,
+        checkin: new Date(Date.now()).toISOString().split('T')[0],
+        checkout: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
+        guest: 2,
+        children: 0
+    }
+
+    const isQueryEmpty =!queryParams.toString();
+    const finalPayload = isQueryEmpty ? defaultLoad: payload;
+
+    const [ searchPayload, setSearchPayload ] = useState(defaultLoad);
+
+    useEffect(() => {
+        setSearchPayload(finalPayload);
+    }, [location.search]);
+    
+    const hotelSearch = useHotelSearch(searchPayload, true);
     const data = hotelSearch.data?.data
 
 
@@ -46,11 +70,23 @@ export default function ResultSearch() {
                             <FindHotel />
                         </FindHotelProvider>
                         {
+                            hotelSearch.isPending ? (
+                                <div className="flex justify-center">
+                                    <LoadingSpinner />
+                                </div>
+                            ) : data && data.length > 0 ? (
                             data?.map((item: CardSearch) => (
                                 <Link key={item.id} to={`/${slug(item.name)}/${item.id}`}>
                                     <CardItemSearch data={item} />
                                 </Link>
                             ))
+                            ) : (
+                                <div className="flex flex-col items-center justify-center">
+                                    <span className="text-xl font-normal">
+                                        Chúng tôi không tìm kiếm được kết quả của bạn
+                                    </span>
+                                </div>
+                            )
                         }
                     </div>
                     

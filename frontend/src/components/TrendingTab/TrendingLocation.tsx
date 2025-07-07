@@ -15,7 +15,7 @@ export default function TrendingLocation() {
             </p>
             <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-2 gap-4">
                 <div className="relative rounded overflow-hidden shadow-lg h-60">
-                    <a href="/HoChiMinh">
+                    <a href="/Hồ Chí Minh">
                         <img
                             src={HoChiMinh}
                             alt={HoChiMinh}
@@ -29,7 +29,7 @@ export default function TrendingLocation() {
                     </a>
                 </div>
                 <div className="relative rounded overflow-hidden shadow-lg h-60">
-                    <a href="/HaNoi">
+                    <a href="/Hà Nội">
                         <img
                             src={HaNoi}
                             alt={HaNoi}
@@ -46,7 +46,7 @@ export default function TrendingLocation() {
 
             <div className="grid grid-cols-1 2xl:grid-cols-3 lg:grid-cols-3 gap-4 mt-4">
                 <div className="relative rounded overflow-hidden shadow-lg h-60">
-                    <a href="/DaNang">
+                    <a href="/Đà Nẵng">
                         <img
                             src={DaNang}
                             alt={DaNang}
@@ -60,7 +60,7 @@ export default function TrendingLocation() {
                     </a>
                 </div>
                 <div className="relative rounded overflow-hidden shadow-lg h-60">
-                    <a href="/DaLat">
+                    <a href="/Đà Lạt">
                         <img
                             src={DaLat}
                             alt={DaLat}
@@ -74,7 +74,7 @@ export default function TrendingLocation() {
                     </a>
                 </div>
                 <div className="relative rounded overflow-hidden shadow-lg h-60">
-                    <a href="/NhaTrang">
+                    <a href="/Nha Trang">
                         <img
                             src={NhaTrang}
                             alt={NhaTrang}

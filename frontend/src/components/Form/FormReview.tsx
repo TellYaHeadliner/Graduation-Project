@@ -2,7 +2,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ReviewFormData, reviewSchemas } from '../../schemas/reviewSchemas';
 import { useUserInfoQuery } from "../../react-query/useUserInfoQuery";
-import { useCheckReviewQuery, useReviewMutation } from "../../react-query/useReview";
+import { useReviewMutation } from "../../react-query/useReview";
 import { toast } from "react-toastify";
 import { ErrorUtils } from "../../utils/Error";
 import LoadingSpinner from "../Loading/LoadingSpinner";
@@ -16,7 +16,6 @@ export const ReviewForm = ({ hotel_id }: ReviewFormProps) => {
         register,
         handleSubmit,
         formState: { errors },
-        reset
     } = useForm<ReviewFormData>({
         resolver: zodResolver(reviewSchemas),
     });
@@ -35,7 +34,7 @@ export const ReviewForm = ({ hotel_id }: ReviewFormProps) => {
         reviewMutation.mutate(payloadData, {
             onSuccess: () => {
                 toast.success("Gửi đánh giá thành công");
-                reset();
+                
             },
             onError: (error) => {
                 const errorUtils = new ErrorUtils();

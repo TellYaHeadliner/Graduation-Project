@@ -2,7 +2,6 @@ import Search from '../TextField/Search';
 import logo from "../../assets/light-logo.png"
 import { PATH } from "../../constants/Paths"
 import Person from '../Avatar/Person';
-// import TabNavLink from '../Tab/TabNavLink';
 import ButtonRegister from '../Button/ButtonRegister';
 import NavUser from '../Navbar/NavUser';
 import useAuth from '../../hooks/useAuth';
@@ -21,20 +20,19 @@ export default function Header() {
                     </a>
                     <Search />
                 </div>
-                <div className="flex flex-nowrap items-center ">
-                    <ButtonRegister />
+                <div>
                     { loading ? ( <LoadingSpinner />
                     ) : user ? (
-                        <NavUser usernameProp={user.fullname} />
+                        <div className="flex flex-nowrap items-center ">
+                            <ButtonRegister />
+                            <NavUser usernameProp={user.fullname} avatar={user.avatar ?? ""}/>
+                        </div>
                     ) : (
                         <Person />
                     )
                     }
                 </div>
             </div>
-            {/* <div className="flex flex-row items-center justify-start py-2 ml-4 ">
-                <TabNavLink />
-            </div> */}
         </header>
     )
 }

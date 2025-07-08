@@ -39,6 +39,8 @@ export default function DetailHotel() {
     ];
 
     const galleyString = getDetailHotel.data?.data.hotel.gallery;
+    const listReviews = getDetailHotel.data?.data.hotel.reviews;
+    const address = getDetailHotel.data?.data?.hotel?.address 
     const listGalley = galleyString?.split(",") ?? [];
     const [isSearchRoomType, setIsSearchRoomType] = useState(false);
     const getRoomType = useHotelRoomTypesQuery(Number(id), state.dateRange[0] , state.dateRange[1], state.adults, state.children, state.rooms, isSearchRoomType)
@@ -58,6 +60,8 @@ export default function DetailHotel() {
 
     const checkReview = useCheckReviewQuery(Number(id));
 
+
+
     return (
         <MainLayout>
             <div className="flex lg:mx-26 2xl:mx-47 flex-col text-black">
@@ -65,7 +69,7 @@ export default function DetailHotel() {
                     <Breadcrumb items={breadcrumbItems} />
                 </div>
                 <h1 className="text-3xl font-bold">
-                    {getDetailHotel.isPending ? <Skeleton width="1090px" height="36px" /> : getDetailHotel.data?.data.hotel.name}
+                    {getDetailHotel.isPending ? <Skeleton width="1215px" height="36px" /> : getDetailHotel.data?.data.hotel.name}
                 </h1>
 
                 <div className="text-thin text-md flex items-center gap-1 my-2">
@@ -121,19 +125,34 @@ export default function DetailHotel() {
 
                     </div>
                     <div className="w-1/2 space-y-4 flex flex-wrap justify-start">
-                        <iframe
-                            src={`https://www.google.com/maps?q=${encodeURIComponent(getDetailHotel.data?.data?.hotel?.address ?? "")}&output=embed`}
-                            width={800}
-                            height={400}
-                            style={{ border: 0 }}
-                            loading="lazy"
-                            allowFullScreen
-                            referrerPolicy="no-referrer-when-downgrade"
-                        />
-                        <h3 className="text-lg font-bold">
-                            Đánh giá về khách sạn chúng tôi
-                        </h3>
-                        <CarouselComment />
+                        {
+                            getDetailHotel.isPending ? (
+                                <Skeleton width="800px" height="400px" />
+                            ) : (
+                                <iframe
+                                    src={`https://www.google.com/maps?q=${encodeURIComponent(address ?? "")}&output=embed`}
+                                    width={800}
+                                    height={400}
+                                    style={{ border: 0 }}
+                                    loading="lazy"
+                                    allowFullScreen
+                                    referrerPolicy="no-referrer-when-downgrade"
+                                />
+                            )
+                        }
+                       {
+                            getDetailHotel.isPending ? (
+                                <Skeleton width="700px" height="300px"/>
+                            ) : (
+                                <div>
+                                    <h3 className="text-lg font-bold">
+                                        Đánh giá về khách sạn chúng tôi
+                                    </h3>
+                                    <CarouselComment reviews={listReviews ?? []} />
+                                </div>
+                            )
+                       }
+                       
                     </div>
                 </div>
                 <div className="flex flex-col mt-6">
@@ -187,7 +206,7 @@ export default function DetailHotel() {
                         Đánh giá khách sạn 
                     </h2>
                     {
-                        checkReview.isLoading ? (
+                        checkReview.isPending ? (
                             <LoadingSpinner />
                         ) : checkReview.error ? (
                             <div className="text-red-500">Đã xảy ra lỗi khi kiểm tra đánh giá.</div>

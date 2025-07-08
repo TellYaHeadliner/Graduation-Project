@@ -44,19 +44,19 @@ export default function TableCombos({ combos, onChange }: TableComboProps) {
 
   return (
     <div className="overflow-x-auto">
-      <table className="w-full table-auto border-collapse border border-black">
+      <table className="w-full table-auto border-collapse border border-gray-300">
         <thead>
           <tr className="bg-blue-700 text-white">
-            <th className="text-center px-6 py-2 border border-black w-20 ">Số lượng</th>
-            <th className="text-left px-4 py-2 border border-black w-1/3">Tên combo</th>
-            <th className="text-left px-4 py-2 border border-black w-1/2">Dịch vụ</th>
-            <th className="text-right px-4 py-2 border border-black w-1/6">Giá</th>
+            <th className="text-center px-6 py-2 border border-gray-300 w-20 ">Số lượng</th>
+            <th className="text-left px-4 py-2 border border-gray-300 w-1/3">Tên combo</th>
+            <th className="text-left px-4 py-2 border border-gray-300 w-1/2">Dịch vụ</th>
+            <th className="text-right px-4 py-2 border border-gray-300 w-1/6">Giá</th>
           </tr>
         </thead>
         <tbody>
           {combos?.map((data, index) => (
-            <tr key={index} className="hover:bg-gray-100 border border-black">
-              <td className="px-4 py-3 border border-black">
+            <tr key={index} className="hover:bg-gray-100 border border-gray-300">
+              <td className="px-4 py-3 border border-gray-300">
                 <div className="flex items-start justify-center h-full">
                   {data.services.map((service) => {  
                     return (
@@ -75,18 +75,18 @@ export default function TableCombos({ combos, onChange }: TableComboProps) {
                   })}
                 </div>
               </td>
-              <td className="px-4 border border-black">
+              <td className="px-4 border border-gray-300">
                 <div className="font-semibold text-base">{data.name}</div>
                 <div className="text-sm text-gray-600">{data.short_description}</div>
               </td>
-              <td className="px-4 border border-black">
+              <td className="px-4 border border-gray-300">
                 <ul className="list-disc list-inside space-y-1">
                   {data.services.map((service) => (
                     <li key={`service-${data.id}-${service.id}`}>{service.name}</li>
                   ))}
                 </ul>
               </td>
-              <td className="px-4 py-3 border border-black text-right">
+              <td className="px-4 py-3 border border-gray-300 text-right">
                 <div className="text-sm text-gray-500 line-through">
                   {Currency.formatVND(data.original_price)}
                 </div>

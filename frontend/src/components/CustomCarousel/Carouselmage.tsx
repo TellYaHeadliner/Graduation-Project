@@ -35,7 +35,7 @@ const CarouselImage: React.FC<CarouselImageProps> = ({  listGalley, options }) =
     }, [emblaMainApi, onSelect])
 
     return (
-        <div className="w-full max-w-5xl mx-auto">
+        <div className="w-full max-w-8xl mx-auto">
             {/* Carousel chính */}
             <div className="overflow-hidden" ref={emblaMainRef}>
                 <div className="flex">

@@ -31,11 +31,11 @@ export default function Home() {
             <div className="relative h-[80vh] ">
                 <div className="absolute inset-0 bg-cover bg-no-repeat bg-center " style={{ backgroundImage: `url(${section})`, filter: 'brightness(0.5)' }} />
                 <div className="relative z-10 flex flex-col justify-center h-full px-8 lg:px-32 max-w-6xl">
-                    <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-white">
+                    <h1 className="text-4xl lg:text-6xl font-bold leading-tight text-white transition duration-700 ease-in-out hover:scale-105">
                         Roomix <br />
                         Trang web đặt khác sạn
                     </h1>
-                    <p className="mt-4 text-2xl text-gray font-medium text-white">
+                    <p className="mt-4 text-2xl text-gray font-medium text-white transition duration-700 ease-in-out hover:text-fourth">
                         Hãy đặt phòng khách sạn như bạn mong muốn !
                     </p>
                     <FindHotelProvider>

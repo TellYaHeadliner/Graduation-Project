@@ -12,7 +12,6 @@ import { LuBedSingle } from "react-icons/lu";
 import { MdBed } from "react-icons/md";
 
 
-
 interface TableRoomProps {
     datas: RoomType[];
     onChange: (bookingDetails: {
@@ -128,15 +127,15 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
             <table typeof="1" className="min-w-full table-auto border border-gray-300">
                 <thead>
                     <tr className="bg-blue-700 text-white">
-                        <th className="text-left px-4 py-2 border-r border-gray-500">Loại phòng </th>
-                        <th className="text-left px-4 py-2 border-r border-gray-500">Người</th>
-                        <th className="px-4 py-2 border-r border-gray-500 text-end">
+                        <th className="text-left px-4 py-2 border-r border-gray-300">Loại phòng </th>
+                        <th className="text-left px-4 py-2 border-r border-gray-300">Người</th>
+                        <th className="px-4 py-2 border-r border-gray-300 text-end">
                             Giá/Phòng/Đêm
                         </th>
-                        <th className="text-end px-4 py-2 border-r border-gray-500">
+                        <th className="text-end px-4 py-2 border-r border-gray-300">
                             Số lượng
                         </th>
-                        <th className="text-left px-2 py-2 border-r border-gray-500">
+                        <th className="text-left px-2 py-2 border-r border-gray-300">
                             Các lựa chọn
                         </th>
                     </tr>

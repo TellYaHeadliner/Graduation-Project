@@ -1,11 +1,16 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import reviewApi from '../api/Review.api'
 import { ReviewPayload, ReviewResponse } from '../types/ReviewTypes'
 
 // Gửi đánh giá
-export const useReviewMutation = () => {
+export const useReviewMutation = (hotel_id: number) => {
+  const queryClient = useQueryClient();
+
   return useMutation<ReviewResponse, Error, ReviewPayload>({
     mutationFn: (data) => reviewApi.review(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['check-review', hotel_id]})
+    }
   })
 }
 

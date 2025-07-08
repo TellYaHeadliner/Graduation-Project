@@ -22,8 +22,7 @@ export const ReviewForm = ({ hotel_id }: ReviewFormProps) => {
     });
 
     const getUserInfo = useUserInfoQuery();
-    const reviewMutation = useReviewMutation();
-    const checkReviewQuery = useCheckReviewQuery(Number(hotel_id))
+    const reviewMutation = useReviewMutation(Number(hotel_id));
 
     const onSubmit = (data: any) => {
         const payloadData = {
@@ -37,7 +36,6 @@ export const ReviewForm = ({ hotel_id }: ReviewFormProps) => {
             onSuccess: () => {
                 toast.success("Gửi đánh giá thành công");
                 reset();
-                checkReviewQuery.refetch();
             },
             onError: (error) => {
                 const errorUtils = new ErrorUtils();

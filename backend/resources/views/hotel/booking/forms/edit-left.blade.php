@@ -7,11 +7,14 @@
 
 			{{-- Cột trái --}}
 			<div class="col-md-6 mb-3">
-				<label class="form-label">Khách sạn:</label>
+				<label class="form-label">Khách sạn: </label>
 				<div class="form-control-plaintext">{{ $booking->hotel->name ?? '-' }}</div>
 
 				<label class="form-label">Khách hàng:</label>
 				<div class="form-control-plaintext">{{ $booking->user->fullname ?? '-' }}</div>
+
+				<label class="form-label">Số điện thoại:</label>
+				<div class="form-control-plaintext">{{ $booking->user->phone ?? '-' }}</div>
 
 				<label class="form-label">Trạng thái:</label>
 				<div class="form-control-plaintext">
@@ -23,15 +26,33 @@
 
 				<label class="form-label">Ngày đặt:</label>
 				<div class="form-control-plaintext">{{ $booking->created_at->format('d/m/Y H:i') }}</div>
+
+				<label class="form-label">Cập nhật lần cuối:</label>
+				<div class="form-control-plaintext">{{ $booking->updated_at->format('d/m/Y H:i') }}</div>
 			</div>
 
-			{{-- Cột phải --}}
+			
 			<div class="col-md-6 mb-3">
-				<label class="form-label">Check-in:</label>
-				<div class="form-control-plaintext">{{ $booking->checkin_date}}</div>
+				<div class="row mb-3">
+					
+					<div class="col-md-6">
+						<label class="form-label">Thời gian check-in dự kiến:</label>
+						<div class="form-control-plaintext">{{ format_date($booking->checkin_date, 'd/m/Y H:i') }}</div>
 
-				<label class="form-label">Check-out:</label>
-				<div class="form-control-plaintext">{{ $booking->checkout_date}}</div>
+						<label class="form-label mt-2">Thời gian khách check-in:</label>
+						<div class="form-control-plaintext">{{ format_date($booking->check_in_at, 'd/m/Y H:i') }}</div>
+					</div>
+
+					
+					<div class="col-md-6">
+						<label class="form-label">Thời gian check-out dự kiến:</label>
+						<div class="form-control-plaintext">{{ format_date($booking->checkout_date, 'd/m/Y H:i') }}
+						</div>
+
+						<label class="form-label mt-2">Thời gian khách check-out:</label>
+						<div class="form-control-plaintext">{{ format_date($booking->check_out_at, 'd/m/Y H:i') }}</div>
+					</div>
+				</div>
 
 				<label class="form-label">Ghi chú:</label>
 				<div class="form-control-plaintext">{{ $booking->note ?: 'Không có' }}</div>

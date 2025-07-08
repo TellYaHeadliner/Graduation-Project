@@ -22,6 +22,8 @@ return new class extends Migration
             $table->integer('total_amount')->default(0);
             $table->dateTime('checkin_date');
             $table->dateTime('checkout_date');
+            $table->datetime('check_in_at')->nullable();  
+            $table->datetime('check_out_at')->nullable();
             $table->text('note')->nullable();
             $table->integer('cancellation_fee')->nullable();
             $table->tinyInteger('status')->default(0);

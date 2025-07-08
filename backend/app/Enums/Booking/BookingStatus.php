@@ -15,6 +15,7 @@ enum BookingStatus: int
     case CheckedOut = 3;     // Đã trả phòng
     case Cancelled = 4;      // Đã hủy (theo yêu cầu khách/chủ)
     case Refunded = 5;       // Đã hoàn tiền
+    case NoShow = 6;       // Vắng mặt
 
     public function badge(): string
     {
@@ -25,6 +26,7 @@ enum BookingStatus: int
             BookingStatus::CheckedOut => 'bg-blue-lt',
             BookingStatus::Cancelled  => 'bg-red-lt',
             BookingStatus::Refunded   => 'bg-indigo-lt',
+            BookingStatus::NoShow   =>   'bg-orange-lt',
         };
     }
 }

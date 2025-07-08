@@ -1,5 +1,6 @@
 import { DataList } from "@radix-ui/themes";
 import { Rule } from '../../types/DetailHotelTypes';
+import { Currency } from "../../utils/Currency";
 
 interface DataListRuleProps {
     hotelRule: Rule | undefined;
@@ -45,7 +46,9 @@ export default function DataListRule({ hotelRule }: DataListRuleProps) {
                 <DataList.Item className="border-b border-gray-300 py-2">
                     <DataList.Label className="border-r border-gray-300">Phụ phí giường</DataList.Label>
                     <DataList.Value>
-                        {hotelRule?.extra_bed_fee === 1 ? "Có phụ phí giường giá 100,000 VNĐ/giường" : "Không có phụ phí giường"}
+                        {hotelRule?.extra_bed_fee && hotelRule?.extra_bed_fee > 0 ? <span>
+                            Phí giường phụ { Currency.formatVND(hotelRule?.extra_bed_fee) }
+                        </span> : "Không có giường phụ"}
                     </DataList.Value>
                 </DataList.Item>
             </DataList.Root>

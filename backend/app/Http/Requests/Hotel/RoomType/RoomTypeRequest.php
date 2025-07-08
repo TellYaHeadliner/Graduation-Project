@@ -19,7 +19,7 @@ class RoomTypeRequest extends BaseRequest
         return [
             'bed_type_id' => ['nullable', 'exists:App\Models\BedType,id'],
             'name' => ['required', 'string'],
-            'room_code' => ['nullable', 'string'],
+            'room_code' => ['nullable', 'string','exists:App\Models\RoomType,room_code'],
             'room_quantity' => ['nullable', 'numeric', 'min:1'],
             'area' => ['nullable', 'numeric', 'min:1'],
             'bed_quantity' => ['nullable', 'numeric', 'min:1'],

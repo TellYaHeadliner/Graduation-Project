@@ -14,6 +14,9 @@
         <div class="card-body p-2">
             <select name="status" class="form-select">
                 @foreach($BookingStatus as $value => $label)
+                    @if($label === "Đã hoàn tiền")
+                        @continue
+                    @endif
                     <option value="{{ $value }}" {{ $value == $booking->status->value ? 'selected' : '' }}>{{ $label }}</option>
                 @endforeach
             </select>

@@ -14,7 +14,7 @@ export default function TrendingLocation() {
                 Đáng để bạn lựa chọn trong dịp nghỉ hè này
             </p>
             <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-2 gap-4">
-                <div className="relative rounded overflow-hidden shadow-lg h-60">
+                <div className="relative rounded overflow-hidden shadow-lg h-60 transform transition duration-500 hover:scale-105">
                     <a href="/Hồ Chí Minh">
                         <img
                             src={HoChiMinh}
@@ -28,7 +28,7 @@ export default function TrendingLocation() {
                         </div>
                     </a>
                 </div>
-                <div className="relative rounded overflow-hidden shadow-lg h-60">
+                <div className="relative rounded overflow-hidden shadow-lg h-60 transform transition duration-500 hover:scale-105">
                     <a href="/Hà Nội">
                         <img
                             src={HaNoi}
@@ -45,7 +45,7 @@ export default function TrendingLocation() {
             </div>
 
             <div className="grid grid-cols-1 2xl:grid-cols-3 lg:grid-cols-3 gap-4 mt-4">
-                <div className="relative rounded overflow-hidden shadow-lg h-60">
+                <div className="relative rounded overflow-hidden shadow-lg h-60 transform transition duration-500 hover:scale-105">
                     <a href="/Đà Nẵng">
                         <img
                             src={DaNang}
@@ -59,7 +59,7 @@ export default function TrendingLocation() {
                         </div>
                     </a>
                 </div>
-                <div className="relative rounded overflow-hidden shadow-lg h-60">
+                <div className="relative rounded overflow-hidden shadow-lg h-60 transform transition duration-500 hover:scale-105">
                     <a href="/Đà Lạt">
                         <img
                             src={DaLat}
@@ -73,7 +73,7 @@ export default function TrendingLocation() {
                         </div>
                     </a>
                 </div>
-                <div className="relative rounded overflow-hidden shadow-lg h-60">
+                <div className="relative rounded overflow-hidden shadow-lg h-60 transform transition duration-500 hover:scale-105">
                     <a href="/Nha Trang">
                         <img
                             src={NhaTrang}

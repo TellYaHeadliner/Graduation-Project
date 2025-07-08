@@ -15,7 +15,7 @@ interface DataListServicesPaymentProps {
 
 export default function DataListServicesPayment({ comboSelection, serviceSelection }: DataListServicesPaymentProps) {
     return (
-        <div className="bg-gray-100 rounded-xl p-4 w-[320px] text-sm font-medium space-y-1 mb-6">
+        <div className="bg-gray-100 rounded-xl p-4 text-sm font-medium space-y-1 mb-6">
             <div className="flex justify-between">
                 <span>Dịch vụ và combo</span>
                 <span>Số lượng</span>

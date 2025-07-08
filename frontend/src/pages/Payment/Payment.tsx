@@ -15,6 +15,9 @@ import { usePaymentMutation } from "../../react-query/usePaymentMutation";
 import { ErrorUtils } from "../../utils/Error";
 import DialogLoading from "../../components/Dialog/DialogLoading";
 import DiscountBar from "../../components/Discount/DiscountBar";
+import { useUserInfoQuery } from "../../react-query/useUserInfoQuery";
+import { Callout } from "@radix-ui/themes";
+import { InfoCircledIcon } from "@radix-ui/react-icons";
 
 
 
@@ -78,74 +81,137 @@ export default function Payment() {
 
     const hotelDetail = useHotelDetailQuery(Number(id));
     const voucherList = hotelDetail.data?.data.hotel.vouchers;
+    const userInfo = useUserInfoQuery();
+
 
     return (
         <PaymentLayout>
-            <div className="lg:px-14">
-                <div className="my-6">
-                    <h1 className="text-3xl font-bold">
-                        Chi tiết thông tin đặt phòng
-                    </h1>
-                    <p className="font-lg font-thin text-gray-400">
-                        Hãy chắc chắn rằng các thông tin bạn điền là chính xác để tiến hành thanh toán
-                    </p>
-                </div>
+            <div className="max-w-7xl mx-auto px-4 lg:px-10 py-8">
+                <div className="flex flex-col lg:flex-row gap-8">
+                    {/* Left: Thông tin đã chọn */}
+                    <div className="lg:w-1/2 space-y-2">
+                        <div className="p-4">
+                            <CardHotel dataHotel={getHotelDetail} />
+                        </div>
 
-                <div className="flex flex-col lg:flex-row w-full gap-6">
-                    <div className="lg:w-1/2 w-full">
-                        <form className="space-y-4" onSubmit={handleSubmit(onSubmit)}>
-                            <div>
-                                <label htmlFor="checkIn" className="block-text-sm font-medium text-gray-700">Check-in</label>
-                                <select {...register("check_in")} defaultValue={checkInDay} className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none">
-                                    <option value={checkInDay}>
-                                        {checkInDay}
-                                    </option>
-                                </select>
+                        <div className="p-4 rounded-lg space-y-2">
+                            <h3 className="text-lg font-semibold">Chi tiết đặt phòng của bạn</h3>
+                            <DataListRoomPayment infoSelectedRoom={getInfoSelectedRoom} />
+                            <DataListServicesPayment
+                                comboSelection={getInfoSelectedCombos}
+                                serviceSelection={getInfoSelectedService}
+                            />
+                            <div className="text-sm text-gray-600 mt-2 text-end">
+                                Tổng tiền ({numberOfNights} đêm):
+                                <span className="text-lg text-red-500 font-semibold ml-1">
+                                    {Currency.formatVND(total)}
+                                </span>
                             </div>
-                            <div>
-                                <label htmlFor="checkOut" className="block-text-sm font-medium text-gray-700">Check-out</label>
-                                <select {...register("check_out")} defaultValue={checkOutDay} className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none">
-                                    <option value={checkOutDay}>
-                                        {checkOutDay}
-                                    </option>
-                                </select>
+                        </div>
+                    </div>
+
+                    {/* Right: Form người đặt */}
+                    <div className="lg:w-1/2 space-y-6">
+                        <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg space-y-6">
+                            <h2 className="text-xl font-bold">Nhập thông tin chi tiết của bạn</h2>
+                            <Callout.Root>
+                                <Callout.Icon>
+                                    <InfoCircledIcon />
+                                </Callout.Icon>
+                                <Callout.Text>
+                                    Hãy kiểm tra thông tin trước khi thanh toán
+                                </Callout.Text>
+                            </Callout.Root>
+
+                            <div className="bg-gray-100 p-3 rounded">
+                                <h2 className="text-xl font-bold">Thông tin người dùng</h2>
+                                <div className="text-sm text-gray-700">
+                                    <div className="flex justify-between">
+                                        <span className="font-medium">
+                                            Họ tên:
+                                        </span>
+                                        <span>
+                                            {userInfo.data?.data.user.fullname}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="font-medium">Email:</span>
+                                        <span>{userInfo.data?.data.user.email ?? "Chưa có"}</span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="font-medium">Số điện thoại:</span>
+                                        <span>{userInfo.data?.data.user.phone ?? "Chưa có"}</span>
+                                    </div>
+                                </div>
                             </div>
-                            <div>
-                                <label htmlFor="note" className="block-text-sm font-medium text-gray-700">Ghi chú</label>
-                                <input {...register("note")} type="text" className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none" />
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Check-in</label>
+                                    <select
+                                        {...register("check_in")}
+                                        defaultValue={checkInDay}
+                                        className="mt-1 w-full border px-4 py-2 rounded-lg"
+                                    >
+                                        <option value={checkInDay}>
+                                            {checkInDay} {hotelDetail.data?.data.hotel.rules.check_in_time}
+                                        </option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="block text-sm font-medium text-gray-700">Check-out</label>
+                                    <select
+                                        {...register("check_out")}
+                                        defaultValue={checkOutDay}
+                                        className="mt-1 w-full border px-4 py-2 rounded-lg"
+                                    >
+                                        <option value={checkOutDay}>
+                                            {checkOutDay} {hotelDetail.data?.data.hotel.rules.check_out_time}
+                                        </option>
+                                    </select>
+                                </div>
                             </div>
+
                             <div>
-                                <label htmlFor="code" className="block-text-sm font-medium text-gray-700">Voucher (Nếu có)</label>
-                                <input {...register("code")} type="text" className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:accent focus:outine-none" />
+                                <label className="block text-sm font-medium text-gray-700">Ghi chú</label>
+                                <input
+                                    type="text"
+                                    {...register("note")}
+                                    className="mt-1 w-full border px-4 py-2 rounded-lg"
+                                    placeholder="Ghi chú cho khách sạn (nếu có)"
+                                />
                             </div>
-                            <button type="submit" className="py-2 px-4 bg-blue-500 hover:bg-accent text-white font-semibold rounded-lg transition duration-200">
-                                Thanh toán
+
+                            <div>
+                                {
+                                    (voucherList && voucherList.length > 0) && (
+                                        <div>
+                                            <label className="block text-sm font-medium text-gray-700">Mã giảm giá</label>
+                                            <input
+                                                {...register("code")}
+                                                type="text"
+                                                placeholder="Nhập mã voucher nếu có"
+                                                className="mt-1 w-full border px-4 py-2 rounded-lg"
+                                            />
+                                            <div className="mt-2">
+                                                <DiscountBar discountList={voucherList} />
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            </div>
+
+                            <button
+                                type="submit"
+                                className="w-full py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition"
+                            >
+                                Tiếp tục thanh toán
                             </button>
                         </form>
-                        <div className="mt-2">
-                            <DiscountBar discountList={voucherList ?? []} />
-                        </div>
-                    </div>
-
-                    <div className="lg:w-1/2 w-full flex flex-col gap-3">
-
-                        <CardHotel dataHotel={getHotelDetail} />
-                        <div className="mt-2">
-                            <DataListRoomPayment infoSelectedRoom={getInfoSelectedRoom} />
-                        </div>
-                        <div className="mt-2">
-                            <DataListServicesPayment comboSelection={getInfoSelectedCombos} serviceSelection={getInfoSelectedService} />
-                        </div>
-                        <div className="bg-gray-100 rounded-xl p-4 text-lg font-medium mt-2 w-[320px]">
-                            Tổng tiền {Number(numberOfNights)} đêm : {Currency.formatVND(total)}
-                        </div>
                     </div>
                 </div>
-                {
-                    mutation.isPending && (
-                        <DialogLoading isOpen={true} />
-                    )
-                }
+
+                {mutation.isPending && <DialogLoading isOpen={true} />}
             </div>
         </PaymentLayout>
     )

@@ -100,7 +100,9 @@ const CardItem: React.FC<CardItemProps> = ({
           }}
           disabled={isPending}
           type="button"
+          
           className="absolute top-2 right-2 bg-white hover:bg-accent p-1 rounded-full shadow z-10"
+          
         >
           <HeartFilledIcon className={`w-5 h-5 transition-colors duration-300 ${is_favorite ? "text-red-500" : "text-gray-400"}`} />
         </button>

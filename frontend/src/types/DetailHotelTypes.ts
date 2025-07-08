@@ -13,6 +13,7 @@ export interface DetailHotel{
     services: Service[];
     combos: Combo[];
     vouchers: Voucher[];
+    reviews: Review[];
 }
 
 export interface Rule{
@@ -60,6 +61,13 @@ export interface Voucher{
     end_date: string;
 }
 
+export interface Review{
+    user_name: string;
+    star: number;
+    content: string;
+    created_at: string;
+    room_type: string;
+}
   
 
 export interface DetailHotelResponse{

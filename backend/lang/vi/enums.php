@@ -127,6 +127,7 @@ return [
         BookingStatus::CheckedOut->value  => 'Đã trả phòng',
         BookingStatus::Cancelled->value   => 'Đã hủy',
         BookingStatus::Refunded->value    => 'Đã hoàn tiền',
+        BookingStatus::NoShow->value    => 'Vắng mặt',
     ],
     TransactionStatus::class => [
         TransactionStatus::Success->value   => 'Thành công',

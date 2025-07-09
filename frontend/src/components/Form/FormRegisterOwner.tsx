@@ -2,7 +2,12 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerOwnerSchema } from "../../schemas/registerOwnerSchemas"; // Đường dẫn tùy bạn
 import { z } from "zod";
-import React, { useEffect, useState } from "react";
+import  { useEffect, useState } from "react";
+import { useRegisterHotelMutation } from "../../react-query/useRegisterHotelMutation";
+import { ErrorUtils } from '../../utils/Error';
+import DialogLoginComplete from "../Dialog/DialogLoginComplete";
+import DialogLoading from "../Dialog/DialogLoading";
+import { useNavigate } from "react-router-dom";
 
 type RegisterOwnerForm = z.infer<typeof registerOwnerSchema>;
 
@@ -21,8 +26,6 @@ export default function RegisterOwnerForm() {
 
 
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const [galleryFiles, setGalleryFiles] = useState<File[]>([]);
-  const [galleryPreview, setGalleryPreview] = useState<string[]>([]);
 
   useEffect(() => {
     if (avatarFile instanceof File) {
@@ -30,22 +33,36 @@ export default function RegisterOwnerForm() {
     }
   }, [avatarFile]);
 
-  useEffect(() => {
-    if (Array.isArray(galleryFiles)) {
-      const previews = galleryFiles.map((file) => URL.createObjectURL(file));
-      setGalleryPreview(previews);
-    }
-  }, [galleryFiles]);
 
+  const [isOpenDialog, setIsOpenDialog] = useState(false);
 
+  const hotelRegister = useRegisterHotelMutation();
+  const navigate = useNavigate();
   const onSubmit = (data: RegisterOwnerForm) => {
-    console.log("Dữ liệu gửi đi:", data);
+    const errorUtils = new ErrorUtils();
+
+    const formattedData = {
+      ...data,
+      mst: Number(data.mst)
+    }
+
+    hotelRegister.mutate(formattedData, {
+      onSuccess: () => {
+        setIsOpenDialog(true);
+        setTimeout(() => {
+          navigate("/")
+        }, 5000);
+      },
+      onError: (error) => {
+        errorUtils.handleError(error);
+      }
+    })
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" encType='multipart/form-data'>
       <div>
-        <label htmlFor="fullname" className="block-text-sm font-medium text-white">Email</label>
+        <label htmlFor="email" className="block-text-sm font-medium text-white">Email</label>
         <input {...register("email")} placeholder="Email" className="mt-1 bg-white block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:outline-none" />
         {errors.email && <p>{errors.email.message}</p>}
       </div>
@@ -64,8 +81,8 @@ export default function RegisterOwnerForm() {
 
       <div>
         <label htmlFor="password" className="block-text-sm font-medium text-white">Địa chỉ</label>
-        <input {...register("adresss")} placeholder="Địa chỉ" className="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus accent focus:outline-none" />
-        {errors.adresss && <p>{errors.adresss.message}</p>}
+        <input {...register("address")} placeholder="Địa chỉ" className="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus accent focus:outline-none" />
+        {errors.address && <p>{errors.address?.message}</p>}
       </div>
 
       <div>
@@ -83,7 +100,7 @@ export default function RegisterOwnerForm() {
 
       <div>
         <label htmlFor="password" className="block-text-sm font-medium text-white mr-2">Mã số thuế</label>
-        <input {...register("mst")} placeholder="Mã số thuế" className="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus accent focus:outline-none" />
+        <input type="number" {...register("mst")} placeholder="Mã số thuế" className="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus accent focus:outline-none" />
         {errors.mst && <p>{errors.mst.message}</p>}
       </div>
 
@@ -115,37 +132,47 @@ export default function RegisterOwnerForm() {
         <label htmlFor="password" className="block-text-sm font-medium text-white mr-2">Ảnh đại diện</label>
         <Controller
           control={control}
-          name="gallery"
+          name="avatar"
           render={({ field }) => (
             <input
               type="file"
               accept="image/*"
-              multiple
               onChange={(e) => {
                 const file = e.target.files?.[0];
-                if (file){
-                  setGalleryFiles((prev) => [...prev, file]);
-                  setGalleryPreview((prev) => [...prev, URL.createObjectURL(file)])
-                } 
-                e.target.value = ""
+                if (file) {
+                  setAvatarPreview(URL.createObjectURL(file));
+                  field.onChange(file); 
+                } else {
+                  field.onChange(null);
+                }
               }}
+              
             />
           )}
         />
-        {errors.gallery && <p className="text-red-500">{errors.gallery.message}</p>}
+        
+        {errors.avatar && <p className="text-red-500">{errors.avatar.message}</p>}
       </div>
-
-      <div className="flex gap-2 flex-wrap overflow-y-auto">
-        {galleryPreview.map((url, index) => (
+      
+      {avatarPreview && (
+        <div className="mt-2">
           <img
-            key={index}
-            src={url}
-            alt={`gallery-${index}`}
+            src={avatarPreview}
+            alt="Avatar Preview"
             className="w-24 h-24 object-cover rounded"
           />
-        ))}
-      </div>
-
+        </div>
+      )}
+      {
+        isOpenDialog === true && (
+          <DialogLoginComplete title="Đăng kí khách sạn thành công" isOpen={isOpenDialog}/>
+        )
+      }
+      {
+        hotelRegister.isPending && (
+          <DialogLoading isOpen={true}/>
+        )
+      }
 
       <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded">
         Đăng ký

@@ -9,11 +9,11 @@ export default function LocationTab() {
             </h2>
             <Tabs.Root defaultValue="1" className="">
                 <Tabs.List>
-                    <Tabs.Trigger value="1">Các tỉnh thành phố</Tabs.Trigger>
-                    <Tabs.Trigger value="2">Các khách sạn gần nơi bạn du lịch</Tabs.Trigger>
+                    <Tabs.Trigger value="1" className="px-4 py-2 text-sm font-medium text-gray-600 data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-600 focus:outline-none hover:text-blue-500 transition-all duration-300">Các tỉnh thành phố</Tabs.Trigger>
+                    <Tabs.Trigger value="2" className="px-4 py-2 text-sm font-medium text-gray-600 data-[state=active]:border-b-2 data-[state=active]:border-blue-500 data-[state=active]:text-blue-600 focus:outline-none hover:text-blue-500 transition-all duration-300">Các khách sạn gần nơi bạn du lịch</Tabs.Trigger>
                 </Tabs.List>
 
-                <Tabs.Content value="1" className="my-6 gap-x-6"> 
+                <Tabs.Content value="1" className="my-6 gap-x-6 bg-white rounded-lg p-4 shadow-sm data-[state=inactive]:opacity-0 data-[state=inactive]:pointer-events-none"> 
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-y-4 gap-x-6 text-gray-800">
                         {[
                             "An Giang", "Bà Rịa - Vũng Tàu", "Bạc Liêu", "Bắc Giang", "Bắc Kạn",
@@ -37,7 +37,7 @@ export default function LocationTab() {
                     </div>
                 </Tabs.Content>
 
-                <Tabs.Content value="2" className="my-6 gap-x-6">
+                <Tabs.Content value="2" className="my-6 gap-x-6 bg-white rounded-lg p-4 shadow-sm transition-all duration-300">
                     <div className="grid grid-cols-3 text-gray-800">
                         <div className="grid gap-y-3">
                             <h3 className="text-md font-bold">

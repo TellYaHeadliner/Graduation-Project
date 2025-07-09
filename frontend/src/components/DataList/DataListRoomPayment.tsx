@@ -24,7 +24,7 @@ export default function DataListRoomPayment({ infoSelectedRoom }: DataListRoomPa
 
 
     return (
-        <div className="bg-gray-100 rounded-xl p-4 w-[320px] text-sm font-medium space-y-1 mb-4">
+        <div className="bg-gray-100 rounded-xl p-4 text-sm font-medium space-y-1 mb-4">
             <div className="flex justify-between">
                 <span>
                     Loại phòng bạn đặt

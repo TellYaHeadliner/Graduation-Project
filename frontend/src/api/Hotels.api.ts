@@ -2,6 +2,7 @@ import api from "./axiosConfig"
 import { HotelResponse } from '../types/ListHotelsTypes';
 import { DetailHotelResponse } from "../types/DetailHotelTypes";
 import { RoomTypeResponse } from "../types/RoomTypes";
+import { RegisterHotelResponse } from "../types/RegisterHotelTypes";
 
 const hotelApi = {
     getHotelSeasons: (): Promise<HotelResponse> => {
@@ -26,7 +27,12 @@ const hotelApi = {
                 hotel_id, check_in, check_out, guest, children, room_quantity
             }
         })
+    },
+
+    registerHotel: (data: any): Promise<RegisterHotelResponse> => {
+        return api.post('/hotels/register-hotel', data)
     }
+    
 }
 
 export default hotelApi

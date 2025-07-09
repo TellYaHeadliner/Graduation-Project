@@ -63,23 +63,17 @@ export default function TabService({ combos, services, onComboChange, onServiceC
     }, [calculateTotalAll, combos, services])
 
     return (
-        <Tabs.Root defaultValue="comboDichVu" orientation="horizontal" className="w-full space-y-4">
-            <Tabs.List className="flex flex-wrap gap-2 border-b pb-2">
+        <Tabs.Root defaultValue="comboDichVu" className="w-full space-y-4">
+            <Tabs.List className="flex flex-wrap gap-2 pb-2">
                 <Tabs.Trigger
                     value="comboDichVu"
-                    className="px-4 py-2 rounded-md font-medium transition-colors 
-                 data-[state=active]:bg-blue-500 data-[state=active]:text-white 
-                 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 
-                 hover:bg-blue-100"
+                    className="px-4 py-2 rounded-md font-medium transition-colors"
                 >
                     Combo dịch vụ
                 </Tabs.Trigger>
                 <Tabs.Trigger
                     value="dichVuRiengLe"
-                    className="px-4 py-2 rounded-md font-medium transition-colors 
-                 data-[state=active]:bg-blue-500 data-[state=active]:text-white 
-                 data-[state=inactive]:bg-gray-100 data-[state=inactive]:text-gray-700 
-                 hover:bg-blue-100"
+                    className="px-4 py-2 rounded-md font-medium transition-colors"
                 >
                     Dịch vụ riêng lẻ
                 </Tabs.Trigger>

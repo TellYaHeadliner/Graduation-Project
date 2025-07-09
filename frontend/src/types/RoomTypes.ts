@@ -13,7 +13,7 @@ export interface RoomType{
   variants: Variant[];
 }
 
-interface Amenity{
+export interface Amenity{
   name: string;
 }
 

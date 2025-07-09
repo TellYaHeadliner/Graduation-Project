@@ -12,7 +12,6 @@ import { LuBedSingle } from "react-icons/lu";
 import { MdBed } from "react-icons/md";
 
 
-
 interface TableRoomProps {
     datas: RoomType[];
     onChange: (bookingDetails: {
@@ -33,6 +32,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
         const key = `${roomTypeId}-${variantId}`;
         const updated = { ...quantities, [key]: quantity };
         setQuantities(updated);
+
 
         const details = Object.entries(updated).filter(([_, q]) => q > 0)
             .map(([key, quantity]) => {
@@ -127,15 +127,15 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
             <table typeof="1" className="min-w-full table-auto border border-gray-300">
                 <thead>
                     <tr className="bg-blue-700 text-white">
-                        <th className="text-left px-4 py-2 border-r border-gray-500">Loại phòng </th>
-                        <th className="text-left px-4 py-2 border-r border-gray-500">Người</th>
-                        <th className="px-4 py-2 border-r border-gray-500 text-end">
+                        <th className="text-left px-4 py-2 border-r border-gray-300">Loại phòng </th>
+                        <th className="text-left px-4 py-2 border-r border-gray-300">Người</th>
+                        <th className="px-4 py-2 border-r border-gray-300 text-end">
                             Giá/Phòng/Đêm
                         </th>
-                        <th className="text-end px-4 py-2 border-r border-gray-500">
+                        <th className="text-end px-4 py-2 border-r border-gray-300">
                             Số lượng
                         </th>
-                        <th className="text-left px-2 py-2 border-r border-gray-500">
+                        <th className="text-left px-2 py-2 border-r border-gray-300">
                             Các lựa chọn
                         </th>
                     </tr>
@@ -162,7 +162,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                                     <tr key={`room-${dataIndex}`} className="border-t border-gray-300">
                                         <td className="px-4 py-3 border-r">
                                             <div className="font-medium text-blue-700">
-                                                <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} />
+                                                <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} galleyList={ data.gallery?.split(",") ?? []}/>
                                             </div>
                                             <div className="text-sm text-gray-600">Loại giường: {data.bed?.type_name}</div>
                                         </td>
@@ -198,7 +198,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                                         {vIndex === 0 && (
                                             <td rowSpan={data.variants.length} className="px-4 py-3 border-r align-top">
                                                 <div className="font-medium text-blue-700">
-                                                    <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} />
+                                                    <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} galleyList={ data.gallery?.split(",") ?? []}/>
                                                 </div>
                                                 <div className="text-sm text-gray-600 mt-2 flex items-center gap-1">
                                                     {data.bed?.quantity} {data.bed?.type_name}
@@ -217,6 +217,17 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                                                         </div>
                                                     ))}
                                                 </div>
+                                                {
+                                                    data.available_room_count > 0 ? (
+                                                        <div className="text-red-500 font-thin text-md">
+                                                            Còn {data.available_room_count} phòng trống
+                                                        </div>
+                                                    ) : (
+                                                        <div className="text-red-500 font-thin text-md">
+                                                            Hết phòng trống
+                                                        </div>
+                                                    )
+                                                }
                                             </td>
                                         )}
 

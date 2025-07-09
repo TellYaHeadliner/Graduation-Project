@@ -19,7 +19,6 @@ Route::middleware('checkJWT')->group(function () {
         Route::controller(App\Http\Controllers\API\User\UserController::class)->group(function () {
             Route::get('/user-info', 'userInfo')->name('info');
             Route::put('/update', 'update')->name('update');
-            Route::put('/forgot-password', 'forgot_password')->name('forgot_password');
         });
     });
     Route::controller(App\Http\Controllers\API\Hotel\HotelController::class)
@@ -96,3 +95,9 @@ Route::controller(App\Http\Controllers\API\RoomType\RoomTypeController::class)
     ->group(function () {
         Route::get('/{hotel_id?}/{check_in?}/{check_out?}/{guest?}/{children?}/{room_quantity?}', 'getRoomTypeHotel')->name('getRoomTypeHotel');
     });
+
+Route::prefix('/users')->as('user.')->group(function () {
+    Route::controller(App\Http\Controllers\API\User\UserController::class)->group(function () {
+        Route::put('/forgot-password', 'forgot_password')->name('forgot_password');
+    });
+});

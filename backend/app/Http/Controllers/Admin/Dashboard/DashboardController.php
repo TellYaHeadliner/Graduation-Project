@@ -7,8 +7,10 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Enums\Booking\BookingStatus;
-use App\Enums\Transaction\TransactionType;     
-use App\Enums\Transaction\TransactionStatus; 
+use App\Enums\Hotel\HotelStatus;
+use App\Enums\Transaction\TransactionType;
+use App\Enums\Transaction\TransactionStatus;
+use App\Models\Transaction;
 
 class DashboardController extends Controller
 {
@@ -24,15 +26,32 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view($this->view['index']);
+        $summary = [
+            'total_users'        => DB::table('users')->count(),
+            'total_hotels'       => DB::table('hotels')->count(),
+            'hotels_active'      => DB::table('hotels')->where('status', HotelStatus::Active->value)->count(),
+            'hotels_pending'     => DB::table('hotels')->where('status', HotelStatus::Pending->value)->count(),
+            'hotels_blocked'     => DB::table('hotels')->where('status', HotelStatus::Blocked->value)->count(),
+            'total_bookings'     => DB::table('bookings')->count(),
+            'total_transactions' => DB::table('transactions')->count(),
+            'total_commission'   => Transaction::where('transaction_type', TransactionType::Release)->where('payment_status', TransactionStatus::Success->value)->sum('commission_amount'),
+            'total_holding'      => Transaction::where('transaction_type', TransactionType::Holding)
+                ->whereDoesntHave('booking.transactions', function ($q) {
+                    $q->whereIn('transaction_type', [
+                        TransactionType::Refund->value,
+                        TransactionType::Release->value,
+                    ]);
+                })
+                ->sum('amount'),
+        ];
+        return view($this->view['index'])->with('summary', $summary);
     }
 
     public function data(Request $request)
     {
-        
         $from    = Carbon::parse($request->input('from', now()->subMonths(12)->startOfMonth()));
         $to      = Carbon::parse($request->input('to',   now()->endOfMonth()));
-        $groupBy = $request->input('group_by', 'month');   // day | month | year
+        $groupBy = $request->input('group_by', 'month');
 
         $format = match ($groupBy) {
             'day'  => '%Y-%m-%d',
@@ -40,113 +59,95 @@ class DashboardController extends Controller
             default => '%Y-%m',
         };
 
-        
-        $summary = [
-            'total_users'        => DB::table('users')->count(),
-            'total_hotels'       => DB::table('hotels')->count(),
-            'hotels_active'      => DB::table('hotels')->where('status', 'active')->count(),
-            'hotels_pending'     => DB::table('hotels')->where('status', 'pending')->count(),
-            'hotels_blocked'     => DB::table('hotels')->where('status', 'blocked')->count(),
-            'total_bookings'     => DB::table('bookings')->count(),
-            'total_transactions' => DB::table('transactions')->count(),
-        ];
-
-       
-        $usersRaw = DB::table('users')
+        $nguoiDungMoi = DB::table('users')
             ->selectRaw("DATE_FORMAT(created_at,'{$format}') AS time, COUNT(*) AS total")
             ->whereBetween('created_at', [$from, $to])
             ->groupBy('time')
             ->orderBy('time')
             ->get();
 
-        $usersGrowth = [
-            'labels'   => $usersRaw->pluck('time'),
+        $chartNguoiDungMoi = [
+            'labels'   => $nguoiDungMoi->pluck('time'),
             'datasets' => [[
                 'label'           => 'Người dùng mới',
-                'data'            => $usersRaw->pluck('total'),
+                'data'            => $nguoiDungMoi->pluck('total'),
                 'borderColor'     => '#10b981',
                 'backgroundColor' => 'rgba(16,185,129,0.2)',
                 'tension'         => .3
             ]]
         ];
 
-       
-        $hotelStatus = [
-            'labels' => ['Hoạt động','Chờ duyệt','Bị khóa'],
-            'datasets' => [[
-                'label'           => 'Khách sạn',
-                'data'            => [$summary['hotels_active'],$summary['hotels_pending'],$summary['hotels_blocked']],
-                'backgroundColor' => ['#3b82f6','#f59e0b','#ef4444']
-            ]]
-        ];
-
-       
-        $bookingRaw = DB::table('bookings')
-            ->selectRaw("
-                DATE_FORMAT(created_at,'{$format}') AS time,
-                COUNT(*) AS total,
-                SUM(CASE WHEN status IN (?, ?, ?) THEN 1 END) AS success,
-                SUM(CASE WHEN status = ?            THEN 1 END) AS cancel
-            ",
-            [
-                BookingStatus::Confirmed->value,
-                BookingStatus::CheckedIn->value,
-                BookingStatus::CheckedOut->value,
-                BookingStatus::Cancelled->value
-            ])
+        $bieuDoBooking = DB::table('bookings')
+            ->selectRaw(
+                "
+            DATE_FORMAT(created_at,'{$format}') AS time,
+            COUNT(*) AS total,
+            SUM(CASE WHEN status IN (?, ?, ?) THEN 1 END) AS success,
+            SUM(CASE WHEN status = ?            THEN 1 END) AS cancel
+        ",
+                [
+                    BookingStatus::Confirmed->value,
+                    BookingStatus::CheckedIn->value,
+                    BookingStatus::CheckedOut->value,
+                    BookingStatus::Cancelled->value
+                ]
+            )
             ->whereBetween('created_at', [$from, $to])
             ->groupBy('time')
             ->orderBy('time')
             ->get();
 
         $bookingsByTime = [
-            'labels'   => $bookingRaw->pluck('time'),
+            'labels'   => $bieuDoBooking->pluck('time'),
             'datasets' => [
                 [
                     'label'           => 'Tổng đặt phòng',
-                    'data'            => $bookingRaw->pluck('total'),
+                    'data'            => $bieuDoBooking->pluck('total'),
                     'backgroundColor' => 'rgba(59,130,246,0.5)',
                 ],
                 [
                     'label'           => 'Thành công',
-                    'data'            => $bookingRaw->pluck('success'),
+                    'data'            => $bieuDoBooking->pluck('success'),
                     'backgroundColor' => 'rgba(16,185,129,0.5)',
                 ],
                 [
                     'label'           => 'Huỷ',
-                    'data'            => $bookingRaw->pluck('cancel'),
+                    'data'            => $bieuDoBooking->pluck('cancel'),
                     'backgroundColor' => 'rgba(239,68,68,0.5)',
                 ],
             ]
         ];
 
-       
-        $revenueRaw = DB::table('transactions')
+        $doanhThu = DB::table('bookings')
+            ->leftJoin('transactions', function ($join) {
+                $join->on('transactions.booking_id', '=', 'bookings.id')
+                    ->where('transactions.transaction_type', TransactionType::Release->value)
+                    ->where('transactions.payment_status', TransactionStatus::Success->value);
+            })
             ->selectRaw("
-                DATE_FORMAT(created_at,'%Y-%m') AS month,
-                SUM(amount)           AS gross,
-                SUM(commission_amount) AS commission
-            ")
-            ->where('transaction_type', TransactionType::Release->value)  // 1 = Release
-            ->where('payment_status', TransactionStatus::Success->value)
-            ->whereBetween('created_at', [$from, $to])
-            ->groupBy('month')
-            ->orderBy('month')
+        DATE_FORMAT(bookings.created_at, '{$format}') AS time,
+        SUM(bookings.total_amount) AS gross,
+        SUM(transactions.commission_amount) AS commission
+    ")
+            ->where('bookings.status', BookingStatus::CheckedOut->value)
+            ->whereBetween('bookings.created_at', [$from, $to])
+            ->groupBy('time')
+            ->orderBy('time')
             ->get();
 
         $revenueByMonth = [
-            'labels' => $revenueRaw->pluck('month'),
+            'labels' => $doanhThu->pluck('time'),
             'datasets' => [
                 [
                     'label'           => 'Doanh thu gộp',
-                    'data'            => $revenueRaw->pluck('gross'),
+                    'data'            => $doanhThu->pluck('gross'),
                     'borderColor'     => '#3b82f6',
                     'backgroundColor' => 'rgba(59,130,246,0.2)',
                     'tension'         => .3
                 ],
                 [
                     'label'           => 'Hoa hồng',
-                    'data'            => $revenueRaw->pluck('commission'),
+                    'data'            => $doanhThu->pluck('commission'),
                     'borderColor'     => '#ef4444',
                     'backgroundColor' => 'rgba(239,68,68,0.2)',
                     'tension'         => .3
@@ -154,47 +155,17 @@ class DashboardController extends Controller
             ]
         ];
 
-      
-        $transBreak = DB::table('transactions')
-            ->selectRaw('transaction_type, COUNT(*) AS count, SUM(amount) AS total')
-            ->groupBy('transaction_type')
-            ->get();
-
-        $transChart = [
-            'labels'   => $transBreak->pluck('transaction_type')->map(fn($t) => match ($t) {
-                TransactionType::Holding->value  => 'Giữ tiền',
-                TransactionType::Release->value  => 'Chi cho KS',
-                TransactionType::Refund->value   => 'Hoàn tiền',
-                default                          => 'Khác',
-            }),
-            'datasets' => [[
-                'label'           => 'Tổng tiền',
-                'data'            => $transBreak->pluck('total'),
-                'backgroundColor' => ['#f59e0b','#10b981','#ef4444']
-            ]]
-        ];
-
-        
-        $finance = DB::table('transactions')->selectRaw("
-            SUM(CASE WHEN transaction_type = ? THEN amount END) AS hold,
-            SUM(CASE WHEN transaction_type = ? THEN amount END) AS payout,
-            SUM(CASE WHEN transaction_type = ? THEN amount END) AS refund
-        ",
-        [
-            TransactionType::Holding->value,
-            TransactionType::Release->value,
-            TransactionType::Refund->value,
-        ])->first();
-
-        
-        $topHotelRevenue = DB::table('bookings')
-            ->join('hotels','hotels.id','=','bookings.hotel_id')
-            ->selectRaw('hotels.name, SUM(total_amount) AS revenue')
-            ->where('bookings.status', BookingStatus::CheckedOut->value)
-            ->groupBy('hotels.id','hotels.name')
+        $topHotelRevenue = DB::table('transactions')
+            ->join('bookings', 'bookings.id', '=', 'transactions.booking_id')
+            ->join('hotels', 'hotels.id', '=', 'bookings.hotel_id')
+            ->selectRaw('hotels.name, SUM(transactions.amount) AS revenue')
+            ->where('transactions.transaction_type', TransactionType::Release->value)
+            ->where('transactions.payment_status', TransactionStatus::Success->value)
+            ->groupBy('hotels.id', 'hotels.name')
             ->orderByDesc('revenue')
             ->limit(5)
             ->get();
+
 
         $topHotelRevenueChart = [
             'labels'   => $topHotelRevenue->pluck('name'),
@@ -205,75 +176,12 @@ class DashboardController extends Controller
             ]]
         ];
 
-        
-        $topHotelBookings = DB::table('bookings')
-            ->join('hotels','hotels.id','=','bookings.hotel_id')
-            ->selectRaw('hotels.name, COUNT(bookings.id) AS total')
-            ->groupBy('hotels.id','hotels.name')
-            ->orderByDesc('total')
-            ->limit(5)
-            ->get();
-
-        $topHotelBookingsChart = [
-            'labels'   => $topHotelBookings->pluck('name'),
-            'datasets' => [[
-                'label'           => 'Số booking',
-                'data'            => $topHotelBookings->pluck('total'),
-                'backgroundColor' => 'rgba(16,185,129,0.5)'
-            ]]
-        ];
-
-       
-        $newHotelRaw = DB::table('hotels')
-            ->selectRaw("DATE_FORMAT(created_at,'%Y-%m') AS month, COUNT(*) AS total")
-            ->whereBetween('created_at', [$from, $to])
-            ->groupBy('month')
-            ->orderBy('month')
-            ->get();
-
-        $newHotelsChart = [
-            'labels'   => $newHotelRaw->pluck('month'),
-            'datasets' => [[
-                'label'           => 'Khách sạn mới',
-                'data'            => $newHotelRaw->pluck('total'),
-                'borderColor'     => '#f59e0b',
-                'backgroundColor' => 'rgba(245,158,11,0.2)',
-                'tension'         => .3
-            ]]
-        ];
-
-        
-        $topUsers = DB::table('bookings')
-            ->join('users','users.id','=','bookings.customer_id')
-            ->selectRaw('users.fullname, COUNT(bookings.id) AS total')
-            ->where('bookings.status', BookingStatus::CheckedOut->value)
-            ->groupBy('users.id','users.fullname')
-            ->orderByDesc('total')
-            ->limit(5)
-            ->get();
-
-        $topUsersChart = [
-            'labels' => $topUsers->pluck('name'),
-            'datasets' => [[
-                'label'           => 'Số booking',
-                'data'            => $topUsers->pluck('total'),
-                'backgroundColor' => 'rgba(239,68,68,0.5)'
-            ]]
-        ];
-
         return response()->json([
-            'summary' => $summary,
-            'charts'  => [
-                'users_growth'        => $usersGrowth,
-                'hotels_status'       => $hotelStatus,
+            'charts' => [
+                'users_growth'        => $chartNguoiDungMoi,
                 'bookings_by_time'    => $bookingsByTime,
                 'revenue_by_month'    => $revenueByMonth,
-                'transactions'        => $transChart,
-                'finance_totals'      => $finance,
                 'top_hotels_revenue'  => $topHotelRevenueChart,
-                'top_hotels_bookings' => $topHotelBookingsChart,
-                'new_hotels'          => $newHotelsChart,
-                'top_users_bookings'  => $topUsersChart,
             ],
         ]);
     }

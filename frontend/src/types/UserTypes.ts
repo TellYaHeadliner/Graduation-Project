@@ -24,3 +24,7 @@ export interface LoginResponse {
     message: string;
     status: number;
 }
+
+export interface ForgetPasswordResponse {
+    message: string;
+}

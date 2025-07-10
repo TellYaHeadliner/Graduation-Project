@@ -2,9 +2,11 @@ import { useParams } from "react-router-dom";
 import useTitle from "../../hooks/useTitle";
 import PersonalLayout from "../../layouts/PersonalLayout";
 import { useBookingDetailQuery } from "../../react-query/useBookingDetailQuery";
-import { Button, Callout } from "@radix-ui/themes";
+import { Callout } from "@radix-ui/themes";
 import { Currency } from '../../utils/Currency';
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import DialogCancelBooking from "../../components/Dialog/DialogCancelBooking";
+import { ToastContainer } from "react-toastify";
 
 export default function DetailBooking() {
     const { id } = useParams();
@@ -167,9 +169,7 @@ export default function DetailBooking() {
                                             Lưu ý:phí hủy sau ... phòng với giá {Currency.formatVND(getDetailBooking.data.data.cancellation_fee)}
                                         </Callout.Text>
                                     </Callout.Root>
-                                    <Button color="red">
-                                        Hủy đặt phòng
-                                    </Button>
+                                    <DialogCancelBooking bookingId={Number(id)}/>
                                 </div>
                             )
                         }
@@ -177,6 +177,7 @@ export default function DetailBooking() {
 
                 </div>
             </div>
+            <ToastContainer position="top-right" />
         </PersonalLayout>
     )
 }

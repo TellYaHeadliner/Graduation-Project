@@ -2,6 +2,10 @@ export interface TransactionsResponse {
     message: string;
     url: string;
 }
+
+export interface CancelBookingResponse {
+  message: string;
+}
 export interface BookingPayload {
     hotel_id: number;
     checkin_date: string;

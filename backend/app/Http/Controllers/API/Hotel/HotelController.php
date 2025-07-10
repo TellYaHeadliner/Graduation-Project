@@ -34,7 +34,8 @@ class HotelController extends Controller
                 $query->where('name', 'LIKE', '%' . $name . '%');
             }
         })->with(['roomTypes.variants.seasons'])
-            ->get();
+          ->where('status', HotelStatus::Active->value)
+          ->get();
         return response()->json([
             'message' => 'Danh sách khách sạn có ưu đãi.',
             'data' => [
@@ -68,9 +69,16 @@ class HotelController extends Controller
     {
         $this->data = $request->validated();
         DB::beginTransaction();
-        if (Hotel::find($request->user_id)) {
+        $hotel = Hotel::find($request->user_id);
+        if ($hotel->status == HotelStatus::Pending) {
             return response()->json([
-                'message' => 'Bạn đã đăng kí khách sạn!.',
+                'message' => 'Bạn đã đăng kí khách sạn vui lòng chờ kết quả!.',
+                'data' => []
+            ], 400);
+        }
+        else{
+            return response()->json([
+                'message' => 'Bạn đang có khách sạn hoạt động.',
                 'data' => []
             ], 400);
         }
@@ -139,7 +147,7 @@ class HotelController extends Controller
     }
     public function list_favorites(Request $request)
     {
-        $user = User::with('favorites')->findOrFail($request->user_id);
+        $user = User::with('favorites')->where('status', HotelStatus::Active->value)->findOrFail($request->user_id);
 
         return response()->json([
             'data' => FavoriteHotelResource::collection($user->favorites),
@@ -166,6 +174,7 @@ class HotelController extends Controller
         }
 
         $hotels = Hotel::query()
+            ->where('status', HotelStatus::Active->value)
 
             ->when(!empty($address), function ($q) use ($address) {
                 $q->whereRaw('LOWER(address) LIKE ?', ['%' . mb_strtolower($address) . '%']);
@@ -293,11 +302,9 @@ class HotelController extends Controller
                 'amenities'
             ])
 
-            // Đánh giá trung bình và số lượng
             ->withAvg('reviews', 'star')
             ->withCount('reviews')
 
-            // Lọc theo sao
             ->when($minRating, fn($q) =>
             $q->having('reviews_avg_star', '>=', $minRating));
 

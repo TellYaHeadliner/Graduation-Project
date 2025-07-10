@@ -217,7 +217,7 @@ export default function DetailHotel() {
                                         <InfoCircledIcon />
                                     </Callout.Icon>
                                     <Callout.Text>
-                                        Bạn có đủ quyền đánh giá khách sạn
+                                        Đánh giá khách sạn
                                     </Callout.Text>
                                 </Callout.Root>
                                 <ReviewForm hotel_id={Number(id)} />

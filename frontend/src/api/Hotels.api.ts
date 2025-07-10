@@ -11,7 +11,7 @@ const hotelApi = {
 
     getHotelSeasonsParam: (name: string): Promise<HotelResponse> => {
         return api.get('/hotels/hotel-seasons/', {
-            params: name
+            params: { name }
         })
     },
 

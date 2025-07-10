@@ -1,8 +1,6 @@
 import { ReactNode } from "react"
 import { Theme } from "@radix-ui/themes"
 import Header from "../components/Header/Header"
-
-
 interface Props {
     children: ReactNode
 }

@@ -8,15 +8,18 @@ use App\Enums\Transaction\TransactionType;
 use App\Enums\Voucher\VoucherStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Transaction\TransactionRequest;
+use App\Mail\BookingCancelMail;
 use App\Mail\BookingSuccessMail;
 use App\Models\Booking;
 use App\Models\Combo;
+use App\Models\CommissionRule;
 use App\Models\Hotel;
 use App\Models\HotelService;
 use App\Models\Room;
 use App\Models\RoomType;
 use App\Models\RoomTypeVariant;
 use App\Models\Transaction;
+use App\Models\User;
 use App\Models\Voucher;
 use Carbon\Carbon;
 use Exception;
@@ -238,6 +241,125 @@ class TransactionController extends Controller
         }
     }
 
+    public function cancel_booking(Request $request)
+    {
+        $request->validate([
+            'booking_id' => 'required|exists:bookings,id',
+        ]);
+
+        $booking = Booking::findOrFail($request->booking_id);
+
+        if (in_array($booking->status, [BookingStatus::CheckedIn->value, BookingStatus::CheckedOut->value])) {
+            return response()->json(['message' => 'Không thể hủy sau khi check in hoặc check out'], 400);
+        }
+
+        $tienTra = 0;
+        $tienGiu = 0;
+        $nights = Carbon::parse($booking->checkin_date)->diffInDays(Carbon::parse($booking->checkout_date));
+        $nights = max($nights, 1);
+
+        $booking->load([
+            'bookingDetails.variant.attributes',
+            'bookingCombos',
+            'bookingServices',
+            'user',
+        ]);
+
+        $hoursGap = now()->diffInHours($booking->checkin_date, false);
+
+        foreach ($booking->bookingDetails as $item) {
+            $variant = $item->variant;
+
+            if ($variant->attributes->firstWhere('type', 'no_refund')) {
+                $tienGiu += $item->price_per_room * $nights;
+                continue;
+            }
+
+            $freeBefore = $variant->attributes->firstWhere('type', 'free_before and fee_after');
+            if ($freeBefore) {
+                $fee = $freeBefore->pivot->attribute_value;
+                if ($hoursGap >= 24) {
+                    $tienTra += $item->price_per_room * $nights;
+                } else {
+                    $tienTra += ($item->price_per_room * $nights) - ($fee * $nights);
+                    $tienGiu += min($fee, $item->price_per_room) * $nights;
+                }
+            }
+        }
+
+        foreach ($booking->bookingCombos as $combo) {
+            $tienTra += $combo->total_price;
+        }
+
+        foreach ($booking->bookingServices as $item) {
+            $tienTra += $item->total_price;
+        }
+
+        $tienTra = min($tienTra, $booking->total_amount - $tienGiu);
+
+        if ($tienTra + $tienGiu > $booking->total_amount) {
+            $excess = ($tienTra + $tienGiu) - $booking->total_amount;
+            $tienTra -= $excess;
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $giaoDichHoanTien = null;
+
+            if ($tienTra > 0) {
+                $giaoDichHoanTien = Transaction::create([
+                    'booking_id' => $booking->id,
+                    'hotel_id' => $booking->hotel_id,
+                    'user_id' => $booking->customer_id,
+                    'transaction_type' => TransactionType::Refund->value,
+                    'transaction_code' => 'RMX' . now()->format('YmdHis') . strtoupper(Str::random(4)),
+                    'amount' => $tienTra,
+                    'payment_status' => TransactionStatus::Success->value,
+                    'paid_at' => now(),
+                ]);
+            }
+
+            $commissionPercent = CommissionRule::where('is_active', true)
+                ->where('min_amount', '<=', $tienGiu)
+                ->where(function ($q) use ($tienGiu) {
+                    $q->where('max_amount', '>=', $tienGiu)->orWhereNull('max_amount');
+                })
+                ->orderBy('min_amount', 'desc')
+                ->value('commission_percent') ?? 0;
+
+            $payToHotel = $tienGiu - ($tienGiu * $commissionPercent / 100);
+
+            if ($payToHotel > 0) {
+                $admin = User::where('email', 'admin@gmail.com')->first();
+                Transaction::create([
+                    'booking_id' => $booking->id,
+                    'hotel_id' => $booking->hotel_id,
+                    'user_id' => $admin->id,
+                    'transaction_type' => TransactionType::Release->value,
+                    'transaction_code' => 'RMX' . now()->format('YmdHis') . strtoupper(Str::random(4)),
+                    'amount' => $payToHotel,
+                    'commission_amount' => $tienGiu * $commissionPercent / 100,
+                    'payment_status' => TransactionStatus::Success->value,
+                    'paid_at' => now(),
+                ]);
+            }
+
+            $booking->update(['status' => BookingStatus::Cancelled->value]);
+
+            Mail::to($booking->user->email)->send(new BookingCancelMail($booking, $giaoDichHoanTien));
+
+            DB::commit();
+
+            return response()->json([
+                'message' => 'Đã hủy phòng thành công.',
+            ],200);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json(['message' => 'Có lỗi khi hủy phòng', 'error' => $e->getMessage()], 500);
+        }
+    }
+
     public function attachCombosAndCalcTotal(Booking $booking, array $items)
     {
         try {
@@ -425,7 +547,7 @@ class TransactionController extends Controller
 
     public function checkVoucher($voucher, $total_amount)
     {
-        $voucher = Voucher::where('code',$voucher)->first();
+        $voucher = Voucher::where('code', $voucher)->first();
 
         if (!$voucher) {
             return ['success' => false, 'message' => 'Voucher không tồn tại'];

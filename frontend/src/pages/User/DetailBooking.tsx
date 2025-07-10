@@ -19,7 +19,6 @@ export default function DetailBooking() {
                 </h1>
 
                 <div className="space-y-6">
-                    {/* Thông tin đơn đặt phòng */}
                     <div className="border p-4 rounded-md bg-white">
                         <h2 className="font-semibold text-xl mb-4 text-gray-800">
                             Thông tin đơn đặt phòng
@@ -56,7 +55,6 @@ export default function DetailBooking() {
                         </div>
                     </div>
 
-                    {/* Thông tin khách hàng */}
                     <div className="border p-4 rounded-md bg-white">
                         <h2 className="font-semibold text-xl mb-4 text-gray-800">
                             Thông tin khách hàng
@@ -73,7 +71,6 @@ export default function DetailBooking() {
                         </div>
                     </div>
 
-                    {/* Phòng đã đặt */}
                     <div className="border p-4 rounded-md bg-white">
                         <h2 className="font-semibold text-xl mb-4 text-gray-800">
                             Phòng đã đặt
@@ -91,7 +88,6 @@ export default function DetailBooking() {
                         </div>
                     </div>
 
-                    {/* Thông tin dịch vụ */}
                     <div className="border p-4 rounded-md bg-white">
                         <h2 className="font-semibold text-xl mb-4 text-gray-800">
                             Thông tin dịch vụ
@@ -119,7 +115,6 @@ export default function DetailBooking() {
                         }
                     </div>
 
-                    {/* Combo đã chọn */}
                     <div className="border p-4 rounded-md bg-white">
                         <h2 className="font-semibold text-xl mb-4 text-gray-800">
                             Combo đã chọn
@@ -156,7 +151,6 @@ export default function DetailBooking() {
                         }
                     </div>
 
-                    {/* Thông tin hủy phòng */}
                     <div className="border p-4 rounded-md bg-white">
                         <h2 className="font-semibold text-xl mb-4 text-gray-800">
                             Có thể hủy phòng
@@ -170,7 +164,7 @@ export default function DetailBooking() {
                                             <InfoCircledIcon />
                                         </Callout.Icon>
                                         <Callout.Text>
-                                            Bạn có hủy phòng với giá {Currency.formatVND(getDetailBooking.data.data.cancellation_fee)}
+                                            Lưu ý:phí hủy sau ... phòng với giá {Currency.formatVND(getDetailBooking.data.data.cancellation_fee)}
                                         </Callout.Text>
                                     </Callout.Root>
                                     <Button color="red">

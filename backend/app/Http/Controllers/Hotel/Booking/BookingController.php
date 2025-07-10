@@ -145,10 +145,9 @@ class BookingController extends Controller
             }
 
             if ($request->status == BookingStatus::CheckedIn->value) {
-                // if (now()->lt($booking->check_in)) {
-                //     return back()->with('error', 'Không thể check-in trước ngày nhận phòng');
-                // }
-
+                if (now()->lt($booking->check_in)) {
+                    return back()->with('error', 'Không thể check-in trước ngày nhận phòng');
+                }
                 $booking->update([
                     'status' => $request->status,
                     'check_in_at' => now()
@@ -156,9 +155,9 @@ class BookingController extends Controller
                 Mail::to($booking->user->email)->send(new BookingCheckInMail($booking));
             }
             if ($request->status == BookingStatus::NoShow->value) {
-                // if (now()->lt($booking->check_in)) {
-                //     return back()->with('error', 'Không thể cập nhật vắng mặt trước ngày nhận phòng');
-                // }
+                if (now()->lt($booking->check_in)) {
+                    return back()->with('error', 'Không thể cập nhật vắng mặt trước ngày nhận phòng');
+                }
                 if (in_array($booking->status, [BookingStatus::CheckedOut, BookingStatus::Cancelled])) {
                     return back()->with('error', 'Booking này không thể cập nhật vắng mặt được nữa.');
                 }

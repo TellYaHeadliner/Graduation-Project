@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
     Route::get('/dashboard/{hotel_id}', [App\Http\Controllers\Hotel\Dashboard\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/data/{hotel_id}',  [App\Http\Controllers\Hotel\Dashboard\DashboardController::class,'data'])->name('dashboard.data'); 
+
     Route::prefix('/hotel-rules')->as('hotel_rules.')->group(function () {
         Route::controller(App\Http\Controllers\Hotel\HotelRules\HotelRulesController::class)->group(function () {
 

@@ -18,11 +18,18 @@ interface TabServiceProps {
 export default function TabService({ combos, services, onComboChange, onServiceChange, }: TabServiceProps) {
     const navigate = useNavigate();
     const { id } = useParams();
+    const [numberOfNights, setNumberOfNights] = useState(1); 
+
+    useEffect(() => {
+        const nights = parseInt(localStorage.getItem('numberOfNights') ?? '1',10);
+        setNumberOfNights(nights);
+    }, []);
 
     const calculateTotalAll = () => {
         const totalRoom = localStorage.getItem('totalRoom');
         const selectedCombos = JSON.parse(localStorage.getItem('infoSelectedCombos') || '[]');
         const selectedServices = JSON.parse(localStorage.getItem('infoSelectedService') || '[]');
+
 
         const comboMap: Record<number, number> = {};
         const serviceMap: Record<number, number> = {};
@@ -30,7 +37,7 @@ export default function TabService({ combos, services, onComboChange, onServiceC
         selectedCombos.forEach((item: { combo_id: number; quantity: number }) => {
             comboMap[item.combo_id] = item.quantity;
         });
-        
+
         selectedServices.forEach((item: { hotel_service_id: number; quantity: number }) => {
             serviceMap[item.hotel_service_id] = item.quantity;
         });
@@ -42,11 +49,11 @@ export default function TabService({ combos, services, onComboChange, onServiceC
         }, 0);
 
         localStorage.setItem('comboTotal', JSON.stringify(comboTotal))
-        
+
         const serviceTotal = services.reduce((sum, service) => {
-          const qty = serviceMap[service.id] || 0;
-          const price = service.promo_price ? service.promo_price : service.base_price
-          return sum + price * qty;
+            const qty = serviceMap[service.id] || 0;
+            const price = service.promo_price ? service.promo_price : service.base_price
+            return sum + price * qty;
         }, 0);
 
         localStorage.setItem('serviceTotal', JSON.stringify(serviceTotal))
@@ -93,7 +100,7 @@ export default function TabService({ combos, services, onComboChange, onServiceC
                     {
                         total && (
                             <p className="text-red-500 text-md ml-4">
-                                Tổng tiền thanh toán: {Currency.formatVND(total)}
+                                Tổng tiền thanh toán ( {numberOfNights + 1} ngày {numberOfNights} đêm): {Currency.formatVND(total)}
                             </p>
                         )
                     }
@@ -114,7 +121,7 @@ export default function TabService({ combos, services, onComboChange, onServiceC
                     {
                         total && (
                             <p className="text-red-500 text-md ml-4">
-                                Tổng tiền thanh toán: {Currency.formatVND(total)}
+                                Tổng tiền thanh toán ( {numberOfNights + 1} ngày {numberOfNights} đêm): {Currency.formatVND(total)}
                             </p>
                         )
                     }

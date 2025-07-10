@@ -101,16 +101,17 @@ export default function Payment() {
                                 comboSelection={getInfoSelectedCombos}
                                 serviceSelection={getInfoSelectedService}
                             />
-                            <div className="text-sm text-gray-600 mt-2 text-end">
-                                Tổng tiền ({numberOfNights} đêm):
-                                <span className="text-lg text-red-500 font-semibold ml-1">
-                                    {Currency.formatVND(total)}
-                                </span>
+                            <div className="text-end mt-3">
+                                <p className="text-lg text-gray-800 font-bold">
+                                    Tổng tiền ({numberOfNights + 1} ngày {numberOfNights} đêm):
+                                    <span className="text-xl text-red-600 font-extrabold ml-2">
+                                        {Currency.formatVND(total)}
+                                    </span>
+                                </p>
                             </div>
                         </div>
                     </div>
 
-                    {/* Right: Form người đặt */}
                     <div className="lg:w-1/2 space-y-6">
                         <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg space-y-6">
                             <h2 className="text-xl font-bold">Nhập thông tin chi tiết của bạn</h2>
@@ -123,24 +124,25 @@ export default function Payment() {
                                 </Callout.Text>
                             </Callout.Root>
 
-                            <div className="bg-gray-100 p-3 rounded">
-                                <h2 className="text-xl font-bold">Thông tin người dùng</h2>
-                                <div className="text-sm text-gray-700">
-                                    <div className="flex justify-between">
-                                        <span className="font-medium">
-                                            Họ tên:
-                                        </span>
-                                        <span>
-                                            {userInfo.data?.data.user.fullname}
-                                        </span>
+                            <div className="bg-white shadow-sm rounded-xl p-5 border border-gray-200">
+                                <h2 className="text-xl font-bold text-gray-800 mb-4 border-b pb-2">
+                                    Thông tin người dùng
+                                </h2>
+
+                                <div className="space-y-3 text-sm text-gray-700">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-gray-600 font-medium">Họ tên:</span>
+                                        <span className="text-gray-900">{userInfo.data?.data.user.fullname}</span>
                                     </div>
-                                    <div className="flex justify-between">
-                                        <span className="font-medium">Email:</span>
-                                        <span>{userInfo.data?.data.user.email ?? "Chưa có"}</span>
+
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-gray-600 font-medium">Email:</span>
+                                        <span className="text-gray-900">{userInfo.data?.data.user.email ?? "Chưa có"}</span>
                                     </div>
-                                    <div className="flex justify-between">
-                                        <span className="font-medium">Số điện thoại:</span>
-                                        <span>{userInfo.data?.data.user.phone ?? "Chưa có"}</span>
+
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-gray-600 font-medium">Số điện thoại:</span>
+                                        <span className="text-gray-900">{userInfo.data?.data.user.phone ?? "Chưa có"}</span>
                                     </div>
                                 </div>
                             </div>
@@ -190,11 +192,11 @@ export default function Payment() {
                                             <input
                                                 {...register("code")}
                                                 type="text"
-                                                placeholder="Nhập mã voucher nếu có"
+                                                placeholder="Nhập mã voucher khác nếu có"
                                                 className="mt-1 w-full border px-4 py-2 rounded-lg"
                                             />
                                             <div className="mt-2">
-                                                <DiscountBar discountList={voucherList} />
+                                                <DiscountBar discountList={voucherList} total={total} />
                                             </div>
                                         </div>
                                     )

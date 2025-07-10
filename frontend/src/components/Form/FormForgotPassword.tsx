@@ -3,6 +3,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { forgotPasswordSchema, ForgotPasswordSchema } from '../../schemas/forgotPasswordSchemas';
 import { useNavigate } from "react-router-dom";
 import { PATH } from "../../constants/Paths"
+import { useForgetPassword } from "../../react-query/useForgetPassword";
+import { ErrorUtils } from "../../utils/Error";
+import DialogLoading from "../Dialog/DialogLoading";
 
 export default function FormForgotPassword(){
 
@@ -16,8 +19,20 @@ export default function FormForgotPassword(){
         resolver: zodResolver(forgotPasswordSchema),
     });
 
-    const onSubmit = () => {
-        navigate(PATH.MAILGUI)
+    const forgetPassword = useForgetPassword();
+
+    const onSubmit = (data: ForgotPasswordSchema) => {
+        // navigate(PATH.MAILGUI)
+        forgetPassword.mutate(data.email, {
+            onSuccess: () => {
+                navigate(PATH.MAILGUI)
+            },
+            onError: (error) => {
+                const errorUtils = new ErrorUtils();
+                errorUtils.handleError(error);
+            }
+        });
+        
     }
 
     return (
@@ -29,6 +44,11 @@ export default function FormForgotPassword(){
             <button type="submit" className="w-full mt-2 py-2 px-4 bg-primary hover:bg-accent text-white font-semibold rounded-lg transition duration-200">
                 Gửi email
             </button>
+            {
+                forgetPassword.isPending && (
+                    <DialogLoading isOpen={true} />
+                )
+            }
         </form>
     )
 }

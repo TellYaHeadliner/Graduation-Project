@@ -70,6 +70,7 @@ Route::controller(App\Http\Controllers\API\Auth\AuthController::class)
         Route::get('/facebook/redirect', 'redirectToFacebook')->name('facebook.redirect');
         Route::get('/facebook/callback', 'handleFacebookCallback')->name('facebook.callback');
         Route::get('/social-callback/{id}/{status}', 'socialCallback')->name('social_callback');
+
     });
 
 Route::controller(App\Http\Controllers\API\Hotel\HotelController::class)
@@ -99,4 +100,4 @@ Route::prefix('/users')->as('user.')->group(function () {
     Route::controller(App\Http\Controllers\API\User\UserController::class)->group(function () {
         Route::put('/forgot-password', 'forgot_password')->name('forgot_password');
     });
-});
+}

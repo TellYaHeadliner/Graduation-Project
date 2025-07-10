@@ -7,6 +7,10 @@ use App\Enums\Booking\BookingStatus;
 use App\Enums\Transaction\TransactionType;
 use App\Enums\Transaction\TransactionStatus;
 use App\Http\Controllers\Controller;
+use App\Mail\BookingCancelMail;
+use App\Mail\BookingCheckInMail;
+use App\Mail\BookingCheckOutMail;
+use App\Mail\BookingNoShowMail;
 use App\Models\Booking;
 use App\Models\CommissionRule;
 use App\Models\Hotel;
@@ -19,6 +23,7 @@ use Exception;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 class BookingController extends Controller
 {
@@ -119,6 +124,7 @@ class BookingController extends Controller
         try {
             $booking = Booking::find($request->id);
             $hotel = Hotel::find($hotel_id);
+            $booking->loadMissing(['user', 'hotel', 'hotel.hotelRule', 'bookingDetails.roomType']);
 
             if (!$booking) {
                 return back()->with('error', 'Đơn đặt phòng không tồn tại');
@@ -139,11 +145,51 @@ class BookingController extends Controller
             }
 
             if ($request->status == BookingStatus::CheckedIn->value) {
-                // if (now()->lt($booking->check_in)) {
-                //     return back()->with('error', 'Không thể check-in trước ngày nhận phòng');
-                // }
-                $booking->update(['status' => $request->status]);
+                if (now()->lt($booking->check_in)) {
+                    return back()->with('error', 'Không thể check-in trước ngày nhận phòng');
+                }
+                $booking->update([
+                    'status' => $request->status,
+                    'check_in_at' => now()
+                ]);
+                Mail::to($booking->user->email)->send(new BookingCheckInMail($booking));
             }
+            if ($request->status == BookingStatus::NoShow->value) {
+                if (now()->lt($booking->check_in)) {
+                    return back()->with('error', 'Không thể cập nhật vắng mặt trước ngày nhận phòng');
+                }
+                if (in_array($booking->status, [BookingStatus::CheckedOut, BookingStatus::Cancelled])) {
+                    return back()->with('error', 'Booking này không thể cập nhật vắng mặt được nữa.');
+                }
+
+                $total_amount = $booking->total_amount;
+                $commission = CommissionRule::where('is_active', true)
+                    ->where('min_amount', '<=', $booking->total_amount)
+                    ->where(function ($q) use ($total_amount) {
+                        $q->where('max_amount', '>=', $total_amount)
+                            ->orWhereNull('max_amount');
+                    })->orderBy('min_amount', 'desc')
+                    ->value('commission_percent') ?? 0.0;
+                $total_release = $booking->total_amount - ($booking->total_amount * $commission / 100);
+                $user = User::where('email', 'admin@gmail.com')->first();
+                Transaction::create([
+                    'booking_id' => $booking->id,
+                    'hotel_id' => $hotel->id,
+                    'user_id' => $user->id,
+                    'transaction_type' => TransactionType::Release->value,
+                    'transaction_code' => 'RMX' . now()->format('YmdHis') . strtoupper(Str::random(4)),
+                    'amount' => $total_release,
+                    'commission_amount' => $booking->total_amount * $commission / 100,
+                    'payment_status' => TransactionStatus::Success->value,
+                    'paid_at' => now(),
+                ]);
+
+                $booking->update([
+                    'status' => $request->status,
+                ]);
+                Mail::to($booking->user->email)->send(new BookingNoShowMail($booking));
+            }
+
             if ($request->status == BookingStatus::CheckedOut->value) {
                 if ($booking->status != BookingStatus::CheckedIn) {
                     return back()->with('error', 'Chỉ có thể Check-out sau khi Check-in');
@@ -170,15 +216,16 @@ class BookingController extends Controller
                     'paid_at' => now(),
                 ]);
 
-                // gửi mail thông báo checkout thành công và chuyển tiền cho khách sạn
                 $booking->update([
-                    'status' => $request->status
+                    'status' => $request->status,
+                    'check_out_at' => now()
                 ]);
+                Mail::to($booking->user->email)->send(new BookingCheckOutMail($booking));
             }
 
             if ($request->status == BookingStatus::Cancelled->value) {
-                if($booking->status == BookingStatus::CheckedOut || $booking->status == BookingStatus::CheckedIn ){
-                     return back()->with('error', 'Không thể hủy sau khi check in hoặc check out');
+                if ($booking->status == BookingStatus::CheckedOut || $booking->status == BookingStatus::CheckedIn) {
+                    return back()->with('error', 'Không thể hủy sau khi check in hoặc check out');
                 }
                 $tienTra = 0;
                 $tienGiu = 0;
@@ -193,7 +240,7 @@ class BookingController extends Controller
                 foreach ($booking->bookingDetails as $item) {
                     $variant = $item->variant;
 
-                    if($variant->attributes->firstWhere('type', 'no_refund')) {
+                    if ($variant->attributes->firstWhere('type', 'no_refund')) {
                         $tienGiu += $item->price_per_room * $nights;
                         continue;
                     }
@@ -223,7 +270,7 @@ class BookingController extends Controller
                 }
 
                 if ($tienTra > 0) {
-                    Transaction::create([
+                    $giaoDichHoanTien = Transaction::create([
                         'booking_id' => $booking->id,
                         'hotel_id' => $booking->hotel_id,
                         'user_id' => $booking->customer_id,
@@ -233,7 +280,7 @@ class BookingController extends Controller
                         'payment_status' => TransactionStatus::Success->value,
                         'paid_at' => now(),
                     ]);
-                }                
+                }
                 $commissionPercent = CommissionRule::where('is_active', true)
                     ->where('min_amount', '<=', $tienGiu)
                     ->where(function ($q) use ($tienGiu) {
@@ -260,6 +307,7 @@ class BookingController extends Controller
                     ]);
                 }
                 $booking->update(['status' => BookingStatus::Cancelled->value]);
+                Mail::to($booking->user->email)->send(new BookingCancelMail($booking,$giaoDichHoanTien));
             }
             DB::commit();
             return redirect()->route($this->route['index'], ['hotel_id' => $hotel_id])->with('success', 'Cập nhập thành công');

@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin\Hotel;
 
 use App\DataTables\Admin\Hotel\HotelApprovalDataTable;
 use App\DataTables\Admin\Hotel\HotelDataTable;
+use App\Enums\Booking\BookingStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Hotel\HotelRequest;
+use App\Models\Booking;
 use App\Models\Hotel;
 use Exception;
 use Illuminate\Http\Request;
@@ -116,6 +118,15 @@ class HotelController extends Controller
         try {
             DB::beginTransaction();
             $this->data = Hotel::find($id);
+            if (Booking::where('hotel_id', $id)
+                ->whereIn('status', [
+                    BookingStatus::Pending,
+                    BookingStatus::Confirmed,
+                    BookingStatus::CheckedIn
+                ])->exists()
+            ) {
+                return redirect()->route($this->route['index'])->with('error', 'Khách sạn đang có booking');
+            }
             $this->data->delete();
             DB::commit();
             return redirect()->route($this->route['index'])->with('success', 'Xóa thành công');
@@ -136,7 +147,7 @@ class HotelController extends Controller
     {
         $hotel = Hotel::with('user')->find($id);
 
-        $response = Http::get('https://api.vietqr.io/v2/business/'.$hotel->mst);
+        $response = Http::get('https://api.vietqr.io/v2/business/' . $hotel->mst);
 
 
         return view($this->view['editHotelApproval'], [
@@ -171,14 +182,12 @@ class HotelController extends Controller
         DB::beginTransaction();
         try {
             $hotel = Hotel::find($id);
-            $hotel->update([
-                'status' => 4
-            ]);
+            $hotel->delete();
             DB::commit();
             return redirect()->route($this->route['indexHotelApproval'])->with('success', 'Cập nhập thành công');
         } catch (Exception $e) {
             DB::rollback();
-            Log::error(  $e->getMessage());
+            Log::error($e->getMessage());
             return redirect()->route($this->route['editHotelApproval'], $id)->with('error', 'Cập nhập thất bại');
         }
     }

@@ -36,8 +36,7 @@ Route::middleware('checkJWT')->group(function () {
             Route::post('/create-booking', 'create_booking')->name('create_booking');
             Route::get('/callback-vnpay', 'callback_vnpay')->name('callback_vnpay');
 
-            Route::post('/refund-booking', 'refund_booking')->name('refund_booking');
-            Route::get('/callback-refund-vnpay', 'callback_refund_vnpay')->name('callback_refund_vnpay');
+            Route::post('/cancel-booking', 'cancel_booking')->name('cancel_booking');
         });
     Route::controller(App\Http\Controllers\API\Booking\BookingController::class)
         ->prefix('/bookings')
@@ -96,9 +95,9 @@ Route::controller(App\Http\Controllers\API\RoomType\RoomTypeController::class)
     ->group(function () {
         Route::get('/{hotel_id?}/{check_in?}/{check_out?}/{guest?}/{children?}/{room_quantity?}', 'getRoomTypeHotel')->name('getRoomTypeHotel');
     });
-    
+
 Route::prefix('/users')->as('user.')->group(function () {
     Route::controller(App\Http\Controllers\API\User\UserController::class)->group(function () {
         Route::put('/forgot-password', 'forgot_password')->name('forgot_password');
     });
-});
+}

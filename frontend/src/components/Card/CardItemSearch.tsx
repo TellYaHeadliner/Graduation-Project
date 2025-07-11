@@ -26,7 +26,7 @@ export default function CardItemSearch({ data }: CardItemSearchProps) {
 
   
   return (
-    <div className="flex border rounded-lg shadow-md overflow-hidden max-w-4xl bg-white">
+    <div className="flex border mt-5 rounded-lg shadow-md overflow-hidden max-w-4xl bg-white">
       {/* Left section - Image and labels */}
       <div className="basis-2/5 relative bg-gray-100">
         <img
@@ -80,7 +80,14 @@ export default function CardItemSearch({ data }: CardItemSearchProps) {
             </div>
             <div className="flex items-center gap-1">
               <span>
-                ✅ <span>{data.room_type.cancellation}</span>
+                {
+                  data.room_type.cancellation && (
+                  <div>
+                  ✅ <span>{data.room_type.cancellation}</span>
+
+                  </div>
+                  )
+                }
               </span>
             </div>
             <div className="flex items-center gap-1">

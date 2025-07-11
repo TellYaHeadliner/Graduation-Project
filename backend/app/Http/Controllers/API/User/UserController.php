@@ -78,7 +78,7 @@ class UserController extends Controller
             }
 
            // $password_new = Str::random(8);
-            $password_new = '123456';
+            $password_new = Str::random(8);
 
             $user->update([
                 'password' => Hash::make($password_new),

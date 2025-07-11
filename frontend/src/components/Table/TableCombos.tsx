@@ -82,13 +82,13 @@ export default function TableCombos({ combos, onChange }: TableComboProps) {
               <td className="px-4 border border-gray-300">
                 <ul className="list-disc list-inside space-y-1">
                   {data.services.map((service) => (
-                    <li key={`service-${data.id}-${service.id}`}>{service.name}</li>
+                    <li key={`service-${data.id}-${service.id}`}>{service.name}/ {service.quantity} {service.default_unit}</li>
                   ))}
                 </ul>
               </td>
               <td className="px-4 py-3 border border-gray-300 text-right">
                 <div className="text-sm text-gray-500 line-through">
-                  {Currency.formatVND(data.original_price)}
+                 {Currency.formatVND(data.original_price)}
                 </div>
                 <div className="text-red-600 font-bold text-base">
                   {Currency.formatVND(data.combo_price)}

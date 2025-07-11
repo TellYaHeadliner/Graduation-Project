@@ -1,5 +1,5 @@
 import { PayloadSearchParams, SearchResponse } from "../types/SearchTypes";
-import api from "./axiosConfig";
+import api from "./axiosConfig"
 import * as qs from 'qs'
 
 const searchApi = {

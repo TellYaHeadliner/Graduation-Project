@@ -209,7 +209,7 @@ export default function DetailHotel() {
                         checkReview.isPending ? (
                             <LoadingSpinner />
                         ) : checkReview.error ? (
-                            <div className="text-red-500">Đã xảy ra lỗi khi kiểm tra đánh giá.</div>
+                            <div className="text-red-500">{checkReview.error.message}</div>
                         ) : (
                             <div>
                                 <Callout.Root>

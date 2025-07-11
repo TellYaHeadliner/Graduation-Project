@@ -20,7 +20,7 @@ export default function DialogCancelBooking({ bookingId } : DialogCancelBookingP
                     Xác nhận hủy phòng
                 </AlertDialog.Title>
                 <AlertDialog.Description size="2">
-                    Bạn có xác nhận hủy phòng ? Một khi đã xác nhận hủy phòng thì bạn đã chấp nhận điều khoản của chúng tôi
+                    Bạn có chắc chắn hủy phòng không? 
                 </AlertDialog.Description>
                 <Flex gap="3" mt="4" justify="end">
                     <AlertDialog.Cancel>

@@ -13,6 +13,49 @@ export default function DetailBooking() {
     const getDetailBooking = useBookingDetailQuery(Number(id));
     useTitle(`Chi tiết booking số ${getDetailBooking.data?.data.id}`)
 
+    interface CancelInfo {
+        deadline: string;
+        isAfter: boolean;
+    }
+
+    function parseVNDateToISO(dateStr: string): Date {
+        const [datePart, timePart] = dateStr.split(' ');
+        const [dd, MM, yyyy] = datePart.split('-');
+        const isoString = `${yyyy}-${MM}-${dd}T${timePart}:00`;
+        return new Date(isoString);
+    }
+
+
+    const getFreeCancelInfo = (checkInDateStr: string): CancelInfo => {
+        if (!checkInDateStr) return { deadline: '', isAfter: false };
+
+        const checkInDate = parseVNDateToISO(checkInDateStr);
+        const deadlineDate = new Date(checkInDate.getTime() - 24 * 60 * 60 * 1000);
+
+        const now = new Date();
+        const isAfter = now > deadlineDate;
+
+        const pad = (n: number) => n.toString().padStart(2, '0');
+        const dd = pad(deadlineDate.getDate());
+        const MM = pad(deadlineDate.getMonth() + 1);
+        const yyyy = deadlineDate.getFullYear();
+        const hh = pad(deadlineDate.getHours());
+        const mm = pad(deadlineDate.getMinutes());
+
+        const deadline = `${dd}/${MM}/${yyyy} ${hh}:${mm}`;
+
+        return { deadline, isAfter };
+    };
+
+    const checkIn = getDetailBooking.data?.data.check_in;
+    const cancelInfo = checkIn ? getFreeCancelInfo(checkIn) : { deadline: '', isAfter: false };
+
+    const bookingStatus = getDetailBooking.data?.data.status;
+    const checkInDate = new Date(getDetailBooking.data?.data.check_in || "");
+    const now = new Date();
+
+    const canCancel = now <= checkInDate && bookingStatus === "Đã xác nhận";
+
     return (
         <PersonalLayout>
             <div className="max-w-4xl mx-auto p-6 rounded-xl shadow-md space-y-6 my-6">
@@ -153,26 +196,52 @@ export default function DetailBooking() {
                         }
                     </div>
 
-                    <div className="border p-4 rounded-md bg-white">
-                        <h2 className="font-semibold text-xl mb-4 text-gray-800">
-                            Có thể hủy phòng
-                        </h2>
-                        {
-                            typeof getDetailBooking.data?.data?.cancellation_fee === 'number' &&
-                            getDetailBooking.data.data.cancellation_fee > 0 && (
-                                <div>
+                    <div className="p-4 rounded-md bg-white">
+
+                        <div>
+                            {bookingStatus === "Đã hủy" ? (
+                                <Callout.Root className="my-2" color="gray">
+                                    <Callout.Icon>
+                                        <InfoCircledIcon />
+                                    </Callout.Icon>
+                                    <Callout.Text>
+                                        Đơn đặt phòng này đã được hủy trước đó.
+                                    </Callout.Text>
+                                </Callout.Root>
+                            ) : canCancel && getDetailBooking.data?.data.cancellation_fee && getDetailBooking.data?.data.cancellation_fee > 0 ? (
+                                cancelInfo.isAfter ? (
                                     <Callout.Root className="my-2" color="red">
                                         <Callout.Icon>
                                             <InfoCircledIcon />
                                         </Callout.Icon>
                                         <Callout.Text>
-                                            Lưu ý:phí hủy sau ... phòng với giá {Currency.formatVND(getDetailBooking.data.data.cancellation_fee)}
+                                            Lưu ý: Bạn đã vượt quá thời gian hủy miễn phí (trước <strong>{cancelInfo.deadline}</strong>).
+                                            Phí hủy phòng {Currency.formatVND(getDetailBooking.data.data.cancellation_fee)} theo chính sách khách sạn.
                                         </Callout.Text>
                                     </Callout.Root>
-                                    <DialogCancelBooking bookingId={Number(id)}/>
+                                ) : (
+                                    <Callout.Root className="my-2" color="green">
+                                        <Callout.Icon>
+                                            <InfoCircledIcon />
+                                        </Callout.Icon>
+                                        <Callout.Text>
+                                            Bạn có thể <strong>hủy miễn phí</strong> trước <strong>{cancelInfo.deadline}</strong>
+                                        </Callout.Text>
+                                    </Callout.Root>
+                                )
+                            ) : null}
+
+                            {/* Nút hủy */}
+                            {canCancel ? (
+                                <div className="text-end mt-4">
+                                    <DialogCancelBooking bookingId={Number(id)} />
                                 </div>
-                            )
-                        }
+                            ) : bookingStatus === "Đã xác nhận" && now > checkInDate ? (
+                                <p className="text-sm text-red-500 mt-2 italic">
+                                    Đã quá thời gian check-in. Bạn không thể hủy phòng nữa.
+                                </p>
+                            ) : null}
+                        </div>
                     </div>
 
                 </div>

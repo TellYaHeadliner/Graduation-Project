@@ -28,7 +28,7 @@
         }).then(res => {
             const { charts: data } = res.data;
 
-            console.log(data.revenue_by_month.datasets[0]); // Doanh thu gộp
+            console.log(data.revenue_by_month.datasets[0]); 
 
             makeChart('usersChart', 'line', data.users_growth);
             makeChart('bookingsChart', 'bar', data.bookings_by_time, {

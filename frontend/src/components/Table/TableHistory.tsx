@@ -8,26 +8,44 @@ interface TableHistoryProps {
 export default function TableHistory({ datas }: TableHistoryProps) {
   const getStatusConfig = (status: string) => {
     switch (status) {
-      case "Đã thanh toán":
+      case "Chờ xác nhận":
         return {
-          bg: "bg-emerald-50",
-          text: "text-emerald-700",
-          border: "border-emerald-200",
-          dot: "bg-emerald-500"
+          bg: "bg-yellow-50",
+          text: "text-yellow-700",
+          border: "border-yellow-200",
+          dot: "bg-yellow-500"
         };
-      case "Đang chờ":
+
+      case "Đã nhận phòng":
         return {
-          bg: "bg-amber-50",
-          text: "text-amber-700",
-          border: "border-amber-200",
-          dot: "bg-amber-500"
+          bg: "bg-green-50",
+          text: "text-green-700",
+          border: "border-green-200",
+          dot: "bg-green-600"
         };
+
+      case "Đã hủy":
+        return {
+          bg: "bg-gray-50",
+          text: "text-gray-600",
+          border: "border-gray-200",
+          dot: "bg-gray-400"
+        };
+
+      case "Đã trả phòng":
+        return {
+          bg: "bg-indigo-50",
+          text: "text-indigo-700",
+          border: "border-indigo-200",
+          dot: "bg-indigo-500"
+        };
+
       default:
         return {
-          bg: "bg-rose-50",
-          text: "text-rose-700",
-          border: "border-rose-200",
-          dot: "bg-rose-500"
+          bg: "bg-red-50",
+          text: "text-red-700",
+          border: "border-red-200",
+          dot: "bg-red-500"
         };
     }
   };

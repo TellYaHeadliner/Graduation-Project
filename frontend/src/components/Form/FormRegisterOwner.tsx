@@ -68,12 +68,6 @@ export default function RegisterOwnerForm() {
       </div>
 
       <div>
-        <label htmlFor="password" className="block-text-sm font-medium text-white">Mật khẩu</label>
-        <input {...register("password")} placeholder="Mật khẩu" type="password" className="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus accent focus:outline-none" />
-        {errors.password && <p>{errors.password.message}</p>}
-      </div>
-
-      <div>
         <label htmlFor="password" className="block-text-sm font-medium text-white">Tên khách sạn</label>
         <input {...register("name")} placeholder="Tên khách sạn" className="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus accent focus:outline-none" />
         {errors.name && <p>{errors.name.message}</p>}

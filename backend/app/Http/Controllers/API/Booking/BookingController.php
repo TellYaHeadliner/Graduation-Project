@@ -25,11 +25,11 @@ class BookingController extends Controller
     {
         $bookings = Booking::with(['user', 'hotel', 'voucher'])
             ->where('customer_id', $request->user_id)
-            ->when($request->status == 4, function ($query) {
-                $query->where('status', 4);
-            }, function ($query) {
-                $query->whereIn('status', [1, 2, 3,0]);
-            })
+            // ->when($request->status == 4, function ($query) {
+            //     $query->where('status', 4);
+            // }, function ($query) {
+            //     $query->whereIn('status', [1, 2, 3,0]);
+            // })
             ->get();
 
         return response()->json([

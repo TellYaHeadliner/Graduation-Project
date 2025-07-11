@@ -110,6 +110,17 @@ class ServiceController extends Controller
         try {
             DB::beginTransaction();
             $this->data = Service::find($id);
+            $hotelServiceIds = DB::table('hotel_services')
+                ->where('service_id', $id)
+                ->pluck('id');
+            $isUsedInBookings = DB::table('booking_services')
+                ->whereIn('hotel_service_id', $hotelServiceIds)
+                ->exists();
+            if ($hotelServiceIds->isNotEmpty() || $isUsedInBookings) {
+                DB::rollBack();
+                return redirect()->route($this->route['index'])
+                    ->with('error', 'Không thể xóa dịch vụ vì đã có đơn đặt sử dụng trong hệ thống.');
+            }
             $this->data->delete();
             DB::commit();
             return redirect()->route($this->route['index'])->with('success', 'Xóa thành công');

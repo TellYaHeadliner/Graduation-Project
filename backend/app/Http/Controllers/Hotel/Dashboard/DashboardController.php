@@ -66,27 +66,44 @@ class DashboardController extends Controller
 
         $bookingStats = DB::table('bookings')
             ->selectRaw("
-            DATE_FORMAT(created_at, '{$format}') as time,
-            COUNT(*) as total,
-            SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as success
-        ", [BookingStatus::CheckedOut->value])
+        DATE_FORMAT(created_at, '{$format}') as time,
+        COUNT(*) as total,
+        SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as checked_out,
+        SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as checked_in,
+        SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as no_show
+    ", [
+                BookingStatus::CheckedOut->value,
+                BookingStatus::CheckedIn->value,
+                BookingStatus::NoShow->value,
+            ])
             ->where('hotel_id', $hotelId)
             ->groupBy('time')
             ->orderBy('time')
             ->get();
+
 
         $bookingChart = [
             'labels' => $bookingStats->pluck('time'),
             'datasets' => [
                 [
                     'label' => 'Tổng booking',
-                    'data'  => $bookingStats->pluck('total'),
+                    'data' => $bookingStats->pluck('total'),
                     'backgroundColor' => 'rgba(59,130,246,0.5)',
                 ],
                 [
-                    'label' => 'Thành công',
-                    'data'  => $bookingStats->pluck('success'),
+                    'label' => 'Đã trả phòng',
+                    'data' => $bookingStats->pluck('checked_out'),
                     'backgroundColor' => 'rgba(16,185,129,0.5)',
+                ],
+                [
+                    'label' => 'Đã nhận phòng',
+                    'data' => $bookingStats->pluck('checked_in'),
+                    'backgroundColor' => 'rgba(251,191,36,0.5)',
+                ],
+                [
+                    'label' => 'Vắng mặt',
+                    'data' => $bookingStats->pluck('no_show'),
+                    'backgroundColor' => 'rgba(239,68,68,0.5)',
                 ],
             ]
         ];
@@ -98,17 +115,17 @@ class DashboardController extends Controller
                     ->where('transactions.payment_status', TransactionStatus::Success->value);
             })
             ->selectRaw("
-            DATE_FORMAT(bookings.created_at, '{$format}') AS time,
-            SUM(bookings.total_amount) AS gross,
-            SUM(transactions.amount) AS net
-        ")
+        DATE_FORMAT(bookings.created_at, '{$format}') AS time,
+        SUM(bookings.total_amount) AS gross,
+        SUM(transactions.amount) AS net
+    ")
             ->where('bookings.hotel_id', $hotelId)
             ->where('bookings.status', BookingStatus::CheckedOut->value)
             ->whereBetween('bookings.created_at', [$from, $to])
             ->groupBy('time')
             ->orderBy('time')
             ->get();
-
+            
         $revenueChart = [
             'labels' => $revenue->pluck('time'),
             'datasets' => [

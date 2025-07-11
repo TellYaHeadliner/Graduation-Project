@@ -43,6 +43,7 @@ export default function CarouselCard({ cardList, title }: CardListProps) {
       </h2>
       <AliceCarousel
         mouseTracking
+        infinite
         controlsStrategy="alternate"
         disableDotsControls
         autoPlay={false}

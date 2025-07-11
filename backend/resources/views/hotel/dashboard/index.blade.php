@@ -12,32 +12,42 @@
                 <div class="row align-items-stretch">
                     <div class="c-dashboardInfo col-md-6" style="width: 20%;">
                         <div class="wrap">
-                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Tổng số phòng</h4>
+                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Tổng số phòng
+                            </h4>
                             <span class="hind-font caption-12 c-dashboardInfo__count">{{ $summary['total_rooms'] }}</span>
                         </div>
                     </div>
                     <div class="c-dashboardInfo col-md-6" style="width: 20%;">
                         <div class="wrap">
-                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Tổng booking</h4>
-                            <span class="hind-font caption-12 c-dashboardInfo__count">{{ $summary['total_bookings'] }}</span>
+                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Tổng booking
+                            </h4>
+                            <span
+                                class="hind-font caption-12 c-dashboardInfo__count">{{ $summary['total_bookings'] }}</span>
                         </div>
                     </div>
                     <div class="c-dashboardInfo col-md-6" style="width: 20%;">
                         <div class="wrap">
                             <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Thành công</h4>
-                            <span class="hind-font caption-12 c-dashboardInfo__count">{{ $summary['success_bookings'] }}</span>
+                            <span
+                                class="hind-font caption-12 c-dashboardInfo__count">{{ $summary['success_bookings'] }}</span>
                         </div>
                     </div>
                     <div class="c-dashboardInfo col-md-6" style="width: 20%;">
                         <div class="wrap">
-                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Doanh thu gộp</h4>
-                            <span class="hind-font caption-12 c-dashboardInfo__count">{{ number_format($summary['gross_revenue']) }} đ</span>
+                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Doanh thu gộp
+                            </h4>
+                            <span
+                                class="hind-font caption-12 c-dashboardInfo__count">{{ number_format($summary['gross_revenue']) }}
+                                đ</span>
                         </div>
                     </div>
                     <div class="c-dashboardInfo col-md-6" style="width: 20%;">
                         <div class="wrap">
-                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Doanh thu thực</h4>
-                            <span class="hind-font caption-12 c-dashboardInfo__count">{{ number_format($summary['net_revenue']) }} đ</span>
+                            <h4 class="heading heading5 hind-font medium-font-weight c-dashboardInfo__title">Doanh thu thực
+                            </h4>
+                            <span
+                                class="hind-font caption-12 c-dashboardInfo__count">{{ number_format($summary['net_revenue']) }}
+                                đ</span>
                         </div>
                     </div>
                 </div>
@@ -47,7 +57,9 @@
             <input type="date" id="fromDate" class="form-control form-control-sm w-auto"
                 value="{{ now()->subMonths(12)->startOfMonth()->toDateString() }}">
 
-            <input type="date" id="toDate" class="form-control form-control-sm w-auto" value="{{ now()->toDateString() }}">
+            <input type="date" id="toDate" class="form-control form-control-sm w-auto"
+                value="{{ now()->endOfMonth()->toDateString() }}">
+
 
             <select id="groupBy" class="form-select form-select-sm w-auto">
                 <option value="month" selected>Theo tháng</option>

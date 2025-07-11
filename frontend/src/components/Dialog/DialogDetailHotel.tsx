@@ -8,9 +8,10 @@ interface DialogDetailHotelProps {
     area: number;
     amenities: Amenity[];
     galleyList: string[];
+    description: string;
 }
 
-export default function DialogDetailHotel({ title, area, amenities, galleyList }: DialogDetailHotelProps) {
+export default function DialogDetailHotel({ title, area, amenities, galleyList, description }: DialogDetailHotelProps) {
     return (
         <Dialog.Root>
             <Dialog.Trigger className="text-blue-600 underline">
@@ -27,22 +28,19 @@ export default function DialogDetailHotel({ title, area, amenities, galleyList }
                             </Dialog.Close>
                         </div>
 
-                        {/* Content */}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                            {/* Hình ảnh */}
                             <div className="space-y-2">
                                 <CarouselImage listGalley={galleyList} />
                             </div>
 
-                            {/* Thông tin */}
-                            <div className="text-sm space-y-4">
+                            <div className="text-sm  space-y-4">
                                 <div>
-                                    <p>
-                                    📏 <strong>Kích thước phòng:</strong> {area} m²
+                                    <p className="text-lg">
+                                     <strong className="text-lg">Kích thước phòng:</strong> {area} m²
                                     </p>
+                                    <div className="mt-4 text-lg text-justify" dangerouslySetInnerHTML={{ __html: description ?? "" }} />
                                 </div>
-
-                                <div>
+                                <div className="text-lg">
                                     <h3 className="font-semibold">Tiện nghi:</h3>
                                     <ul className="list-disc list-inside grid grid-cols-2 gap-x-4">
                                        {amenities.map((amenity) => (

@@ -47,7 +47,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                 }
 
                 if (variant?.seasons.length) {
-                    const firstSeason = variant.seasons[0]; 
+                    const firstSeason = variant.seasons[0];
                     finalPrice = seasonsPrice(finalPrice, firstSeason.discount_type, firstSeason.discount_value);
                 }
 
@@ -56,7 +56,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                     room_type_variant_id,
                     quantity,
                     name: room?.name || "",
-                    price: finalPrice 
+                    price: finalPrice
                 };
             });
         localStorage.setItem('infoSelectedRoom', JSON.stringify(details));
@@ -162,7 +162,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                                     <tr key={`room-${dataIndex}`} className="border-t border-gray-300">
                                         <td className="px-4 py-3 border-r">
                                             <div className="font-medium text-blue-700">
-                                                <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} galleyList={ data.gallery?.split(",") ?? []}/>
+                                                <DialogDetailHotel description={data.description} title={data.name} area={data.area} amenities={data.amenities} galleyList={data.gallery?.split(",") ?? []} />
                                             </div>
                                             <div className="text-sm text-gray-600">Loại giường: {data.bed?.type_name}</div>
                                         </td>
@@ -198,7 +198,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                                         {vIndex === 0 && (
                                             <td rowSpan={data.variants.length} className="px-4 py-3 border-r align-top">
                                                 <div className="font-medium text-blue-700">
-                                                    <DialogDetailHotel title={data.name} area={data.area} amenities={data.amenities} galleyList={ data.gallery?.split(",") ?? []}/>
+                                                    <DialogDetailHotel description={data.description} title={data.name} area={data.area} amenities={data.amenities} galleyList={data.gallery?.split(",") ?? []} />
                                                 </div>
                                                 <div className="text-sm text-gray-600 mt-2 flex items-center gap-1">
                                                     {data.bed?.quantity} {data.bed?.type_name}
@@ -208,7 +208,7 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                                                         <MdBed className="w-4 h-4 text-gray-500" />
                                                     )}
                                                 </div>
-                                                <div className="text-sm text-gray-600 flex flex-wrap gap-2 mt-2">
+                                                <div className="text-sm text-gray-600 flex flex-wrap w-80 mt-2">
                                                     {data.amenities.map((a, index) => (
                                                         <div key={index} className="flex items-center gap-1">
                                                             <CheckIcon className="text-green-500 w-4 h-4" />
@@ -231,20 +231,19 @@ export default function TableRoom({ datas, onChange, isLoading, hotelRule }: Tab
                                             </td>
                                         )}
 
-                                        {/* Số lượng người */}
-                                        <td className="px-4 py-3 border-r">
+
+                                        <td className="px-4 py-3 border-r ">
                                             {adults &&
                                                 Array.from({ length: adults.value }).map((_, i) => (
                                                     <FaUser key={`adult-${vIndex}-${i}`} className="inline-block w-5 h-5 text-blue-600 mr-1" />
                                                 ))}
-                                            {adults && children && <span className="mx-1 text-gray-500">+</span>}
+                                            {adults && children && children.value > 0 && <span className="mx-1 text-gray-500">+</span>}
                                             {children &&
-                                                Array.from({ length: children.value }).map((_, i) => (
-                                                    <FaChild key={`child-${vIndex}-${i}`} className="inline-block w-5 h-5 text-blue-500 mr-1" />
+                                                Array.from({ length: children.value }).map((_, i) => (              
+                                                        <FaChild key={`child-${vIndex}-${i}`} className="inline-block w-5 h-5 text-blue-500 mr-1" />
                                                 ))}
                                         </td>
 
-                                        {/* Giá phòng */}
                                         <td className="px-4 py-3 border-r text-end">
                                             {isEmptySeasons && !variant.discount_price && (
                                                 <p className="font-medium cursor-pointer">{Currency.formatVND(variant.base_price)}</p>

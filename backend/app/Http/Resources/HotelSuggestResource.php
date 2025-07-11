@@ -58,7 +58,7 @@ class HotelSuggestResource extends JsonResource
                 'cancellation'  => $is_chinh_sach_huy ? 'Miễn phí hủy' : null,
             ],
 
-            'season' => $season->name
+            // 'season' => $season->name
         ];
     }
 }

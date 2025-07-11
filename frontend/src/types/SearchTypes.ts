@@ -27,7 +27,7 @@ export interface PayloadSearchParams{
     children: number;
     checkin: string | null;
     checkout: string | null;
-    amenties?: number[];
+    amenities?: number[];
 }
 
 export interface SearchResponse{

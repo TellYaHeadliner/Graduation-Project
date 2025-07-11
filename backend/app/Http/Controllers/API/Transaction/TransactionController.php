@@ -21,6 +21,7 @@ use App\Models\RoomTypeVariant;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Voucher;
+use App\Models\VoucherUser;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
@@ -548,6 +549,8 @@ class TransactionController extends Controller
     public function checkVoucher($voucher, $total_amount)
     {
         $voucher = Voucher::where('code', $voucher)->first();
+
+        //$voucher_user =VoucherUser::where('voucher_id',$voucher->id)->where('user_id',$user_id)->first();
 
         if (!$voucher) {
             return ['success' => false, 'message' => 'Voucher không tồn tại'];

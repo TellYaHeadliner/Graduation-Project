@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\Hotel;
 
 use App\Enums\Booking\BookingStatus;
 use App\Enums\Hotel\HotelStatus;
+use App\Enums\RoomType\RoomTypeStatus;
 use App\Enums\Season\SeasonStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Hotel\HotelRequest;
@@ -34,8 +35,8 @@ class HotelController extends Controller
                 $query->where('name', 'LIKE', '%' . $name . '%');
             }
         })->with(['roomTypes.variants.seasons'])
-          ->where('status', HotelStatus::Active->value)
-          ->get();
+            ->where('status', HotelStatus::Active->value)
+            ->get();
         return response()->json([
             'message' => 'Danh sách khách sạn có ưu đãi.',
             'data' => [
@@ -56,7 +57,8 @@ class HotelController extends Controller
             'hotelServices',
             'reviews.user',
             'reviews.booking.bookingDetails.roomType'
-        ])->find($id);
+        ])
+        ->find($id);
         return response()->json([
             'message' => 'Chi tiết khách sạn.',
             'data' => [
@@ -70,15 +72,15 @@ class HotelController extends Controller
         $this->data = $request->validated();
         DB::beginTransaction();
         $hotel = Hotel::find($request->user_id);
-        if ($hotel->status == HotelStatus::Pending) {
+        if ($hotel && $hotel->status == HotelStatus::Pending) {
             return response()->json([
                 'message' => 'Bạn đã đăng kí khách sạn vui lòng chờ kết quả!.',
                 'data' => []
             ], 400);
         }
-        else{
+        if ($hotel && $hotel->status == HotelStatus::Active) {
             return response()->json([
-                'message' => 'Bạn đang có khách sạn hoạt động.',
+                'message' => 'Bạn đã có khách sạn.',
                 'data' => []
             ], 400);
         }
@@ -177,7 +179,7 @@ class HotelController extends Controller
             ->where('status', HotelStatus::Active->value)
 
             ->when(!empty($address), function ($q) use ($address) {
-                $q->whereRaw('LOWER(address) LIKE ?', ['%' . mb_strtolower($address) . '%']);
+                $q->where('address', 'LIKE', '%' . $address . '%');
             })
 
             ->when(!empty($amenities), function ($q) use ($amenities) {
@@ -188,8 +190,8 @@ class HotelController extends Controller
 
             ->whereHas('roomTypes', function ($roomTypeQ) use ($checkIn, $checkOut, $quantity, $guest, $children, $minPrice, $maxPrice) {
 
-                // Đếm số phòng còn trống
                 $roomTypeQ->withCount(['rooms as available_room_count' => function ($roomQ) use ($checkIn, $checkOut) {
+                    $roomQ->where('status',RoomTypeStatus::Active);
                     $roomQ->whereDoesntHave(
                         'bookingDetails',
                         fn($bd) =>
@@ -208,7 +210,6 @@ class HotelController extends Controller
                 }])
                     ->having('available_room_count', '>=', $quantity)
 
-                    // RoomType phải có ít nhất 1 variant phù hợp
                     ->whereHas('variants', function ($variantQ) use ($guest, $children, $checkIn, $checkOut, $minPrice, $maxPrice) {
                         $variantQ
                             ->whereHas('attributes', function ($q) use ($guest) {
@@ -245,6 +246,7 @@ class HotelController extends Controller
             // Load các quan hệ
             ->with([
                 'roomTypes' => function ($roomTypeQ) use ($guest, $children, $checkIn, $checkOut, $minPrice, $maxPrice, $quantity) {
+                    $roomTypeQ->where('status',RoomTypeStatus::Active);
                     $roomTypeQ->withCount(['rooms as available_room_count' => function ($roomQ) use ($checkIn, $checkOut) {
                         $roomQ->whereDoesntHave(
                             'bookingDetails',

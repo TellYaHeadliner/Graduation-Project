@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\RoomType;
 
 use App\Enums\Booking\BookingStatus;
+use App\Enums\RoomType\RoomTypeStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\RoomTypeResource;
 use App\Models\RoomType;
@@ -75,6 +76,7 @@ class RoomTypeController extends Controller
                         });
                     }
                 ])
+                ->where('status',RoomTypeStatus::Active)
                 ->when($room_quantity, function ($q) use ($room_quantity) {
                     $q->having('available_room_count', '>=', $room_quantity);
                 })

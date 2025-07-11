@@ -139,7 +139,7 @@
             <input type="date" id="fromDate" class="form-control form-control-sm w-auto"
                 value="{{ now()->subMonths(12)->startOfMonth()->toDateString() }}">
 
-            <input type="date" id="toDate" class="form-control form-control-sm w-auto" value="{{ now()->toDateString() }}">
+            <input type="date" id="toDate" class="form-control form-control-sm w-auto" value="{{ now()->endOfMonth()->toDateString() }}">
 
             <select id="groupBy" class="form-select form-select-sm w-auto">
                 <option value="month" selected>Theo tháng</option>

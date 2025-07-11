@@ -2,7 +2,6 @@ import MainLayout from "../layouts/MainLayout";
 import CarouselCard from "../components/CustomCarousel/CarouselCard";
 import useTitle from "../hooks/useTitle";
 import FindHotel from "../components/FindHotel/FindHotel";
-
 import section from "../assets/section.jpg"
 import TrendingLocation from "../components/TrendingTab/TrendingLocation";
 import { ToastContainer } from "react-toastify";
@@ -12,11 +11,13 @@ import { useHotelSeasonsQuery } from "../react-query/useHotelSeasonsQuery";
 import { ErrorUtils } from "../utils/Error";
 import LoadingSpinner from "../components/Loading/LoadingSpinner";
 import { FindHotelProvider } from "../context/FindHotelContext";
+import { useHotelSeasonsParamsQuery } from "../react-query/useHotelSeasonsParamsQuery";
 
 export default function Home() {
     useTitle("Roomix");
 
     const getHotelSeasonResponse = useHotelSeasonsQuery();
+    const getSpringSeasons = useHotelSeasonsParamsQuery("Mùa xuân");
 
 
     useEffect(() => {
@@ -49,10 +50,10 @@ export default function Home() {
                 <div className="flex justify-center my-4">
                     <LoadingSpinner />
                 </div>
-            ): <CarouselCard cardList={getHotelSeasonResponse?.data?.data.hotels ?? []} title="Khách sạn ưu đãi" /> }
-            {/* <CarouselCard cardList={CardListWithPriceData} title="Khách sạn có giá ưu đãi" />
-            <CarouselCard cardList={CardListStaticData} title="Khách sạn có ưu đãi cuối tuần" />
-            <CarouselCard cardList={CardListStaticData} title="Khách sạn theo mùa du lịch" /> */}
+            ): <CarouselCard cardList={getHotelSeasonResponse?.data?.data.hotels ?? []} title="Khách sạn bạn quan tâm" /> }
+            <CarouselCard cardList={getSpringSeasons.data?.data.hotels ?? []} title="Mùa xuân" />
+            {/* <CarouselCard cardList={CardListStaticData} title="Khách sạn có ưu đãi cuối tuần" />
+            <CarouselCard cardList={CardListStaticData} title="Khách sạn theo mùa du lịch" />  */}
             <LocationTab />
             <ToastContainer position="top-right" />
         </MainLayout>

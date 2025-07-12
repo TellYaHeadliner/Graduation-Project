@@ -1,7 +1,8 @@
 import { useFilter } from '../../context/FilterContext';
 import { Amentity } from '../../types/AmentityTypes';
 import AccordiionFilterComfortCommon from '../Accordion/AccordionFilterComfortCommon';
-import AccordionFilterStar from '../Accordion/AccordionFilterStar';
+import AccordionFilterStar from '../Accordion/AccordionFilterStar';import ButtonApplyFilter from '../Button/ButtonApplyFilter';
+;
 import PriceSlider from './PriceSlider';
 
 interface Props{
@@ -13,7 +14,10 @@ export default function NavBarFilter({ amenties }: Props){
 
     return (
         <nav className="w-64 px-auto rounded space-y-4 py-3 text-sm text-white">
-            <PriceSlider numberRoom={0} nightCount={0} />
+            <div className="my-4">
+                <ButtonApplyFilter />
+            </div>
+            <PriceSlider />
             <AccordionFilterStar onFilterChange={updateStars}/>
             {
                 amenties.map((amentity) => (

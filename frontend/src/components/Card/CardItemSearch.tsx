@@ -26,7 +26,7 @@ export default function CardItemSearch({ data }: CardItemSearchProps) {
 
   
   return (
-    <div className="flex border mt-5 rounded-lg shadow-md overflow-hidden max-w-4xl bg-white">
+    <div className="flex border mt-5 rounded-lg shadow-md overflow-hidden 2xl:max-w-6xl max-w-4xl bg-white">
       {/* Left section - Image and labels */}
       <div className="basis-2/5 relative bg-gray-100">
         <img

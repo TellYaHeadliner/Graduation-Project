@@ -12,11 +12,13 @@ export default function AccordiionFilterComfortCommon({ title, children }: AFCCP
     const { filter, updateAmentities } = useFilter();
 
     const handleToggle = (id: number) => {
-        const isSelected = filter.amentityIds.includes(id);
-        const newIds = isSelected ? filter.amentityIds.filter(item => item !== id) : [...filter.amentityIds, id];
+        const isSelected = filter.amenities.includes(id);
+        const newIds = isSelected ? filter.amenities.filter(item => item !== id) : [...filter.amenities, id];
 
         updateAmentities(newIds)
+
     }
+    
 
     return (
         <div className="p-4 rounded-lg border border-gray-200 text-black">
@@ -37,7 +39,7 @@ export default function AccordiionFilterComfortCommon({ title, children }: AFCCP
                                     name={amentity.name} 
                                     id={amentity.name} 
                                     className="mr-2" 
-                                    checked={filter.amentityIds.includes(amentity.id)}
+                                    checked={filter.amenities.includes(amentity.id)}
                                     onChange={() => handleToggle(amentity.id)}
                                     /> 
                                 <span>{amentity.name}</span>

@@ -13,6 +13,8 @@ export interface DetailHotel{
     combos: Combo[];
     vouchers: Voucher[];
     reviews: Review[];
+    average_star: number;
+    total_reviews: number;
 }
 
 export interface Rule{

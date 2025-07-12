@@ -115,8 +115,8 @@ class TransactionController extends Controller
                 $voucher = $this->checkVoucher($request->voucher, $total);
                 if (!$voucher['success']) {
                     return response()->json([
-                        'message' => $voucher['message']
-                    ], 500);
+                        'message' => 'voucher hết hạn không thể áp dụng.'
+                    ], 404);
                 }
 
                 $v = $voucher['data'];

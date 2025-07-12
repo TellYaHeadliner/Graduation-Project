@@ -51,7 +51,7 @@ export default function DetailBooking() {
     const cancelInfo = checkIn ? getFreeCancelInfo(checkIn) : { deadline: '', isAfter: false };
 
     const bookingStatus = getDetailBooking.data?.data.status;
-    const checkInDate = new Date(getDetailBooking.data?.data.check_in || "");
+    const checkInDate: Date = checkIn ? parseVNDateToISO(checkIn) : new Date();
     const now = new Date();
 
     const canCancel = now <= checkInDate && bookingStatus === "Đã xác nhận";
@@ -225,7 +225,8 @@ export default function DetailBooking() {
                                             <InfoCircledIcon />
                                         </Callout.Icon>
                                         <Callout.Text>
-                                            Bạn có thể <strong>hủy miễn phí</strong> trước <strong>{cancelInfo.deadline}</strong>
+                                            Bạn có thể <strong>hủy miễn phí</strong> trước <strong>{cancelInfo.deadline}</strong> <br />
+                                            *Lưu ý: Phí hủy phòng của bạn là {Currency.formatVND(getDetailBooking.data.data.cancellation_fee)} theo chính sách khách sạn.
                                         </Callout.Text>
                                     </Callout.Root>
                                 )

@@ -91,14 +91,14 @@ trait BaseAuthCMS
         return Auth::guard('admin')->id();
     }
 
-    public function getAllRolesByGuardName($guardName) {
-        return Role::where('guard_name', $guardName)->get();
-    }
+    // public function getAllRolesByGuardName($guardName) {
+    //     return Role::where('guard_name', $guardName)->get();
+    // }
 
-    public function getAllRoles(): Collection
-    {
-        return Role::all();
-    }
+    // public function getAllRoles(): Collection
+    // {
+    //     return Role::all();
+    // }
 
 
 }

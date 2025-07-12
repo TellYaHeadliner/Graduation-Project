@@ -70,11 +70,13 @@ class DashboardController extends Controller
         COUNT(*) as total,
         SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as checked_out,
         SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as checked_in,
-        SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as no_show
+        SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as no_show,
+        SUM(CASE WHEN status = ? THEN 1 ELSE 0 END) as cancel
     ", [
                 BookingStatus::CheckedOut->value,
                 BookingStatus::CheckedIn->value,
                 BookingStatus::NoShow->value,
+                BookingStatus::Cancelled->value
             ])
             ->where('hotel_id', $hotelId)
             ->groupBy('time')
@@ -104,6 +106,11 @@ class DashboardController extends Controller
                     'label' => 'Vắng mặt',
                     'data' => $bookingStats->pluck('no_show'),
                     'backgroundColor' => 'rgba(239,68,68,0.5)',
+                ],
+                [
+                    'label' => 'Đã hủy',
+                    'data' => $bookingStats->pluck('cancel'),
+                    'backgroundColor' => 'rgba(242, 6, 6, 0.5)',
                 ],
             ]
         ];

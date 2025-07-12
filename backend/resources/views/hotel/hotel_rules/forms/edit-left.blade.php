@@ -40,13 +40,13 @@
                     :checked="( isset($hotel->child_policy) && $hotel->child_policy->value == 1)" />
             </div>
 
-            {{-- Độ tuổi giới hạn trẻ em --}}
+            {{-- Độ tuổi giới hạn trẻ em
             <div class="col-12 mb-3" id="child_age_limit_box"
                 style="{{ (isset($hotel->child_policy) && $hotel->child_policy->value == 1 ) ? '' : 'display:none;' }}">
                 <label class="control-label"><i class="ti ti-user"></i> {{ __('Độ tuổi giới hạn trẻ em') }}:</label>
                 <x-input type="number" name="child_age_limit" id="child_age_limit" :value="$hotel->child_age_limit ?? 0"
                     placeholder="{{ __('Độ tuổi tối đa') }}" />
-            </div>
+            </div> --}}
 
             {{-- Có giường phụ --}}
             <div class="col-12 mb-3">

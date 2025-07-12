@@ -20,7 +20,6 @@ export interface Rule{
     check_out_time: string;
     pet_policy: boolean;
     child_policy: boolean;
-    child_age_limit: number;
     extra_bed_fee: number;
 }
 

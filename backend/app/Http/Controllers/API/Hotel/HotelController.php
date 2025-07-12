@@ -35,6 +35,7 @@ class HotelController extends Controller
                 $query->where('name', 'LIKE', '%' . $name . '%');
             }
         })->with(['roomTypes.variants.seasons'])
+            ->whereHas('hotelRule')
             ->where('status', HotelStatus::Active->value)
             ->get();
         return response()->json([
@@ -178,6 +179,7 @@ class HotelController extends Controller
 
         $hotels = Hotel::query()
             ->where('status', HotelStatus::Active->value)
+            ->whereHas('hotelRule')
 
             ->when(!empty($address), function ($q) use ($address) {
                 $q->where('address', 'LIKE', '%' . $address . '%');
@@ -190,7 +192,6 @@ class HotelController extends Controller
             })
 
             ->whereHas('roomTypes', function ($roomTypeQ) use ($checkIn, $checkOut, $quantity, $guest, $children, $minPrice, $maxPrice) {
-
                 $roomTypeQ->withCount(['rooms as available_room_count' => function ($roomQ) use ($checkIn, $checkOut) {
                     $roomQ->where('status', RoomTypeStatus::Active);
                     $roomQ->whereDoesntHave(

@@ -42,8 +42,17 @@ class UserController extends Controller
             $data = $request->validated();
 
             $user = User::find($request->user_id);
+            
+            if ($request->hasFile('avatar')) {
+                $file = $request->file('avatar');
 
-            if(isset($data['password_new']) && !empty($data['password_new'])){
+                $fileName = time() . '_' . $file->getClientOriginalName();
+                $this->data['avatar'] = '/assets/images/' . $fileName;
+
+                $file->move(public_path('assets/images'), $fileName);
+            }
+
+            if (isset($data['password_new']) && !empty($data['password_new'])) {
                 $data['password'] = Hash::make($data['password_new']);
             }
             unset($data['password_new']);
@@ -67,24 +76,22 @@ class UserController extends Controller
     {
         DB::beginTransaction();
         try {
-            
-            $user = User::where('email',$request->email)->first();
 
-            if(!$user){
+            $user = User::where('email', $request->email)->first();
+
+            if (!$user) {
                 return response()->json([
-                'message' => 'Không tìm thấy tài khoản này.',
-                'data' => [],
-            ], 500);
+                    'message' => 'Không tìm thấy tài khoản này.',
+                    'data' => [],
+                ], 500);
             }
-
-           // $password_new = Str::random(8);
             $password_new = Str::random(8);
 
             $user->update([
                 'password' => Hash::make($password_new),
             ]);
 
-            Mail::to($user->email)->send(new ForgotPasswordMail($password_new,$user));
+            Mail::to($user->email)->send(new ForgotPasswordMail($password_new, $user));
 
             DB::commit();
             return response()->json([

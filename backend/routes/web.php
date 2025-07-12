@@ -1,7 +1,11 @@
 <?php
 
+use App\Models\Hotel;
+use App\Models\User;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use CKSource\CKFinderBridge\Controller\CKFinderController;
+use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,6 +52,23 @@ Route::prefix('/search')->as('search.')->group(function () {
         Route::get('/services', [App\Http\Controllers\Search\ServiceSearchSelectController::class, 'selectSearch'])->name('service');
         Route::get('/bed-types', [App\Http\Controllers\Search\BedTypeSearchSelectController::class, 'selectSearch'])->name('bed_type');
         Route::get('/seasons', [App\Http\Controllers\Search\SeasonSearchSelectController::class, 'selectSearch'])->name('season');
-    
     });
 });
+
+Route::get('/email/verify/{id}/{hash}', function (Request $request,$hash) {
+    $user = User::find($request->route('id'));
+
+    if (!$user) {
+        abort(404, 'Không tìm thấy khách sạn.');
+    }
+
+    if (! hash_equals($hash, sha1($user->email))) {
+        abort(403, 'Liên kết xác minh không hợp lệ.');
+    }
+
+    if ($user->hasVerifiedEmail()) {
+        return redirect('http://127.0.0.1:5173/email-verified');
+    }
+    $user->markEmailAsVerified();
+    return redirect('http://127.0.0.1:5173/email-verified');
+})->middleware(['signed'])->name('verification.verify');

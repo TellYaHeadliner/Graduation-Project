@@ -18,7 +18,7 @@ export default function ConfirmMail() {
     return (
         <LoginLayout>
             <p className="text-md font-medium text-gray-700 mb-0">
-                Mail về việc thay đổi mật khẩu của bạn đã gửi, vui lòng mở họp thư để thay đổi mật khẩu mới của bạn
+                Mail về việc thay đổi mật khẩu của bạn đã gửi, vui lòng mở hộp thư để nhận mật khẩu mới của bạn.
             </p>
         </LoginLayout>
     )

@@ -5,7 +5,6 @@ export interface DetailHotel{
     description: string;
     star_rating: number;
     phone: string;
-    email: number;
     avatar: string;
     gallery: string;
     rules: Rule;

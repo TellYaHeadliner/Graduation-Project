@@ -19,10 +19,9 @@ return new class extends Migration
             $table->text('address');
             $table->longText('description')->nullable();
             $table->tinyInteger('star_rating')->default(0);
-            $table->char('phone',10);
-            $table->string('email')->unique();
-            $table->char('mst',20);
-            $table->char('bank_account_number',50);
+            $table->char('phone', 10);
+            $table->char('mst', 20);
+            $table->char('bank_account_number', 50);
             $table->string('bank_account_name');
             $table->string('bank_name');
             $table->text('avatar')->nullable();
@@ -31,7 +30,7 @@ return new class extends Migration
             $table->tinyInteger('reputation_score')->default(70);
             $table->timestamps();
 
-            $table->foreign('id')->references('id')->on('users')->onDelete('cascade'); 
+            $table->foreign('id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

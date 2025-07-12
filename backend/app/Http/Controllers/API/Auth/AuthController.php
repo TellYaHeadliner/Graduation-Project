@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\User\UserApiRequest;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
+use App\Notifications\VerifyUserEmail;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -27,9 +28,15 @@ class AuthController extends Controller
 
         if (!$user) {
             return response()->json([
-                'message' => 'Tài khoản không tồn tại!',
+                'message' => 'Tài khoản không tồn tại.',
                 'data' => []
             ], 404);
+        }
+
+        if (!$user->hasVerifiedEmail()) {
+            return response()->json([
+                'message' => 'Vui lòng kiểm tra email để kích hoạt tài khoản.'
+            ], 403);
         }
 
         if (!Hash::check($this->data['password'], $user->password)) {
@@ -85,15 +92,18 @@ class AuthController extends Controller
                 $file = $request->file('avatar');
 
                 $fileName = time() . '_' . $file->getClientOriginalName();
-                $this->data['avatar'] = '/assets/images/'.$fileName;
+                $this->data['avatar'] = '/assets/images/' . $fileName;
 
                 $file->move(public_path('assets/images'), $fileName);
             }
 
-            User::create($this->data);
+            $user = User::create($this->data);
+
+            $user->sendEmailVerificationNotification();
+
             DB::commit();
             return response()->json([
-                'message' => 'Đăng ký thành công.',
+                'message' => 'Đăng ký thành công. Vui lòng kiểm tra email để xác minh tài khoản.',
                 'data' => [],
             ], 200);
         } catch (Exception $e) {
@@ -105,6 +115,17 @@ class AuthController extends Controller
             ], 500);
         }
     }
+
+    public function resend_email(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if (! $user || $user->hasVerifiedEmail()) {
+            return response()->json(['message' => 'Email không hợp lệ hoặc đã xác minh.'], 400);
+        }
+        $user->sendEmailVerificationNotification();
+        return response()->json(['message' => 'Đã gửi lại email xác minh.'], 200);
+    }
+
 
     public function redirectToGoogle()
     {

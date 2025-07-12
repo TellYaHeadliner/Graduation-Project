@@ -44,11 +44,12 @@ export default function FormRegister() {
                 birthday: data.birthday
             };
             const responseSignIn = await authApi.signIn(newFormData);
-            if (responseSignIn) {
-                setIsOpenDialog(true);
+            if (responseSignIn?.redirect) {
+                const redirectUrl = responseSignIn.redirect; 
+                localStorage.setItem("email_verification_pending", data.email);
                 setTimeout(() => {
-                    navigate("/");
-                }, 5000);
+                    navigate(redirectUrl);
+                }, 4000);
             }
         } catch (error) {
             errorHandler.handleError(error);

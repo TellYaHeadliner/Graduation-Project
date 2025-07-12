@@ -55,16 +55,8 @@ Route::prefix('/search')->as('search.')->group(function () {
     });
 });
 
-Route::get('/email/verify/{id}/{hash}', function (Request $request,$hash) {
+Route::get('/email/verify/{id}/{hash}', function (Request $request) {
     $user = User::find($request->route('id'));
-
-    if (!$user) {
-        abort(404, 'Không tìm thấy khách sạn.');
-    }
-
-    if (! hash_equals($hash, sha1($user->email))) {
-        abort(403, 'Liên kết xác minh không hợp lệ.');
-    }
 
     if ($user->hasVerifiedEmail()) {
         return redirect('http://127.0.0.1:5173/email-verified');

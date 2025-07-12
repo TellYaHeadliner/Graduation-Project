@@ -9,6 +9,8 @@ import { useState } from "react";
 import { useLoginMutation } from '../../react-query/useLoginMutation';
 import DialogLoading from "../Dialog/DialogLoading";
 import { ErrorUtils } from "../../utils/Error";
+import { useNavigate } from "react-router-dom";
+import { ApiError } from "../../types/api"; 
 
 
 export default function FormLogin() {
@@ -21,6 +23,7 @@ export default function FormLogin() {
     });
     const [isOpenDialog, setIsOpenDialog] = useState(false);
     const loginMutation = useLoginMutation();
+    const navigate = useNavigate();
 
     const onSubmit = async (data: LoginSchema) => {
         const errorHandler = new ErrorUtils();
@@ -29,7 +32,15 @@ export default function FormLogin() {
             if (responseLogin) {
                 setIsOpenDialog(true);
             }
-        } catch (error) {
+        } catch (err) {
+            const error = err as ApiError;
+
+            if (error.redirect) {
+                localStorage.setItem("email_verification_pending", data.email);
+                navigate(error.redirect);
+                return;
+            }
+
             errorHandler.handleError(error);
         }
     }

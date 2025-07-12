@@ -55,14 +55,16 @@ class HotelController extends Controller
             'services',
             'combos.comboServices.service',
             'vouchers' => function ($q) {
-                $q->where('start_date', '<=', now())   
-                    ->where('end_date', '>=', now())     
-                    ->where('is_active', 1);                
+                $q->where('start_date', '<=', now())
+                    ->where('end_date', '>=', now())
+                    ->where('is_active', 1);
             },
             'hotelServices',
             'reviews.user',
             'reviews.booking.bookingDetails.roomType'
         ])
+            ->withAvg('reviews', 'star')
+            ->withCount('reviews')
             ->find($id);
         return response()->json([
             'message' => 'Chi tiết khách sạn.',

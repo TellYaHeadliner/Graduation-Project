@@ -25,6 +25,8 @@ class HotelDetailResource extends JsonResource
             'mst' => $this->mst,
             'avatar' => $this->avatar,
             'gallery' => $this->gallery,
+            'average_star'  => round($this->reviews_avg_star, 1),
+            'total_reviews' => $this->reviews_count,
 
 
             'rules' => [

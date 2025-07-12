@@ -5,7 +5,6 @@ export interface DetailHotel{
     description: string;
     star_rating: number;
     phone: string;
-    email: number;
     avatar: string;
     gallery: string;
     rules: Rule;
@@ -21,7 +20,6 @@ export interface Rule{
     check_out_time: string;
     pet_policy: boolean;
     child_policy: boolean;
-    child_age_limit: number;
     extra_bed_fee: number;
 }
 

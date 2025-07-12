@@ -30,7 +30,7 @@ export default function DataListRule({ hotelRule }: DataListRuleProps) {
                     <DataList.Value className="border-r border-gray-300">
                         {hotelRule?.child_policy === true ? (
                             <span>
-                                Cho phép trẻ em (Giới hạn độ tuổi: dưới {hotelRule.child_age_limit} tuổi)
+                                Cho phép trẻ em lưu trú
                             </span>
                         ) : (
                             <span>Không cho phép trẻ em</span>

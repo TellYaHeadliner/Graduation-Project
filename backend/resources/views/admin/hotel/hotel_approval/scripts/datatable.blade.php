@@ -3,14 +3,14 @@
     delete statusOptions[2];
     delete statusOptions[3];
     function searchColumsDataTable(datatable) {
-        datatable.api().columns([0, 1, 2, 3, 4, 7]).every(function () {
+        datatable.api().columns([0, 1, 2, 3, 6]).every(function () {
             var column = this;
             var input = document.createElement("input");
 
             input.setAttribute('placeholder', 'Nhập từ khóa');
             input.setAttribute('class', 'form-control');
 
-            if (column.selector.cols == 7) {
+            if (column.selector.cols == 6) {
                 input = document.createElement("select");
                 generateSelectOptions(input, statusOptions); 
             }

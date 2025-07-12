@@ -180,7 +180,7 @@ export default function FormRegister() {
                 Đăng kí
             </button>
 
-            <DialogLoginComplete title="Đăng kí thành công" isOpen={isOpenDialog} />
+            <DialogLoginComplete title="Đăng kí thành công. Vui lòng kiểm tra email để kích hoạt tài khoản!" isOpen={isOpenDialog} />
         </form>
     )
 }

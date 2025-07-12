@@ -25,6 +25,7 @@ return new class extends Migration
             $table->text('avatar')->nullable();
             $table->string('provider')->nullable(); 
             $table->string('provider_id')->nullable()->unique(); 
+            $table->timestamp('email_verified_at')->nullable();
             $table->tinyInteger('role')->default(1);
             $table->tinyInteger('status')->default(1);
             $table->timestamps();

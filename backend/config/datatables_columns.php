@@ -88,6 +88,12 @@ return [
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
+        'email_verified_at' => [
+            'title' => 'Đã xác minh email',
+            'icon' => 'ti ti-check',
+            'orderable' => false,
+            'addClass' => 'text-center align-middle'
+        ],
         'status' => [
             'title' => 'Trạng thái',
             'icon' => 'ti-toggle-right',
@@ -113,12 +119,6 @@ return [
         'owner' => [
             'title' => 'Chủ sở hữu',
             'icon' => 'ti ti-user',
-            'orderable' => false,
-            'addClass' => 'text-center align-middle'
-        ],
-        'email' => [
-            'title' => 'Email',
-            'icon' => 'ti ti-mail',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],

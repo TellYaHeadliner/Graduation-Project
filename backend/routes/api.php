@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\Hotel;
+use App\Notifications\VerifyHotelEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -63,6 +65,7 @@ Route::controller(App\Http\Controllers\API\Auth\AuthController::class)
         Route::post('/logout', 'logout')->name('logout');
 
         Route::post('/register', 'register')->name('register');
+        Route::post('/resend-email', 'resend_email')->name('resend_email');
 
         Route::get('/google/redirect', 'redirectToGoogle')->name('google.redirect');
         Route::get('/google/callback', 'handleGoogleCallback')->name('google.callback');

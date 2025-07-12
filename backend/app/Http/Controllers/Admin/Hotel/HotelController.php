@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin\Hotel;
 use App\DataTables\Admin\Hotel\HotelApprovalDataTable;
 use App\DataTables\Admin\Hotel\HotelDataTable;
 use App\Enums\Booking\BookingStatus;
+use App\Enums\User\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Hotel\HotelRequest;
 use App\Models\Booking;
@@ -147,29 +148,27 @@ class HotelController extends Controller
     {
         $hotel = Hotel::with('user')->find($id);
 
-        $response = Http::get('https://api.vietqr.io/v2/business/' . $hotel->mst);
-
-
         return view($this->view['editHotelApproval'], [
             'breadcrumbs' => $this->crums->add(
                 __('Danh sách khách sạn'),
                 route($this->route['index'])
             )->add('Duyệt khách sạn'),
             'hotel' => $hotel,
-            'response' => $response->json()
         ]);
     }
 
-    public function updateHotelApproval(HotelRequest $request)
+    public function updateHotelApproval(Request $request)
     {
         DB::beginTransaction();
         try {
-            $this->data = $request->validated();
+            $this->data = $request->all();
 
             $hotel = Hotel::find($this->data['id']);
             $hotel->update([
                 'status' => 2
             ]);
+            $hotel->user->update(['role'=>UserRole::Owner]);
+
             DB::commit();
             return redirect()->route($this->route['index'])->with('success', 'Cập nhập thành công');
         } catch (Exception $e) {

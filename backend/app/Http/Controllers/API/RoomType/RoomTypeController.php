@@ -31,7 +31,6 @@ class RoomTypeController extends Controller
             $check_out = Carbon::parse($data['check_out'])->toDateString();
             $hotel_id = $data['hotel_id'] ?? null;
 
-
             $listRoomType = RoomType::with([
                 'variants' => function ($variantQuery) use ($guest, $children, $check_in, $check_out) {
                     $variantQuery

@@ -22,7 +22,6 @@ class HotelRequest extends BaseRequest
             'address' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'star_rating' => ['nullable'],
-            'email' => ['required', 'email'],
             'phone' => [
                 'required',
                 'regex:/((09|03|07|08|05)+([0-9]{8})\b)/',

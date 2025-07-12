@@ -22,7 +22,6 @@ class HotelRulesRequest extends BaseRequest
             'check_out_time' => ['required'],
             'pet_policy' => ['nullable', new Enum(HotelRulePetPolicy::class)],
             'child_policy' => ['nullable', new Enum(HotelRuleChildPolicy::class)],
-            'child_age_limit' => ['nullable','numeric','min:0'],
             'extra_bed_fee_check' =>['nullable'],
             'extra_bed_fee' =>['nullable','numeric','min:0'],
         ];

@@ -7,7 +7,7 @@
 
     <div class="page-body">
         <div class="container-xl">
-            <x-form :action="route('admin.hotel.update')" type="put" :validate="true">
+            <x-form :action="route('admin.hotel.updateHotelApproval')" type="put" :validate="true">
                 <x-input type="hidden" name="id" :value="$hotel->id" />
                 <div class="row justify-content-center">
                     @include('admin.hotel.hotel_approval.forms.edit-left')

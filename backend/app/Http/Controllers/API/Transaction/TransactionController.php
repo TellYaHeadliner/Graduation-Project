@@ -473,7 +473,6 @@ class TransactionController extends Controller
                                 BookingStatus::Pending->value,
                                 BookingStatus::Confirmed->value,
                                 BookingStatus::CheckedIn->value,
-                                BookingStatus::CheckedOut->value,
                             ]);
                     })
                     ->orderBy('code', 'asc')

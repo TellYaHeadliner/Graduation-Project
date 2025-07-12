@@ -19,13 +19,6 @@
                     <x-input-phone name="phone" :value="$hotel->phone" placeholder="{{ __('Số điện thoại') }}" />
                 </div>
             </div>
-            {{-- email --}}
-            <div class="col-md-6 col-12">
-                <div class="mb-3">
-                    <label class="control-label"><i class="ti ti-mail"></i> {{ __('Email') }}:</label>
-                    <x-input-email id="emailInput" name="email" :value="$hotel->email" />
-                </div>
-            </div>
             {{-- mst --}}
             <div class="col-md-6 col-12">
                 <div class="mb-3">

@@ -3,7 +3,7 @@
     const roleOptions = @json(\App\Enums\User\UserRole::asSelectArray());
     const statusOptions = @json(\App\Enums\User\UserStatus::asSelectArray());
     function searchColumsDataTable(datatable) {
-        datatable.api().columns([0, 1, 2, 3, 4, 5, 7, 8]).every(function () {
+        datatable.api().columns([0, 1, 2, 3, 4, 5, 7, 9]).every(function () {
             var column = this;
             var input = document.createElement("input");
 
@@ -14,7 +14,7 @@
                 input.setAttribute('type', 'date');
             }
 
-            if (column.selector.cols == 8) {
+            if (column.selector.cols == 9) {
                 input = document.createElement("select");
                 generateSelectOptions(input, statusOptions); 
             }

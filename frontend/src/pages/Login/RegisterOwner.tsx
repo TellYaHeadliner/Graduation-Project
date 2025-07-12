@@ -11,7 +11,7 @@ export default function RegisterOwner() {
                 Đăng kí chủ khách sạn
             </h1>
             <p className="text-md text-white font-thin text-center">
-                Hãy đăng kí chúng tôi, để quảng bá, tự động mọi thứ
+                 Hợp tác với chúng tôi để quảng bá khách sạn và tiếp cận khách hàng tiềm năng
             </p>
             <RegisterOwnerForm />
         </LoginLayout>

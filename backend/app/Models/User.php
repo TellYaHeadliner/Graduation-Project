@@ -4,14 +4,18 @@ namespace App\Models;
 
 use App\Enums\User\UserGender;
 use App\Enums\User\UserStatus;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\User\UserRole;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use App\Notifications\VerifyUserEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory;
+    use Notifiable;
     protected $table = 'users';
     protected $guarded = [];
     protected $casts = [
@@ -74,5 +78,10 @@ class User extends Authenticatable
     public function bookings()
     {
         return $this->hasMany(Booking::class, 'customer_id');
+    }
+
+    public function sendEmailVerificationNotification()
+    {
+        $this->notify(new VerifyUserEmail());
     }
 }

@@ -67,5 +67,6 @@ class Kernel extends HttpKernel
         'roleCheck' => \App\Http\Middleware\RoleCheck::class,
         'hotelOwnerCheck' => \App\Http\Middleware\HotelOwnerCheck::class,
         'checkJWT' => \App\Http\Middleware\CheckJWT::class,
+        'checkHotelRule' => \App\Http\Middleware\checkHotelRule::class,
     ];
 }

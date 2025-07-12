@@ -28,6 +28,9 @@ export interface PayloadSearchParams{
     checkin: string | null;
     checkout: string | null;
     amenities?: number[];
+    min_price?: number;
+    max_price?: number;
+    min_rating?: number;
 }
 
 export interface SearchResponse{

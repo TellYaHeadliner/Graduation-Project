@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useReducer, ReactNode } from 'react';
 
+
 export interface FindHotelParams {
   province: string;
   dateRange: [string | null, string | null];
@@ -14,7 +15,7 @@ type FindHotelAction =
   | { type: 'SET_DATE_RANGE'; payload: [string | null, string | null] }
   | { type: 'SET_ADULTS'; payload: number }
   | { type: 'SET_CHILDREN'; payload: number }
-  | { type: 'SET_ROOMS'; payload: number };
+  | { type: 'SET_ROOMS'; payload: number }
 
 const initialState: FindHotelParams = {
   province: '',
@@ -37,7 +38,7 @@ function reducer(state: FindHotelParams, action: FindHotelAction): FindHotelPara
     case 'SET_ROOMS':
       return { ...state, rooms: action.payload };
     default:
-      return state;
+    return state;
   }
 }
 

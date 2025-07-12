@@ -2,11 +2,9 @@ import { createContext, useContext, useState, ReactNode } from "react";
 
 export interface FilterState {
     stars: number[];         // VD: [5, 4]
-    amentityIds: number[];   // Các tiện nghi con được chọn (id)
+    amenities: number[];   // Các tiện nghi con được chọn (id)
     minPrice: number;
     maxPrice: number;
-    numberRoom: number;
-    nightCount: number;
 }
 
 interface FilterContextType {
@@ -14,18 +12,14 @@ interface FilterContextType {
     updateStars: (stars: number[]) => void;
     updateAmentities: (ids: number[]) => void;
     updatePriceRange: (min: number, max: number) => void;
-    updateNumberRoom: (room: number) => void;
-    updateNightCount: (night: number) => void;
     resetFilter: () => void;
 }
 
 const defaultFilter: FilterState = {
     stars: [],
-    amentityIds: [],
+    amenities: [],
     minPrice: 0,
-    maxPrice: 10000000,
-    numberRoom: 1,
-    nightCount: 1,
+    maxPrice: 0,
 };
 
 const FilterContext = createContext<FilterContextType | undefined>(undefined);
@@ -38,19 +32,11 @@ export function FilterProvider({ children }: { children: ReactNode }) {
     };
 
     const updateAmentities = (ids: number[]) => {
-        setFilter(prev => ({ ...prev, amentityIds: ids }));
+        setFilter(prev => ({ ...prev, amenities: ids }));
     };
 
     const updatePriceRange = (min: number, max: number) => {
         setFilter(prev => ({ ...prev, minPrice: min, maxPrice: max }));
-    };
-
-    const updateNumberRoom = (room: number) => {
-        setFilter(prev => ({ ...prev, numberRoom: room }));
-    };
-
-    const updateNightCount = (night: number) => {
-        setFilter(prev => ({ ...prev, nightCount: night }));
     };
 
     const resetFilter = () => {
@@ -63,8 +49,6 @@ export function FilterProvider({ children }: { children: ReactNode }) {
             updateStars,
             updateAmentities,
             updatePriceRange,
-            updateNumberRoom,
-            updateNightCount,
             resetFilter
         }}>
             {children}

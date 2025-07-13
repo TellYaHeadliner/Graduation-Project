@@ -1,4 +1,5 @@
 import { User } from "../../types/UserTypes";
+import DialogChangePassword from "../Dialog/DialogChangePassword";
 
 interface PersonalInfoSectionProps {
   user: User | null;
@@ -63,11 +64,9 @@ export default function PersonalInfoSection({ user }: PersonalInfoSectionProps) 
               <p className="text-sm text-gray-500 mt-1">{item.description}</p>
             )}
           </div>
-          <button className="text-blue-600 text-sm whitespace-nowrap hover:underline">
-            {item.action}
-          </button>
         </div>
       ))}
+      <DialogChangePassword />
     </div>
   );
 }

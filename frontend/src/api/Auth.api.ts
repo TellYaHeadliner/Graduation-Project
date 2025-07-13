@@ -1,5 +1,5 @@
 import { newFormattedForm } from '../components/Form/FormRegister';
-import { ForgetPasswordResponse, LoginResponse, UserResponse } from '../types/UserTypes';
+import { ForgetPasswordResponse, LoginResponse, PayloadChangePassword, UserResponse } from '../types/UserTypes';
 import api from "./axiosConfig"
 
 const authApi = {
@@ -35,6 +35,13 @@ const authApi = {
 
     resendVerification: (email: string): Promise<{ message: string }> => {
         return api.post('/auth/resend-email', { email });
+    },
+
+    changePassword: (data: PayloadChangePassword): Promise<{ message: string}> => {
+        return api.post('/users/update', {
+            ...data,
+            _method: 'PUT'
+        })
     }
 };
 

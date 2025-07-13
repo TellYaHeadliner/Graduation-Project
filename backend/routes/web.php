@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\TestMessageSent;
 use App\Models\Hotel;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -64,3 +65,8 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request) {
     $user->markEmailAsVerified();
     return redirect('http://127.0.0.1:5173/email-verified');
 })->middleware(['signed'])->name('verification.verify');
+
+Route::get('/test-broadcast', function () {
+    broadcast(new TestMessageSent());
+    return 'Đã gửi thử!';
+});

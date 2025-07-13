@@ -1,5 +1,5 @@
 import { newFormattedForm } from '../components/Form/FormRegister';
-import { ForgetPasswordResponse, LoginResponse, UserResponse } from '../types/UserTypes';
+import { ForgetPasswordResponse, LoginResponse, PayloadChangePassword, UserResponse } from '../types/UserTypes';
 import api from "./axiosConfig"
 
 const authApi = {
@@ -31,7 +31,13 @@ const authApi = {
                 email: { email }
             }
         })
+    },
+
+    changePassword: (data: PayloadChangePassword) => {
+        return api.put("/")
     }
+
+    
 };
 
 export default authApi;

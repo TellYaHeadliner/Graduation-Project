@@ -8,7 +8,7 @@ import DialogHotelServices from "../components/Dialog/DialogHotelServices";
 import { useParams } from "react-router-dom";
 import { useHotelDetailQuery } from "../react-query/useHotelDetailQuery";
 import useTitle from "../hooks/useTitle";
-import { CheckIcon, InfoCircledIcon, StarFilledIcon } from "@radix-ui/react-icons";
+import { CheckIcon, InfoCircledIcon} from "@radix-ui/react-icons";
 import FindRoom from "../components/FindHotel/FindRoom";
 import { useFindRoomContext } from "../context/FindRoomContext";
 import { useHotelRoomTypesQuery } from '../react-query/useHotelRoomTypesQuery';

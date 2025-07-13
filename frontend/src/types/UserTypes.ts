@@ -10,6 +10,14 @@ export interface User {
     role: number;
     status: number;
     created_at: string;
+    password: string;
+}
+
+export interface PayloadChangePassword{
+    fullname: string;
+    email: string;
+    gender: number;
+    password_new: string;
 }
 
 export interface UserResponse {

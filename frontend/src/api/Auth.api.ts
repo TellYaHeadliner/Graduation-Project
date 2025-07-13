@@ -31,6 +31,10 @@ const authApi = {
                 email: { email }
             }
         })
+    },
+
+    resendVerification: (email: string): Promise<{ message: string }> => {
+        return api.post('/auth/resend-email', { email });
     }
 };
 

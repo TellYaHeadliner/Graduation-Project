@@ -15,6 +15,7 @@ export interface User {
 export interface UserResponse {
     fullname: string;
     message: string;
+    redirect?: string;
     data: {
         user: User;
     }

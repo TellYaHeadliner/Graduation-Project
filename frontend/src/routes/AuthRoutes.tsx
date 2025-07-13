@@ -8,6 +8,9 @@ const Register = lazy(() => import("../pages/Login/Register"))
 const ForgotPassword = lazy(() => import("../pages/Login/ForgotPassword"))
 const ConfirmMail = lazy(() => import("../pages/Login/ConfirmMail"))
 const LoadingPage = lazy(() => import("../pages/LoadingPage"))
+const PleaseCheckEmail = lazy(() => import("../pages/Login/PleaseCheckEmail"))
+const EmailVerified = lazy(() => import("../pages/Login/EmailVerified"))
+
 
 export default function AuthRoutes() {
     return (
@@ -38,7 +41,20 @@ export default function AuthRoutes() {
                     <RegisterOwner />
                 </Suspense>
             } />
-            
+
+            <Route path={PATH.RESENDMAIL} element={
+                <Suspense fallback={<LoadingPage />}>
+                    <PleaseCheckEmail />
+                </Suspense>
+            } />
+
+            <Route path={PATH.EMAIL_VERIFIED} element={
+                <Suspense fallback={<LoadingPage />}>
+                    <EmailVerified />
+                </Suspense>
+            } />
+
+
         </>
     )
 }

@@ -8,6 +8,8 @@ use App\Enums\Booking\BookingStatus;
 use App\Enums\User\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Hotel\HotelRequest;
+use App\Mail\HotelApprovalRejectedMail;
+use App\Mail\HotelApprovalSuccessMail;
 use App\Models\Booking;
 use App\Models\Hotel;
 use Exception;
@@ -15,6 +17,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 
 class HotelController extends Controller
 {
@@ -167,7 +170,8 @@ class HotelController extends Controller
             $hotel->update([
                 'status' => 2
             ]);
-            $hotel->user->update(['role'=>UserRole::Owner]);
+            $hotel->user->update(['role' => UserRole::Owner]);
+            Mail::to($hotel->user->email)->send(new HotelApprovalSuccessMail($hotel));
 
             DB::commit();
             return redirect()->route($this->route['index'])->with('success', 'Cập nhập thành công');
@@ -181,6 +185,7 @@ class HotelController extends Controller
         DB::beginTransaction();
         try {
             $hotel = Hotel::find($id);
+            Mail::to($hotel->user->email)->send(new HotelApprovalRejectedMail($request->reason, $hotel));
             $hotel->delete();
             DB::commit();
             return redirect()->route($this->route['indexHotelApproval'])->with('success', 'Cập nhập thành công');

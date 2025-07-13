@@ -23,7 +23,8 @@ api.interceptors.response.use(
     const apiError: ApiError = {
         message: error.response?.data?.message,
         status: error.status,
-        statusText: error.response?.statusText
+        statusText: error.response?.statusText,
+        redirect: error.response?.data?.redirect,
     };
     return Promise.reject(apiError)
     }

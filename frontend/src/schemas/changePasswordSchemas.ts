@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const changePasswordSchemas= z
   .object({
-    password: z.string().min(6, "Mật khẩu phải có ít nhất 6 ký tự"),
+    password: z.string().min(8, "Mật khẩu phải có ít nhất 8 ký tự"),
     confirmPassword: z.string(),
   })
   .refine((data) => data.password === data.confirmPassword, {

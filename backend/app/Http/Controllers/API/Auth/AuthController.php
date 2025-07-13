@@ -33,16 +33,18 @@ class AuthController extends Controller
             ], 404);
         }
 
-        if (!$user->hasVerifiedEmail()) {
-            return response()->json([
-                'message' => 'Vui lòng kiểm tra email để kích hoạt tài khoản.'
-            ], 403);
-        }
-
         if (!Hash::check($this->data['password'], $user->password)) {
             return response()->json([
                 'message' => 'Sai mật khẩu.',
                 'data' => []
+            ], 400);
+        }
+
+        if (!$user->hasVerifiedEmail()) {
+            $user->sendEmailVerificationNotification();
+            return response()->json([
+                'message' => 'Vui lòng kiểm tra email để kích hoạt tài khoản.',
+                'redirect' => '/please-check-email',
             ], 400);
         }
 
@@ -104,7 +106,7 @@ class AuthController extends Controller
             DB::commit();
             return response()->json([
                 'message' => 'Đăng ký thành công. Vui lòng kiểm tra email để xác minh tài khoản.',
-                'data' => [],
+                'redirect' => '/please-check-email',
             ], 200);
         } catch (Exception $e) {
             DB::rollback();

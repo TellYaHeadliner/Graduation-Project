@@ -1,25 +1,49 @@
 import { AlertDialog, Button, Flex, Dialog, Text, TextField } from "@radix-ui/themes";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { changePasswordSchemas, ChangePasswordSchemas } from "../../schemas/changePasswordSchemas";
+import { changePasswordSchemas, ChangePasswordSchemas } from '../../schemas/changePasswordSchemas';
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useUserInfoQuery } from "../../react-query/useUserInfoQuery";
+import { PayloadChangePassword } from "../../types/UserTypes";
+import { useChangePassword } from '../../react-query/useChangePassword';
+import { toast } from "react-toastify";
+import { ErrorUtils } from '../../utils/Error';
+import LoadingSpinner from "../Loading/LoadingSpinner";
 
 export default function DialogChangePassword() {
     const [openForm, setOpenForm] = useState(false);
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm<ChangePasswordSchemas>({
+    const { register, handleSubmit, formState: { errors } } = useForm<ChangePasswordSchemas>({
         resolver: zodResolver(changePasswordSchemas)
     })
+    const getUserInfo = useUserInfoQuery();
+    const changePassword = useChangePassword();
 
-    const onSubmit = (data: any) => {
-        console.log(data)
+    const onSubmit = (data: ChangePasswordSchemas) => {
+        
+        const payloadData: PayloadChangePassword = {
+            fullname: getUserInfo.data?.data.user.fullname ?? '',
+            email: getUserInfo.data?.data.user.email ?? '',
+            gender: getUserInfo.data?.data.user.gender ?? 0,
+            password_new: data.password
+        }
+        setOpenForm(false);
+        changePassword.mutate(payloadData, {
+            onSuccess: () => {
+                toast.success("Mật khẩu thay đổi thành công")
+            },
+            onError: (error) => {
+                const errorUtils = new ErrorUtils();
+                errorUtils.handleError(error);
+            }
+        });
     } 
 
     return (
         <>
             <AlertDialog.Root>
                 <AlertDialog.Trigger>
-                    <Button color="red">
+                    <Button color="red" disabled={changePassword.isPending}>
                         Thay đổi mật khẩu
                     </Button>
                 </AlertDialog.Trigger>

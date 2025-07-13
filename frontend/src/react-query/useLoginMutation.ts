@@ -13,7 +13,7 @@ export const useLoginMutation = () => {
         onSuccess: () => {
             setTimeout(() => {
                 navigate("/")
-            }, 5000);
+            }, 1000);
         },
 
         onError: (error) => {

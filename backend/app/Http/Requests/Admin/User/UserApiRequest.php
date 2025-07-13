@@ -37,7 +37,7 @@ class UserApiRequest extends BaseRequest
     {
         return [
             'fullname' => ['required', 'string'],
-            'email' => ['required', 'email', 'unique:App\Models\User,email'],
+            'email' => ['required', 'email'],
             'phone' => [
                 'nullable',
                 'regex:/((09|03|07|08|05)+([0-9]{8})\b)/',

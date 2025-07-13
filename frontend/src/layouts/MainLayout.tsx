@@ -2,6 +2,7 @@ import { ReactNode } from "react"
 import { Theme } from "@radix-ui/themes"
 import Header from "../components/Header/Header"
 import Footer from "../components/Footer/Footer"
+import { ToastContainer } from "react-toastify"
 
 interface Props {
     children: ReactNode
@@ -18,6 +19,7 @@ export default function MainLayout(props: Props) {
                 {children}
             </main>
             <Footer />
+            <ToastContainer position="top-right" />
         </Theme>
     )
 }

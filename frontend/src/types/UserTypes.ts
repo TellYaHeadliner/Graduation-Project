@@ -23,6 +23,7 @@ export interface PayloadChangePassword{
 export interface UserResponse {
     fullname: string;
     message: string;
+    redirect?: string;
     data: {
         user: User;
     }

@@ -33,11 +33,16 @@ const authApi = {
         })
     },
 
-    changePassword: (data: PayloadChangePassword) => {
-        return api.put("/")
-    }
+    resendVerification: (email: string): Promise<{ message: string }> => {
+        return api.post('/auth/resend-email', { email });
+    },
 
-    
+    changePassword: (data: PayloadChangePassword): Promise<{ message: string}> => {
+        return api.post('/users/update', {
+            ...data,
+            _method: 'PUT'
+        })
+    }
 };
 
 export default authApi;

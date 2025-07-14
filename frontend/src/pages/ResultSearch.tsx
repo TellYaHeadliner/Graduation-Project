@@ -14,6 +14,7 @@ import { Link, useLocation } from "react-router-dom";
 import slug from "slug";
 import { useEffect, useState } from "react";
 import LoadingSpinner from "../components/Loading/LoadingSpinner";
+import { Skeleton } from "@radix-ui/themes";
 
 
 export default function ResultSearch() {
@@ -29,6 +30,10 @@ export default function ResultSearch() {
         checkout: queryParams.get("checkout") ?? "",
         guest: Number(queryParams.get("guest") ?? "1"),
         children: Number(queryParams.get("children") ?? "0"),
+        amenities: queryParams.getAll("amenities[]").map(Number),
+        min_rating: Number(queryParams.get("min_rating") ?? "0"),
+        min_price: Number(queryParams.get("min_price") ?? "0"),
+        max_price: Number(queryParams.get("max_price") ?? "10000000"),
     }
 
     const location = useLocation();
@@ -51,21 +56,28 @@ export default function ResultSearch() {
     useEffect(() => {
         setSearchPayload(finalPayload);
     }, [location.search]);
-    
+
     const hotelSearch = useHotelSearch(searchPayload, true);
     const data = hotelSearch.data?.data
-
 
     return (
         <MainLayout>
             <FilterProvider>
                 <div className="relative flex gap-x-4 lg:px-26 max-w-screen-xl mx-auto">
                     <div className="w-1/4 block">
-                        <div className="sticky top-34">
-                            <SideBarFilter amenties={amenties.data?.data ?? []} />
-                        </div>
+                        {
+                            hotelSearch.isPending ? (
+                                <Skeleton width="300px" height="500px" className="my-4"/>
+                            ) : (
+                                <div className="sticky top-34">
+                                    <SideBarFilter amenties={amenties.data?.data ?? []} />
+                                </div>
+                            )
+                        } 
+
                     </div>
                     <div className="flex-1 space-y-4 mt-4">
+                        
                         <FindHotelProvider>
                             <FindHotel />
                         </FindHotelProvider>

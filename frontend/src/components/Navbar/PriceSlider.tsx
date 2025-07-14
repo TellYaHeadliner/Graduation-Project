@@ -2,15 +2,12 @@ import { useState, useRef, useEffect } from "react";
 import { Currency } from "../../utils/Currency";
 import { useFilter } from "../../context/FilterContext";
 
-interface PriceSliderProps {
-    numberRoom: number;
-    nightCount: number;
-}
+
 
 const MIN = 0
-const MAX = 24000000;
+const MAX = 0;
 
-export default function PriceSlider({ numberRoom, nightCount }: PriceSliderProps) {
+export default function PriceSlider() {
 
     const minRef = useRef<HTMLInputElement>(null);
     const maxRef = useRef<HTMLInputElement>(null);
@@ -54,7 +51,6 @@ export default function PriceSlider({ numberRoom, nightCount }: PriceSliderProps
             <div className="flex justify-between items-start mb-2">
                 <div>
                     <span className="block text-sm font-semibold ">Khoảng giá</span>
-                    <span className="block text-sm ">{numberRoom} phòng, {nightCount} đêm</span>
                 </div>
                 <span className="text-sm text-blue-500 cursor-pointer hover:text-underline" onClick={handleReset}>Đặt lại</span>
             </div>

@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use CKSource\CKFinderBridge\Controller\CKFinderController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -69,4 +71,26 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request) {
 Route::get('/test-broadcast', function () {
     broadcast(new TestMessageSent());
     return 'Đã gửi thử!';
+});
+
+Route::post('/broadcasting/auth', function (Request $request) {
+    $user = auth()->user();
+
+    if (!$user) {
+        $userId = $request->header('X-User-Id');
+        $user = User::find($userId);
+        auth()->setUser($user);
+    }
+
+    Log::info('Broadcast auth attempt', [
+        'user_id' => optional($user)->id,
+        'authenticated' => (bool) $user,
+    ]);
+
+    if (!$user) {
+        return response()->json(['error' => 'Không xác thực được user'], 401);
+    }
+
+
+    return Broadcast::auth($request);
 });

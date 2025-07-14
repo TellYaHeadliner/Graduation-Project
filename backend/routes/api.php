@@ -54,6 +54,14 @@ Route::middleware('checkJWT')->group(function () {
             Route::get('/check/{hotel_id?}', 'check_review')->name('check_review');
             Route::post('/', 'create')->name('create');
         });
+    Route::controller(App\Http\Controllers\API\Chat\ChatController::class)
+        ->prefix('/chat')
+        ->as('chat.')
+        ->group(function () {
+            Route::post('/send-message', 'sendMessage')->name('sendMessage');
+            Route::get('/message/{id}', 'getMessages')->name('getMessages');
+            Route::get('/with/{partnerId}', 'getOrCreateConversation')->name('getOrCreateConversation');
+        });
 });
 
 

@@ -23,13 +23,16 @@ import LoadingSpinner from "../components/Loading/LoadingSpinner";
 import CarouselImage from "../components/CustomCarousel/Carouselmage";
 import { ToastContainer } from "react-toastify";
 import CarouselComment from "../components/CustomCarousel/CarouselComment";
+import useAuth from '../hooks/useAuth';
 
 export default function DetailHotel() {
 
     const { id } = useParams();
-    const { state } =  useFindRoomContext();
+    const { state } = useFindRoomContext();
+    const { user, loading } = useAuth();
     const getDetailHotel = useHotelDetailQuery(Number(id));
-    const title = getDetailHotel.data?.data?.hotel?.name
+    const title = getDetailHotel.data?.data?.hotel?.name;
+    const hotelId = getDetailHotel.data?.data?.hotel?.id;
     useTitle(title ?? "Đang tải")
 
     const breadcrumbItems = [
@@ -40,10 +43,10 @@ export default function DetailHotel() {
 
     const galleyString = getDetailHotel.data?.data.hotel.gallery;
     const listReviews = getDetailHotel.data?.data.hotel.reviews;
-    const address = getDetailHotel.data?.data?.hotel?.address 
+    const address = getDetailHotel.data?.data?.hotel?.address
     const listGalley = galleyString?.split(",") ?? [];
     const [isSearchRoomType, setIsSearchRoomType] = useState(false);
-    const getRoomType = useHotelRoomTypesQuery(Number(id), state.dateRange[0] , state.dateRange[1], state.adults, state.children, state.rooms, isSearchRoomType)
+    const getRoomType = useHotelRoomTypesQuery(Number(id), state.dateRange[0], state.dateRange[1], state.adults, state.children, state.rooms, isSearchRoomType)
 
     const [bookingDetails, setBookingDetails] = useState<BookingDetail[]>([]);
 
@@ -88,9 +91,9 @@ export default function DetailHotel() {
                     <div className="lg:w-1/2 w-full mr-4">
 
                         <h3 className="text-lg font-semibold">Về khách sạn chúng tôi:</h3>
-                        { getDetailHotel.isPending ? (
-                            <Skeleton height="100px"/>
-                        ): (
+                        {getDetailHotel.isPending ? (
+                            <Skeleton height="100px" />
+                        ) : (
                             <div className="text-lg text-justify" dangerouslySetInnerHTML={{ __html: getDetailHotel.data?.data.hotel.description ?? "" }} />
                         )}
                         <h2 className="text-lg font-semibold mt-5">
@@ -110,7 +113,7 @@ export default function DetailHotel() {
                             Các dịch vụ chúng tôi có
                         </h2>
                         {getDetailHotel.isPending && (
-                            <Skeleton height="500px"/>
+                            <Skeleton height="500px" />
                         )}
                         <div>
                             <ul className="flex flex-row flex-wrap gap-4 mt-2">
@@ -140,9 +143,9 @@ export default function DetailHotel() {
                                 />
                             )
                         }
-                       {
+                        {
                             getDetailHotel.isPending ? (
-                                <Skeleton width="700px" height="300px"/>
+                                <Skeleton width="700px" height="300px" />
                             ) : (
                                 <div>
                                     <h3 className="text-lg font-bold">
@@ -151,8 +154,8 @@ export default function DetailHotel() {
                                     <CarouselComment reviews={listReviews ?? []} />
                                 </div>
                             )
-                       }
-                       
+                        }
+
                     </div>
                 </div>
                 <div className="flex flex-col mt-6">
@@ -161,10 +164,10 @@ export default function DetailHotel() {
                     </h2>
 
                     <div className="mb-4">
-                        <FindRoom onSearch={() => setIsSearchRoomType(true)}/>
+                        <FindRoom onSearch={() => setIsSearchRoomType(true)} />
                     </div>
                     <div >
-                        <TableRoom isLoading={getRoomType.isPending} datas={getRoomType.data?.data.list ?? []} onChange={setBookingDetails} hotelRule={getDetailHotel.data?.data.hotel.rules}/>
+                        <TableRoom isLoading={getRoomType.isPending} datas={getRoomType.data?.data.list ?? []} onChange={setBookingDetails} hotelRule={getDetailHotel.data?.data.hotel.rules} />
                     </div>
 
                     <div className="flex justify-end py-3 items-center">
@@ -203,7 +206,7 @@ export default function DetailHotel() {
 
                 <div className="mt-5 mb-5">
                     <h2 className="text-xl font-bold mt-2">
-                        Đánh giá khách sạn 
+                        Đánh giá khách sạn
                     </h2>
                     {
                         checkReview.isPending ? (
@@ -224,10 +227,16 @@ export default function DetailHotel() {
                             </div>
                         )
                     }
-                    
+
                 </div>
             </div>
-            <ChatButton />
+            {loading ? (
+                <LoadingSpinner />
+            ) : user && hotelId ? (
+                <div>
+                    <ChatButton partnerId={hotelId} userId={Number(user.id)} />
+                </div>
+            ) : null}
             <ToastContainer position="top-right" />
         </MainLayout>
     )

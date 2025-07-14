@@ -1,10 +1,12 @@
 import { Button } from '@radix-ui/themes';
 import { CardSearch } from '../../types/SearchTypes';
 import { Currency } from '../../utils/Currency';
+import { StarFilledIcon } from '@radix-ui/react-icons';
 
 interface CardItemSearchProps {
   data: CardSearch;
 }
+
 const showPrice = (basePrice: number, discountPrice: number | null) => (
   <div className="text-right mt-2">
     { discountPrice ? (
@@ -24,11 +26,11 @@ const showPrice = (basePrice: number, discountPrice: number | null) => (
 
 export default function CardItemSearch({ data }: CardItemSearchProps) {
 
-  
+
   return (
-    <div className="flex border mt-5 rounded-lg shadow-md overflow-hidden max-w-4xl bg-white">
+    <div className="flex border mt-5 rounded-lg shadow-md overflow-hidden 2xl:max-w-6xl max-w-4xl bg-white">
       {/* Left section - Image and labels */}
-      <div className="basis-2/5 relative bg-gray-100">
+      <div className="basis-2/6 relative bg-gray-100">
         <img
           src={import.meta.env.VITE_URL + data?.avatar}
           className="w-100 h-full object-cover"
@@ -40,7 +42,7 @@ export default function CardItemSearch({ data }: CardItemSearchProps) {
         <div>
           <h2 className="text-lg font-semibold">{data.name}</h2>
           <div className="flex items-center text-sm text-blue-600 mt-1">
-            <span className="mr-2 py-1 rounded bg-blue-600 px-2 text-white flex items-center gap-1">
+            <span className="mr-2 py-1 rounded px-2 bg-blue-600 text-white flex items-center gap-1">
               {data.average_star} 
             </span>
             <span>{data.total_reviews} đánh giá</span>

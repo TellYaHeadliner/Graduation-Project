@@ -8,7 +8,7 @@ import DialogHotelServices from "../components/Dialog/DialogHotelServices";
 import { useParams } from "react-router-dom";
 import { useHotelDetailQuery } from "../react-query/useHotelDetailQuery";
 import useTitle from "../hooks/useTitle";
-import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
+import { CheckIcon, InfoCircledIcon} from "@radix-ui/react-icons";
 import FindRoom from "../components/FindHotel/FindRoom";
 import { useFindRoomContext } from "../context/FindRoomContext";
 import { useHotelRoomTypesQuery } from '../react-query/useHotelRoomTypesQuery';
@@ -29,7 +29,9 @@ export default function DetailHotel() {
 
     const { id } = useParams();
     const { state } = useFindRoomContext();
+
     const { user, loading } = useAuth();
+
     const getDetailHotel = useHotelDetailQuery(Number(id));
     const title = getDetailHotel.data?.data?.hotel?.name;
     const hotelId = getDetailHotel.data?.data?.hotel?.id;
@@ -148,9 +150,16 @@ export default function DetailHotel() {
                                 <Skeleton width="700px" height="300px" />
                             ) : (
                                 <div>
+
                                     <h3 className="text-lg font-bold">
                                         Đánh giá về khách sạn chúng tôi
                                     </h3>
+                                    <span className="rounded px-2 bg-blue-600 text-white">
+                                        {getDetailHotel.data?.data.hotel.average_star}
+                                    </span>
+                                    <span className="ml-2">
+                                        Có { getDetailHotel.data?.data.hotel.total_reviews} người đánh giá
+                                    </span>
                                     <CarouselComment reviews={listReviews ?? []} />
                                 </div>
                             )

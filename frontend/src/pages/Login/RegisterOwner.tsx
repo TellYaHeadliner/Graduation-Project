@@ -8,7 +8,7 @@ export default function RegisterOwner() {
     return (
         <LoginLayout>
             <h1 className="text-4xl font-bold text-center text-white">
-                Đăng kí chủ khách sạn
+                Đăng kí trở thành đối tác
             </h1>
             <p className="text-md text-white font-thin text-center">
                  Hợp tác với chúng tôi để quảng bá khách sạn và tiếp cận khách hàng tiềm năng

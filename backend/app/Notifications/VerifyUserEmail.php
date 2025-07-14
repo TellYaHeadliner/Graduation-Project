@@ -42,6 +42,8 @@ class VerifyUserEmail extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        URL::forceRootUrl(config('app.url'));
+        
         $verificationUrl = $this->verificationUrl($notifiable);
         return (new MailMessage)
             ->subject('Xác minh email Roomix')

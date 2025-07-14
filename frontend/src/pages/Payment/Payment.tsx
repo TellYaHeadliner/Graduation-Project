@@ -19,8 +19,6 @@ import { useUserInfoQuery } from "../../react-query/useUserInfoQuery";
 import { Callout } from "@radix-ui/themes";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
 
-
-
 export default function Payment() {
     const title = "Điền thông tin";
     const { id } = useParams();

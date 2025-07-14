@@ -27,7 +27,7 @@ export default function ChatBox({ onClose, partnerId, userId }: ChatBoxProps) {
     axios
       .get(`${BASE_URL}/chat/with/${partnerId}`, {
         withCredentials: true,
-      })
+       })
       .then((res) => {
         setConversationId(res.data.id);
         setMessages(res.data.messages || []);

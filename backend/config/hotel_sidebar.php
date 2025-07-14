@@ -113,5 +113,12 @@ return [
             ]
         ]
     ],
+    [
+        'title' => 'Chat',
+        'routeName' => 'hotel.chat.index',
+        'icon' => '<i class="ti ti-brand-line"></i>',
+        'param' => true,
+        'sub' => []
+    ],
 
 ];

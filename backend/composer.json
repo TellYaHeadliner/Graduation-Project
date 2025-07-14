@@ -9,11 +9,12 @@
         "bensampo/laravel-enum": "^6.12",
         "ckfinder/ckfinder-laravel-package": "^5.0",
         "firebase/php-jwt": "^6.11",
-        "fruitcake/laravel-cors": "^3.0",
+        "fruitcake/laravel-cors": "dev-develop",
         "guzzlehttp/guzzle": "^7.9",
         "kalnoy/nestedset": "^6.0",
         "kreait/laravel-firebase": "^5.10",
-        "laravel/framework": "^9.0",
+        "laravel/framework": "^10.47",
+        "laravel/reverb": "*",
         "laravel/sanctum": "^3.3",
         "laravel/socialite": "^5.21",
         "laravel/tinker": "^2.7",
@@ -23,11 +24,13 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "google/cloud-core": "^1.62",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.4",
+        "monolog/monolog": "^3.0",
         "nunomaduro/collision": "^6.1",
         "phpunit/phpunit": "^9.5.10",
-        "spatie/laravel-ignition": "^1.0"
+        "spatie/laravel-ignition": "^2.0"
     },
     "autoload": {
         "psr-4": {

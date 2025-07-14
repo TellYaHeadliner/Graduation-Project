@@ -23,13 +23,18 @@ import LoadingSpinner from "../components/Loading/LoadingSpinner";
 import CarouselImage from "../components/CustomCarousel/Carouselmage";
 import { ToastContainer } from "react-toastify";
 import CarouselComment from "../components/CustomCarousel/CarouselComment";
+import useAuth from '../hooks/useAuth';
 
 export default function DetailHotel() {
 
     const { id } = useParams();
     const { state } = useFindRoomContext();
+
+    const { user, loading } = useAuth();
+
     const getDetailHotel = useHotelDetailQuery(Number(id));
-    const title = getDetailHotel.data?.data?.hotel?.name
+    const title = getDetailHotel.data?.data?.hotel?.name;
+    const hotelId = getDetailHotel.data?.data?.hotel?.id;
     useTitle(title ?? "Đang tải")
 
     const breadcrumbItems = [
@@ -234,7 +239,13 @@ export default function DetailHotel() {
 
                 </div>
             </div>
-            <ChatButton />
+            {loading ? (
+                <LoadingSpinner />
+            ) : user && hotelId ? (
+                <div>
+                    <ChatButton partnerId={hotelId} userId={Number(user.id)} />
+                </div>
+            ) : null}
             <ToastContainer position="top-right" />
         </MainLayout>
     )

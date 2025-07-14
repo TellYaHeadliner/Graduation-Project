@@ -2,12 +2,24 @@ import React, { useState } from "react";
 import { FaComments } from "react-icons/fa";
 import ChatBox from "./ChatBox";
 
-export default function ChatButton() {
+
+interface ChatButtonProps {
+  partnerId: number;
+  userId: number;
+}
+
+export default function ChatButton({ partnerId , userId}: ChatButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
-      {isOpen && <ChatBox onClose={() => setIsOpen(false)} />}
+      {isOpen && (
+        <ChatBox
+          partnerId={partnerId}
+          userId={userId}
+          onClose={() => setIsOpen(false)}
+        />
+      )}
 
       <button
         onClick={() => setIsOpen(true)}
@@ -19,3 +31,4 @@ export default function ChatButton() {
     </>
   );
 }
+

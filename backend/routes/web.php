@@ -1,11 +1,14 @@
 <?php
 
+use App\Events\TestMessageSent;
 use App\Models\Hotel;
 use App\Models\User;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 use CKSource\CKFinderBridge\Controller\CKFinderController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -64,3 +67,30 @@ Route::get('/email/verify/{id}/{hash}', function (Request $request) {
     $user->markEmailAsVerified();
     return redirect('http://127.0.0.1:5173/email-verified');
 })->middleware(['signed'])->name('verification.verify');
+
+Route::get('/test-broadcast', function () {
+    broadcast(new TestMessageSent());
+    return 'Đã gửi thử!';
+});
+
+Route::post('/broadcasting/auth', function (Request $request) {
+    $user = auth()->user();
+
+    if (!$user) {
+        $userId = $request->header('X-User-Id');
+        $user = User::find($userId);
+        auth()->setUser($user);
+    }
+
+    Log::info('Broadcast auth attempt', [
+        'user_id' => optional($user)->id,
+        'authenticated' => (bool) $user,
+    ]);
+
+    if (!$user) {
+        return response()->json(['error' => 'Không xác thực được user'], 401);
+    }
+
+
+    return Broadcast::auth($request);
+});

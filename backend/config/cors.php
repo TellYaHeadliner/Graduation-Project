@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'paths' => ['api/v1/*', 'ckfinder/*'],
+    'paths' => ['api/v1/*', 'ckfinder/*', 'broadcasting/auth'],
 
     'allowed_methods' => ['*'],
 

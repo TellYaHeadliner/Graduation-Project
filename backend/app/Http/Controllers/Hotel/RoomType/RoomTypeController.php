@@ -96,7 +96,7 @@ class RoomTypeController extends Controller
             $bedTypeId = $this->data['bed_type_id'] ?? null;
             $amenities = $this->data['amenities'] ?? null;
             $createRoom = $this->data['create_room'] ?? false;
-            unset($this->data['bed_type_id'], $this->data['amenities']);
+            unset($this->data['bed_type_id'], $this->data['amenities'],$this->data['create_room']);
 
             $roomType = RoomType::create($this->data);
             if ($bedTypeId) {
@@ -111,6 +111,7 @@ class RoomTypeController extends Controller
                 for ($i = 1; $i <= $this->data['room_quantity']; $i++) {
                     $room[] = [
                         'room_type_id' => $roomType->id,
+                        'hotel_id' => $hotel_id,
                         'code' => ($this->data['room_code'] ?? 'PHONG') . " " . $i,
                         'status' => RoomStatus::Active->value
                     ];

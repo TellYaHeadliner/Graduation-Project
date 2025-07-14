@@ -1,7 +1,6 @@
 import { z } from "zod"
 
 export const registerOwnerSchema = z.object({
-    email: z.string().min(1, "Vui lòng nhập địa chỉ email").max(255, "Số lượng kí tự vượt quá giới hạn"),
     name: z.string().min(1, "Vui lòng nhập tên khách sạn").max(255, "Số lượng kí tự vượt quá giới hạn"),
     address: z.string().min(1, "Vui lòng nhập địa chỉ"),
     star_rating: z.string().nonempty("Vui lòng lựa chọn số sao khách sạn"),

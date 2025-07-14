@@ -34,9 +34,12 @@
             <div class="col-md-6 col-12">
                 <div class="mb-3">
                     <label class="control-label">{{ __('Tạo phòng nhanh') }}:</label>
-                    <x-input-checkbox name="create_room" :value="1" :label="__('Tạo phòng nhanh với số lượng phòng ?')"
-                        :checked="old('create_room',  [])"  />
-
+                    <x-input-checkbox
+    name="create_room"
+    :value="1"
+    :label="__('Tạo phòng nhanh với số lượng phòng ?')"
+    :checked="Arr::wrap(old('create_room'))"
+/>
                 </div>
             </div>
            

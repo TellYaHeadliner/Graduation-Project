@@ -62,12 +62,6 @@ export default function RegisterOwnerForm() {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4" encType='multipart/form-data'>
       <div>
-        <label htmlFor="email" className="block-text-sm font-medium text-white">Email</label>
-        <input {...register("email")} placeholder="Email" className="mt-1 bg-white block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-accent focus:outline-none" />
-        {errors.email && <p>{errors.email.message}</p>}
-      </div>
-
-      <div>
         <label htmlFor="password" className="block-text-sm font-medium text-white">Tên khách sạn</label>
         <input {...register("name")} placeholder="Tên khách sạn" className="bg-white mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus accent focus:outline-none" />
         {errors.name && <p>{errors.name.message}</p>}

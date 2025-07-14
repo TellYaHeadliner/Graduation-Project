@@ -94,3 +94,9 @@ Route::post('/broadcasting/auth', function (Request $request) {
 
     return Broadcast::auth($request);
 });
+
+use Illuminate\Support\Facades\URL;
+
+Route::get('/debug-url', function () {
+    return URL::to('/test-path');
+});

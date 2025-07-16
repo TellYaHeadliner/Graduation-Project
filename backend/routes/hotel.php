@@ -139,13 +139,14 @@ Route::middleware(['roleCheck:Owner', 'hotelOwnerCheck'])->group(function () {
             });
         });
         Route::controller(App\Http\Controllers\Hotel\Chat\ChatController::class)
-        ->prefix('/chat')
-        ->as('chat.')
-        ->group(function () {
-            Route::post('/send-message/{hotel_id}', 'sendMessage')->name('sendMessage');
-            Route::get('/message/{hotel_id}','index')->name('index');
-            Route::get('/message/{hotel_id}/{id}','fetch')->name('fetch');
-        });
+            ->prefix('/chat')
+            ->as('chat.')
+            ->group(function () {
+                Route::post('/send-message/{hotel_id}', 'sendMessage')->name('sendMessage');
+                Route::get('/message/{hotel_id}', 'index')->name('index');
+                Route::get('/message/{hotel_id}/{id}', 'fetch')->name('fetch');
+                Route::get('/message-list/{hotel_id}', 'messageList')->name('messageList');
+            });
 
         Route::prefix('/search')->as('search.')->group(function () {
             Route::prefix('/select')->as('select.')->group(function () {

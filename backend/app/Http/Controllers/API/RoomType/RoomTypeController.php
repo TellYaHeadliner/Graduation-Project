@@ -33,19 +33,10 @@ class RoomTypeController extends Controller
 
             $listRoomType = RoomType::with([
                 'variants' => function ($variantQuery) use ($guest, $children, $check_in, $check_out) {
-                    $variantQuery
-                        ->whereHas('attributes', function ($q) use ($guest) {
-                            $q->where('attributes.type', 'guest')
-                                ->whereRaw('CAST(variant_attributes.attribute_value AS UNSIGNED) >= ?', [$guest]);
-                        })
-                        ->whereHas('attributes', function ($q) use ($children) {
-                            $q->where('attributes.type', 'children')
-                                ->whereRaw('CAST(variant_attributes.attribute_value AS UNSIGNED) >= ?', [$children]);
-                        })
-                        ->with([
-                            'seasons',
-                            'attributes:id,name,type',
-                        ]);
+                    $variantQuery->with([
+                        'seasons',
+                        'attributes:id,name,type',
+                    ]);
                 },
                 'amenities:id,name',
                 'bedType:id,name',
@@ -75,7 +66,7 @@ class RoomTypeController extends Controller
                         });
                     }
                 ])
-                ->where('status',RoomTypeStatus::Active)
+                ->where('status', RoomTypeStatus::Active)
                 ->when($room_quantity, function ($q) use ($room_quantity) {
                     $q->having('available_room_count', '>=', $room_quantity);
                 })

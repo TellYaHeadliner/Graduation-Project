@@ -83,7 +83,7 @@
 
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Doanh thu theo thời gian</h3>
+                <h3 class="card-title">Doanh thu booking theo thời gian</h3>
             </div>
             <div class="card-body" style="height: 350px;">
                 <canvas id="revenueChart" class="chart-canvas" style="height: 100%; width: 100%;"></canvas>

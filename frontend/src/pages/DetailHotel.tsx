@@ -8,7 +8,7 @@ import DialogHotelServices from "../components/Dialog/DialogHotelServices";
 import { useParams } from "react-router-dom";
 import { useHotelDetailQuery } from "../react-query/useHotelDetailQuery";
 import useTitle from "../hooks/useTitle";
-import { CheckIcon, InfoCircledIcon} from "@radix-ui/react-icons";
+import { CheckIcon, InfoCircledIcon } from "@radix-ui/react-icons";
 import FindRoom from "../components/FindHotel/FindRoom";
 import { useFindRoomContext } from "../context/FindRoomContext";
 import { useHotelRoomTypesQuery } from '../react-query/useHotelRoomTypesQuery';
@@ -60,7 +60,16 @@ export default function DetailHotel() {
         localStorage.setItem('numberOfNights', JSON.stringify(0));
         localStorage.setItem('serviceTotal', JSON.stringify(0));
         localStorage.setItem('totalRoom', JSON.stringify(0));
-        localStorage.setItem('findHotel', JSON.stringify({ "dateRange": [null, null], "adults": 0, "children": 0, "rooms": 0 }))
+        const findHotelString = localStorage.getItem("findHotel");
+        if (!findHotelString) return;
+        const findHotel = JSON.parse(findHotelString);
+        const newFindRoom = {
+            dateRange: [findHotel.checkin, findHotel.checkout],
+            adults: findHotel.guest,
+            children: findHotel.children,
+            rooms: findHotel.quantity,
+        };
+        localStorage.setItem('findRoom', JSON.stringify(newFindRoom))
     }, [])
 
     const checkReview = useCheckReviewQuery(Number(id));
@@ -158,7 +167,7 @@ export default function DetailHotel() {
                                         {getDetailHotel.data?.data.hotel.average_star}
                                     </span>
                                     <span className="ml-2">
-                                        Có { getDetailHotel.data?.data.hotel.total_reviews} người đánh giá
+                                        Có {getDetailHotel.data?.data.hotel.total_reviews} người đánh giá
                                     </span>
                                     <CarouselComment reviews={listReviews ?? []} />
                                 </div>

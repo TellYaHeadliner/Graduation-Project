@@ -21,17 +21,18 @@ export interface CardSearch{
     seasons: string;
 }
 
-export interface PayloadSearchParams{
-    address: string;
-    guest: number;
-    children: number;
-    checkin: string | null;
-    checkout: string | null;
-    amenities?: number[];
-    min_price?: number;
-    max_price?: number;
-    min_rating?: number;
-}
+    export interface PayloadSearchParams{
+        address: string;
+        guest: number;
+        children: number;
+        checkin: string | null;
+        checkout: string | null;
+        quantity: number;
+        amenities?: number[];
+        min_price?: number;
+        max_price?: number;
+        min_rating?: number;
+    }
 
 export interface SearchResponse{
     message: string;

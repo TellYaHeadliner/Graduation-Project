@@ -34,6 +34,7 @@ export default function ResultSearch() {
         min_rating: Number(queryParams.get("min_rating") ?? "0"),
         min_price: Number(queryParams.get("min_price") ?? "0"),
         max_price: Number(queryParams.get("max_price") ?? "10000000"),
+        quantity: Number(queryParams.get("quantity") ?? 1)
     }
 
     const location = useLocation();
@@ -45,15 +46,18 @@ export default function ResultSearch() {
         checkin: new Date(Date.now()).toISOString().split('T')[0],
         checkout: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000).toISOString().split('T')[0],
         guest: 2,
-        children: 0
+        children: 0,
+        quantity: 0
     }
 
     const isQueryEmpty =!queryParams.toString();
     const finalPayload = isQueryEmpty ? defaultLoad: payload;
 
+
     const [ searchPayload, setSearchPayload ] = useState(defaultLoad);
 
     useEffect(() => {
+        localStorage.setItem('findHotel', JSON.stringify(finalPayload))
         setSearchPayload(finalPayload);
     }, [location.search]);
 

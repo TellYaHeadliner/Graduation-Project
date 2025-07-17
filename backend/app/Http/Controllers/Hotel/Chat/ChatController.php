@@ -61,7 +61,7 @@ class ChatController extends Controller
         ]);
     }
 
-    public function fetch($hotel_id,$id)
+    public function fetch($hotel_id, $id)
     {
         $user = auth()->user();
         $conversation = Conversation::with('messages')->find($id);
@@ -75,8 +75,20 @@ class ChatController extends Controller
         }
 
         return response()->json([
-            'id'       => $conversation,
+            'id'       => $conversation->id,
             'messages' => $conversation->messages()->latest()->take(50)->get()->reverse()->values(),
         ]);
+    }
+
+    public function messageList($hotel_id)
+    {
+        $user = auth()->user();
+
+        $conversations = Conversation::where('partner_id', $user->id)
+            ->with('customer')
+            ->orderByDesc('last_message_at')
+            ->get();
+
+        return view('hotel.chat.partials.conversation_list', compact('conversations'))->render();   
     }
 }

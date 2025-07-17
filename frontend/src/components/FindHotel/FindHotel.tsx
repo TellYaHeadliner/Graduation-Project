@@ -8,6 +8,7 @@ import useFindHotel from "../../hooks/useFindHotel";
 import { vi } from "date-fns/locale/vi";
 import { useFindHotelContext } from "../../context/FindHotelContext";
 import { findHotelSchemas } from "../../schemas/findHotelSchemas";
+import { format } from "date-fns";
 
 
 registerLocale("vi", vi);
@@ -78,6 +79,7 @@ export default function FindHotel() {
             children,
             rooms,
         })
+        
 
         if (!result.success) {
             setIsNull(true);
@@ -86,7 +88,7 @@ export default function FindHotel() {
         }
 
 
-        navigate(`/search?address=${province}&checkin=${startDate}&checkout=${endDate}&guest=${adults}&children=${children}`);
+        navigate(`/search?address=${province}&checkin=${startDate}&checkout=${endDate}&guest=${adults}&children=${children}&quantity=${rooms}`);
     }
     return (
         <div className="search-booking">
@@ -118,8 +120,8 @@ export default function FindHotel() {
                         startDate={startDate ? new Date(startDate) : null}
                         endDate={endDate ? new Date(endDate) : null}
                         onChange={(update: [Date | null, Date | null]) => {
-                            const start = update[0] ? update[0].toISOString().split('T')[0] : null;
-                            const end = update[1] ? update[1].toISOString().split('T')[0] : null;
+                            const start = update[0] ? format(update[0], 'yyyy-MM-dd') : null;
+                            const end = update[1] ? format(update[1], 'yyyy-MM-dd') : null;
                             dispatch({ type: 'SET_DATE_RANGE', payload: [start, end] });
                         }}
                         dateFormat="dd/MM/yyyy"

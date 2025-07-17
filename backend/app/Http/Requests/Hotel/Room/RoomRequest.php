@@ -24,7 +24,7 @@ class RoomRequest extends BaseRequest
     protected function methodPut()
     {
         return [
-            'id' => ['required', 'exists:App\Models\Room,id'],
+            'id' => ['required'],
             'code' => ['required', 'string', 'min:1' , 'max:10'],
             'status' => ['nullable' , new Enum(RoomStatus::class)],
         ];

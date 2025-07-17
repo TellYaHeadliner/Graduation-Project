@@ -45,14 +45,29 @@ export default function FindRoom({ onSearch }: FindRoomProps) {
         onSearch();
         return { id, startDate, endDate, adults, children, rooms }
     }
+
+    useEffect(() => {
+        const findRoomString = localStorage.getItem('findHotel');
+        if (findRoomString){
+            const formattedFindRoom = JSON.parse(findRoomString);
+            console.log(formattedFindRoom);
+            dispatch({ type: "SET_DATE_RANGE", payload: [formattedFindRoom.checkin, formattedFindRoom.checkout] });
+            dispatch({ type: "SET_ADULTS", payload: formattedFindRoom.guest });
+            dispatch({ type: "SET_CHILDREN", payload:  formattedFindRoom.children });
+            dispatch({ type: "SET_ROOMS", payload: formattedFindRoom.quantity });
+        }
+    }, [])
     useEffect(() => {
         if (!startDate || !endDate) return;
 
         const diffTime = endDate.getTime() - startDate.getTime();
-        const nights = Math.max(diffTime / (1000 * 60 * 60 * 24), 1); // ít nhất 1 đêm
+        const nights = Math.max(diffTime / (1000 * 60 * 60 * 24), 1); 
 
         localStorage.setItem('numberOfNights', JSON.stringify(nights));
+
     }, [startDate, endDate]);
+
+    
 
     return (
         <div className="search-booking">

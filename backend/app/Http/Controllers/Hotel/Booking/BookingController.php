@@ -145,9 +145,9 @@ class BookingController extends Controller
             }
 
             if ($request->status == BookingStatus::CheckedIn->value) {
-                // if (now()->lt($booking->check_in)) {
-                //     return back()->with('error', 'Không thể check-in trước ngày nhận phòng');
-                // }
+                if (now()->lt($booking->check_in)) {
+                    return back()->with('error', 'Không thể check-in trước ngày nhận phòng');
+                }
                 $booking->update([
                     'status' => $request->status,
                     'check_in_at' => now()

@@ -169,7 +169,7 @@
 					<label class="form-label mt-4">Voucher:</label>
 					<div class="form-control-plaintext">
 						<strong>Mã:</strong> {{ $booking->voucher->code }}<br>
-						<strong>Giảm:</strong> {{ number_format($booking->voucher_discount) }} đ
+						<strong>Giảm:</strong> {{ number_format($booking->voucher->discount_value) }} đ
 					</div>
 				</div>
 			@endif
@@ -192,7 +192,7 @@
 					</li>
 					<li class="list-group-item d-flex justify-content-between">
 						<span>Giảm giá voucher</span>
-						<span class="text-danger">-{{ number_format($booking->voucher_discount) }} đ</span>
+						<span class="text-danger">-{{ number_format($booking->voucher->discount_value) }} đ</span>
 					</li>
 					<li class="list-group-item d-flex justify-content-between fw-bold">
 						<span>Tổng thanh toán</span>

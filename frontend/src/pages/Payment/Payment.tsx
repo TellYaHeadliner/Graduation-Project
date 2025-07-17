@@ -18,6 +18,7 @@ import DiscountBar from "../../components/Discount/DiscountBar";
 import { useUserInfoQuery } from "../../react-query/useUserInfoQuery";
 import { Callout } from "@radix-ui/themes";
 import { InfoCircledIcon } from "@radix-ui/react-icons";
+import { useWatch } from "react-hook-form";
 
 
 
@@ -38,9 +39,15 @@ export default function Payment() {
     const findRoom = JSON.parse(localStorage.getItem('findRoom') ?? '{}');
     const [checkInDay, checkOutDay] = findRoom?.dateRange ?? [];
 
-    const { register, handleSubmit } = useForm<PaymentSchema>({
+    const { register, handleSubmit, control ,setValue} = useForm<PaymentSchema>({
         resolver: zodResolver(paymentSchemas)
     });
+
+    const code = useWatch({ control, name: "code" });
+
+    const handleApplyVoucher = (code: string) => {
+        setValue("code", code);  
+    };
 
     const mutation = usePaymentMutation();
     type WithName<T> = T & { name: string };
@@ -185,22 +192,26 @@ export default function Payment() {
                             </div>
 
                             <div>
-                                {
-                                    (voucherList && voucherList.length > 0) && (
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700">Mã giảm giá</label>
-                                            <input
-                                                {...register("code")}
-                                                type="text"
-                                                placeholder="Nhập mã voucher khác nếu có"
-                                                className="mt-1 w-full border px-4 py-2 rounded-lg"
-                                            />
+                                {voucherList && voucherList.length > 0 && (
+                                    <div>
+                                        <label className="block text-sm font-medium text-gray-700">
+                                            Mã giảm giá
+                                        </label>
+
+                                        <input
+                                            {...register("code")}
+                                            type="text"
+                                            placeholder="Nhập mã voucher khác nếu có"
+                                            className="mt-1 w-full border px-4 py-2 rounded-lg"
+                                        />
+
+                                        {(!code || code.trim() === "") && (
                                             <div className="mt-2">
-                                                <DiscountBar discountList={voucherList} total={total} />
+                                                <DiscountBar discountList={voucherList} total={total} onApplyVoucher={handleApplyVoucher} />
                                             </div>
-                                        </div>
-                                    )
-                                }
+                                        )}
+                                    </div>
+                                )}
                             </div>
 
                             <button

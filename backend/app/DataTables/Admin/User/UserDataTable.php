@@ -31,7 +31,6 @@ class UserDataTable extends BaseDataTable
             'email' => 'admin.user.datatable.email',
             'phone' => 'admin.user.datatable.phone',
             'gender' => 'admin.user.datatable.gender',
-            'address' => 'admin.user.datatable.address',
             'avatar' => 'admin.user.datatable.avatar',
             'role' => 'admin.user.datatable.role',
             'email_verified_at' => 'admin.user.datatable.email_verified_at',
@@ -43,17 +42,17 @@ class UserDataTable extends BaseDataTable
     public function setColumnSearch(): void
     {
 
-        $this->columnAllSearch = [0, 1, 2, 3, 4, 5, 7, 9];
+        $this->columnAllSearch = [0, 1, 2, 3, 4,  6, 8];
 
         $this->columnSearchDate = [3];
 
         $this->columnSearchSelect = [
             [
-                'column' => 7,
+                'column' => 6,
                 'data' => UserRole::asSelectArray()
             ],
             [
-                'column' => 9,
+                'column' => 8,
                 'data' => UserStatus::asSelectArray()
             ],
             [
@@ -80,7 +79,6 @@ class UserDataTable extends BaseDataTable
             'email' => $this->view['email'],
             'phone' => $this->view['phone'],
             'gender' => $this->view['gender'],
-            'address' => $this->view['address'],
             'avatar' => $this->view['avatar'],
             'role' => $this->view['role'],
             'status' => $this->view['status'],
@@ -98,7 +96,7 @@ class UserDataTable extends BaseDataTable
 
     protected function setCustomRawColumns(): void
     {
-        $this->customRawColumns = ['action', 'email_verified_at', 'fullname', 'email', 'phone', 'gender', 'address', 'avatar', 'role', 'status'];
+        $this->customRawColumns = ['action', 'email_verified_at', 'fullname', 'email', 'phone', 'gender', 'avatar', 'role', 'status'];
     }
 
     public function setCustomFilterColumns(): void {}

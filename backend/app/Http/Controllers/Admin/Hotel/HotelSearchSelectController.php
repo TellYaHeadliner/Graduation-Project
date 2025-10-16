@@ -26,8 +26,9 @@ class HotelSearchSelectController extends BaseSearchSelectController
         }
 
         $query->where('status','=',HotelStatus::Active->value);
+        $query->with('user');
 
-        $this->instance = $query->limit(10)->get(['id', 'name' , 'email']);
+        $this->instance = $query->limit(10)->get();
     }
 
     protected function selectResponse(): void
@@ -36,7 +37,7 @@ class HotelSearchSelectController extends BaseSearchSelectController
             'results' => $this->instance->map(function ($item) {
                 return [
                     'id' => $item->id,
-                    'text' => $item->name.' | ' . $item->email,
+                    'text' => $item->name.' | ' . $item->user->email,
                 ];
             }),
         ];

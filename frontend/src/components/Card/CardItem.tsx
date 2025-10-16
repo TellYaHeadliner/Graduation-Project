@@ -1,10 +1,12 @@
 import React from "react";
-import { StarIcon, HeartFilledIcon } from "@radix-ui/react-icons";
+import { HeartFilledIcon } from "@radix-ui/react-icons";
 import { AlertDialog, Flex, Button } from "@radix-ui/themes";
 import { useNavigate } from "react-router-dom";
 
 import { Currency } from "../../utils/Currency";
 import { useAuthCheck } from "../../hooks/useAuthCheck";
+import { StarIcon } from '@heroicons/react/24/solid';
+
 
 import "./CardItem.css";
 import {
@@ -19,8 +21,9 @@ interface CardItemProps {
   name: string;
   address: string;
   star_rating: number;
-  price: number | null;
-  reputation_score: number;
+  avg_star: number;
+  total_reviews: number;
+  price: number ;
   discountPrice: number | null;
   avatar: string;
   slug: string;
@@ -63,8 +66,8 @@ const AlertDialogComp: React.FC<AlertDialogCompProps> = ({
 };
 
 const TagScore: React.FC<{ reputation_score: number }> = ({ reputation_score }) => {
-  if (reputation_score <= 40) return <BadHotelBadge />;
-  if (reputation_score >= 70) return <GoodHotelBadge />;
+  if (reputation_score <= 3) return <BadHotelBadge />;
+  if (reputation_score <= 5) return <GoodHotelBadge />;
   return null;
 };
 
@@ -74,7 +77,8 @@ const CardItem: React.FC<CardItemProps> = ({
   address,
   star_rating,
   price,
-  reputation_score,
+  total_reviews,
+  avg_star,
   discountPrice,
   avatar,
   slug,
@@ -100,9 +104,9 @@ const CardItem: React.FC<CardItemProps> = ({
           }}
           disabled={isPending}
           type="button"
-          
+
           className="absolute top-2 right-2 bg-white hover:bg-accent p-1 rounded-full shadow z-10"
-          
+
         >
           <HeartFilledIcon className={`w-5 h-5 transition-colors duration-300 ${is_favorite ? "text-red-500" : "text-gray-400"}`} />
         </button>
@@ -119,28 +123,45 @@ const CardItem: React.FC<CardItemProps> = ({
 
         <div className="flex flex-col items-start gap-2 mt-1">
           <span className="text-gray-500 flex flex-row items-center gap-1">
-            <StarIcon className="text-secondary" />
-            {star_rating} •
-            <TooltipReputation reputation={reputation_score} />
+            {[...Array(star_rating)].map((_, i) => (
+              <StarIcon
+                key={i}
+                className="w-4 h-4 text-yellow-400"
+              />
+            ))}
+            <TooltipReputation reputation={avg_star} />
+            {typeof total_reviews === "number" && (
+              <span className="text-sm text-gray-500">
+                ({total_reviews} đánh giá)
+              </span>
+            )}
           </span>
 
           <div className="flex flex-row gap-2 items-center">
-            <TagScore reputation_score={reputation_score} />
+            <TagScore reputation_score={avg_star} />
             <DiscountPriceBadge discountPrice={discountPrice} />
           </div>
 
           {/* Giá */}
           <div className="block w-full text-right text-gray-500">
-            {discountPrice ? (
-              <>
-                <span className="text-red-600 line-through mr-2">
-                  {Currency.formatVND(price)}
-                </span>
-                <span>{Currency.formatVND(discountPrice)}</span>
-              </>
-            ) : price ? (
-              <span>{Currency.formatVND(price)}</span>
-            ) : null}
+            {typeof price === "number" && (
+              <div className="flex flex-row items-center gap-2">
+                {typeof discountPrice === "number" ? (
+                  <>
+                    <span className="text-red-600 line-through">
+                      {Currency.formatVND(price)}
+                    </span>
+                    <span className="font-semibold text-primary">
+                      {Currency.formatVND(discountPrice)}
+                    </span>
+                  </>
+                ) : (
+                  <span className="font-semibold text-primary">
+                    {Currency.formatVND(price)}
+                  </span>
+                )}
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -70,12 +70,6 @@ return [
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],
-        'address' => [
-            'title' => 'Địa chỉ',
-            'icon' => 'ti ti-home',
-            'orderable' => false,
-            'addClass' => 'text-center align-middle'
-        ],
         'avatar' => [
             'title' => 'Ảnh đại diện',
             'icon' => 'ti ti-user-circle',
@@ -137,12 +131,6 @@ return [
         'avatar' => [
             'title' => 'Ảnh đại diện',
             'icon' => 'ti ti-user-circle',
-            'orderable' => false,
-            'addClass' => 'text-center align-middle'
-        ],
-        'reputation_score' => [
-            'title' => 'Điểm uy tín',
-            'icon' => 'ti ti-exposure',
             'orderable' => false,
             'addClass' => 'text-center align-middle'
         ],

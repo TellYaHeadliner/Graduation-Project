@@ -6,9 +6,10 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 interface DiscountBarProps {
   discountList: Voucher[];
   total: number;
+  onApplyVoucher: (code: string) => void;
 }
 
-export default function DiscountBar({ discountList, total }: DiscountBarProps) {
+export default function DiscountBar({ discountList, total, onApplyVoucher }: DiscountBarProps) {
   const items = discountList.map((discount) => (
     <div key={discount.id} className="px-2">
       <DiscountItem
@@ -20,6 +21,7 @@ export default function DiscountBar({ discountList, total }: DiscountBarProps) {
         startDate={discount.start_date}
         endDate={discount.end_date}
         total={total}
+        onApplyVoucher={onApplyVoucher}
       />
     </div>
   ));

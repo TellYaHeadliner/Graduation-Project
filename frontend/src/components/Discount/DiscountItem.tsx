@@ -9,6 +9,7 @@ interface DiscountItemProps {
   startDate: string;
   endDate: string;
   total: number;
+  onApplyVoucher?: (code: string) => void;
 }
 
 export default function DiscountItem({
@@ -19,15 +20,21 @@ export default function DiscountItem({
   discountValue,
   maxDiscountValue,
   minDiscountValue,
-  total }: DiscountItemProps) {
+  total,
+  onApplyVoucher, }: DiscountItemProps) {
   const [copied, setCopied] = useState(false);
   const isEligible = total >= minDiscountValue;
-  
-  const handleCopy = async () => {
+
+  const handleCopy = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+
     if (!isEligible) return;
+
     try {
       await navigator.clipboard.writeText(discountCode);
       setCopied(true);
+      onApplyVoucher && onApplyVoucher(discountCode);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
       console.error('Lỗi khi copy:', err);
@@ -49,21 +56,20 @@ export default function DiscountItem({
 
   return (
     <div
-      className={`rounded-xl border p-4 shadow-sm space-y-2 transition-all duration-300 ${
-        isEligible
-          ? 'border-gray-200 bg-white'
-          : 'border-gray-100 bg-gray-50 opacity-60 pointer-events-none'
-      }`}
+      className={`rounded-xl border p-4 shadow-sm space-y-2 transition-all duration-300 ${isEligible
+        ? 'border-gray-200 bg-white'
+        : 'border-gray-100 bg-gray-50 opacity-60 pointer-events-none'
+        }`}
     >
       <div className="flex items-center justify-between">
         <div className="text-sm font-semibold text-gray-700">Mã giảm giá</div>
         <button
+          type="button"
           onClick={handleCopy}
-          className={`px-2 py-1 text-xs rounded transition ${
-            isEligible
-              ? 'bg-blue-100 text-blue-600 hover:bg-blue-200'
-              : 'bg-gray-200 text-gray-500 cursor-not-allowed'
-          }`}
+          className={`px-2 py-1 text-xs rounded transition ${isEligible
+            ? 'bg-blue-100 text-blue-600 hover:bg-blue-200'
+            : 'bg-gray-200 text-gray-500 cursor-not-allowed'
+            }`}
         >
           {copied ? 'Đã áp dụng' : discountCode}
         </button>

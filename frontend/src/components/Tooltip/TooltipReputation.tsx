@@ -11,9 +11,9 @@ export default function TooltipReputation({ reputation }: BadgeReputaionScorePro
   const descriptionBadHotel = "Đây là khách sạn có phản hồi, dịch vụ khá tệ";
 
   const getDescription = () => {
-    if (reputation === 40) return descriptionBadHotel;
-    if (reputation >= 70) return descriptionGoodHotel;
-    if (reputation >= 50) return descriptionNormalHotel;
+    if (reputation === 2) return descriptionBadHotel;
+    if (reputation >= 3) return descriptionGoodHotel;
+    if (reputation >= 5) return descriptionNormalHotel;
     return "";
   };
 

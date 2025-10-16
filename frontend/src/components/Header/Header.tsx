@@ -18,7 +18,7 @@ export default function Header() {
                     <a href={PATH.HOME}>
                         <img src={logo} alt={logo} className='sm:w-40 lg:w-40 2xl:w-50 mr-4 '/>
                     </a>
-                    <Search />
+                    
                 </div>
                 <div>
                     { loading ? ( <LoadingSpinner />

@@ -138,7 +138,7 @@
                 <p>Chúng tôi rất mong được đón tiếp bạn trong những lần ghé thăm tiếp theo. Để giúp chúng tôi cải thiện dịch vụ, bạn có thể dành ít phút để chia sẻ trải nghiệm của mình?</p>
 
                 <div class="button-container">
-                    <a href="YOUR_FEEDBACK_URL" class="button">Gửi phản hồi của bạn</a>
+                    <a href="http://127.0.0.1:5173/tam-coc-windy-fields-1/2" class="button">Gửi phản hồi của bạn</a>
                 </div>
 
                 <p>Nếu bạn có bất kỳ câu hỏi nào về hóa đơn hoặc cần hỗ trợ thêm, vui lòng liên hệ với chúng tôi.</p>

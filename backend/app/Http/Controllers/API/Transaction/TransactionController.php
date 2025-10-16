@@ -21,6 +21,7 @@ use App\Models\RoomTypeVariant;
 use App\Models\Transaction;
 use App\Models\User;
 use App\Models\Voucher;
+use App\Models\VoucherHotel;
 use App\Models\VoucherUser;
 use Carbon\Carbon;
 use Exception;
@@ -112,20 +113,23 @@ class TransactionController extends Controller
             $total = ($combos['total'] ?? 0) + ($services['total'] ?? 0) + $roomTotal;
 
             if ($request->filled('voucher')) {
-                $voucher = $this->checkVoucher($request->voucher, $total);
+                $voucher = $this->checkVoucher($request->voucher, $total, $request->user_id, $request->hotel_id);
                 if (!$voucher['success']) {
+                    $booking->delete();
                     return response()->json([
-                        'message' => 'voucher hết hạn không thể áp dụng.'
+                        'message' => $voucher['message'] ?? 'voucher không hợp lệ'
                     ], 404);
                 }
 
                 $v = $voucher['data'];
-                if ($v->discount_type == 0) {
+                if ($v->discount_type->value == 0) {
                     $total -= $v->discount_value;
+                    // Log::error('create booking: ' . $v->discount_value, []);
                 } else {
                     $percentDiscount = $total * ($v->discount_value / 100);
                     $maxDiscount     = $v->max_discount_value ?? $percentDiscount;
                     $total          -= min($percentDiscount, $maxDiscount);
+                    
                 }
                 $booking->voucher_id = $v->id;
             }
@@ -238,7 +242,7 @@ class TransactionController extends Controller
                 'payment_status' => TransactionStatus::Failed->value,
                 'paid_at' => now(),
             ]);
-            return redirect()->away('http://127.0.0.1:5173/lich-su-booking?status=error&message=' . urlencode('Thanh toán không thành công'));
+            return redirect()->away('http://127.0.0.1:5173/?status=error&message=' . urlencode('Thanh toán thất bại'));
         }
     }
 
@@ -354,7 +358,7 @@ class TransactionController extends Controller
 
             return response()->json([
                 'message' => 'Đã hủy phòng thành công.',
-            ],200);
+            ], 200);
         } catch (\Throwable $e) {
             DB::rollBack();
             return response()->json(['message' => 'Có lỗi khi hủy phòng', 'error' => $e->getMessage()], 500);
@@ -545,11 +549,9 @@ class TransactionController extends Controller
         }
     }
 
-    public function checkVoucher($voucher, $total_amount)
+    public function checkVoucher($voucherCode, $total_amount, $user_id = null, $hotel_id = null)
     {
-        $voucher = Voucher::where('code', $voucher)->first();
-
-        //$voucher_user =VoucherUser::where('voucher_id',$voucher->id)->where('user_id',$user_id)->first();
+        $voucher = Voucher::where('code', $voucherCode)->first();
 
         if (!$voucher) {
             return ['success' => false, 'message' => 'Voucher không tồn tại'];
@@ -566,6 +568,18 @@ class TransactionController extends Controller
 
         if ($total_amount < $voucher->min_order_value) {
             return ['success' => false, 'message' => 'Không đủ điều kiện áp dụng'];
+        }
+
+        if ($voucher->customer_scope == 0) {
+            if (!$user_id || !VoucherUser::where('voucher_id', $voucher->id)->where('user_id', $user_id)->exists()) {
+                return ['success' => false, 'message' => 'Voucher không áp dụng cho tài khoản này'];
+            }
+        }
+
+        if ($voucher->hotel_scope == 0) {
+            if (!$hotel_id || !VoucherHotel::where('voucher_id', $voucher->id)->where('hotel_id', $hotel_id)->exists()) {
+                return ['success' => false, 'message' => 'Voucher không áp dụng cho khách sạn này'];
+            }
         }
 
         return ['success' => true, 'data' => $voucher];

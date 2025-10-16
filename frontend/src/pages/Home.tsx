@@ -50,8 +50,8 @@ export default function Home() {
                 <div className="flex justify-center my-4">
                     <LoadingSpinner />
                 </div>
-            ): <CarouselCard cardList={getHotelSeasonResponse?.data?.data.hotels ?? []} title="Khách sạn bạn quan tâm" /> }
-            <CarouselCard cardList={getSpringSeasons.data?.data.hotels ?? []} title="Mùa xuân" />
+            ): <CarouselCard cardList={getHotelSeasonResponse?.data?.data.hotels ?? []} title="Khách sạn đang áp dụng ưu đãi" /> }
+            {/* <CarouselCard cardList={getSpringSeasons.data?.data.hotels ?? []} title="Mùa xuân" /> */}
             {/* <CarouselCard cardList={CardListStaticData} title="Khách sạn có ưu đãi cuối tuần" />
             <CarouselCard cardList={CardListStaticData} title="Khách sạn theo mùa du lịch" />  */}
             <LocationTab />

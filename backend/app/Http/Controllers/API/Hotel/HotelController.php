@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\API\Hotel\HotelRequest;
 use App\Http\Resources\FavoriteHotelResource;
 use App\Http\Resources\HotelDetailResource;
+use App\Http\Resources\HotelSeasonResource;
 use App\Http\Resources\HotelSuggestResource;
 use App\Models\Hotel;
 use App\Models\User;
@@ -29,19 +30,29 @@ class HotelController extends Controller
     public function listHotelSeasons(Request $request)
     {
         $name = $request->query('name');
+
         $hotels = Hotel::whereHas('roomTypes.variants.seasons', function ($query) use ($name) {
             $query->where('status', SeasonStatus::Active->value);
             if ($name) {
                 $query->where('name', 'LIKE', '%' . $name . '%');
             }
-        })->with(['roomTypes.variants.seasons'])
+        })
             ->whereHas('hotelRule')
             ->where('status', HotelStatus::Active->value)
+            ->with(['roomTypes.variants.seasons' => function ($query) use ($name) {
+                $query->where('status', SeasonStatus::Active->value);
+                if ($name) {
+                    $query->where('name', 'LIKE', '%' . $name . '%');
+                }
+            }])
+            ->withAvg('reviews', 'star')
+            ->withCount('reviews')
             ->get();
+
         return response()->json([
             'message' => 'Danh sách khách sạn có ưu đãi.',
             'data' => [
-                'hotels' => $hotels
+                'hotels' => HotelSeasonResource::collection($hotels)
             ]
         ], 200);
     }

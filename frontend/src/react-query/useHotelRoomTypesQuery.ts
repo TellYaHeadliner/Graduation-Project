@@ -12,7 +12,7 @@ export const useHotelRoomTypesQuery = (
   ) => {
     return useQuery({
       queryKey: ["get-room-type", id, checkIn, checkOut, guest, children, roomQuantity],
-      queryFn: () => hotelApi.getRoomTypes(id, checkIn, checkOut, guest, children, roomQuantity),
+      queryFn: () => hotelApi.getRoomTypes(id!, checkIn!, checkOut!, guest, children, roomQuantity),
       staleTime: Infinity,
       gcTime: Infinity,
       retry: false,

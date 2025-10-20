@@ -50,7 +50,6 @@ CMS - Quản trị viên:
 
 ## Triển khai nhanh
 
-### Backend
 ```bash
 git clone https://github.com/TellYaHeadliner/Graduation-Project.git
 cd backend

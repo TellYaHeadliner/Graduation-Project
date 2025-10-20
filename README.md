@@ -48,6 +48,11 @@ CMS - Quản trị viên:
 
 ---
 
+### Website
+- [Trang chủ Roomix](https://roomix.id.vn)
+
+---
+
 ## Triển khai nhanh
 
 ```bash
@@ -72,4 +77,5 @@ php artisan queue:work
 cd frontend
 yarn install
 yarn dev
+
 

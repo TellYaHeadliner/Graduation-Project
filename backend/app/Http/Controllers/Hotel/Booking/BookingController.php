@@ -134,7 +134,6 @@ class BookingController extends Controller
                 return back()->with('error', 'Không thể cập nhật đơn đã hủy hoặc đã hoàn tiền');
             }
 
-
             if ($request->status < $booking->status->value) {
                 return redirect()->route($this->route['edit'], ['hotel_id' => $hotel_id, 'id' => $request->id])
                     ->with('error', 'Không thể cập nhập từ ' . \App\Enums\Booking\BookingStatus::getDescription($request->status) . ' trở về ' . $booking->status->description());

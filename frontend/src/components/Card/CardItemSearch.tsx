@@ -1,7 +1,6 @@
 import { Button } from '@radix-ui/themes';
 import { CardSearch } from '../../types/SearchTypes';
 import { Currency } from '../../utils/Currency';
-import { StarFilledIcon } from '@radix-ui/react-icons';
 
 interface CardItemSearchProps {
   data: CardSearch;
